@@ -21,7 +21,8 @@ const loginRules = reactive(<FormRules>{
       },
       trigger: "blur"
     }
-  ]
+  ],
+  emailCode: [{ required: true, trigger: "blur", type: "string" }]
 });
 
 export { loginRules };

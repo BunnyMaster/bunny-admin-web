@@ -10,10 +10,10 @@ export const serverOptions = (mode: string) => {
     open: true,
     cors: true,
     proxy: {
-      "/api": {
+      "/admin": {
         target: VITE_APP_URL,
         changeOrigin: true,
-        rewrite: (path: string) => path.replace(/^\/api/, "/api")
+        rewrite: (path: string) => path.replace(/^\/admin/, "/admin")
       },
       "/mock": {
         target: VITE_APP_URL,

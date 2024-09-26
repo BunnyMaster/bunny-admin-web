@@ -10,9 +10,10 @@ import type {
   RequestMethods
 } from "./types";
 import { stringify } from "qs";
-import NProgress from "../../utils/progress";
+import NProgress from "@/utils/progress";
 import { formatToken, getToken } from "@/utils/auth";
 import { useUserStoreHook } from "@/store/modules/user";
+import { message } from "@/utils/message";
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
@@ -55,7 +56,7 @@ class PureHttp {
   private static retryOriginalRequest(config: PureHttpRequestConfig) {
     return new Promise(resolve => {
       PureHttp.requests.push((token: string) => {
-        config.headers["Authorization"] = formatToken(token);
+        config.headers["token"] = formatToken(token);
         resolve(config);
       });
     });
@@ -136,7 +137,7 @@ class PureHttp {
                     // token过期刷新
                     useUserStoreHook()
                       .handRefreshToken({ refreshToken: data.refreshToken })
-                      .then(res => {
+                      .then((res: any) => {
                         const token = res.data.accessToken;
                         config.headers["Authorization"] = formatToken(token);
                         PureHttp.requests.forEach(cb => cb(token));
@@ -188,8 +189,9 @@ class PureHttp {
         $error.isCancelRequest = Axios.isCancel($error);
         // 关闭进度条动画
         NProgress.done();
+        message(error.message, { type: "error" });
         // 所有的响应异常 区分来源为取消请求/非取消请求
-        return Promise.reject($error);
+        return $error;
       }
     );
   }

@@ -8,8 +8,7 @@ import { useNav } from "@/layout/hooks/useNav";
 import type { FormInstance } from "element-plus";
 import { $t } from "@/plugins/i18n";
 import { useLayout } from "@/layout/hooks/useLayout";
-import { useUserStoreHook } from "@/store/modules/user";
-import { getTopMenu, initRouter } from "@/router/utils";
+import { useUserStore } from "@/store/modules/user";
 import { avatar, bg, illustration } from "./utils/static";
 import { useRenderIcon } from "@/components/CommonIcon/src/hooks";
 import { onBeforeUnmount, onMounted, reactive, ref, toRaw } from "vue";
@@ -22,6 +21,7 @@ import globalization from "@/assets/svg/globalization.svg?component";
 import Lock from "@iconify-icons/ri/lock-fill";
 import Check from "@iconify-icons/ep/check";
 import User from "@iconify-icons/ri/user-3-fill";
+import { getTopMenu, initRouter } from "@/router/utils";
 
 defineOptions({
   name: "Login"
@@ -29,6 +29,8 @@ defineOptions({
 const router = useRouter();
 const loading = ref(false);
 const ruleFormRef = ref<FormInstance>();
+const sendSecond = ref(60);
+const timer = ref(null);
 
 const { initStorage } = useLayout();
 initStorage();
@@ -38,32 +40,71 @@ const { dataTheme, overallStyle, dataThemeChange } = useDataThemeChange();
 dataThemeChange(overallStyle.value);
 const { title, getDropdownItemStyle, getDropdownItemClass } = useNav();
 const { locale, translationCh, translationEn } = useTranslationLang();
+const userStore = useUserStore();
 
 const ruleForm = reactive({
-  username: "admin",
-  password: "admin123"
+  username: "1319900154@qq.com",
+  password: "admin123",
+  emailCode: ""
 });
 
+/**
+ * * 发送邮箱验证码
+ */
+const onSendEmailCode = async () => {
+  // 判断是否填写邮箱，如果没有填写邮箱不给发送验证码
+  if (ruleForm.username === "" || ruleForm.username === void 0) {
+    message("请先填写邮箱地址", { type: "warning" });
+    return false;
+  }
+  const result = await userStore.postEmailCode(ruleForm.username);
+  if (result) {
+    // 开始倒计时，之后发送邮箱验证码
+    onSendEmailTimer();
+  }
+};
+
+/**
+ * * 发送邮箱倒计时点击
+ */
+const onSendEmailTimer = () => {
+  // 开始倒计时
+  timer.value = setInterval(() => {
+    // 当定时小于0时清除定时器
+    if (sendSecond.value <= 0) {
+      clearInterval(timer.value);
+      timer.value = null;
+      sendSecond.value = 60;
+      return;
+    }
+
+    // 之后每秒减去时间
+    sendSecond.value--;
+  }, 1000);
+};
+
+/**
+ * 登录
+ * @param formEl
+ */
 const onLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
-  await formEl.validate((valid, fields) => {
+  await formEl.validate(async valid => {
     if (valid) {
       loading.value = true;
-      useUserStoreHook()
-        .loginByUsername({ username: ruleForm.username, password: "admin123" })
-        .then(res => {
-          if (res.success) {
-            // 获取后端路由
-            return initRouter().then(() => {
-              router.push(getTopMenu(true).path).then(() => {
-                message(t("login.loginSuccess"), { type: "success" });
-              });
-            });
-          } else {
-            message(t("login.loginFail"), { type: "error" });
-          }
-        })
-        .finally(() => (loading.value = false));
+      const result = await userStore.loginByUsername(ruleForm);
+
+      if (result) {
+        // 获取后端路由
+        await initRouter();
+        router.push(getTopMenu(true).path).then(() => {
+          message(t("login.loginSuccess"), { type: "success" });
+        });
+      } else {
+        message(t("login.loginFail"), { type: "error" });
+      }
+
+      loading.value = false;
     }
   });
 };
@@ -175,6 +216,39 @@ onBeforeUnmount(() => {
                   clearable
                   show-password
                 />
+              </el-form-item>
+            </Motion>
+
+            <Motion :delay="150">
+              <el-form-item prop="emailCode">
+                <el-input
+                  v-model="ruleForm.emailCode"
+                  :placeholder="t('login.emailCode')"
+                  :prefix-icon="useRenderIcon('ic:outline-email')"
+                  clearable
+                  @keydown.enter="onLogin(ruleFormRef)"
+                >
+                  <template v-slot:append>
+                    <el-link
+                      v-if="sendSecond === 60"
+                      :underline="false"
+                      class="px-2"
+                      type="primary"
+                      @click="onSendEmailCode"
+                    >
+                      {{ t("login.getEmailCode") }}
+                    </el-link>
+                    <el-link
+                      v-else
+                      :underline="false"
+                      class="px-2"
+                      type="primary"
+                    >
+                      {{ sendSecond }}
+                      {{ t("login.getCodeInfo") }}
+                    </el-link>
+                  </template>
+                </el-input>
               </el-form-item>
             </Motion>
 

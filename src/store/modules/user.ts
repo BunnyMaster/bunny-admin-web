@@ -8,16 +8,17 @@ import {
   type userType
 } from "../utils";
 import {
-  getLogin,
+  fetchLogin,
+  fetchPostEmailCode,
   refreshTokenApi,
-  type RefreshTokenResult,
-  type UserResult
+  type RefreshTokenResult
 } from "@/api/v1/user";
 import { useMultiTagsStoreHook } from "./multiTags";
 import { type DataInfo, removeToken, setToken, userKey } from "@/utils/auth";
+import { message } from "@/utils/message";
 
 export const useUserStore = defineStore({
-  id: "pure-user",
+  id: "system-user",
   state: (): userType => ({
     // 头像
     avatar: storageLocal().getItem<DataInfo<number>>(userKey)?.avatar ?? "",
@@ -65,33 +66,53 @@ export const useUserStore = defineStore({
       this.loginDay = Number(value);
     },
     /** 登入 */
-    async loginByUsername(data) {
-      return new Promise<UserResult>((resolve, reject) => {
-        getLogin(data)
-          .then(data => {
-            if (data?.success) setToken(data.data);
-            resolve(data);
-          })
-          .catch(error => {
-            reject(error);
-          });
-      });
+    async loginByUsername(data: any) {
+      const result = await fetchLogin(data);
+
+      if (result.code === 200) {
+        setToken(data.data);
+        return true;
+      }
+
+      message(result.message, { type: "error" });
+      return false;
     },
-    /** 前端登出（不调用接口） */
-    logOut() {
+
+    /**
+     * * 发送邮箱验证码
+     * @param email
+     */
+    async postEmailCode(email: string) {
+      const response = await fetchPostEmailCode({ email });
+      if (response.code === 200) {
+        message(response.message, { type: "success" });
+        return true;
+      }
+      message(response.message, { type: "error" });
+
+      return false;
+    },
+
+    /**
+     * 前端登出（不调用接口）
+     */
+    async logOut() {
       this.username = "";
       this.roles = [];
       this.permissions = [];
       removeToken();
       useMultiTagsStoreHook().handleTags("equal", [...routerArrays]);
       resetRouter();
-      router.push("/login");
+      await router.push("/login");
     },
-    /** 刷新`token` */
+
+    /**
+     * 刷新`token`
+     */
     async handRefreshToken(data) {
       return new Promise<RefreshTokenResult>((resolve, reject) => {
         refreshTokenApi(data)
-          .then(data => {
+          .then((data: any) => {
             if (data) {
               setToken(data.data);
               resolve(data);

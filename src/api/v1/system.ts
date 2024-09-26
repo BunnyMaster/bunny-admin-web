@@ -1,4 +1,4 @@
-import { http } from "@/utils/http";
+import { http } from "@/api/service";
 
 type Result = {
   success: boolean;
