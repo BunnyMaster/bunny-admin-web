@@ -29,7 +29,9 @@ export interface RefreshTokenResult {
 	expires: Date;
 }
 
-/** 登录 */
+/**
+ * 登录
+ */
 export const fetchLogin = (data?: object) => {
 	return http.request<BaseResult<UserResult>>('post', '/login', { data });
 };
@@ -44,5 +46,5 @@ export const fetchPostEmailCode = (data: any) => {
 
 /** 刷新`token` */
 export const refreshTokenApi = (data?: object) => {
-	return http.request<BaseResult<RefreshTokenResult>>('post', '/refresh-token', { data });
+	return http.request<BaseResult<RefreshTokenResult>>('post', 'user/noAuth/refreshToken', { data });
 };

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { resetRouter, router, routerArrays, storageLocal, store, type userType } from '../utils';
-import { fetchLogin, fetchPostEmailCode, refreshTokenApi, type RefreshTokenResult } from '@/api/v1/user';
+import { fetchLogin, fetchPostEmailCode, refreshTokenApi } from '@/api/v1/user';
 import { useMultiTagsStoreHook } from './multiTags';
 import { type DataInfo, removeToken, setToken, userKey } from '@/utils/auth';
 import { message } from '@/utils/message';
@@ -19,13 +19,14 @@ export const useUserStore = defineStore({
 		// 按钮级别权限
 		permissions: storageLocal().getItem<DataInfo<number>>(userKey)?.permissions ?? [],
 		// 是否勾选了登录页的免登录
-		isRemembered: false,
+		isRemembered: true,
 		// 登录页的免登录存储几天，默认7天
-		loginDay: 7,
+		readMeDay: 7,
 	}),
 	actions: {
 		/** 登入 */
 		async loginByUsername(data: any) {
+			data = this.isRemembered ? { ...data, readMeDay: this.readMeDay } : data;
 			const result = await fetchLogin(data);
 
 			if (result.code === 200) {
@@ -68,19 +69,14 @@ export const useUserStore = defineStore({
 		/**
 		 * 刷新`token`
 		 */
-		async handRefreshToken(data) {
-			return new Promise<RefreshTokenResult>((resolve, reject) => {
-				refreshTokenApi(data)
-					.then((data: any) => {
-						if (data) {
-							setToken(data.data);
-							resolve(data);
-						}
-					})
-					.catch(error => {
-						reject(error);
-					});
-			});
+		async handRefreshToken(data: any) {
+			const result = await refreshTokenApi({ ...data, readMeDay: this.readMeDay });
+			if (result.code === 200) {
+				setToken(data.data);
+				return true;
+			}
+			message(result.message, { type: 'error' });
+			return false;
 		},
 	},
 });

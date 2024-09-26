@@ -128,6 +128,9 @@ onBeforeUnmount(() => {
 						</el-link>
 					</template>
 				</el-input>
+				<el-checkbox v-model="userStore.isRemembered">
+					<el-text size="small" type="primary">{{ userStore.readMeDay }}天免登录</el-text>
+				</el-checkbox>
 			</el-form-item>
 		</Motion>
 
