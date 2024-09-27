@@ -48,3 +48,11 @@ export const fetchPostEmailCode = (data: any) => {
 export const refreshTokenApi = (data?: object) => {
 	return http.request<BaseResult<RefreshTokenResult>>('post', 'user/noAuth/refreshToken', { data });
 };
+
+/**
+ * * 退出内容
+ * @param data
+ */
+export const fetchLogOut = (data?: object) => {
+	return http.request<BaseResult<any>>('post', 'user/logOut', { data });
+};

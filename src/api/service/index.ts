@@ -55,12 +55,7 @@ class PureHttp {
 
 	/** 通用请求工具函数 */
 	public request<T>(method: RequestMethods, url: string, param?: AxiosRequestConfig, axiosConfig?: PureHttpRequestConfig): Promise<T> {
-		const config = {
-			method,
-			url,
-			...param,
-			...axiosConfig,
-		} as PureHttpRequestConfig;
+		const config = { method, url, ...param, ...axiosConfig } as PureHttpRequestConfig;
 
 		// 单独处理自定义请求/响应回调
 		return new Promise((resolve, reject) => {
@@ -106,6 +101,7 @@ class PureHttp {
 					? config
 					: new Promise(resolve => {
 							const data = getToken();
+							// 存在token
 							if (data) {
 								const now = new Date().getTime();
 								const expired = parseInt(data.expires) - now <= 0;
@@ -116,7 +112,8 @@ class PureHttp {
 										useUserStoreHook()
 											.handRefreshToken({ refreshToken: data.refreshToken })
 											.then((res: any) => {
-												const token = res.data.accessToken;
+												// 从结果中获取token
+												const token = res.data.token;
 												config.headers['token'] = formatToken(token);
 												PureHttp.requests.forEach(cb => cb(token));
 												PureHttp.requests = [];
@@ -127,7 +124,7 @@ class PureHttp {
 									}
 									resolve(PureHttp.retryOriginalRequest(config));
 								} else {
-									config.headers['token'] = formatToken(data.accessToken);
+									config.headers['token'] = formatToken(data.token);
 									resolve(config);
 								}
 							} else {
