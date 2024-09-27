@@ -10,7 +10,7 @@ import { type menuType, routerArrays } from '@/layout/types';
 import { useMultiTagsStoreHook } from '@/store/multiTags';
 import { usePermissionStoreHook } from '@/store/permission';
 // 动态路由
-import { getAsyncRoutes } from '@/api/v1/routes';
+import { getRouterAsync } from '@/api/v1/routes';
 // import { getAsyncRoutes } from '@/api/routes';
 
 const IFrame = () => import('@/layout/frame.vue');
@@ -153,7 +153,7 @@ function initRouter() {
 			});
 		} else {
 			return new Promise(resolve => {
-				getAsyncRoutes().then(({ data }) => {
+				getRouterAsync().then(({ data }) => {
 					handleAsyncRoutes(cloneDeep(data));
 					storageLocal().setItem(key, data);
 					resolve(router);
@@ -162,7 +162,7 @@ function initRouter() {
 		}
 	} else {
 		return new Promise(resolve => {
-			getAsyncRoutes().then(({ data }) => {
+			getRouterAsync().then(({ data }) => {
 				handleAsyncRoutes(cloneDeep(data));
 				resolve(router);
 			});
