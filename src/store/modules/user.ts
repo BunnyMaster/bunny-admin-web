@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { resetRouter, router, routerArrays, storageLocal, store, type userType } from '../utils';
-import { fetchLogin, fetchLogOut, fetchPostEmailCode, refreshTokenApi } from '@/api/v1/user';
+import { fetchLogin, fetchLogout, fetchPostEmailCode, refreshTokenApi } from '@/api/v1/user';
 import { useMultiTagsStoreHook } from '../multiTags';
 import { type DataInfo, removeToken, setToken, userKey } from '@/utils/auth';
 import { message } from '@/utils/message';
@@ -58,7 +58,7 @@ export const useUserStore = defineStore({
 		 */
 		async logOut() {
 			// 登出
-			const result = await fetchLogOut();
+			const result = await fetchLogout();
 			if (result.code == 200) {
 				this.username = '';
 				this.roles = [];

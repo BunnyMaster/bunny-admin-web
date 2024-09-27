@@ -53,6 +53,6 @@ export const refreshTokenApi = (data?: object) => {
  * * 退出内容
  * @param data
  */
-export const fetchLogOut = (data?: object) => {
-	return http.request<BaseResult<any>>('post', 'user/logOut', { data });
+export const fetchLogout = (data?: object) => {
+	return http.request<BaseResult<any>>('post', 'user/logout', { data });
 };

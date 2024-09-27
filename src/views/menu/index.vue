@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useMenu } from './utils/hook';
+import { onMounted, ref } from 'vue';
 import { $t } from '@/plugins/i18n';
 import { PureTableBar } from '@/components/TableBar';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
@@ -9,6 +8,9 @@ import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import AddFill from '@iconify-icons/ri/add-circle-line';
+import { columns, dataList, handleDelete, handleSelectionChange, loading, onSearch, openDialog, resetForm } from '@/views/menu/utils/hook';
+import form from '@/views/role/form.vue';
+import PureTable from '@pureadmin/table';
 
 defineOptions({
 	name: 'SystemMenu',
@@ -16,12 +18,18 @@ defineOptions({
 
 const formRef = ref();
 const tableRef = ref();
-const { form, loading, columns, dataList, onSearch, resetForm, openDialog, handleDelete, handleSelectionChange } = useMenu();
 
-function onFullscreen() {
+/**
+ * 全屏
+ */
+const onFullscreen = () => {
 	// 重置表格高度
 	tableRef.value.setAdaptive();
-}
+};
+
+onMounted(() => {
+	onSearch();
+});
 </script>
 
 <template>
