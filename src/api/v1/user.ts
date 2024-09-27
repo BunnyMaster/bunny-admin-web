@@ -1,5 +1,5 @@
 import { http } from '@/api/service';
-import type { BaseResult } from '@/types/common/BaseResult';
+import type { BaseResult } from '@/types/BaseResult';
 
 export interface UserResult {
 	/** 头像 */

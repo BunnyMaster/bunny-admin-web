@@ -1,10 +1,6 @@
-import { http } from "@/api/service/mockRequest";
-
-type Result = {
-  success: boolean;
-  data: Array<any>;
-};
+import { http } from '@/api/service';
+import type { BaseResult } from '@/types/BaseResult';
 
 export const getAsyncRoutes = () => {
-  return http.request<Result>("get", "/get-async-routes");
+	return http.request<BaseResult<any>>('get', 'router/getRouterAsync');
 };
