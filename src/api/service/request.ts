@@ -1,32 +1,11 @@
-import Axios, { type AxiosInstance, type AxiosRequestConfig, type CustomParamsSerializer } from 'axios';
+import Axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
 import type { PureHttpError, PureHttpRequestConfig, PureHttpResponse, RequestMethods } from './types';
-import { stringify } from 'qs';
 import NProgress from '@/utils/progress';
-import { formatToken, getToken } from '@/utils/auth';
+import { formatToken, getToken, removeToken } from '@/utils/auth';
 import { useUserStoreHook } from '@/store/modules/user';
 import { message } from '@/utils/message';
-
-// 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
-const defaultConfig: AxiosRequestConfig = {
-	// 默认请求地址
-	baseURL: import.meta.env.VITE_BASE_API,
-	// 设置超时时间
-	timeout: import.meta.env.VITE_BASE_API_TIMEOUT,
-	// @ts-expect-error
-	retry: import.meta.env.VITE_BASE_API_RETRY, //设置全局重试请求次数（最多重试几次请求）
-	retryDelay: import.meta.env.VITE_BASE_API_RETRY_DELAY, //设置全局请求间隔
-	// 跨域允许携带凭证
-	// withCredentials: true,
-	headers: {
-		Accept: 'application/json, text/plain, */*',
-		'Content-Type': 'application/json',
-		'X-Requested-With': 'XMLHttpRequest',
-	},
-	// 数组格式参数序列化（https://github.com/axios/axios/issues/5142）
-	paramsSerializer: {
-		serialize: stringify as unknown as CustomParamsSerializer,
-	},
-};
+import { router } from '@/store/utils';
+import { defaultConfig, whiteList } from '@/api/service/config';
 
 class PureHttp {
 	/** `token`过期后，暂存待执行的请求 */
@@ -96,7 +75,6 @@ class PureHttp {
 					return config;
 				}
 				/** 请求白名单，放置一些不需要`token`的接口（通过设置请求白名单，防止`token`过期后再请求造成的死循环问题） */
-				const whiteList = ['/refresh-token', '/login'];
 				return whiteList.some(url => config.url.endsWith(url))
 					? config
 					: new Promise(resolve => {
@@ -142,27 +120,43 @@ class PureHttp {
 		instance.interceptors.response.use(
 			(response: PureHttpResponse) => {
 				const $config = response.config;
+				const data = response.data;
+
 				// 关闭进度条动画
 				NProgress.done();
+
+				// 登录过期，和异常处理
+				if (data.code === 208) {
+					message(data.message, { type: 'warning' });
+					router.push('/').then();
+					removeToken();
+				} else if (data.code >= 209 && data.code < 300) {
+					message(data.message, { type: 'warning' });
+				} else if (data.code > 300) {
+					message(data.message, { type: 'error' });
+				}
+
 				// 优先判断post/get等方法是否传入回调，否则执行初始化设置等回调
 				if (typeof $config.beforeResponseCallback === 'function') {
 					$config.beforeResponseCallback(response);
-					return response.data;
+					return data;
 				}
+
 				if (PureHttp.initConfig.beforeResponseCallback) {
 					PureHttp.initConfig.beforeResponseCallback(response);
-					return response.data;
+					return data;
 				}
-				return response.data;
+
+				return data;
 			},
 			(error: PureHttpError) => {
-				const $error = error;
-				$error.isCancelRequest = Axios.isCancel($error);
+				error.isCancelRequest = Axios.isCancel(error);
+
 				// 关闭进度条动画
 				NProgress.done();
 				message(error.message, { type: 'error' });
-				// 所有的响应异常 区分来源为取消请求/非取消请求
-				return $error;
+
+				return error;
 			},
 		);
 	}

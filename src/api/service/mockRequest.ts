@@ -1,24 +1,9 @@
-import Axios, { type AxiosInstance, type AxiosRequestConfig, type CustomParamsSerializer } from 'axios';
+import Axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
 import type { PureHttpError, PureHttpRequestConfig, PureHttpResponse, RequestMethods } from './types';
-import { stringify } from 'qs';
 import NProgress from '../../utils/progress';
 import { formatToken, getToken } from '@/utils/auth';
 import { useUserStoreHook } from '@/store/modules/user';
-
-// 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
-const defaultConfig: AxiosRequestConfig = {
-	timeout: import.meta.env.VITE_BASE_API_TIMEOUT,
-	baseURL: import.meta.env.VITE_MOCK_BASE_API || '/mock',
-	headers: {
-		Accept: 'application/json, text/plain, */*',
-		'Content-Type': 'application/json',
-		'X-Requested-With': 'XMLHttpRequest',
-	},
-	// 数组格式参数序列化（https://github.com/axios/axios/issues/5142）
-	paramsSerializer: {
-		serialize: stringify as unknown as CustomParamsSerializer,
-	},
-};
+import { defaultMockConfig } from '@/api/service/config';
 
 class PureHttp {
 	/** `token`过期后，暂存待执行的请求 */
@@ -28,7 +13,7 @@ class PureHttp {
 	/** 初始化配置对象 */
 	private static initConfig: PureHttpRequestConfig = {};
 	/** 保存当前`Axios`实例对象 */
-	private static axiosInstance: AxiosInstance = Axios.create(defaultConfig);
+	private static axiosInstance: AxiosInstance = Axios.create(defaultMockConfig);
 
 	constructor() {
 		this.httpInterceptorsRequest();

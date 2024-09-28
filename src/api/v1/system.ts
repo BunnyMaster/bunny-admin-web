@@ -1,4 +1,4 @@
-import { http } from '@/api/service';
+import { http } from '@/api/service/request';
 import type { BaseResult } from '@/types/BaseResult';
 
 type ResultTable = {
