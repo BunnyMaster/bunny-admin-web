@@ -3,14 +3,14 @@ import { onMounted, ref } from 'vue';
 import { $t } from '@/plugins/i18n';
 import { PureTableBar } from '@/components/TableBar';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import AddFill from '@iconify-icons/ri/add-circle-line';
-import { columns, dataList, handleDelete, handleSelectionChange, loading, onSearch, openDialog, resetForm } from '@/views/menu/utils/hook';
+import { dataList, handleDelete, handleSelectionChange, loading, onSearch, openDialog, resetForm } from '@/views/menu/utils/hook';
 import form from '@/views/role/form.vue';
 import PureTable from '@pureadmin/table';
+import { columns } from '@/views/menu/utils/rule';
 
 defineOptions({
 	name: 'SystemMenu',
@@ -18,14 +18,6 @@ defineOptions({
 
 const formRef = ref();
 const tableRef = ref();
-
-/**
- * 全屏
- */
-const onFullscreen = () => {
-	// 重置表格高度
-	tableRef.value.setAdaptive();
-};
 
 onMounted(() => {
 	onSearch();
@@ -44,7 +36,7 @@ onMounted(() => {
 			</el-form-item>
 		</el-form>
 
-		<PureTableBar :columns="columns" :isExpandAll="false" :tableRef="tableRef?.getTableRef()" title="菜单管理（仅演示，操作后不生效）" @fullscreen="onFullscreen" @refresh="onSearch">
+		<PureTableBar :columns="columns" :isExpandAll="false" :tableRef="tableRef?.getTableRef()" title="菜单管理（仅演示，操作后不生效）" @fullscreen="tableRef.value.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="openDialog()"> 新增菜单</el-button>
 			</template>
@@ -54,10 +46,7 @@ onMounted(() => {
 					:adaptiveConfig="{ offsetBottom: 45 }"
 					:columns="dynamicColumns"
 					:data="dataList"
-					:header-cell-style="{
-						background: 'var(--el-fill-color-light)',
-						color: 'var(--el-text-color-primary)',
-					}"
+					:header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
 					:loading="loading"
 					:size="size"
 					adaptive

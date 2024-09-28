@@ -4,7 +4,6 @@ const menuTypeOptions: Array<OptionsType> = [
 	{ label: '菜单', value: 0 },
 	{ label: 'iframe', value: 1 },
 	{ label: '外链', value: 2 },
-	{ label: '按钮', value: 3 },
 ];
 
 const showLinkOptions: Array<OptionsType> = [

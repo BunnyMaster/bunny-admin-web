@@ -21,11 +21,8 @@ const props = withDefaults(defineProps<FormProps>(), {
 		rank: 99,
 		redirect: '',
 		icon: '',
-		extraIcon: '',
 		enterTransition: '',
 		leaveTransition: '',
-		activePath: '',
-		auths: '',
 		frameSrc: '',
 		frameLoading: true,
 		keepAlive: false,
@@ -39,11 +36,7 @@ const props = withDefaults(defineProps<FormProps>(), {
 const ruleFormRef = ref();
 const newFormInline = ref(props.formInline);
 
-function getRef() {
-	return ruleFormRef.value;
-}
-
-defineExpose({ getRef });
+defineExpose({ getRef: ruleFormRef.value });
 </script>
 
 <template>
@@ -60,12 +53,7 @@ defineExpose({ getRef });
 					<el-cascader
 						v-model="newFormInline.parentId"
 						:options="newFormInline.higherMenuOptions"
-						:props="{
-							value: 'id',
-							label: 'title',
-							emitPath: false,
-							checkStrictly: true,
-						}"
+						:props="{ value: 'id', label: 'title', emitPath: false, checkStrictly: true }"
 						class="w-full"
 						clearable
 						filterable
@@ -84,13 +72,13 @@ defineExpose({ getRef });
 					<el-input v-model="newFormInline.title" clearable placeholder="请输入菜单名称" />
 				</el-form-item>
 			</re-col>
-			<re-col v-if="newFormInline.menuType !== 3" :sm="24" :value="12" :xs="24">
+			<re-col :sm="24" :value="12" :xs="24">
 				<el-form-item label="路由名称" prop="name">
 					<el-input v-model="newFormInline.name" clearable placeholder="请输入路由名称" />
 				</el-form-item>
 			</re-col>
 
-			<re-col v-if="newFormInline.menuType !== 3" :sm="24" :value="12" :xs="24">
+			<re-col :sm="24" :value="12" :xs="24">
 				<el-form-item label="路由路径" prop="path">
 					<el-input v-model="newFormInline.path" clearable placeholder="请输入路由路径" />
 				</el-form-item>
@@ -112,14 +100,9 @@ defineExpose({ getRef });
 				</el-form-item>
 			</re-col>
 
-			<re-col v-show="newFormInline.menuType !== 3" :sm="24" :value="12" :xs="24">
+			<re-col :sm="24" :value="12" :xs="24">
 				<el-form-item label="菜单图标">
 					<IconSelect v-model="newFormInline.icon" class="w-full" />
-				</el-form-item>
-			</re-col>
-			<re-col v-show="newFormInline.menuType !== 3" :sm="24" :value="12" :xs="24">
-				<el-form-item label="右侧图标">
-					<el-input v-model="newFormInline.extraIcon" clearable placeholder="菜单名称右侧的额外图标" />
 				</el-form-item>
 			</re-col>
 
@@ -134,18 +117,6 @@ defineExpose({ getRef });
 				</el-form-item>
 			</re-col>
 
-			<re-col v-show="newFormInline.menuType === 0" :sm="24" :value="12" :xs="24">
-				<el-form-item label="菜单激活">
-					<el-input v-model="newFormInline.activePath" clearable placeholder="请输入需要激活的菜单" />
-				</el-form-item>
-			</re-col>
-			<re-col v-if="newFormInline.menuType === 3" :sm="24" :value="12" :xs="24">
-				<!-- 按钮级别权限设置 -->
-				<el-form-item label="权限标识" prop="auths">
-					<el-input v-model="newFormInline.auths" clearable placeholder="请输入权限标识" />
-				</el-form-item>
-			</re-col>
-
 			<re-col v-show="newFormInline.menuType === 1" :sm="24" :value="12" :xs="24">
 				<!-- iframe -->
 				<el-form-item label="链接地址">
@@ -154,83 +125,35 @@ defineExpose({ getRef });
 			</re-col>
 			<re-col v-if="newFormInline.menuType === 1" :sm="24" :value="12" :xs="24">
 				<el-form-item label="加载动画">
-					<Segmented
-						:modelValue="newFormInline.frameLoading ? 0 : 1"
-						:options="frameLoadingOptions"
-						@change="
-							({ option: { value } }) => {
-								newFormInline.frameLoading = value;
-							}
-						"
-					/>
+					<Segmented :modelValue="newFormInline.frameLoading ? 0 : 1" :options="frameLoadingOptions" @change="({ option: { value } }) => (newFormInline.frameLoading = value)" />
 				</el-form-item>
 			</re-col>
 
-			<re-col v-show="newFormInline.menuType !== 3" :sm="24" :value="12" :xs="24">
+			<re-col :sm="24" :value="12" :xs="24">
 				<el-form-item label="菜单">
-					<Segmented
-						:modelValue="newFormInline.showLink ? 0 : 1"
-						:options="showLinkOptions"
-						@change="
-							({ option: { value } }) => {
-								newFormInline.showLink = value;
-							}
-						"
-					/>
+					<Segmented :modelValue="newFormInline.showLink ? 0 : 1" :options="showLinkOptions" @change="({ option: { value } }) => (newFormInline.showLink = value)" />
 				</el-form-item>
 			</re-col>
-			<re-col v-show="newFormInline.menuType !== 3" :sm="24" :value="12" :xs="24">
+			<re-col :sm="24" :value="12" :xs="24">
 				<el-form-item label="父级菜单">
-					<Segmented
-						:modelValue="newFormInline.showParent ? 0 : 1"
-						:options="showParentOptions"
-						@change="
-							({ option: { value } }) => {
-								newFormInline.showParent = value;
-							}
-						"
-					/>
+					<Segmented :modelValue="newFormInline.showParent ? 0 : 1" :options="showParentOptions" @change="({ option: { value } }) => (newFormInline.showParent = value)" />
 				</el-form-item>
 			</re-col>
 
 			<re-col v-show="newFormInline.menuType < 2" :sm="24" :value="12" :xs="24">
 				<el-form-item label="缓存页面">
-					<Segmented
-						:modelValue="newFormInline.keepAlive ? 0 : 1"
-						:options="keepAliveOptions"
-						@change="
-							({ option: { value } }) => {
-								newFormInline.keepAlive = value;
-							}
-						"
-					/>
+					<Segmented :modelValue="newFormInline.keepAlive ? 0 : 1" :options="keepAliveOptions" @change="({ option: { value } }) => (newFormInline.keepAlive = value)" />
 				</el-form-item>
 			</re-col>
 
 			<re-col v-show="newFormInline.menuType < 2" :sm="24" :value="12" :xs="24">
 				<el-form-item label="标签页">
-					<Segmented
-						:modelValue="newFormInline.hiddenTag ? 1 : 0"
-						:options="hiddenTagOptions"
-						@change="
-							({ option: { value } }) => {
-								newFormInline.hiddenTag = value;
-							}
-						"
-					/>
+					<Segmented :modelValue="newFormInline.hiddenTag ? 1 : 0" :options="hiddenTagOptions" @change="({ option: { value } }) => (newFormInline.hiddenTag = value)" />
 				</el-form-item>
 			</re-col>
 			<re-col v-show="newFormInline.menuType < 2" :sm="24" :value="12" :xs="24">
 				<el-form-item label="固定标签页">
-					<Segmented
-						:modelValue="newFormInline.fixedTag ? 0 : 1"
-						:options="fixedTagOptions"
-						@change="
-							({ option: { value } }) => {
-								newFormInline.fixedTag = value;
-							}
-						"
-					/>
+					<Segmented :modelValue="newFormInline.fixedTag ? 0 : 1" :options="fixedTagOptions" @change="({ option: { value } }) => (newFormInline.fixedTag = value)" />
 				</el-form-item>
 			</re-col>
 		</el-row>

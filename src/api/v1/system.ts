@@ -1,5 +1,5 @@
 import { http } from '@/api/service/request';
-import type { BaseResult } from '@/types/BaseResult';
+import type { BaseResult } from '@/api/service/types';
 
 type ResultTable = {
 	/** 列表数据 */

@@ -10,11 +10,8 @@ interface FormItemProps {
 	rank: number;
 	redirect: string;
 	icon: string;
-	extraIcon: string;
 	enterTransition: string;
 	leaveTransition: string;
-	activePath: string;
-	auths: string;
 	frameSrc: string;
 	frameLoading: boolean;
 	keepAlive: boolean;
