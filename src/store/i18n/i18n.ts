@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { fetchAddI18n, fetchDeleteI18n, fetchGetI18n, fetchGetI18nList, fetchUpdateI18n } from '@/api/v1/i18n';
 import { pageSizes } from '@/enums/baseConstant';
-import { storeMessage } from '@/utils/message';
+import { message, storeMessage } from '@/utils/message';
 
 export const userI18nStore = defineStore('i18nStore', {
 	persist: true,
@@ -10,9 +10,9 @@ export const userI18nStore = defineStore('i18nStore', {
 			// ? 多语言内容
 			i18n: {},
 			// 多语言列表
-			i18nDataList: [],
-			// 多语言类型
-			i18nTypeList: [],
+			datalist: [],
+			// 查询表单
+			form: { keyName: undefined, translation: undefined },
 			isAddShown: false,
 			// ? 分页查询结果
 			pagination: {
@@ -20,13 +20,10 @@ export const userI18nStore = defineStore('i18nStore', {
 				pageSize: 150,
 				total: 100,
 				pageSizes,
+				background: true,
 			},
 			// 加载
 			loading: false,
-			// 添加弹窗
-			addDialogVisible: false,
-			// 更新弹窗
-			updateDialogVisible: false,
 		};
 	},
 	getters: {},
@@ -51,9 +48,21 @@ export const userI18nStore = defineStore('i18nStore', {
 		/**
 		 * * 获取多语言列表
 		 */
-		async getI18nMangeList(data: any) {
+		async getI18nMangeList() {
+			const data = { ...this.pagination, ...this.form };
 			const result = await fetchGetI18nList(data);
-			return storeMessage(result);
+
+			// 如果成功赋值内容
+			if (result.code === 200) {
+				this.datalist = result.data.list;
+				this.pagination.currentPage = result.data.pageNo;
+				this.pagination.pageSize = result.data.pageSize;
+				this.pagination.total = result.data.total;
+				return true;
+			}
+
+			message(result.message, { type: 'error' });
+			return false;
 		},
 
 		/**

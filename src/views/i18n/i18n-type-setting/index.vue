@@ -1,79 +1,61 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { columns } from '@/views/i18n/i18n-type-setting/utils/columns';
-import { userI18nStore } from '@/store/i18n/i18n';
-import { messageBox } from '@/utils/message';
-import { addDialogVisible, getI18nDataList, onDelete } from '@/views/i18n/i18n-setting/utils/hook';
 import PureTableBar from '@/components/TableBar/src/bar';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import AddFill from '@iconify-icons/ri/add-circle-line';
-import EditPen from '@iconify-icons/ep/edit-pen';
-import { $t } from '@/plugins/i18n';
-import Delete from '@iconify-icons/ep/delete';
 import PureTable from '@pureadmin/table';
-import AddI18nType from '@/views/i18n/i18n-type-setting/add-i18n-type.vue';
+import { userI18nTypeStore } from '@/store/i18n/i18nType';
+import { onAdd, onDelete, onSearch, onUpdate } from '@/views/i18n/i18n-type-setting/utils/hook';
+import Delete from '@iconify-icons/ep/delete';
+import EditPen from '@iconify-icons/ep/edit-pen';
+import TableIsDefaultTag from '@/components/TableBar/src/TableIsDefaultTag.vue';
+import { resetForm } from '@/views/menu/utils/hook';
+import Refresh from '@iconify-icons/ep/refresh';
 
-const i18nStore = userI18nStore();
 const tableRef = ref();
+const formRef = ref();
+const i18nTypeStore = userI18nTypeStore();
 
-/**
- * * 获取多语言类型
- */
-const getI18nType = () => {
-	i18nStore.getI18nTypeList();
-};
-
-/**
- * * 表格的列添加语言类型
- */
-const onColumnAdd = () => {
-	i18nStore.isAddShown = true;
-};
-
-/**
- * * 删除多语言类容
- */
-const onColumnDelete = async (row: any, isPhysicalDelete: boolean) => {
-	const id = row.id;
-	const title = isPhysicalDelete ? '删除不可逆！' : '确认删除吗？';
-
-	messageBox({
-		message: `删除这条 【${row.summary}】 `,
-		title,
-		showMessage: false,
-		confirmMessage: undefined,
-		cancelMessage: '取消删除',
-	})
-		.then(result => {
-			if (result) {
-				i18nStore.deleteI18nType(id);
-			}
-			return result;
-		})
-		.then(result => result && getI18nType());
+const resetForm = async formEl => {
+	if (!formEl) return;
+	formEl.resetFields();
+	await onSearch();
 };
 
 onMounted(() => {
-	getI18nType();
+	onSearch();
 });
 </script>
 
 <template>
 	<div class="main">
-		<!-- 添加多语言种类 -->
-		<add-I18n-type />
-		<PureTableBar :columns="columns" :tableRef="tableRef?.getTableRef()" title="多语言类型管理" @fullscreen="tableRef.setAdaptive()" @refresh="getI18nDataList">
+		<el-form ref="formRef" :inline="true" :model="i18nTypeStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+			<el-form-item label="类型名称" prop="title">
+				<el-input v-model="i18nTypeStore.form.typeName" class="!w-[180px]" clearable placeholder="输入类型名称" />
+			</el-form-item>
+			<el-form-item label="类型解释" prop="title">
+				<el-input v-model="i18nTypeStore.form.summary" class="!w-[180px]" clearable placeholder="输入类型解释" />
+			</el-form-item>
+			<el-form-item>
+				<el-button :icon="useRenderIcon('ri:search-line')" :loading="i18nTypeStore.loading" type="primary" @click="onSearch"> 搜索 </el-button>
+				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> 重置</el-button>
+			</el-form-item>
+		</el-form>
+
+		<PureTableBar :columns="columns" :tableRef="tableRef?.getTableRef()" title="多语言类型管理" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="addDialogVisible = true"> 添加多语言 </el-button>
+				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> 添加多语言类型</el-button>
 			</template>
+
 			<template v-slot="{ size, dynamicColumns }">
 				<pure-table
 					ref="tableRef"
 					:adaptiveConfig="{ offsetBottom: 45 }"
 					:columns="dynamicColumns"
-					:data="i18nStore.i18nDataList"
+					:data="i18nTypeStore.datalist"
 					:header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
-					:loading="i18nStore.loading"
+					:loading="i18nTypeStore.loading"
 					:size="size"
 					adaptive
 					align-whole="center"
@@ -81,10 +63,14 @@ onMounted(() => {
 					showOverflowTooltip
 					table-layout="auto"
 				>
+					<template #isDefault="{ row }">
+						<TableIsDefaultTag :status="row.isDefault" />
+					</template>
+
 					<template #operation="{ row }">
-						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary"> 修改 </el-button>
-						<el-button v-show="row.menuType !== 3" :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary"> 新增 </el-button>
-						<el-popconfirm :title="`是否确认删除菜单名称为${$t(row.title)}的这条数据${row?.children?.length > 0 ? '注意下级菜单也会一并删除，请谨慎操作' : ''}`" @confirm="onDelete(row)">
+						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> 修改 </el-button>
+						<el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd"> 新增 </el-button>
+						<el-popconfirm :title="`是否确认删除 ${row.typeName}数据`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary"> 删除 </el-button>
 							</template>

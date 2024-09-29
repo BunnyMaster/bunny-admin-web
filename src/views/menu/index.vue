@@ -27,8 +27,8 @@ onMounted(() => {
 <template>
 	<div class="main">
 		<el-form ref="formRef" :inline="true" :model="form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-			<el-form-item label="菜单名称：" prop="title">
-				<el-input v-model="form.title" class="!w-[180px]" clearable placeholder="请输入菜单名称" />
+			<el-form-item label="菜单名称" prop="title">
+				<el-input v-model="form.title" class="!w-[180px]" clearable placeholder="输入菜单名称" />
 			</el-form-item>
 			<el-form-item>
 				<el-button :icon="useRenderIcon('ri:search-line')" :loading="loading" type="primary" @click="onSearch"> 搜索 </el-button>
@@ -54,7 +54,6 @@ onMounted(() => {
 					row-key="id"
 					showOverflowTooltip
 					table-layout="auto"
-					@selection-change="handleSelectionChange"
 				>
 					<template #operation="{ row }">
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="openDialog('修改', row)"> 修改 </el-button>

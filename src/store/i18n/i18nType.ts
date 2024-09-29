@@ -9,6 +9,8 @@ export const userI18nTypeStore = defineStore('i18nTypeStore', {
 		return {
 			// 多语言列表
 			datalist: [],
+			// 查询表单
+			form: { typeName: undefined, summary: undefined },
 			isAddShown: false,
 			// ? 分页查询结果
 			pagination: {
@@ -19,10 +21,6 @@ export const userI18nTypeStore = defineStore('i18nTypeStore', {
 			},
 			// 加载
 			loading: false,
-			// 添加弹窗
-			addDialogVisible: false,
-			// 更新弹窗
-			updateDialogVisible: false,
 		};
 	},
 	getters: {},
@@ -32,7 +30,11 @@ export const userI18nTypeStore = defineStore('i18nTypeStore', {
 		 */
 		async getI18nTypeList() {
 			const result = await fetchGetI18nTypeList();
-			return storeMessage(result);
+			if (result.code === 200) {
+				this.datalist = result.data;
+				return true;
+			}
+			return false;
 		},
 
 		/**

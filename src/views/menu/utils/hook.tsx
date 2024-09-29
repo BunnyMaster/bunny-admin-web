@@ -44,10 +44,6 @@ export const resetForm = async formEl => {
 	await onSearch();
 };
 
-export const handleSelectionChange = (val: any) => {
-	console.log('handleSelectionChange', val);
-};
-
 export const onSearch = async () => {
 	loading.value = true;
 
@@ -110,25 +106,24 @@ export function openDialog(title = '新增', row?: FormItemProps) {
 		closeOnClickModal: false,
 		contentRenderer: () => h(editForm, { ref: formRef, formInline: null }),
 		beforeSure: (done, { options }) => {
-			const FormRef = formRef.value.menuFormRef;
+			const menuFormRef = formRef.value.menuFormRef;
 			const curData = options.props.formInline as FormItemProps;
-			FormRef.validate(async (valid: any) => {
-				if (valid) {
-					delete curData.higherMenuOptions;
+			menuFormRef.validate(async (valid: any) => {
+				if (!valid) return;
+				delete curData.higherMenuOptions;
 
-					let result = false;
-					if (title === '新增') {
-						result = await routerStore.addMenu(curData);
-					} else {
-						curData.id = row.id;
-						result = await routerStore.updateMenu(curData);
-					}
+				let result: boolean;
+				if (title === '新增') {
+					result = await routerStore.addMenu(curData);
+				} else {
+					curData.id = row.id;
+					result = await routerStore.updateMenu(curData);
+				}
 
-					// 刷新表格数据
-					if (result) {
-						done();
-						await onSearch();
-					}
+				// 刷新表格数据
+				if (result) {
+					done();
+					await onSearch();
 				}
 			});
 		},

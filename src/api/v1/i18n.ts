@@ -1,5 +1,5 @@
-import { http } from '@/api/service/mockRequest';
-import type { BaseResult } from '@/api/service/types';
+import { http } from '@/api/service/request';
+import type { BaseResult, ResultTable } from '@/api/service/types';
 
 /**
  * * 获取多语言内容
@@ -12,7 +12,7 @@ export const fetchGetI18n = () => {
  * 多语言管理---获取多语言列表
  */
 export const fetchGetI18nList = (data: any) => {
-	return http.request<BaseResult<object>>('get', `i18n/getI18nList/${data.page}/${data.pageSize}`, { data });
+	return http.request<BaseResult<ResultTable>>('get', `i18n/getI18nList/${data.currentPage}/${data.pageSize}`, { data });
 };
 
 /**
@@ -40,7 +40,7 @@ export const fetchDeleteI18n = (data: any) => {
  * 多语言类型管理---获取多语言类型列表
  */
 export const fetchGetI18nTypeList = () => {
-	return http.request<BaseResult<object>>('get', 'i18nType/getI18nTypeList');
+	return http.request<BaseResult<ResultTable>>('get', 'i18nType/getI18nTypeList');
 };
 
 /**
@@ -61,5 +61,5 @@ export const fetchUpdateI18nType = (data: any) => {
  * 多语言类型管理---删除多语言类型
  */
 export const fetchDeleteI18nType = (data: any) => {
-	return http.request<BaseResult<object>>('put', 'i18nType/deleteI18nType', { data });
+	return http.request<BaseResult<object>>('delete', 'i18nType/deleteI18nType', { data });
 };
