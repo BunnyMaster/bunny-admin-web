@@ -6,7 +6,7 @@ import { FormProps } from './utils/types';
 import { IconSelect } from '@/components/ReIcon';
 import Segmented from '@/components/ReSegmented';
 import ReAnimateSelector from '@/components/AnimateSelector';
-import { fixedTagOptions, frameLoadingOptions, hiddenTagOptions, keepAliveOptions, menuTypeOptions, showLinkOptions, showParentOptions } from '../../enums/enums';
+import { fixedTagOptions, frameLoadingOptions, hiddenTagOptions, keepAliveOptions, menuTypeOptions, showLinkOptions, showParentOptions } from '@/enums';
 import { $t } from '@/plugins/i18n';
 
 const props = withDefaults(defineProps<FormProps>(), {
@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<FormProps>(), {
 const ruleFormRef = ref();
 const newFormInline = ref(props.formInline);
 
-defineExpose({ getRef: ruleFormRef.value });
+defineExpose({ menuFormRef: ruleFormRef });
 </script>
 
 <template>

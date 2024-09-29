@@ -1,6 +1,7 @@
 import type { VNode } from 'vue';
 import { isFunction } from '@pureadmin/utils';
 import { ElMessage, type MessageHandler } from 'element-plus';
+import type { BaseResult } from '@/api/service/types';
 
 type messageStyle = 'el' | 'antd';
 type messageTypes = 'info' | 'success' | 'warning' | 'error';
@@ -35,7 +36,7 @@ interface MessageParams {
 /**
  * `Message` 消息提示函数
  */
-const message = (message: string | VNode | (() => VNode), params?: MessageParams): MessageHandler => {
+export const message = (message: string | VNode | (() => VNode), params?: MessageParams): MessageHandler => {
 	if (!params) {
 		return ElMessage({
 			message,
@@ -77,6 +78,16 @@ const message = (message: string | VNode | (() => VNode), params?: MessageParams
 /**
  * 关闭所有 `Message` 消息提示函数
  */
-const closeAllMessage = (): void => ElMessage.closeAll();
+export const closeAllMessage = (): void => ElMessage.closeAll();
 
-export { message, closeAllMessage };
+/**
+ * 仓库消息展示
+ * @param result
+ */
+export const storeMessage = (result: BaseResult<any>) => {
+	if (result.code !== 200) {
+		return false;
+	}
+	message(result.message, { type: 'success' });
+	return true;
+};

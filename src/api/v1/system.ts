@@ -12,6 +12,32 @@ type ResultTable = {
 	pageNo?: number;
 };
 
+/** 系统管理-用户路由获取 */
+export const getRouterAsync = () => {
+	return http.request<BaseResult<any>>('get', 'router/getRouterAsync');
+};
+
+/** 系统管理-菜单管理列表 */
+export const getMenuList = (data?: any) => {
+	return http.request<BaseResult<ResultTable>>('get', `router/getMenus`, { data });
+};
+
+/** 系统管理-添加菜单 */
+export const addMenu = (data?: any) => {
+	return http.request<BaseResult<any>>('post', `router/addMenu`, { data });
+};
+
+/** 系统管理-更新菜单 */
+export const updateMenu = (data?: any) => {
+	return http.request<BaseResult<any>>('put', `router/updateMenu`, { data });
+};
+
+/** 系统管理-删除菜单 */
+export const deletedMenuByIds = (data?: any) => {
+	return http.request<BaseResult<any>>('delete', `router/deletedMenuByIds`, { data });
+};
+
+// ------------未确认------------
 /** 获取系统管理-用户管理列表 */
 export const getUserList = (data?: object) => {
 	return http.request<BaseResult<ResultTable>>('post', '/user', { data });
@@ -30,12 +56,6 @@ export const getRoleIds = (data?: object) => {
 /** 获取系统管理-角色管理列表 */
 export const getRoleList = (data?: object) => {
 	return http.request<ResultTable>('post', '/role', { data });
-};
-
-/** 获取系统管理-菜单管理列表 */
-export const getMenuList = (data?: any) => {
-	// /${data.page}/${data.limit}
-	return http.request<BaseResult<ResultTable>>('get', `router/getMenus`, { data });
 };
 
 /** 获取系统管理-部门管理列表 */
