@@ -169,19 +169,16 @@ export default defineComponent({
 		};
 
 		const isFixedColumn = (label: string) => {
-			return dynamicColumns.value.filter(item => $t(item.label) === $t(label))[0].fixed ? true : false;
+			return !!dynamicColumns.value.filter(item => $t(item.label) === $t(label))[0].fixed;
 		};
 
-		const rendTippyProps = (content: string) => {
-			// https://vue-tippy.netlify.app/props
-			return {
-				content,
-				offset: [0, 18],
-				duration: [300, 0],
-				followCursor: true,
-				hideOnClick: 'toggle',
-			};
-		};
+		const rendTippyProps = (content: string) => ({
+			content,
+			offset: [0, 18],
+			duration: [300, 0],
+			followCursor: true,
+			hideOnClick: 'toggle',
+		});
 
 		const reference = {
 			reference: () => <SettingIcon class={['w-[16px]', iconClass.value]} v-tippy={rendTippyProps('列设置')} />,
@@ -198,9 +195,7 @@ export default defineComponent({
 								<>
 									<ExpandIcon
 										class={['w-[16px]', iconClass.value]}
-										style={{
-											transform: isExpandAll.value ? 'none' : 'rotate(-90deg)',
-										}}
+										style={{ transform: isExpandAll.value ? 'none' : 'rotate(-90deg)' }}
 										v-tippy={rendTippyProps(isExpandAll.value ? '折叠' : '展开')}
 										onClick={() => onExpand()}
 									/>
@@ -245,12 +240,7 @@ export default defineComponent({
 							</el-popover>
 							<el-divider direction='vertical' />
 
-							<iconifyIconOffline
-								class={['w-[16px]', iconClass.value]}
-								icon={isFullscreen.value ? ExitFullscreen : Fullscreen}
-								v-tippy={isFullscreen.value ? '退出全屏' : '全屏'}
-								onClick={() => onFullscreen()}
-							/>
+							<iconifyIconOffline class={['w-[16px]', iconClass.value]} icon={isFullscreen.value ? ExitFullscreen : Fullscreen} v-tippy={isFullscreen.value ? '退出全屏' : '全屏'} onClick={onFullscreen} />
 						</div>
 					</div>
 					{slots.default({

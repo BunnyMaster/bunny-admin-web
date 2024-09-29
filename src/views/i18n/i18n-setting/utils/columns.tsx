@@ -1,17 +1,16 @@
 // 多语言表格列字段
 import { reactive } from 'vue';
 import type { FormRules } from 'element-plus';
-import { $t } from '@/plugins/i18n';
 
 export const columns: TableColumnList = [
-	{ type: 'selection' },
-	{ type: 'index', label: $t('table.tableNumber'), width: 100 },
-	{ label: $t('i18n.keyName'), prop: 'keyName' },
-	{ label: $t('i18n.translate'), prop: 'translate' },
-	{ label: $t('i18n.languageSummary'), prop: 'languageSummary' },
-	{ label: $t('i18n.languageName'), prop: 'languageName' },
-	{ label: $t('i18n.parentKeyName'), prop: 'parentKeyName' },
-	{ label: $t('table.operation'), prop: 'operation', slot: 'operation' },
+	// { type: 'selection' },
+	// { type: 'index', label: 'table.tableNumber', width: 100 },
+	{ label: 'i18n.keyName', prop: 'keyName' },
+	{ label: 'i18n.translate', prop: 'translate' },
+	{ label: 'i18n.languageSummary', prop: 'languageSummary' },
+	{ label: 'i18n.languageName', prop: 'languageName' },
+	{ label: 'i18n.parentKeyName', prop: 'parentKeyName' },
+	{ label: 'table.operation', prop: 'operation', slot: 'operation' },
 ];
 
 // 添加多语言表单规则

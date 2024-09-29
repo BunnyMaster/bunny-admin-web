@@ -1,38 +1,32 @@
 import { http } from '@/api/service/request';
-import type { BaseResult } from '@/api/service/types';
-
-type ResultTable = {
-	/** 列表数据 */
-	list: Array<any>;
-	/** 总条目数 */
-	total?: number;
-	/** 每页显示条目个数 */
-	pageSize?: number;
-	/** 当前页数 */
-	pageNo?: number;
-};
+import type { BaseResult, ResultTable } from '@/api/service/types';
 
 /** 系统管理-用户路由获取 */
 export const getRouterAsync = () => {
 	return http.request<BaseResult<any>>('get', 'router/getRouterAsync');
 };
 
-/** 系统管理-菜单管理列表 */
+/** 图标管理-获取系统图标 */
+export const getMenuIconList = (data: any) => {
+	return http.request<BaseResult<ResultTable>>('get', `menuIcon/getMenuIconList/${data.page}/${data.limit}`, { data });
+};
+
+/** 菜单管理-列表 */
 export const getMenuList = (data?: any) => {
 	return http.request<BaseResult<ResultTable>>('get', `router/getMenus`, { data });
 };
 
-/** 系统管理-添加菜单 */
+/** 菜单管理-添加菜单 */
 export const addMenu = (data?: any) => {
 	return http.request<BaseResult<any>>('post', `router/addMenu`, { data });
 };
 
-/** 系统管理-更新菜单 */
+/** 菜单管理-更新菜单 */
 export const updateMenu = (data?: any) => {
 	return http.request<BaseResult<any>>('put', `router/updateMenu`, { data });
 };
 
-/** 系统管理-删除菜单 */
+/** 菜单管理-删除菜单 */
 export const deletedMenuByIds = (data?: any) => {
 	return http.request<BaseResult<any>>('delete', `router/deletedMenuByIds`, { data });
 };

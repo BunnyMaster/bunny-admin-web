@@ -7,6 +7,17 @@ export interface BaseResult<T> {
 	message: string;
 }
 
+export interface ResultTable {
+	/** 列表数据 */
+	list: Array<any>;
+	/** 总条目数 */
+	total?: number;
+	/** 每页显示条目个数 */
+	pageSize?: number;
+	/** 当前页数 */
+	pageNo?: number;
+}
+
 export type resultType = {
 	accessToken?: string;
 };

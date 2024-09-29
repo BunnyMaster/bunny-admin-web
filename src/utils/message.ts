@@ -1,6 +1,6 @@
 import type { VNode } from 'vue';
 import { isFunction } from '@pureadmin/utils';
-import { ElMessage, type MessageHandler } from 'element-plus';
+import { ElMessage, ElMessageBox, type MessageHandler } from 'element-plus';
 import type { BaseResult } from '@/api/service/types';
 
 type messageStyle = 'el' | 'antd';
@@ -29,6 +29,15 @@ interface MessageParams {
 	grouping?: boolean;
 	/** 关闭时的回调函数, 参数为被关闭的 `message` 实例 */
 	onClose?: Function | null;
+}
+
+// 消息盒
+interface MessageBox {
+	message: string | undefined;
+	title: string | undefined;
+	confirmMessage: any;
+	cancelMessage: any;
+	showMessage: boolean;
 }
 
 /** 用法非常简单，参考 src/views/components/message/index.vue 文件 */
@@ -90,4 +99,35 @@ export const storeMessage = (result: BaseResult<any>) => {
 	}
 	message(result.message, { type: 'success' });
 	return true;
+};
+
+const defaultBoxOption: MessageBox = {
+	showMessage: false,
+	message: '',
+	title: '',
+	confirmMessage: undefined,
+	cancelMessage: undefined,
+};
+
+/**
+ * 消息弹窗确认
+ * @param type
+ * @param option
+ */
+export const messageBox = async (option: MessageBox = defaultBoxOption, type: any = 'warning') => {
+	return ElMessageBox.confirm(option.message, option.title, {
+		confirmButtonText: '确认',
+		cancelButtonText: '返回',
+		type,
+		draggable: true,
+		overflow: true,
+	})
+		.then(() => {
+			option.showMessage && ElMessage({ type: 'success', message: option.confirmMessage });
+			return true;
+		})
+		.catch(() => {
+			ElMessage({ type: 'warning', message: option.cancelMessage });
+			return false;
+		});
 };

@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { $t } from '@/plugins/i18n';
-import { PureTableBar } from '@/components/TableBar';
+import PureTableBar from '@/components/TableBar/src/bar';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import AddFill from '@iconify-icons/ri/add-circle-line';
-import { dataList, handleDelete, handleSelectionChange, loading, onSearch, openDialog, resetForm } from '@/views/menu/utils/hook';
+import { dataList, handleDelete, loading, onSearch, openDialog, resetForm } from '@/views/menu/utils/hook';
 import form from '@/views/role/form.vue';
 import PureTable from '@pureadmin/table';
 import { columns } from '@/views/menu/utils/rule';
@@ -36,7 +36,7 @@ onMounted(() => {
 			</el-form-item>
 		</el-form>
 
-		<PureTableBar :columns="columns" :isExpandAll="false" :tableRef="tableRef?.getTableRef()" title="菜单管理（仅演示，操作后不生效）" @fullscreen="tableRef.value.setAdaptive()" @refresh="onSearch">
+		<PureTableBar :columns="columns" :isExpandAll="false" :tableRef="tableRef?.getTableRef()" title="菜单管理" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="openDialog()"> 新增菜单</el-button>
 			</template>
@@ -61,7 +61,7 @@ onMounted(() => {
 						<el-button v-show="row.menuType !== 3" :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="openDialog('新增', { parentId: row.id } as any)">
 							新增
 						</el-button>
-						<el-popconfirm :title="`是否确认删除菜单名称为${$t(row.title)}的这条数据${row?.children?.length > 0 ? '。注意下级菜单也会一并删除，请谨慎操作' : ''}`" @confirm="handleDelete(row)">
+						<el-popconfirm :title="`是否确认删除菜单名称为${$t(row.title)}的这条数据${row?.children?.length > 0 ? '注意下级菜单也会一并删除，请谨慎操作' : ''}`" @confirm="handleDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary"> 删除 </el-button>
 							</template>

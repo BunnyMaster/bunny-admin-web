@@ -35,14 +35,6 @@ export const getMenuType = (type, text = false) => {
 };
 
 /**
- * 表格选择
- * @param val
- */
-export const handleSelectionChange = val => {
-	console.log('handleSelectionChange', val);
-};
-
-/**
  * 表单重置
  * @param formEl
  */
@@ -50,6 +42,10 @@ export const resetForm = async formEl => {
 	if (!formEl) return;
 	formEl.resetFields();
 	await onSearch();
+};
+
+export const handleSelectionChange = (val: any) => {
+	console.log('handleSelectionChange', val);
 };
 
 export const onSearch = async () => {

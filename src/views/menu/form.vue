@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import ReCol from '@/components/MyCol';
 import { formRules } from './utils/rule';
 import { FormProps } from './utils/types';
@@ -8,6 +8,7 @@ import Segmented from '@/components/ReSegmented';
 import ReAnimateSelector from '@/components/AnimateSelector';
 import { fixedTagOptions, frameLoadingOptions, hiddenTagOptions, keepAliveOptions, menuTypeOptions, showLinkOptions, showParentOptions } from '@/enums';
 import { $t } from '@/plugins/i18n';
+import { userMenuIconStore } from '@/store/modules/menuIcon';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
@@ -33,8 +34,13 @@ const props = withDefaults(defineProps<FormProps>(), {
 	}),
 });
 
+const menuIconStore = userMenuIconStore();
 const ruleFormRef = ref();
 const newFormInline = ref(props.formInline);
+
+onMounted(() => {
+	menuIconStore.getMenuIconList();
+});
 
 defineExpose({ menuFormRef: ruleFormRef });
 </script>

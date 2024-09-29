@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { useI18nTypeStore } from '@/store/i18n/i18nType';
-import SimpleDialog from '@/components/Dialog/SimpleDialog.vue';
+import SimpleDialog from '@/components/BaseDialog/SimpleDialog.vue';
 import { userI18nStore } from '@/store/i18n/i18n';
-import { rules } from '@/views/i18n/language-setting/utils/columns';
+import { rules } from '@/views/i18n/i18n-setting/utils/columns';
 
 defineProps({
 	// 是否显示弹窗
@@ -33,7 +32,6 @@ defineProps({
 });
 
 const ruleFormRef = ref<FormInstance>();
-const i18nTypeStore = useI18nTypeStore();
 const i18nStore = userI18nStore();
 
 defineExpose({
@@ -44,15 +42,9 @@ defineExpose({
 <template>
 	<SimpleDialog :show="visible" :title="title" width="600" @onCancel="onClose" @onConfirm="onSubmit(ruleFormRef)">
 		<el-form ref="ruleFormRef" :model="form" :rules="rules" isDefault-icon label-position="left" label-width="135px">
-			<el-form-item label="选择添加语言分类" prop="parentId">
-				<el-select v-model="form.parentId!" clearable filterable placeholder="选择添加语言分类">
-					<el-option v-for="item in i18nStore.languageParentList" :key="item.id" :label="item.translate" :value="item.id" />
-				</el-select>
-			</el-form-item>
-
 			<el-form-item label="选择添加语言分类" prop="languageId">
 				<el-select v-model="form.languageId!" filterable placeholder="选择添加语言分类">
-					<el-option v-for="item in i18nTypeStore.languageTypeMap" :key="item.id" :label="item.value" :value="item.id" />
+					<el-option v-for="item in i18nStore.i18nTypeList" :key="item.id" :label="item.value" :value="item.id" />
 				</el-select>
 			</el-form-item>
 

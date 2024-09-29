@@ -1,37 +1,36 @@
 import { ref } from 'vue';
 import { delObjectProperty } from '@pureadmin/utils';
-import { $t } from '@/plugins/i18n';
-import { useI18nTypeStore } from '@/store/i18n/i18nType';
 import { isDefaultOptions } from '@/enums/baseConstant';
-import TableIsDefaultTag from '@/components/Table/TableIsDefaultTag.vue';
+import TableIsDefaultTag from '@/components/TableBar/src/TableIsDefaultTag.vue';
+import { userI18nTypeStore } from '@/store/i18n/i18nType';
 
-const i18nTypeStore = useI18nTypeStore();
+const i18nTypeStore = userI18nTypeStore();
 export const editMap = ref({});
 
 export const columns: TableColumnList = [
-	{ type: 'index', label: '序号', width: 100 },
+	// { type: 'index', label: '序号', width: 100 },
 	{
-		label: $t('i18n.languageName'),
+		label: 'i18n.languageName',
 		prop: 'languageName',
 		cellRenderer({ row, index }) {
 			return <>{editMap.value[index]?.editable ? <el-input v-model={row.languageName} /> : <p>{row.languageName}</p>}</>;
 		},
 	},
 	{
-		label: $t('i18n.languageSummary'),
+		label: 'i18n.languageSummary',
 		prop: 'summary',
 		cellRenderer({ row, index }) {
 			return <>{editMap.value[index]?.editable ? <el-input v-model={row.summary} /> : <p>{row.summary}</p>}</>;
 		},
 	},
 	{
-		label: $t('i18n.isDefault'),
+		label: 'i18n.isDefault',
 		prop: 'isDefault',
 		cellRenderer({ row, index }) {
 			return (
 				<>
 					{editMap.value[index]?.editable ? (
-						<el-select placeholder={$t('table.chooseIsDefault')} v-model={row.isDefault}>
+						<el-select placeholder={'table.chooseIsDefault'} v-model={row.isDefault}>
 							{isDefaultOptions.map(item => (
 								<el-option key={item.value} label={item.label} value={item.value} />
 							))}
@@ -44,7 +43,7 @@ export const columns: TableColumnList = [
 		},
 	},
 	// ? 表格操作
-	{ label: $t('table.operation'), prop: 'op', slot: 'op', width: 160, fixed: 'right' },
+	{ label: 'table.operation', prop: 'op', slot: 'op', width: 160, fixed: 'right' },
 ];
 
 /**
@@ -62,9 +61,9 @@ export function onEdit(row: any, index: number) {
  * @param index
  */
 export async function onSave(row: any, index: number) {
-	await i18nTypeStore.updateLanguageType(row);
+	await i18nTypeStore.updateI18nType(row);
 	editMap.value[index].editable = false;
-	await i18nTypeStore.getLanguageType();
+	await i18nTypeStore.getI18nTypeList();
 }
 
 /**
@@ -73,5 +72,5 @@ export async function onSave(row: any, index: number) {
  */
 export function onCancel(index: number) {
 	editMap.value[index].editable = false;
-	i18nTypeStore.dataList[index] = delObjectProperty(editMap.value[index], 'editable');
+	i18nTypeStore.datalist[index] = delObjectProperty(editMap.value[index], 'editable');
 }
