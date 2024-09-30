@@ -10,8 +10,8 @@ export const columns: TableColumnList = [
 	{ label: $t('i18n.typeName'), prop: 'typeName' },
 	{ label: $t('table.updateTime'), prop: 'updateTime' },
 	{ label: $t('table.createTime'), prop: 'createTime' },
-	{ label: $t('table.createUser'), prop: 'createUser' },
-	{ label: $t('table.updateUser'), prop: 'updateUser' },
+	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser' },
+	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser' },
 	{ label: $t('table.operation'), fixed: 'right', width: 210, slot: 'operation' },
 ];
 

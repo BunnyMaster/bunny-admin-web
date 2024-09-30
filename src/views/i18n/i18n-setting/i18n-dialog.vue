@@ -27,7 +27,7 @@ defineExpose({ ruleFormRef });
 	<el-form ref="ruleFormRef" :model="form" :rules="rules" isDefault-icon label-position="left" label-width="135px">
 		<el-form-item label="选择添加语言分类" prop="typeName">
 			<el-select v-model="form.typeName" filterable placeholder="选择添加语言分类">
-				<el-option v-for="item in i18nTypeStore.datalist" :key="item.typeName" :label="item.typeName" :value="item.typeName" />
+				<el-option v-for="item in i18nTypeStore.datalist" :key="item.id" :label="item.typeName" :value="item.typeName" />
 			</el-select>
 		</el-form-item>
 

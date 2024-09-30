@@ -3,8 +3,8 @@ import { addDialog } from '@/components/BaseDialog/index';
 import AddI18nType from '@/views/i18n/i18n-type-setting/i18n-type-dialog.vue';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
 import { h, ref } from 'vue';
-import type { AddFormItemProps } from '@/views/i18n/i18n-type-setting/utils/types';
 import { messageBox } from '@/utils/message';
+import type { FormItemProps } from '@/views/i18n/i18n-type-setting/utils/types';
 
 export const formRef = ref();
 const i18nTypeStore = userI18nTypeStore();
@@ -34,7 +34,7 @@ export function onAdd() {
 		closeOnClickModal: false,
 		contentRenderer: () => h(AddI18nType, { ref: formRef }),
 		beforeSure: (done, { options }) => {
-			const form = options.props.formInline as AddFormItemProps;
+			const form = options.props.formInline as FormItemProps;
 			formRef.value.formRef.validate(async (valid: any) => {
 				if (!valid) return;
 
@@ -62,7 +62,7 @@ export function onUpdate(row: any) {
 		closeOnClickModal: false,
 		contentRenderer: () => h(AddI18nType, { ref: formRef }),
 		beforeSure: (done, { options }) => {
-			const form = options.props.formInline as AddFormItemProps;
+			const form = options.props.formInline as FormItemProps;
 			formRef.value.formRef.validate(async (valid: any) => {
 				if (!valid) return;
 

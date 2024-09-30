@@ -12,6 +12,8 @@ import EditPen from '@iconify-icons/ep/edit-pen';
 import TableIsDefaultTag from '@/components/TableBar/src/TableIsDefaultTag.vue';
 import { resetForm } from '@/views/system/menu/utils/hook';
 import Refresh from '@iconify-icons/ep/refresh';
+import { selectUserinfo } from '@/components/Table/Userinfo/columns';
+import { $t } from '@/plugins/i18n';
 
 const tableRef = ref();
 const formRef = ref();
@@ -59,12 +61,22 @@ onMounted(() => {
 					:size="size"
 					adaptive
 					align-whole="center"
+					border
+					highlight-current-row
 					row-key="id"
 					showOverflowTooltip
 					table-layout="auto"
 				>
 					<template #isDefault="{ row }">
 						<TableIsDefaultTag :status="row.isDefault" />
+					</template>
+
+					<template #createUser="{ row }">
+						<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>
+					</template>
+
+					<template #updateUser="{ row }">
+						<el-button link type="primary" @click="selectUserinfo(row.updateUser)">{{ $t('table.updateUser') }} </el-button>
 					</template>
 
 					<template #operation="{ row }">

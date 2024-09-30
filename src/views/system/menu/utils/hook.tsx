@@ -1,13 +1,10 @@
 import editForm from '../form.vue';
-import { handleTree } from '@/utils/tree';
-import { message } from '@/utils/message';
-import { getMenuList } from '@/api/v1/system';
 import { $t } from '@/plugins/i18n';
 import { addDialog } from '@/components/BaseDialog/index';
 import { h, reactive, ref } from 'vue';
 import type { FormItemProps } from './types';
 
-import { cloneDeep, deviceDetection, isAllEmpty } from '@pureadmin/utils';
+import { cloneDeep, deviceDetection } from '@pureadmin/utils';
 import { userRouterStore } from '@/store/modules/router';
 
 const routerStore = userRouterStore();
@@ -15,8 +12,6 @@ export const form = reactive({
 	title: '',
 });
 export const formRef = ref();
-export const dataList = ref([]);
-export const loading = ref(true);
 
 /**
  * 标签栏菜单类型匹配
@@ -38,28 +33,19 @@ export const getMenuType = (type, text = false) => {
  * 表单重置
  * @param formEl
  */
-export const resetForm = async formEl => {
+export const resetForm = async (formEl: any) => {
 	if (!formEl) return;
 	formEl.resetFields();
 	await onSearch();
 };
 
+/**
+ * * 获取菜单数据
+ */
 export const onSearch = async () => {
-	loading.value = true;
-
-	// 获取菜单数据
-	const result: any = await getMenuList();
-	if (result.code !== 200) message(result.message, { type: 'error' });
-
-	// 前端搜索菜单名称
-	if (!isAllEmpty(form.title)) {
-		result.data = result.data.filter(item => $t(item.title).includes(form.title));
-	}
-
-	// 处理成树结构
-	dataList.value = handleTree(result.data);
-
-	loading.value = false;
+	routerStore.loading = true;
+	await routerStore.getMenuList();
+	routerStore.loading = false;
 };
 
 export const formatHigherMenuOptions = (treeList: any) => {
@@ -73,30 +59,25 @@ export const formatHigherMenuOptions = (treeList: any) => {
 	return newTreeList;
 };
 
-export function openDialog(title = '新增', row?: FormItemProps) {
+/**
+ * * 添加菜单
+ */
+export function onAdd(parentId: any = 0) {
 	addDialog({
-		title: `${title}菜单`,
+		title: `新增菜单`,
 		props: {
 			formInline: {
-				menuType: row?.menuType ?? 0,
-				higherMenuOptions: formatHigherMenuOptions(cloneDeep(dataList.value)),
-				parentId: row?.parentId ?? 0,
-				title: row?.title ?? '',
-				name: row?.name ?? '',
-				path: row?.path ?? '',
-				component: row?.component ?? '',
-				rank: row?.rank ?? 99,
-				redirect: row?.redirect ?? '',
-				icon: row?.icon ?? '',
-				enterTransition: row?.enterTransition ?? '',
-				leaveTransition: row?.leaveTransition ?? '',
-				frameSrc: row?.frameSrc ?? '',
-				frameLoading: row?.frameLoading ?? true,
-				keepAlive: row?.keepAlive ?? false,
-				hiddenTag: row?.hiddenTag ?? false,
-				fixedTag: row?.fixedTag ?? false,
-				showLink: row?.showLink ?? true,
-				showParent: row?.showParent ?? false,
+				menuType: 0,
+				higherMenuOptions: formatHigherMenuOptions(cloneDeep(routerStore.datalist)),
+				parentId,
+				title: '',
+				name: '',
+				path: '',
+				component: '',
+				rank: 99,
+				icon: '',
+				frameSrc: '',
+				visible: true,
 			},
 		},
 		width: '45%',
@@ -104,7 +85,7 @@ export function openDialog(title = '新增', row?: FormItemProps) {
 		fullscreen: deviceDetection(),
 		fullscreenIcon: true,
 		closeOnClickModal: false,
-		contentRenderer: () => h(editForm, { ref: formRef, formInline: null }),
+		contentRenderer: () => h(editForm, { ref: formRef }),
 		beforeSure: (done, { options }) => {
 			const menuFormRef = formRef.value.menuFormRef;
 			const curData = options.props.formInline as FormItemProps;
@@ -112,23 +93,66 @@ export function openDialog(title = '新增', row?: FormItemProps) {
 				if (!valid) return;
 				delete curData.higherMenuOptions;
 
-				let result: boolean;
-				if (title === '新增') {
-					result = await routerStore.addMenu(curData);
-				} else {
-					curData.id = row.id;
-					result = await routerStore.updateMenu(curData);
-				}
+				console.log(curData);
 
-				// 刷新表格数据
-				if (result) {
-					done();
-					await onSearch();
-				}
+				// const result = await routerStore.addMenu(curData);
+				// // 刷新表格数据
+				// if (result) {
+				// 	done();
+				// 	await onSearch();
+				// }
 			});
 		},
 	});
 }
+
+/**
+ * * 更新菜单
+ * @param row
+ */
+export const onUpdate = (row?: FormItemProps) => {
+	addDialog({
+		title: `更新菜单`,
+		props: {
+			formInline: {
+				menuType: row?.menuType,
+				higherMenuOptions: formatHigherMenuOptions(cloneDeep(routerStore.datalist)),
+				parentId: row?.parentId,
+				title: row?.title,
+				name: row?.name,
+				path: row?.path,
+				component: row?.component,
+				rank: row?.rank,
+				icon: row?.icon,
+				frameSrc: row?.frameSrc,
+				visible: row?.visible,
+			},
+		},
+		width: '45%',
+		draggable: true,
+		fullscreen: deviceDetection(),
+		fullscreenIcon: true,
+		closeOnClickModal: false,
+		contentRenderer: () => h(editForm, { ref: formRef }),
+		beforeSure: (done, { options }) => {
+			const menuFormRef = formRef.value.menuFormRef;
+			const curData = options.props.formInline as FormItemProps;
+			menuFormRef.validate(async (valid: any) => {
+				if (!valid) return;
+				delete curData.higherMenuOptions;
+
+				curData.id = row.id;
+				console.log(row);
+				// const result = await routerStore.updateMenu(curData);
+				// // 刷新表格数据
+				// if (result) {
+				// 	done();
+				// 	await onSearch();
+				// }
+			});
+		},
+	});
+};
 
 /**
  * * 删除菜单

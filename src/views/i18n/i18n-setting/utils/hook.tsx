@@ -1,15 +1,14 @@
 import { h, ref } from 'vue';
 import { userI18nStore } from '@/store/i18n/i18n';
-import { messageBox } from '@/utils/message';
 import { addDialog, closeDialog } from '@/components/BaseDialog/index';
 import { deviceDetection } from '@pureadmin/utils';
 import I18nDialog from '@/views/i18n/i18n-setting/i18n-dialog.vue';
 import type { FormProps } from '@/views/i18n/i18n-setting/utils/types';
 import { $t } from '@/plugins/i18n';
+import { messageBox } from '@/utils/message';
 
 export const formRef = ref();
 const i18nStore = userI18nStore();
-export const ids = ref<string[]>([]);
 
 /**
  * * 查询内容
@@ -26,7 +25,7 @@ export const onSearch = async () => {
  */
 export const onAdd = () => {
 	addDialog({
-		title: `${$t('add_multilingual')}`,
+		title: $t('add_multilingual'),
 		width: '30%',
 		props: { formInline: { keyName: '', translation: '', typeName: '' } },
 		draggable: true,
@@ -36,7 +35,7 @@ export const onAdd = () => {
 		contentRenderer: () => h(I18nDialog, { ref: formRef }),
 		footerButtons: [
 			{
-				label: '取消',
+				label: $t('cancel'),
 				text: true,
 				bg: true,
 				btnClick: ({ dialog: { options, index } }) => {
@@ -61,7 +60,7 @@ export const onAdd = () => {
 				},
 			},
 			{
-				label: '继续添加',
+				label: $t('continue_adding'),
 				type: 'success',
 				text: true,
 				bg: true,
@@ -86,9 +85,9 @@ export const onUpdate = (row: any) => {
 	const id = row.id;
 
 	addDialog({
-		title: `更新多语言`,
+		title: $t('update_multilingual'),
 		width: '30%',
-		props: { formInline: { keyName: row.keyName, translation: row.translation, typeId: row.typeId } },
+		props: { formInline: { keyName: row.keyName, translation: row.translation, typeName: row.typeName } },
 		draggable: true,
 		fullscreen: deviceDetection(),
 		fullscreenIcon: true,
@@ -107,22 +106,20 @@ export const onUpdate = (row: any) => {
 		},
 	});
 };
-
 /**
  * * 批量彻底删除行
  */
-export const onDelete = async () => {
+export const onDelete = async (row: any) => {
 	const isConfirm = await messageBox({
-		message: '是否确认批量删除(此操作不可逆)',
-		title: '删除警告',
+		message: $t('confirm_delete'),
+		title: $t('delete_warning'),
 		showMessage: false,
-		confirmMessage: '删除成功',
-		cancelMessage: '取消删除',
+		confirmMessage: $t('delete_success'),
+		cancelMessage: $t('cancel_delete'),
 	});
 
 	if (isConfirm) {
-		const data = ids.value;
-		await i18nStore.deleteI18n(data);
+		await i18nStore.deleteI18n([row.id]);
 		await onSearch();
 	}
 };

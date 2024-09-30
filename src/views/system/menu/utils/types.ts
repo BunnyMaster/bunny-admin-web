@@ -9,17 +9,9 @@ interface FormItemProps {
 	path: string;
 	component: string;
 	rank: number;
-	redirect: string;
 	icon: string;
-	enterTransition: string;
-	leaveTransition: string;
 	frameSrc: string;
-	frameLoading: boolean;
-	keepAlive: boolean;
-	hiddenTag: boolean;
-	fixedTag: boolean;
-	showLink: boolean;
-	showParent: boolean;
+	visible: boolean;
 }
 
 interface FormProps {

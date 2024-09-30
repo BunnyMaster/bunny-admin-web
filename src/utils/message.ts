@@ -95,7 +95,6 @@ export const closeAllMessage = (): void => ElMessage.closeAll();
  */
 export const storeMessage = (result: BaseResult<any>) => {
 	if (result.code !== 200) {
-		message(result.message, { type: 'warning' });
 		return false;
 	}
 	message(result.message, { type: 'success' });

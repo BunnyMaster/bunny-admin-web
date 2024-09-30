@@ -1,13 +1,29 @@
 import { defineStore } from 'pinia';
-import { addMenu, deletedMenuByIds, updateMenu } from '@/api/v1/system';
+import { addMenu, deletedMenuByIds, getMenuList, updateMenu } from '@/api/v1/system';
 import { storeMessage } from '@/utils/message';
+import { handleTree } from '@/utils/tree';
 
 export const userRouterStore = defineStore('routerStore', {
 	state() {
-		return {};
+		return {
+			datalist: [],
+			loading: false,
+		};
 	},
 	getters: {},
 	actions: {
+		/**
+		 * * 获取菜单列表
+		 */
+		async getMenuList() {
+			const result = await getMenuList();
+			if (result.code === 200) {
+				this.datalist = handleTree(result.data as any);
+				return true;
+			}
+			return false;
+		},
+
 		/**
 		 * * 添加菜单
 		 * @param data

@@ -130,7 +130,7 @@ class PureHttp {
 					message(data.message, { type: 'warning' });
 					router.push('/').then();
 					removeToken();
-				} else if (data.code >= 209 && data.code < 300) {
+				} else if (data.code >= 201 && data.code < 300) {
 					message(data.message, { type: 'warning' });
 				} else if (data.code > 300) {
 					message(data.message, { type: 'error' });

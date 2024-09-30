@@ -33,7 +33,7 @@ export const fetchUpdateI18n = (data: any) => {
  * 多语言管理---删除多语言
  */
 export const fetchDeleteI18n = (data: any) => {
-	return http.request<BaseResult<object>>('put', 'i18n/deleteI18n', { data });
+	return http.request<BaseResult<object>>('delete', 'i18n/deleteI18n', { data });
 };
 
 /**

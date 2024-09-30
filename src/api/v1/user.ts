@@ -56,3 +56,10 @@ export const refreshTokenApi = (data?: object) => {
 export const fetchLogout = (data?: object) => {
 	return http.request<BaseResult<any>>('post', 'user/logout', { data });
 };
+
+/**
+ * 获取用户信息
+ */
+export const fetchGetUserinfoById = (data?: object) => {
+	return http.request<BaseResult<UserResult>>('get', 'user/getUserinfoById', { params: data });
+};
