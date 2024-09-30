@@ -12,7 +12,7 @@ export const fetchGetI18n = () => {
  * 多语言管理---获取多语言列表
  */
 export const fetchGetI18nList = (data: any) => {
-	return http.request<BaseResult<ResultTable>>('get', `i18n/getI18nList/${data.currentPage}/${data.pageSize}`, { data });
+	return http.request<BaseResult<ResultTable>>('get', `i18n/getI18nList/${data.currentPage}/${data.pageSize}`, { params: data });
 };
 
 /**

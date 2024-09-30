@@ -10,7 +10,7 @@ import { onAdd, onDelete, onSearch, onUpdate } from '@/views/i18n/i18n-type-sett
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import TableIsDefaultTag from '@/components/TableBar/src/TableIsDefaultTag.vue';
-import { resetForm } from '@/views/menu/utils/hook';
+import { resetForm } from '@/views/system/menu/utils/hook';
 import Refresh from '@iconify-icons/ep/refresh';
 
 const tableRef = ref();

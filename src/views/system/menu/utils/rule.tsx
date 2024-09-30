@@ -3,7 +3,7 @@ import type { FormRules } from 'element-plus';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { $t } from '@/plugins/i18n';
 import { isAllEmpty } from '@pureadmin/utils';
-import { getMenuType } from '@/views/menu/utils/hook';
+import { getMenuType } from '@/views/system/menu/utils/hook';
 
 export const columns: TableColumnList = [
 	{

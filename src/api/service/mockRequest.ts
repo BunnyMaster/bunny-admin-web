@@ -82,7 +82,7 @@ class PureHttp {
 				return whiteList.some(url => config.url.endsWith(url))
 					? config
 					: new Promise(resolve => {
-							const data = getToken();
+							const data: any = getToken();
 							if (data) {
 								const now = new Date().getTime();
 								const expired = parseInt(data.expires) - now <= 0;

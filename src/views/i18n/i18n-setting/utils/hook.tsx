@@ -1,23 +1,15 @@
-import { h, reactive, ref } from 'vue';
+import { h, ref } from 'vue';
 import { userI18nStore } from '@/store/i18n/i18n';
 import { messageBox } from '@/utils/message';
-import { addDialog } from '@/components/BaseDialog/index';
+import { addDialog, closeDialog } from '@/components/BaseDialog/index';
 import { deviceDetection } from '@pureadmin/utils';
 import I18nDialog from '@/views/i18n/i18n-setting/i18n-dialog.vue';
 import type { FormProps } from '@/views/i18n/i18n-setting/utils/types';
+import { $t } from '@/plugins/i18n';
 
 export const formRef = ref();
 const i18nStore = userI18nStore();
-const ids = ref<string[]>([]);
-
-// 更新表单数据
-export const updateForm = reactive({
-	id: '',
-	languageId: '',
-	keyName: '',
-	translate: '',
-	parentId: '',
-});
+export const ids = ref<string[]>([]);
 
 /**
  * * 查询内容
@@ -34,25 +26,56 @@ export const onSearch = async () => {
  */
 export const onAdd = () => {
 	addDialog({
-		title: `添加多语言`,
+		title: `${$t('add_multilingual')}`,
 		width: '30%',
-		props: { formInline: { keyName: '', translation: '', typeId: '' } },
+		props: { formInline: { keyName: '', translation: '', typeName: '' } },
 		draggable: true,
 		fullscreen: deviceDetection(),
 		fullscreenIcon: true,
 		closeOnClickModal: false,
 		contentRenderer: () => h(I18nDialog, { ref: formRef }),
-		beforeSure: (done, { options }) => {
-			const form = options.props.formInline as FormProps;
-			formRef.value.ruleFormRef.validate(async (valid: any) => {
-				if (!valid) return;
+		footerButtons: [
+			{
+				label: '取消',
+				text: true,
+				bg: true,
+				btnClick: ({ dialog: { options, index } }) => {
+					closeDialog(options, index);
+				},
+			},
+			{
+				label: $t('buttons.pureConfirm'),
+				type: 'primary',
+				text: true,
+				bg: true,
+				btnClick: ({ dialog: { options, index } }) => {
+					const form = options.props.formInline as FormProps;
+					formRef.value.ruleFormRef.validate(async (valid: any) => {
+						if (!valid) return;
 
-				const result = await i18nStore.addI18n(form);
-				if (!result) return;
-				done();
-				await onSearch();
-			});
-		},
+						const result = await i18nStore.addI18n(form);
+						if (!result) return;
+						closeDialog(options, index);
+						await onSearch();
+					});
+				},
+			},
+			{
+				label: '继续添加',
+				type: 'success',
+				text: true,
+				bg: true,
+				btnClick: ({ dialog: { options } }) => {
+					const form = options.props.formInline as FormProps;
+					formRef.value.ruleFormRef.validate(async (valid: any) => {
+						if (!valid) return;
+						const result = await i18nStore.addI18n(form);
+						if (!result) return;
+						await onSearch();
+					});
+				},
+			},
+		],
 	});
 };
 

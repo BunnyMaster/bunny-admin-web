@@ -1,6 +1,6 @@
-import iconifyIconOffline from "./src/iconifyIconOffline";
-import iconifyIconOnline from "./src/iconifyIconOnline";
-import fontIcon from "./src/iconfont";
+import iconifyIconOffline from './src/iconifyIconOffline';
+import iconifyIconOnline from './src/iconifyIconOnline';
+import fontIcon from './src/iconfont';
 
 /** 本地图标组件 */
 const IconifyIconOffline = iconifyIconOffline;

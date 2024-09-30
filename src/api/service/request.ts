@@ -154,8 +154,6 @@ class PureHttp {
 
 				// 关闭进度条动画
 				NProgress.done();
-				message(error.message, { type: 'error' });
-
 				return error;
 			},
 		);

@@ -209,8 +209,8 @@ const markOptions = computed<Array<OptionsType>>(() => {
 			value: 'card',
 		},
 		{
-			label: 'panel.pureTagsStyleChrome',
-			tip: 'panel.pureTagsStyleChromeTip',
+			label: t('panel.pureTagsStyleChrome'),
+			tip: t('panel.pureTagsStyleChrome'),
 			value: 'chrome',
 		},
 	];

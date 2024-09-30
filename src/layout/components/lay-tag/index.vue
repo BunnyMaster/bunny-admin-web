@@ -545,7 +545,7 @@ onBeforeUnmount(() => {
 							<TagChrome />
 						</div>
 						<span class="tag-title">
-							{{ transformI18n(item.meta.title) }}
+							{{ $t(item.meta.title) }}
 						</span>
 						<span v-if="isFixedTag(item) ? false : index !== 0" class="chrome-close-btn" @click.stop="deleteMenu(item)">
 							<IconifyIconOffline :icon="Close" />

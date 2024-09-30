@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { fetchAddI18n, fetchDeleteI18n, fetchGetI18n, fetchGetI18nList, fetchUpdateI18n } from '@/api/v1/i18n';
 import { pageSizes } from '@/enums/baseConstant';
-import { message, storeMessage } from '@/utils/message';
+import { storeMessage } from '@/utils/message';
 
 export const userI18nStore = defineStore('i18nStore', {
 	persist: true,
@@ -12,7 +12,7 @@ export const userI18nStore = defineStore('i18nStore', {
 			// 多语言列表
 			datalist: [],
 			// 查询表单
-			form: { keyName: undefined, translation: undefined },
+			form: { keyName: '', translation: '', typeName: '' },
 			isAddShown: false,
 			// ? 分页查询结果
 			pagination: {
@@ -50,6 +50,9 @@ export const userI18nStore = defineStore('i18nStore', {
 		 */
 		async getI18nMangeList() {
 			const data = { ...this.pagination, ...this.form };
+			delete data.pageSizes;
+			delete data.total;
+			delete data.background;
 			const result = await fetchGetI18nList(data);
 
 			// 如果成功赋值内容
@@ -61,7 +64,6 @@ export const userI18nStore = defineStore('i18nStore', {
 				return true;
 			}
 
-			message(result.message, { type: 'error' });
 			return false;
 		},
 

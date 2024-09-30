@@ -2,7 +2,7 @@
 export interface FormItemProps {
 	keyName: string;
 	translation: string;
-	typeId: string;
+	typeName: string;
 }
 
 // 添加或修改表单Props

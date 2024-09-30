@@ -169,7 +169,7 @@ export default defineComponent({
 		};
 
 		const isFixedColumn = (label: string) => {
-			return !!dynamicColumns.value.filter(item => $t(item.label) === $t(label))[0].fixed;
+			return !!dynamicColumns.value.filter(item => item.label === label)[0].fixed;
 		};
 
 		const rendTippyProps = (content: string) => ({
@@ -213,7 +213,7 @@ export default defineComponent({
 								<div class={[topClass.value]}>
 									<el-checkbox class='!-mr-1' label='列展示' v-model={checkAll.value} indeterminate={isIndeterminate.value} onChange={value => handleCheckAllChange(value)} />
 									<el-button type='primary' link onClick={() => onReset()}>
-										重置
+										{$t('buttons.reset')}
 									</el-button>
 								</div>
 
@@ -226,8 +226,8 @@ export default defineComponent({
 														<div class='flex items-center'>
 															<DragIcon class={['drag-btn w-[16px] mr-2', isFixedColumn(item) ? '!cursor-no-drop' : '!cursor-grab']} onMouseenter={(event: { preventDefault: () => void }) => rowDrop(event)} />
 															<el-checkbox key={index} label={item} value={item} onChange={value => handleCheckColumnListChange(value, item)}>
-																<span title={$t(item)} class='inline-block w-[120px] truncate hover:text-text_color_primary'>
-																	{$t(item)}
+																<span title={item} class='inline-block w-[120px] truncate hover:text-text_color_primary'>
+																	{item}
 																</span>
 															</el-checkbox>
 														</div>

@@ -7,10 +7,10 @@ import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import AddFill from '@iconify-icons/ri/add-circle-line';
-import { dataList, handleDelete, loading, onSearch, openDialog, resetForm } from '@/views/menu/utils/hook';
+import { dataList, handleDelete, loading, onSearch, openDialog, resetForm } from '@/views/system/menu/utils/hook';
 import form from '@/views/role/form.vue';
 import PureTable from '@pureadmin/table';
-import { columns } from '@/views/menu/utils/rule';
+import { columns } from '@/views/system/menu/utils/rule';
 
 defineOptions({
 	name: 'SystemMenu',

@@ -3,9 +3,9 @@ import { handleTree } from '@/utils/tree';
 import { message } from '@/utils/message';
 import { getMenuList } from '@/api/v1/system';
 import { $t } from '@/plugins/i18n';
-import { addDialog } from '@/components/BaseDialog';
+import { addDialog } from '@/components/BaseDialog/index';
 import { h, reactive, ref } from 'vue';
-import type { FormItemProps } from '../utils/types';
+import type { FormItemProps } from './types';
 
 import { cloneDeep, deviceDetection, isAllEmpty } from '@pureadmin/utils';
 import { userRouterStore } from '@/store/modules/router';

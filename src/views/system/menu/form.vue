@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import ReCol from '@/components/MyCol';
-import { formRules } from './utils/rule';
-import { FormProps } from './utils/types';
+import { formRules } from '@/views/system/menu/utils/rule';
+import { FormProps } from '@/views/system/menu/utils/types';
 import { IconSelect } from '@/components/ReIcon';
 import Segmented from '@/components/ReSegmented';
 import ReAnimateSelector from '@/components/AnimateSelector';
