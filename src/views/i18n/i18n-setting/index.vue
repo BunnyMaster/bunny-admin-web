@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { userI18nStore } from '@/store/i18n/i18n';
-import { onAdd, onDelete, onSearch, onUpdate } from '@/views/i18n/i18n-setting/utils/hook';
+import { deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/i18n/i18n-setting/utils/hook';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import EditPen from '@iconify-icons/ep/edit-pen';
@@ -44,6 +44,14 @@ const onPageSizeChange = async (value: number) => {
 	await onSearch();
 };
 
+/**
+ * * 选择多行
+ * @param rows
+ */
+const onSelectionChange = (rows: Array<any>) => {
+	deleteIds.value = rows.map((row: any) => row.id);
+};
+
 onMounted(() => {
 	onSearch();
 });
@@ -67,14 +75,20 @@ onMounted(() => {
 			</el-form-item>
 		</el-form>
 
-		<PureTableBar :columns="columns" :tableRef="tableRef?.getTableRef()" :title="$t('multilingual_management')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
+		<PureTableBar :columns="columns" :title="$t('multilingual_management')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
+				<!-- 添加多语言 -->
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_multilingual') }} </el-button>
+				<!-- 批量删除按钮 -->
+				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+					{{ $t('add_multilingual') }}
+				</el-button>
 			</template>
+
 			<template v-slot="{ size, dynamicColumns }">
 				<pure-table
 					ref="tableRef"
-					:adaptiveConfig="{ offsetBottom: 45 }"
+					:adaptiveConfig="{ offsetBottom: 96 }"
 					:columns="dynamicColumns"
 					:data="i18nStore.datalist"
 					:header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
@@ -87,7 +101,9 @@ onMounted(() => {
 					highlight-current-row
 					row-key="id"
 					showOverflowTooltip
+					stripe
 					table-layout="auto"
+					@selection-change="onSelectionChange"
 					@page-size-change="onPageSizeChange"
 					@page-current-change="onCurrentPageChange"
 				>

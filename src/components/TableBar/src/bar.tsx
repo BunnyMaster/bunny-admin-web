@@ -187,7 +187,7 @@ export default defineComponent({
 		return () => (
 			<>
 				<div {...attrs} class={['w-[99/100]', 'px-2', 'pb-2', 'bg-bg_color', isFullscreen.value ? ['!w-full', '!h-full', 'z-[2002]', 'fixed', 'inset-0'] : 'mt-2']}>
-					<div class='flex justify-between w-full h-[60px] p-4'>
+					<div class='flex justify-between w-full h-[50px] p-3'>
 						{slots?.title ? slots.title() : <p class='font-bold truncate'>{props.title}</p>}
 						<div class='flex items-center justify-around'>
 							{slots?.buttons ? <div class='flex mr-4'>{slots.buttons()}</div> : null}

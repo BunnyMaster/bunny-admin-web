@@ -9,6 +9,7 @@ import { messageBox } from '@/utils/message';
 
 export const formRef = ref();
 const i18nStore = userI18nStore();
+export const deleteIds = ref([]);
 
 /**
  * * 查询内容
@@ -120,6 +121,24 @@ export const onDelete = async (row: any) => {
 
 	if (isConfirm) {
 		await i18nStore.deleteI18n([row.id]);
+		await onSearch();
+	}
+};
+
+/**
+ * * 批量删除
+ */
+export const onDeleteBatch = async () => {
+	const isConfirm = await messageBox({
+		message: $t('confirm_delete'),
+		title: $t('delete_warning'),
+		showMessage: false,
+		confirmMessage: $t('delete_success'),
+		cancelMessage: $t('cancel_delete'),
+	});
+
+	if (isConfirm) {
+		await i18nStore.deleteI18n(deleteIds.value);
 		await onSearch();
 	}
 };

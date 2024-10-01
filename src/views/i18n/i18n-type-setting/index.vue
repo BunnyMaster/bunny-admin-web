@@ -33,19 +33,19 @@ onMounted(() => {
 <template>
 	<div class="main">
 		<el-form ref="formRef" :inline="true" :model="i18nTypeStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-			<el-form-item label="类型名称" prop="title">
-				<el-input v-model="i18nTypeStore.form.typeName" class="!w-[180px]" clearable placeholder="输入类型名称" />
+			<el-form-item :label="$t('i18n_typeName')" prop="title">
+				<el-input v-model="i18nTypeStore.form.typeName" :placeholder="`${$t('input')}${$t('i18n_typeName')}`" class="!w-[180px]" clearable />
 			</el-form-item>
-			<el-form-item label="类型解释" prop="title">
-				<el-input v-model="i18nTypeStore.form.summary" class="!w-[180px]" clearable placeholder="输入类型解释" />
+			<el-form-item :label="$t('i18n_summary')" prop="title">
+				<el-input v-model="i18nTypeStore.form.summary" :placeholder="`${$t('input')}${$t('i18n_summary')}`" class="!w-[180px]" clearable />
 			</el-form-item>
 			<el-form-item>
-				<el-button :icon="useRenderIcon('ri:search-line')" :loading="i18nTypeStore.loading" type="primary" @click="onSearch"> 搜索 </el-button>
-				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> 重置</el-button>
+				<el-button :icon="useRenderIcon('ri:search-line')" :loading="i18nTypeStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
+				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
 			</el-form-item>
 		</el-form>
 
-		<PureTableBar :columns="columns" :tableRef="tableRef?.getTableRef()" title="多语言类型管理" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
+		<PureTableBar :columns="columns" title="多语言类型管理" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> 添加多语言类型</el-button>
 			</template>
@@ -80,11 +80,13 @@ onMounted(() => {
 					</template>
 
 					<template #operation="{ row }">
-						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> 修改 </el-button>
-						<el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd"> 新增 </el-button>
+						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
+						<el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd"> {{ $t('add_new') }} </el-button>
 						<el-popconfirm :title="`是否确认删除 ${row.typeName}数据`" @confirm="onDelete(row)">
 							<template #reference>
-								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary"> 删除 </el-button>
+								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
+									{{ $t('delete') }}
+								</el-button>
 							</template>
 						</el-popconfirm>
 					</template>

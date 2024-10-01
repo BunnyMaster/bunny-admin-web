@@ -4,12 +4,14 @@ import type { FormRules } from 'element-plus';
 import { $t } from '@/plugins/i18n';
 
 export const columns: TableColumnList = [
+	{ type: 'index', index: (index: number) => index + 1 },
+	{ type: 'selection', align: 'left' },
 	{ label: $t('id'), prop: 'id' },
 	{ label: $t('i18n.keyName'), prop: 'keyName' },
 	{ label: $t('i18n.translation'), prop: 'translation' },
 	{ label: $t('i18n.typeName'), prop: 'typeName' },
-	{ label: $t('table.updateTime'), prop: 'updateTime' },
-	{ label: $t('table.createTime'), prop: 'createTime' },
+	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true },
+	{ label: $t('table.createTime'), prop: 'createTime', sortable: true },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser' },
 	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser' },
 	{ label: $t('table.operation'), fixed: 'right', width: 210, slot: 'operation' },
