@@ -1,4 +1,3 @@
-import { deviceDetection } from '@pureadmin/utils';
 import { addDialog } from '@/components/BaseDialog/index';
 import RoleDialog from '@/views/system/role/role-dialog.vue';
 import { useRoleStore } from '@/store/system/role';
@@ -33,7 +32,6 @@ export function onAdd() {
 			},
 		},
 		draggable: true,
-		fullscreen: deviceDetection(),
 		fullscreenIcon: true,
 		closeOnClickModal: false,
 		contentRenderer: () => h(RoleDialog, { ref: formRef }),
@@ -66,7 +64,6 @@ export function onUpdate(row: any) {
 			},
 		},
 		draggable: true,
-		fullscreen: deviceDetection(),
 		fullscreenIcon: true,
 		closeOnClickModal: false,
 		contentRenderer: () => h(RoleDialog, { ref: formRef }),

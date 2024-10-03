@@ -12,6 +12,7 @@ import PureTable from '@pureadmin/table';
 import { columns } from '@/views/system/menu/utils/columns';
 import { userRouterStore } from '@/store/system/router';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 
 const formRef = ref();
 const tableRef = ref();
@@ -95,6 +96,14 @@ onMounted(() => {
 							width="60"
 							@update:modelValue="onchangeVisible(row)"
 						/>
+					</template>
+
+					<template #createUser="{ row }">
+						<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>
+					</template>
+
+					<template #updateUser="{ row }">
+						<el-button link type="primary" @click="selectUserinfo(row.updateUser)">{{ $t('table.updateUser') }} </el-button>
 					</template>
 
 					<template #operation="{ row }">

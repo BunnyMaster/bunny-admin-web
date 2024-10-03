@@ -1,7 +1,6 @@
 import { h, ref } from 'vue';
 import { userI18nStore } from '@/store/i18n/i18n';
 import { addDialog, closeDialog } from '@/components/BaseDialog/index';
-import { deviceDetection } from '@pureadmin/utils';
 import I18nDialog from '@/views/i18n/i18n-setting/i18n-dialog.vue';
 import type { FormProps } from '@/views/i18n/i18n-setting/utils/types';
 import { $t } from '@/plugins/i18n';
@@ -30,7 +29,6 @@ export const onAdd = () => {
 		width: '30%',
 		props: { formInline: { keyName: '', translation: '', typeName: '' } },
 		draggable: true,
-		fullscreen: deviceDetection(),
 		fullscreenIcon: true,
 		closeOnClickModal: false,
 		contentRenderer: () => h(I18nDialog, { ref: formRef }),
@@ -90,7 +88,6 @@ export const onUpdate = (row: any) => {
 		width: '30%',
 		props: { formInline: { keyName: row.keyName, translation: row.translation, typeName: row.typeName } },
 		draggable: true,
-		fullscreen: deviceDetection(),
 		fullscreenIcon: true,
 		closeOnClickModal: false,
 		contentRenderer: () => h(I18nDialog, { ref: formRef }),

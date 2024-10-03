@@ -73,7 +73,6 @@ export function onAdd(parentId: any = 0) {
 		width: '45%',
 		draggable: true,
 		closeOnClickModal: false,
-		fullscreen: deviceDetection(),
 		fullscreenIcon: true,
 		contentRenderer: () => h(editForm, { ref: formRef }),
 		beforeSure: (done, { options }) => {

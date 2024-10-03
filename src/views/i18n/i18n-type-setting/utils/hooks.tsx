@@ -1,4 +1,3 @@
-import { deviceDetection } from '@pureadmin/utils';
 import { addDialog } from '@/components/BaseDialog/index';
 import AddI18nType from '@/views/i18n/i18n-type-setting/i18n-type-dialog.vue';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
@@ -29,7 +28,6 @@ export function onAdd() {
 			formInline: { typeName: '', summary: '', isDefault: false },
 		},
 		draggable: true,
-		fullscreen: deviceDetection(),
 		fullscreenIcon: true,
 		closeOnClickModal: false,
 		contentRenderer: () => h(AddI18nType, { ref: formRef }),
@@ -57,7 +55,6 @@ export function onUpdate(row: any) {
 		width: '30%',
 		props: { formInline: { typeName: row.typeName, summary: row.summary, isDefault: row.isDefault } },
 		draggable: true,
-		fullscreen: deviceDetection(),
 		fullscreenIcon: true,
 		closeOnClickModal: false,
 		contentRenderer: () => h(AddI18nType, { ref: formRef }),

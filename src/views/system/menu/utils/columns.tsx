@@ -39,6 +39,10 @@ export const columns: TableColumnList = [
 	},
 	{ label: '排序', prop: 'rank', width: 100 },
 	{ label: '隐藏', prop: 'visible', slot: 'visible', width: 100 },
+	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true },
+	{ label: $t('table.createTime'), prop: 'createTime', sortable: true },
+	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 90 },
+	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 90 },
 	{ label: '操作', fixed: 'right', width: 210, slot: 'operation' },
 ];
 
