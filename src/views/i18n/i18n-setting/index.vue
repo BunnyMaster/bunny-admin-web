@@ -81,7 +81,7 @@ onMounted(() => {
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_multilingual') }} </el-button>
 				<!-- 批量删除按钮 -->
 				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
-					{{ $t('add_multilingual') }}
+					{{ $t('delete_batches') }}
 				</el-button>
 			</template>
 

@@ -4,7 +4,7 @@ import { $t } from '@/plugins/i18n';
 // 表格列
 export const columns: TableColumnList = [
 	{ type: 'index', index: (index: number) => index + 1 },
-	// { type: 'selection', align: 'left' },
+	{ type: 'selection', align: 'left' },
 	{ label: $t('id'), prop: 'id' },
 	// 父级id
 	{ label: $t('power_parentId'), prop: 'parentId' },

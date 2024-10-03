@@ -8,6 +8,7 @@ import { $t } from '@/plugins/i18n';
 
 export const formRef = ref();
 const menuIconStore = useMenuIconStore();
+export const deleteIds = ref([]);
 
 /**
  * * 搜索初始化系统菜单图标
@@ -96,5 +97,25 @@ export const onDelete = async (row: any) => {
 
 	// 删除数据
 	await menuIconStore.deleteMenuIcon([id]);
+	await onSearch();
+};
+
+/**
+ * 批量删除
+ */
+export const onDeleteBatch = async () => {
+	const ids = deleteIds.value;
+
+	// 是否确认删除
+	const result = await messageBox({
+		title: $t('confirm_delete'),
+		showMessage: false,
+		confirmMessage: undefined,
+		cancelMessage: $t('cancel_delete'),
+	});
+	if (!result) return;
+
+	// 删除数据
+	await menuIconStore.deleteMenuIcon(ids);
 	await onSearch();
 };

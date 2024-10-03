@@ -4,7 +4,7 @@ import { columns } from '@/views/system/role/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onDelete, onSearch, onUpdate } from '@/views/system/role/utils/hooks';
+import { deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/system/role/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -17,6 +17,18 @@ const tableRef = ref();
 const formRef = ref();
 const roleStore = useRoleStore();
 
+/**
+ * * 选择多行
+ * @param rows
+ */
+const onSelectionChange = (rows: Array<any>) => {
+	deleteIds.value = rows.map((row: any) => row.id);
+};
+
+/**
+ * 重置表单
+ * @param formEl
+ */
 const resetForm = async formEl => {
 	if (!formEl) return;
 	formEl.resetFields();
@@ -45,7 +57,12 @@ onMounted(() => {
 
 		<PureTableBar :columns="columns" title="角色" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> 添加角色</el-button>
+				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') + $t('role_roleCode') }} </el-button>
+
+				<!-- 批量删除按钮 -->
+				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+					{{ $t('delete_batches') }}
+				</el-button>
 			</template>
 
 			<template v-slot="{ size, dynamicColumns }">
@@ -64,6 +81,7 @@ onMounted(() => {
 					row-key="id"
 					showOverflowTooltip
 					table-layout="auto"
+					@selection-change="onSelectionChange"
 				>
 					<template #createUser="{ row }">
 						<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>
@@ -76,8 +94,7 @@ onMounted(() => {
 					<template #operation="{ row }">
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
 						<el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd"> {{ $t('add_new') }} </el-button>
-						<!-- TODO 待完成 -->
-						<el-popconfirm :title="`是否确认删除 ${row.typeName}数据`" @confirm="onDelete(row)">
+						<el-popconfirm :title="`是否确认删除 ${row.roleCode}数据`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}

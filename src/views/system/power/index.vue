@@ -4,7 +4,7 @@ import { columns } from '@/views/system/power/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onDelete, onSearch, onUpdate } from '@/views/system/power/utils/hooks';
+import { deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/system/power/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -17,6 +17,18 @@ const tableRef = ref();
 const formRef = ref();
 const powerStore = usePowerStore();
 
+/**
+ * * 选择多行
+ * @param rows
+ */
+const onSelectionChange = (rows: Array<any>) => {
+	deleteIds.value = rows.map((row: any) => row.id);
+};
+
+/**
+ * 重置表单
+ * @param formEl
+ */
 const resetForm = async formEl => {
 	if (!formEl) return;
 	formEl.resetFields();
@@ -49,9 +61,15 @@ onMounted(() => {
 			</el-form-item>
 		</el-form>
 
-		<PureTableBar :columns="columns" title="权限" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
+		<PureTableBar :columns="columns" :title="$t('power')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> 添加权限</el-button>
+				<!-- 添加权限按钮 -->
+				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') + $t('power') }} </el-button>
+
+				<!-- 批量删除按钮 -->
+				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+					{{ $t('delete_batches') }}
+				</el-button>
 			</template>
 
 			<template v-slot="{ size, dynamicColumns }">
@@ -70,6 +88,7 @@ onMounted(() => {
 					row-key="id"
 					showOverflowTooltip
 					table-layout="auto"
+					@selection-change="onSelectionChange"
 				>
 					<template #createUser="{ row }">
 						<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>

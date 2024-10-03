@@ -5,7 +5,7 @@ import PureTableBar from '@/components/TableBar/src/bar';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onDelete, onSearch, onUpdate } from '@/views/system/menuIcon/utils/hooks';
+import { deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/system/menuIcon/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -17,6 +17,18 @@ const tableRef = ref();
 const formRef = ref();
 const menuIconStore = useMenuIconStore();
 
+/**
+ * * 选择多行
+ * @param rows
+ */
+const onSelectionChange = (rows: Array<any>) => {
+	deleteIds.value = rows.map((row: any) => row.id);
+};
+
+/**
+ * 重置表单
+ * @param formEl
+ */
 const resetForm = async formEl => {
 	if (!formEl) return;
 	formEl.resetFields();
@@ -42,7 +54,14 @@ onMounted(() => {
 
 		<PureTableBar :columns="columns" title="系统菜单图标" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> 添加系统菜单图标</el-button>
+				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
+					{{ $t('add_new') + $t('menuIcon_iconName') }}
+				</el-button>
+
+				<!-- 批量删除按钮 -->
+				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+					{{ $t('delete_batches') }}
+				</el-button>
 			</template>
 
 			<template v-slot="{ size, dynamicColumns }">
@@ -61,6 +80,7 @@ onMounted(() => {
 					row-key="id"
 					showOverflowTooltip
 					table-layout="auto"
+					@selection-change="onSelectionChange"
 				>
 					<template #iconName="{ row }">
 						<div class="flex justify-center">
