@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { columns } from '@/views/system/power/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
@@ -35,6 +35,11 @@ const resetForm = async formEl => {
 	await onSearch();
 };
 
+/**
+ * * 按钮类
+ */
+const buttonClass = computed(() => ['!h-[20px]', 'reset-margin', '!text-gray-500', 'dark:!text-white', 'dark:hover:!text-primary']);
+
 onMounted(() => {
 	onSearch();
 });
@@ -43,9 +48,6 @@ onMounted(() => {
 <template>
 	<div class="main">
 		<el-form ref="formRef" :inline="true" :model="powerStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-			<el-form-item :label="$t('power_parentId')" prop="parentId">
-				<el-input v-model="powerStore.form.parentId" :placeholder="`${$t('input')}${$t('power_parentId')}`" class="!w-[180px]" clearable />
-			</el-form-item>
 			<el-form-item :label="$t('power_powerCode')" prop="powerCode">
 				<el-input v-model="powerStore.form.powerCode" :placeholder="`${$t('input')}${$t('power_powerCode')}`" class="!w-[180px]" clearable />
 			</el-form-item>
@@ -99,8 +101,10 @@ onMounted(() => {
 					</template>
 
 					<template #operation="{ row }">
+						<!-- 修改 -->
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
-						<el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd"> {{ $t('add_new') }} </el-button>
+
+						<!-- 删除 -->
 						<el-popconfirm :title="`是否确认删除 ${row.powerName}数据`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">

@@ -14,8 +14,6 @@ export const usePowerStore = defineStore('powerStore', {
 			datalist: [],
 			// 查询表单
 			form: {
-				// 父级id
-				parentId: undefined,
 				// 权限编码
 				powerCode: undefined,
 				// 权限名称
