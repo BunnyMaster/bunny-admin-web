@@ -6,7 +6,7 @@ import Lock from '@iconify-icons/ri/lock-fill';
 import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { useUserStore } from '@/store/modules/user';
+import { useUserStore } from '@/store/system/user';
 import { message } from '@/utils/message';
 import { getTopMenu, initRouter } from '@/router/utils';
 import Motion from './utils/motion';

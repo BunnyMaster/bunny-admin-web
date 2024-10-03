@@ -33,8 +33,6 @@ export const useUserStore = defineStore({
 				setToken(result.data);
 				return true;
 			}
-
-			message(result.message, { type: 'error' });
 			return false;
 		},
 

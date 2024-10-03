@@ -1,7 +1,7 @@
 import { deviceDetection } from '@pureadmin/utils';
 import { addDialog } from '@/components/BaseDialog/index';
 import MenuIconDialog from '@/views/system/menuIcon/menu-icon-dialog.vue';
-import { useMenuIconStore } from '@/store/modules/menuIcon';
+import { useMenuIconStore } from '@/store/system/menuIcon';
 import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/menuIcon/utils/types';

@@ -9,7 +9,7 @@ import type { routeMetaType } from '../types';
 import { remainingPaths, router } from '@/router';
 import { computed, type CSSProperties } from 'vue';
 import { useAppStoreHook } from '@/store/modules/app';
-import { useUserStoreHook } from '@/store/modules/user';
+import { useUserStoreHook } from '@/store/system/user';
 import { isAllEmpty, useGlobal } from '@pureadmin/utils';
 import { useEpThemeStoreHook } from '@/store/epTheme';
 import { usePermissionStoreHook } from '@/store/permission';

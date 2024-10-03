@@ -2,7 +2,7 @@ import Axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
 import type { PureHttpError, PureHttpRequestConfig, PureHttpResponse, RequestMethods } from './types';
 import NProgress from '../../utils/progress';
 import { formatToken, getToken } from '@/utils/auth';
-import { useUserStoreHook } from '@/store/modules/user';
+import { useUserStoreHook } from '@/store/system/user';
 import { defaultMockConfig } from '@/api/service/config';
 
 class PureHttp {

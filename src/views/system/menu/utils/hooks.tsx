@@ -5,7 +5,7 @@ import { h, reactive, ref } from 'vue';
 import type { FormItemProps } from './types';
 
 import { cloneDeep, deviceDetection } from '@pureadmin/utils';
-import { userRouterStore } from '@/store/modules/router';
+import { userRouterStore } from '@/store/system/router';
 
 const routerStore = userRouterStore();
 export const form = reactive({
@@ -72,9 +72,9 @@ export function onAdd(parentId: any = 0) {
 		},
 		width: '45%',
 		draggable: true,
+		closeOnClickModal: false,
 		fullscreen: deviceDetection(),
 		fullscreenIcon: true,
-		closeOnClickModal: false,
 		contentRenderer: () => h(editForm, { ref: formRef }),
 		beforeSure: (done, { options }) => {
 			const menuFormRef = formRef.value.menuFormRef;

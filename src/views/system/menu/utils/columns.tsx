@@ -2,7 +2,7 @@ import { h, reactive } from 'vue';
 import type { FormRules } from 'element-plus';
 import { $t } from '@/plugins/i18n';
 import { isAllEmpty } from '@pureadmin/utils';
-import { getMenuType } from '@/views/system/menu/utils/hook';
+import { getMenuType } from '@/views/system/menu/utils/hooks';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 
 export const columns: TableColumnList = [

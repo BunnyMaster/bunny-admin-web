@@ -6,11 +6,11 @@ import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import AddFill from '@iconify-icons/ri/add-circle-line';
-import { handleDelete, onAdd, onSearch, onUpdate, resetForm } from '@/views/system/menu/utils/hook';
+import { handleDelete, onAdd, onSearch, onUpdate, resetForm } from '@/views/system/menu/utils/hooks';
 import form from '@/views/system/menu/form.vue';
 import PureTable from '@pureadmin/table';
 import { columns } from '@/views/system/menu/utils/columns';
-import { userRouterStore } from '@/store/modules/router';
+import { userRouterStore } from '@/store/system/router';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 
 const formRef = ref();

@@ -2,7 +2,7 @@ import Axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
 import type { PureHttpError, PureHttpRequestConfig, PureHttpResponse, RequestMethods } from './types';
 import NProgress from '@/utils/progress';
 import { formatToken, getToken, removeToken } from '@/utils/auth';
-import { useUserStoreHook } from '@/store/modules/user';
+import { useUserStoreHook } from '@/store/system/user';
 import { message } from '@/utils/message';
 import { router } from '@/store/utils';
 import { defaultConfig, whiteList } from '@/api/service/config';
