@@ -4,7 +4,7 @@ import { FormInstance } from 'element-plus';
 import { rules } from '@/views/i18n/i18n-type-setting/utils/columns';
 import { FormProps } from '@/views/i18n/i18n-type-setting/utils/types';
 import { frameSureOptions } from '@/enums';
-import Segmented from '@/components/ReSegmented';
+import Segmented from '@/components/Segmented';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({

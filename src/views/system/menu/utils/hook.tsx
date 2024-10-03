@@ -30,16 +30,6 @@ export const getMenuType = (type, text = false) => {
 };
 
 /**
- * 表单重置
- * @param formEl
- */
-export const resetForm = async (formEl: any) => {
-	if (!formEl) return;
-	formEl.resetFields();
-	await onSearch();
-};
-
-/**
  * * 获取菜单数据
  */
 export const onSearch = async () => {
@@ -93,14 +83,12 @@ export function onAdd(parentId: any = 0) {
 				if (!valid) return;
 				delete curData.higherMenuOptions;
 
-				console.log(curData);
-
-				// const result = await routerStore.addMenu(curData);
-				// // 刷新表格数据
-				// if (result) {
-				// 	done();
-				// 	await onSearch();
-				// }
+				const result = await routerStore.addMenu(curData);
+				// 刷新表格数据
+				if (result) {
+					done();
+					await onSearch();
+				}
 			});
 		},
 	});
@@ -125,7 +113,7 @@ export const onUpdate = (row?: FormItemProps) => {
 				rank: row?.rank,
 				icon: row?.icon,
 				frameSrc: row?.frameSrc,
-				visible: row?.visible,
+				visible: row.visible,
 			},
 		},
 		width: '45%',
@@ -142,13 +130,12 @@ export const onUpdate = (row?: FormItemProps) => {
 				delete curData.higherMenuOptions;
 
 				curData.id = row.id;
-				console.log(row);
-				// const result = await routerStore.updateMenu(curData);
-				// // 刷新表格数据
-				// if (result) {
-				// 	done();
-				// 	await onSearch();
-				// }
+				const result = await routerStore.updateMenu(curData);
+				// 刷新表格数据
+				if (result) {
+					done();
+					await onSearch();
+				}
 			});
 		},
 	});

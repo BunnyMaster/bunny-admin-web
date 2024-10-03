@@ -1,4 +1,4 @@
-import type { OptionsType } from '@/components/ReSegmented';
+import type { OptionsType } from '@/components/Segmented';
 
 export const menuTypeOptions: Array<OptionsType> = [
 	{ label: '菜单', value: 0 },
@@ -8,11 +8,7 @@ export const menuTypeOptions: Array<OptionsType> = [
 
 export const showLinkOptions: Array<OptionsType> = [
 	{ label: '显示', tip: '会在菜单中显示', value: true },
-	{
-		label: '隐藏',
-		tip: '不会在菜单中显示',
-		value: false,
-	},
+	{ label: '隐藏', tip: '不会在菜单中显示', value: false },
 ];
 
 export const fixedTagOptions: Array<OptionsType> = [

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { fetchAddI18n, fetchDeleteI18n, fetchGetI18n, fetchGetI18nList, fetchUpdateI18n } from '@/api/v1/i18n';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
+import { storePagination } from '@/store/useStorePagination';
 
 export const userI18nStore = defineStore('i18nStore', {
 	persist: true,
@@ -55,16 +56,9 @@ export const userI18nStore = defineStore('i18nStore', {
 			delete data.background;
 			const result = await fetchGetI18nList(data);
 
-			// 如果成功赋值内容
-			if (result.code === 200) {
-				this.datalist = result.data.list;
-				this.pagination.currentPage = result.data.pageNo;
-				this.pagination.pageSize = result.data.pageSize;
-				this.pagination.total = result.data.total;
-				return true;
-			}
-
-			return false;
+			// 公共页面函数hook
+			const pagination = storePagination.bind(this);
+			return pagination(result);
 		},
 
 		/**

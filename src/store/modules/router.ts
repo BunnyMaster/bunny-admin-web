@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { addMenu, deletedMenuByIds, getMenuList, updateMenu } from '@/api/v1/system';
+import { addMenu, deletedMenuByIds, getMenusList, updateMenu } from '@/api/v1/system';
 import { storeMessage } from '@/utils/message';
 import { handleTree } from '@/utils/tree';
 
@@ -7,6 +7,7 @@ export const userRouterStore = defineStore('routerStore', {
 	state() {
 		return {
 			datalist: [],
+			form: { title: undefined, visible: undefined },
 			loading: false,
 		};
 	},
@@ -16,7 +17,9 @@ export const userRouterStore = defineStore('routerStore', {
 		 * * 获取菜单列表
 		 */
 		async getMenuList() {
-			const result = await getMenuList();
+			const data = { ...this.pagination, ...this.form };
+			const result = await getMenusList(data);
+
 			if (result.code === 200) {
 				this.datalist = handleTree(result.data as any);
 				return true;

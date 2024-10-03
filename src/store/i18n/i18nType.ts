@@ -4,7 +4,6 @@ import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 
 export const userI18nTypeStore = defineStore('i18nTypeStore', {
-	persist: true,
 	state() {
 		return {
 			// 多语言列表

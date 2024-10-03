@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { userI18nStore } from '@/store/i18n/i18n';
 import { deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/i18n/i18n-setting/utils/hook';
-import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Delete from '@iconify-icons/ep/delete';

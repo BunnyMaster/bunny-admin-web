@@ -1,9 +1,9 @@
 import { h, reactive } from 'vue';
 import type { FormRules } from 'element-plus';
-import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { $t } from '@/plugins/i18n';
 import { isAllEmpty } from '@pureadmin/utils';
 import { getMenuType } from '@/views/system/menu/utils/hook';
+import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 
 export const columns: TableColumnList = [
 	{
@@ -37,14 +37,8 @@ export const columns: TableColumnList = [
 		prop: 'component',
 		formatter: ({ path, component }) => (isAllEmpty(component) ? path : component),
 	},
-	{ label: '权限标识', prop: 'auths' },
 	{ label: '排序', prop: 'rank', width: 100 },
-	{
-		label: '隐藏',
-		prop: 'showLink',
-		formatter: ({ showLink }) => (showLink ? '否' : '是'),
-		width: 100,
-	},
+	{ label: '隐藏', prop: 'visible', slot: 'visible', width: 100 },
 	{ label: '操作', fixed: 'right', width: 210, slot: 'operation' },
 ];
 

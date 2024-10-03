@@ -12,8 +12,8 @@ export const getMenuIconList = (data: any) => {
 };
 
 /** 菜单管理-列表 */
-export const getMenuList = (data?: any) => {
-	return http.request<BaseResult<ResultTable>>('get', `router/getMenus`, { data });
+export const getMenusList = (data?: any) => {
+	return http.request<BaseResult<ResultTable>>('get', `router/getMenusList`, { params: data });
 };
 
 /** 菜单管理-添加菜单 */

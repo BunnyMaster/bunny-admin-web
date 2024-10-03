@@ -1,25 +1,18 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import ReCol from '@/components/MyCol';
-import { formRules } from '@/views/system/menu/utils/rule';
+import { formRules } from '@/views/system/menu/utils/columns';
+import IconSelect from '@/components/SelectIcon/Select.vue';
+import Segmented from '@/components/Segmented';
+import { menuTypeOptions } from '@/enums';
 import { FormProps } from '@/views/system/menu/utils/types';
-import { IconSelect } from '@/components/ReIcon';
-import Segmented from '@/components/ReSegmented';
-import { menuTypeOptions, showLinkOptions } from '@/enums';
-import { userMenuIconStore } from '@/store/modules/menuIcon';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({}),
 });
 
-const menuIconStore = userMenuIconStore();
 const ruleFormRef = ref();
 const newFormInline = ref(props.formInline);
-
-onMounted(() => {
-	menuIconStore.getMenuIconList();
-});
-
 defineExpose({ menuFormRef: ruleFormRef });
 </script>
 
@@ -81,7 +74,7 @@ defineExpose({ menuFormRef: ruleFormRef });
 
 			<re-col :sm="24" :value="12" :xs="24">
 				<el-form-item label="菜单图标" prop="icon">
-					<IconSelect v-model="newFormInline.icon" class="w-full" />
+					<IconSelect :form-inline="newFormInline" class="w-full" />
 				</el-form-item>
 			</re-col>
 
@@ -93,7 +86,9 @@ defineExpose({ menuFormRef: ruleFormRef });
 
 			<re-col :sm="24" :value="12" :xs="24">
 				<el-form-item label="是否显示">
-					<Segmented :modelValue="newFormInline.visible ? 0 : 1" :options="showLinkOptions" @change="({ option: { value } }) => (newFormInline.visible = value)" />
+					<el-switch v-model="newFormInline.visible" active-text="开启" inactive-text="隐藏" inline-prompt style="
+
+--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
 				</el-form-item>
 			</re-col>
 		</el-row>
