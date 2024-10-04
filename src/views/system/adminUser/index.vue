@@ -1,119 +1,44 @@
-<script lang="tsx" setup>
-import { computed, onMounted, reactive, ref } from 'vue';
+<script lang="ts" setup>
+import { computed, onMounted, ref } from 'vue';
 import { columns } from '@/views/system/adminUser/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onDelete, onSearch, onUpdate, updateUserStatus } from '@/views/system/adminUser/utils/hooks';
+import { onAdd, onAssignRolesToUser, onDelete, onResetPassword, onSearch, onUpdate, onUploadAvatar, updateUserStatus } from '@/views/system/adminUser/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { useAdminUserStore } from '@/store/system/adminUser.ts';
-import ResetPasswordDialog from '@/components/Table/ResetPasswords.vue';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import userAvatar from '@/assets/user.jpg';
 import Upload from '@iconify-icons/ri/upload-line';
 import Role from '@iconify-icons/ri/admin-line';
 import Password from '@iconify-icons/ri/lock-password-line';
 import More from '@iconify-icons/ep/more-filled';
-import { addDialog } from '@/components/BaseDialog/index';
-import { deviceDetection } from '@pureadmin/utils';
-import CropperPreview from '@/components/CropperPreview';
-import AssignUserToRole from '@/views/system/adminUser/assign-user-to-role.vue';
-import { useRoleStore } from '@/store/system/role';
+import { useAdminUserStore } from '@/store/system/adminUser';
+import { ErrorTypes } from 'xgplayer/es/error';
 
 const tableRef = ref();
 const formRef = ref();
-const cropRef = ref();
-const assignRolesRef = ref();
-const roleStore = useRoleStore();
-// 上传头像信息
-const avatarInfo = ref();
 const adminUserStore = useAdminUserStore();
-// 重置密码表单校验Ref
-const ruleFormByRestPasswordRef = ref();
-// 重置密码表单
-const restPasswordForm = reactive({
-	userId: void 0,
-	password: '',
-});
+const buttonClass = computed(() => ['!h-[20px]', 'reset-margin', '!text-gray-500', 'dark:!text-white', 'dark:hover:!text-primary']);
 
-/** 上传头像 */
-const onUploadAvatar = (row: any) => {
-	addDialog({
-		title: '裁剪、上传头像',
-		width: '40%',
-		closeOnClickModal: false,
-		fullscreen: deviceDetection(),
-		contentRenderer: () =>
-			h(CropperPreview, {
-				ref: cropRef,
-				imgSrc: row.avatar || userAvatar,
-				onCropper: info => (avatarInfo.value = info),
-			}),
-		beforeSure: async done => {
-			console.log('裁剪后的图片信息：', avatarInfo.value);
-			// 根据实际业务使用avatarInfo.value和row里的某些字段去调用上传头像接口即可
-			done();
-			await onSearch();
-		},
-		closeCallBack: () => cropRef.value.hidePopover(),
-	});
+/**
+ * * 当前页改变时
+ */
+const onCurrentPageChange = async (value: number) => {
+	adminUserStore.pagination.currentPage = value;
+	await onSearch();
 };
 
 /**
- * * 重置密码
- * @param row
+ * * 当分页发生变化
+ * @param value
  */
-const onResetPassword = (row: any) => {
-	addDialog({
-		title: `重置 ${row.username} 用户的密码`,
-		width: '30%',
-		draggable: true,
-		closeOnClickModal: false,
-		fullscreenIcon: true,
-		destroyOnClose: true,
-		contentRenderer: () => <ResetPasswordDialog ref={ruleFormByRestPasswordRef} form={restPasswordForm} />,
-		beforeSure: (done: any) => {
-			ruleFormByRestPasswordRef.value.ruleFormRef.validate(async (valid: any) => {
-				if (valid) {
-					// 更新用户密码
-					const data = { userId: row.id, password: restPasswordForm.password };
-					const result = await adminUserStore.updateAdminUserPasswordByManager(data);
-
-					// 更新成功关闭弹窗
-					if (!result) return;
-					done();
-				}
-			});
-		},
-	});
-};
-
-/**
- * 为用户分配角色
- * @param row
- */
-const onAssignRolesToUser = (row: any) => {
-	addDialog({
-		title: `为 ${row.username} 分配角色`,
-		width: '30%',
-		draggable: true,
-		closeOnClickModal: false,
-		fullscreenIcon: true,
-		contentRenderer: () => <AssignUserToRole ref={assignRolesRef} userId={row.id} />,
-		beforeSure: async (done: any) => {
-			// 分配用户角色
-			const data = { userId: row.id, roleIds: assignRolesRef.value.assignRoles };
-			const result = await roleStore.assignRolesToUsers(data);
-
-			// 更新成功关闭弹窗
-			if (!result) return;
-			done();
-		},
-	});
+const onPageSizeChange = async (value: number) => {
+	adminUserStore.pagination.pageSize = value;
+	await onSearch();
 };
 
 /**
@@ -125,11 +50,6 @@ const resetForm = async formEl => {
 	formEl.resetFields();
 	await onSearch();
 };
-
-/**
- * * 按钮类
- */
-const buttonClass = computed(() => ['!h-[20px]', 'reset-margin', '!text-gray-500', 'dark:!text-white', 'dark:hover:!text-primary']);
 
 onMounted(() => {
 	onSearch();
@@ -179,6 +99,7 @@ onMounted(() => {
 					:data="adminUserStore.datalist"
 					:header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
 					:loading="adminUserStore.loading"
+					:pagination="adminUserStore.pagination"
 					:size="size"
 					adaptive
 					align-whole="center"
@@ -187,6 +108,8 @@ onMounted(() => {
 					row-key="id"
 					showOverflowTooltip
 					table-layout="auto"
+					@page-size-change="onPageSizeChange"
+					@page-current-change="onCurrentPageChange"
 				>
 					<!-- 显示头像 -->
 					<template #avatar="{ row }">

@@ -25,10 +25,17 @@ defineExpose({ formRef });
 			<el-input v-model="form.iconName" autocomplete="off" type="text" />
 		</el-form-item>
 
-		<el-form-item :label="$t('menuIcon_preview')">
+		<el-form-item v-show="form.iconName" :label="$t('menuIcon_preview')">
 			<div class="flex justify-center">
 				<component :is="useRenderIcon(form.iconName)" class="flex justify-center" style="font-size: 30px" />
 			</div>
+		</el-form-item>
+
+		<!-- icon 官网 -->
+		<el-form-item :label="$t('systemMenuIcon.officialWebsite')">
+			<el-link :title="$t('systemMenuIcon.officialWebsite')" :underline="false" href="https://icon-sets.iconify.design/" target="_blank" type="primary">
+				{{ $t('systemMenuIcon.officialWebsite') }}
+			</el-link>
 		</el-form-item>
 	</el-form>
 </template>

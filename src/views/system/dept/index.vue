@@ -17,6 +17,27 @@ const tableRef = ref();
 const formRef = ref();
 const deptStore = useDeptStore();
 
+/**
+ * * 当前页改变时
+ */
+const onCurrentPageChange = async (value: number) => {
+	deptStore.pagination.currentPage = value;
+	await onSearch();
+};
+
+/**
+ * * 当分页发生变化
+ * @param value
+ */
+const onPageSizeChange = async (value: number) => {
+	deptStore.pagination.pageSize = value;
+	await onSearch();
+};
+
+/**
+ * 重置表单
+ * @param formEl
+ */
 const resetForm = async formEl => {
 	if (!formEl) return;
 	formEl.resetFields();
@@ -62,6 +83,7 @@ onMounted(() => {
 					:data="deptStore.datalist"
 					:header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
 					:loading="deptStore.loading"
+					:pagination="deptStore.pagination"
 					:size="size"
 					adaptive
 					align-whole="center"
@@ -70,6 +92,8 @@ onMounted(() => {
 					row-key="id"
 					showOverflowTooltip
 					table-layout="auto"
+					@page-size-change="onPageSizeChange"
+					@page-current-change="onCurrentPageChange"
 				>
 					<template #createUser="{ row }">
 						<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>

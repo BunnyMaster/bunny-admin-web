@@ -18,6 +18,23 @@ const formRef = ref();
 const menuIconStore = useMenuIconStore();
 
 /**
+ * * 当前页改变时
+ */
+const onCurrentPageChange = async (value: number) => {
+	menuIconStore.pagination.currentPage = value;
+	await onSearch();
+};
+
+/**
+ * * 当分页发生变化
+ * @param value
+ */
+const onPageSizeChange = async (value: number) => {
+	menuIconStore.pagination.pageSize = value;
+	await onSearch();
+};
+
+/**
  * * 选择多行
  * @param rows
  */
@@ -72,6 +89,7 @@ onMounted(() => {
 					:data="menuIconStore.datalist"
 					:header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
 					:loading="menuIconStore.loading"
+					:pagination="menuIconStore.pagination"
 					:size="size"
 					adaptive
 					align-whole="center"
@@ -80,6 +98,8 @@ onMounted(() => {
 					row-key="id"
 					showOverflowTooltip
 					table-layout="auto"
+					@page-size-change="onPageSizeChange"
+					@page-current-change="onCurrentPageChange"
 					@selection-change="onSelectionChange"
 				>
 					<template #iconName="{ row }">

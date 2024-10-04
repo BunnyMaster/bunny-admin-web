@@ -18,6 +18,23 @@ const formRef = ref();
 const roleStore = useRoleStore();
 
 /**
+ * * 当前页改变时
+ */
+const onCurrentPageChange = async (value: number) => {
+	roleStore.pagination.currentPage = value;
+	await onSearch();
+};
+
+/**
+ * * 当分页发生变化
+ * @param value
+ */
+const onPageSizeChange = async (value: number) => {
+	roleStore.pagination.pageSize = value;
+	await onSearch();
+};
+
+/**
  * * 选择多行
  * @param rows
  */
@@ -73,6 +90,7 @@ onMounted(() => {
 					:data="roleStore.datalist"
 					:header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
 					:loading="roleStore.loading"
+					:pagination="roleStore.pagination"
 					:size="size"
 					adaptive
 					align-whole="center"
@@ -81,6 +99,8 @@ onMounted(() => {
 					row-key="id"
 					showOverflowTooltip
 					table-layout="auto"
+					@page-size-change="onPageSizeChange"
+					@page-current-change="onCurrentPageChange"
 					@selection-change="onSelectionChange"
 				>
 					<template #createUser="{ row }">
