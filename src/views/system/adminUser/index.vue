@@ -17,7 +17,7 @@ import Role from '@iconify-icons/ri/admin-line';
 import Password from '@iconify-icons/ri/lock-password-line';
 import More from '@iconify-icons/ep/more-filled';
 import { useAdminUserStore } from '@/store/system/adminUser';
-import { ErrorTypes } from 'xgplayer/es/error';
+import { sexConstant, userStatus } from '@/enums/baseConstant';
 
 const tableRef = ref();
 const formRef = ref();
@@ -59,27 +59,45 @@ onMounted(() => {
 <template>
 	<div class="main">
 		<el-form ref="formRef" :inline="true" :model="adminUserStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+			<!-- 查询用户名 -->
 			<el-form-item :label="$t('adminUser_username')" prop="username">
 				<el-input v-model="adminUserStore.form.username" :placeholder="`${$t('input')}${$t('adminUser_username')}`" class="!w-[180px]" clearable />
 			</el-form-item>
+
+			<!-- 查询昵称 -->
 			<el-form-item :label="$t('adminUser_nickName')" prop="nickName">
 				<el-input v-model="adminUserStore.form.nickName" :placeholder="`${$t('input')}${$t('adminUser_nickName')}`" class="!w-[180px]" clearable />
 			</el-form-item>
+
+			<!-- 查询邮箱 -->
 			<el-form-item :label="$t('adminUser_email')" prop="email">
 				<el-input v-model="adminUserStore.form.email" :placeholder="`${$t('input')}${$t('adminUser_email')}`" class="!w-[180px]" clearable />
 			</el-form-item>
+
+			<!-- 查询手机号 -->
 			<el-form-item :label="$t('adminUser_phone')" prop="phone">
 				<el-input v-model="adminUserStore.form.phone" :placeholder="`${$t('input')}${$t('adminUser_phone')}`" class="!w-[180px]" clearable />
 			</el-form-item>
+
+			<!-- 查询性别 -->
 			<el-form-item :label="$t('adminUser_sex')" prop="sex">
-				<el-input v-model="adminUserStore.form.sex" :placeholder="`${$t('input')}${$t('adminUser_sex')}`" class="!w-[180px]" clearable />
+				<el-select v-model="adminUserStore.form.sex" :placeholder="`${$t('input')}${$t('adminUser_sex')}`" class="!w-[180px]" clearable filterable>
+					<el-option v-for="(item, index) in sexConstant" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
+				</el-select>
 			</el-form-item>
+
+			<!-- 查询简介 -->
 			<el-form-item :label="$t('adminUser_summary')" prop="summary">
 				<el-input v-model="adminUserStore.form.summary" :placeholder="`${$t('input')}${$t('adminUser_summary')}`" class="!w-[180px]" clearable />
 			</el-form-item>
+
+			<!-- 查询状态 -->
 			<el-form-item :label="$t('adminUser_status')" prop="status">
-				<el-input v-model="adminUserStore.form.status" :placeholder="`${$t('input')}${$t('adminUser_status')}`" class="!w-[180px]" clearable />
+				<el-select v-model="adminUserStore.form.status" :placeholder="`${$t('input')}${$t('adminUser_status')}`" class="!w-[180px]" clearable filterable>
+					<el-option v-for="(item, index) in userStatus" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
+				</el-select>
 			</el-form-item>
+
 			<el-form-item>
 				<el-button :icon="useRenderIcon('ri:search-line')" :loading="adminUserStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
 				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>

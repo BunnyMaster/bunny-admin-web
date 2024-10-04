@@ -23,6 +23,14 @@ export const sexConstant = [
 ];
 
 /**
+ * * 默认状态
+ */
+export const userStatus = [
+	{ value: 0, label: '启用' },
+	{ value: 1, label: '禁用' },
+];
+
+/**
  * * 分页默认数组个数
  */
 export const pageSizes: number[] = [15, 30, 50, 100, 150, 200, 300];

@@ -16,7 +16,7 @@
 import { Plus } from '@element-plus/icons-vue';
 import { ElMessage, UploadRawFile, UploadRequestOptions } from 'element-plus';
 import { onMounted, ref } from 'vue';
-import { SystemEnum } from '@/enum/upload';
+import { SystemEnum } from '@/enums/upload';
 import { fetchUploadFIle } from '@/api/v1/system';
 
 const props = defineProps({

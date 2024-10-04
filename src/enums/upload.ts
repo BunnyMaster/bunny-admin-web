@@ -7,16 +7,3 @@ export enum SystemEnum {
 	// Base64
 	Base64 = 'data:text/plain;base64,',
 }
-
-/**
- *
- */
-export enum UploadFileEnum {
-	Favicon = 'favicon',
-	Avatar = 'avatar',
-	Article = 'article',
-	Carousel = 'carousel',
-	Feedback = 'feedback',
-	ArticleCovers = 'articleCovers',
-	ArticleAttachment = 'articleAttachment',
-}
