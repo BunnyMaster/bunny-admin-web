@@ -106,7 +106,7 @@ onMounted(() => {
 
 		<PureTableBar :columns="columns" title="用户信息" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> 添加用户信息</el-button>
+				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') + $t('adminUser') }} </el-button>
 			</template>
 
 			<template v-slot="{ size, dynamicColumns }">

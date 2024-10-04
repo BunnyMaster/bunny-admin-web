@@ -6,7 +6,6 @@ import { FormProps } from '@/views/system/adminUser/utils/types';
 import { $t } from '@/plugins/i18n';
 import ReCol from '@/components/MyCol';
 import { sexConstant } from '@/enums/baseConstant';
-import UploadDialogImage from '@/components/Upload/UploadDialogImage.vue';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
@@ -90,13 +89,6 @@ defineExpose({ formRef });
 					<el-select v-model="form.sex" :placeholder="$t('adminUser_sex')" clearable filterable>
 						<el-option v-for="(item, index) in sexConstant" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
 					</el-select>
-				</el-form-item>
-			</re-col>
-
-			<!-- 头像 -->
-			<re-col :sm="24" :value="24" :xs="24">
-				<el-form-item :label="$t('adminUser_avatar')" prop="avatar">
-					<UploadDialogImage :image-url="form.avatar" type="avatar" @uploadCallback="onUploadCallback" />
 				</el-form-item>
 			</re-col>
 

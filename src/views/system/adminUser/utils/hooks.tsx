@@ -2,7 +2,7 @@ import { addDialog } from '@/components/BaseDialog/index';
 import AdminUserDialog from '@/views/system/adminUser/admin-user-dialog.vue';
 import { useAdminUserStore } from '@/store/system/adminUser.ts';
 import { h, reactive, ref } from 'vue';
-import { messageBox } from '@/utils/message';
+import { message, messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/adminUser/utils/types';
 import { $t } from '@/plugins/i18n';
 import { isAddUserinfo } from '@/views/system/adminUser/utils/columns';
@@ -11,6 +11,9 @@ import ResetPasswordDialog from '@/views/system/adminUser/reset-passwords.vue';
 import { deviceDetection } from '@pureadmin/utils';
 import CropperPreview from '@/components/CropperPreview';
 import AssignUserToRole from '@/views/system/adminUser/assign-user-to-role.vue';
+import { fetchUploadFile } from '@/api/v1/system';
+import userAvatar from '@/assets/user.jpg';
+import { fetchUploadAvatarByAdmin } from '@/api/v1/user';
 
 export const formRef = ref();
 const cropRef = ref();
@@ -156,7 +159,10 @@ export const updateUserStatus = async (row: any) => {
 	await onSearch();
 };
 
-/* 上传头像 */
+/**
+ * * 上传头像
+ * @param row
+ */
 export const onUploadAvatar = (row: any) => {
 	addDialog({
 		title: '裁剪、上传头像',
@@ -170,8 +176,18 @@ export const onUploadAvatar = (row: any) => {
 				onCropper: info => (avatarInfo.value = info),
 			}),
 		beforeSure: async done => {
-			console.log('裁剪后的图片信息：', avatarInfo.value);
-			// 根据实际业务使用avatarInfo.value和row里的某些字段去调用上传头像接口即可
+			// 上传头像
+			const blob = avatarInfo.value.blob;
+			const uploadData = { file: blob, type: 'avatar' };
+			let result = await fetchUploadFile(uploadData);
+			if (result.code !== 200) return;
+
+			// 修改头像
+			const data = { userId: row.id, avatar: result.data.filepath };
+			result = await fetchUploadAvatarByAdmin(data);
+			if (result.code !== 200) return;
+
+			message(result.message, { type: 'success' });
 			done();
 			await onSearch();
 		},
@@ -215,7 +231,7 @@ export const onResetPassword = (row: any) => {
 export const onAssignRolesToUser = (row: any) => {
 	addDialog({
 		title: `为 ${row.username} 分配角色`,
-		width: '30%',
+		width: '45%',
 		draggable: true,
 		closeOnClickModal: false,
 		fullscreenIcon: true,

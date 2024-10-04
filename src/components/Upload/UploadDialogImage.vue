@@ -17,7 +17,7 @@ import { Plus } from '@element-plus/icons-vue';
 import { ElMessage, UploadRawFile, UploadRequestOptions } from 'element-plus';
 import { onMounted, ref } from 'vue';
 import { SystemEnum } from '@/enums/upload';
-import { fetchUploadFIle } from '@/api/v1/system';
+import { fetchUploadFile } from '@/api/v1/system';
 
 const props = defineProps({
 	imageUrl: String,
@@ -38,7 +38,7 @@ const onUpload = async (options: UploadRequestOptions) => {
 	const data = { file, type };
 
 	// 上传文件并返回文件地址
-	const result: any = await fetchUploadFIle(data);
+	const result: any = await fetchUploadFile(data);
 	imageSrc.value = result.data.url;
 	emits('uploadCallback', result);
 };
@@ -85,16 +85,16 @@ onMounted(() => {
 });
 </script>
 
-<style>
-.el-upload {
-	width: 128px;
-	height: 128px;
-}
-
-.el-upload-dragger {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 100%;
-}
+<style lang="scss" scoped>
+//.el-upload {
+//	width: 128px;
+//	height: 128px;
+//}
+//
+//.el-upload-dragger {
+//	display: flex;
+//	align-items: center;
+//	justify-content: center;
+//	height: 100%;
+//}
 </style>

@@ -71,3 +71,11 @@ export const fetchGetUserinfoById = (data?: object) => {
 export const fetchUpdateUserPasswordByAdmin = (data: any) => {
 	return http.request<BaseResult<UserResult>>('put', 'user/updateUserPasswordByAdmin', { data });
 };
+
+/**
+ * 管理员修改管理员用户头像
+ * @param data
+ */
+export const fetchUploadAvatarByAdmin = (data: any) => {
+	return http.request<BaseResult<UserResult>>('put', 'user/uploadAvatarByAdmin', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
+};
