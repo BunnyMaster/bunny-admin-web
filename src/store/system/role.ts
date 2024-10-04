@@ -12,6 +12,8 @@ export const useRoleStore = defineStore('roleStore', {
 		return {
 			// 角色列表
 			datalist: [],
+			// 所有角色列表
+			allRoleList: [],
 			// 查询表单
 			form: {
 				// 角色代码
@@ -72,6 +74,22 @@ export const useRoleStore = defineStore('roleStore', {
 		async deleteRole(data: any) {
 			const result = await fetchDeleteRole(data);
 			return storeMessage(result);
+		},
+
+		/**
+		 * * 根据用户id获取角色列表
+		 * @param data
+		 */
+		async getRoleListByUserId(data: any) {
+			console.log(data);
+		},
+
+		/**
+		 * * 为用户分配角色
+		 * @param data
+		 */
+		async assignRolesToUsers(data: any) {
+			console.log(data);
 		},
 	},
 });

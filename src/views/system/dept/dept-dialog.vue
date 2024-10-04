@@ -41,7 +41,7 @@ defineExpose({ formRef });
 			<el-input v-model="form.summary" autocomplete="off" type="text" />
 		</el-form-item>
 		<el-form-item :label="$t('dept_remarks')" prop="remarks">
-			<el-input v-model="form.remarks" autocomplete="off" type="text" />
+			<el-input v-model="form.remarks" autocomplete="off" maxlength="600" show-word-limit type="textarea" />
 		</el-form-item>
 	</el-form>
 </template>

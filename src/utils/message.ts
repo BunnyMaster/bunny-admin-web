@@ -123,11 +123,11 @@ export const messageBox = async (option: MessageBox = defaultBoxOption, type: an
 		overflow: true,
 	})
 		.then(() => {
-			option.showMessage && ElMessage({ type: 'success', message: option.confirmMessage });
+			option.showMessage && message(option.cancelMessage, { type: 'success' });
 			return true;
 		})
 		.catch(() => {
-			ElMessage({ type: 'warning', message: option.cancelMessage });
+			message(option.cancelMessage, { type: 'warning' });
 			return false;
 		});
 };

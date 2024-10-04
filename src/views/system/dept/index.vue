@@ -31,9 +31,6 @@ onMounted(() => {
 <template>
 	<div class="main">
 		<el-form ref="formRef" :inline="true" :model="deptStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-			<el-form-item :label="$t('dept_parentId')" prop="parentId">
-				<el-input v-model="deptStore.form.parentId" :placeholder="`${$t('input')}${$t('dept_parentId')}`" class="!w-[180px]" clearable />
-			</el-form-item>
 			<el-form-item :label="$t('dept_managerId')" prop="managerId">
 				<el-input v-model="deptStore.form.managerId" :placeholder="`${$t('input')}${$t('dept_managerId')}`" class="!w-[180px]" clearable />
 			</el-form-item>
@@ -85,8 +82,7 @@ onMounted(() => {
 					<template #operation="{ row }">
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
 						<el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd"> {{ $t('add_new') }} </el-button>
-						<!-- TODO 待完成 -->
-						<el-popconfirm :title="`是否确认删除 ${row.typeName}数据`" @confirm="onDelete(row)">
+						<el-popconfirm :title="`是否确认删除 ${row.deptName}数据`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}

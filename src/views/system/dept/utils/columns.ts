@@ -25,14 +25,8 @@ export const columns: TableColumnList = [
 
 // 添加规则
 export const rules = reactive({
-	// 父级id
-	parentId: [{ required: true, message: `${$t('input')}${$t('dept_parentId')}`, trigger: 'blur' }],
-	// 管理者id
-	managerId: [{ required: true, message: `${$t('input')}${$t('dept_managerId')}`, trigger: 'blur' }],
 	// 部门名称
 	deptName: [{ required: true, message: `${$t('input')}${$t('dept_deptName')}`, trigger: 'blur' }],
 	// 部门简介
 	summary: [{ required: true, message: `${$t('input')}${$t('dept_summary')}`, trigger: 'blur' }],
-	// 备注信息
-	remarks: [{ required: true, message: `${$t('input')}${$t('dept_remarks')}`, trigger: 'blur' }],
 });

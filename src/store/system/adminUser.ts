@@ -3,6 +3,7 @@ import { fetchAddAdminUser, fetchDeleteAdminUser, fetchGetAdminUserList, fetchUp
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
+import { fetchUpdateUserPasswordByAdmin } from '@/api/v1/user';
 
 /**
  * 用户信息 Store
@@ -81,6 +82,15 @@ export const useAdminUserStore = defineStore('adminUserStore', {
 		 */
 		async deleteAdminUser(data: any) {
 			const result = await fetchDeleteAdminUser(data);
+			return storeMessage(result);
+		},
+
+		/**
+		 * * 更新用户密码
+		 * @param data
+		 */
+		async updateAdminUserPasswordByManager(data: any) {
+			const result: any = await fetchUpdateUserPasswordByAdmin(data);
 			return storeMessage(result);
 		},
 	},

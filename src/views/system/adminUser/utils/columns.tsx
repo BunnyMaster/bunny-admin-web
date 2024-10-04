@@ -1,5 +1,8 @@
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { $t } from '@/plugins/i18n';
+
+// 是否是更新用户信息
+export const isAddUserinfo = ref(false);
 
 // 表格列
 export const columns: TableColumnList = [
@@ -33,18 +36,19 @@ export const columns: TableColumnList = [
 export const rules = reactive({
 	// 用户名
 	username: [{ required: true, message: `${$t('input')}${$t('adminUser_username')}`, trigger: 'blur' }],
-	// 昵称
-	nickName: [{ required: true, message: `${$t('input')}${$t('adminUser_nickName')}`, trigger: 'blur' }],
-	// 邮箱
-	email: [{ required: true, message: `${$t('input')}${$t('adminUser_email')}`, trigger: 'blur' }],
-	// 手机号
-	phone: [{ required: true, message: `${$t('input')}${$t('adminUser_phone')}`, trigger: 'blur' }],
 	// 密码
-	password: [{ required: true, message: `${$t('input')}${$t('adminUser_password')}`, trigger: 'blur' }],
-	// 头像
-	avatar: [{ required: true, message: `${$t('input')}${$t('adminUser_avatar')}`, trigger: 'blur' }],
-	// 性别
-	sex: [{ required: true, message: `${$t('input')}${$t('adminUser_sex')}`, trigger: 'blur' }],
+	password: [
+		{
+			required: isAddUserinfo,
+			message: `${$t('input')}${$t('adminUser_password')}`,
+			trigger: 'blur',
+		},
+	],
+	// 邮箱
+	email: [
+		{ required: true, message: `${$t('input')}${$t('adminUser_email')}`, trigger: 'blur' },
+		{ type: 'email', message: `${$t('input')}${$t('adminUser_email')}${$t('format_error')}` },
+	],
 	// 个人描述
 	summary: [{ required: true, message: `${$t('input')}${$t('adminUser_summary')}`, trigger: 'blur' }],
 	// 状态

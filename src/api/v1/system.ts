@@ -31,6 +31,11 @@ export const deletedMenuByIds = (data?: any) => {
 	return http.request<BaseResult<any>>('delete', `router/deletedMenuByIds`, { data });
 };
 
+/** 上传文件 */
+export const fetchUploadFIle = (data: any) => {
+	return http.post<BaseResult<any>>('/files/upload', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
+};
+
 // ------------未确认------------
 /** 获取系统管理-用户管理列表 */
 export const getUserList = (data?: object) => {

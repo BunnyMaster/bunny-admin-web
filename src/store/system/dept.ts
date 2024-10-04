@@ -14,10 +14,6 @@ export const useDeptStore = defineStore('deptStore', {
 			datalist: [],
 			// 查询表单
 			form: {
-				// 父级id
-				parentId: undefined,
-				// 管理者id
-				managerId: undefined,
 				// 部门名称
 				deptName: undefined,
 				// 部门简介

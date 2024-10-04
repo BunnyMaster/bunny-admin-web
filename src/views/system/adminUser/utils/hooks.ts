@@ -5,8 +5,10 @@ import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/adminUser/utils/types';
 import { $t } from '@/plugins/i18n';
+import { isAddUserinfo } from '@/views/system/adminUser/utils/columns';
 
 export const formRef = ref();
+
 const adminUserStore = useAdminUserStore();
 
 /**
@@ -22,6 +24,7 @@ export async function onSearch() {
  * * 添加用户信息
  */
 export function onAdd() {
+	isAddUserinfo.value = true;
 	addDialog({
 		title: `${$t('add_new')}${$t('adminUser')}`,
 		width: '30%',
@@ -35,7 +38,7 @@ export function onAdd() {
 				avatar: undefined,
 				sex: undefined,
 				summary: undefined,
-				status: undefined,
+				status: false,
 			},
 		},
 		draggable: true,
@@ -61,6 +64,7 @@ export function onAdd() {
  * @param row
  */
 export function onUpdate(row: any) {
+	isAddUserinfo.value = false;
 	addDialog({
 		title: `${$t('modify')}${$t('adminUser')}`,
 		width: '30%',
@@ -85,9 +89,9 @@ export function onUpdate(row: any) {
 			const form = options.props.formInline as FormItemProps;
 			formRef.value.formRef.validate(async (valid: any) => {
 				if (!valid) return;
-
 				const result = await adminUserStore.updateAdminUser({ ...form, id: row.id });
 				if (!result) return;
+
 				done();
 				await onSearch();
 			});
@@ -112,5 +116,26 @@ export const onDelete = async (row: any) => {
 
 	// 删除数据
 	await adminUserStore.deleteAdminUser([id]);
+	await onSearch();
+};
+
+/**
+ * * 更新用户状态
+ * @param row
+ */
+export const updateUserStatus = async (row: any) => {
+	const confirm = await messageBox({
+		title: $t('confirm_update_status'),
+		showMessage: false,
+		confirmMessage: undefined,
+		cancelMessage: $t('cancel'),
+	});
+	if (!confirm) {
+		row.status = !row.status;
+		return;
+	}
+	const data = { id: row.id, username: row.username, nickName: row.nickName, email: row.email, status: row.status };
+	const result = await adminUserStore.updateAdminUser(data);
+	if (!result) return;
 	await onSearch();
 };

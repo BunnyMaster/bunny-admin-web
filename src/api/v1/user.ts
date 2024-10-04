@@ -63,3 +63,11 @@ export const fetchLogout = (data?: object) => {
 export const fetchGetUserinfoById = (data?: object) => {
 	return http.request<BaseResult<UserResult>>('get', 'user/getUserinfoById', { params: data });
 };
+
+/**
+ * 管理员修改管理员用户密码
+ * @param data
+ */
+export const fetchUpdateUserPasswordByAdmin = (data: any) => {
+	return http.request<BaseResult<UserResult>>('put', 'user/updateUserPasswordByAdmin', { data });
+};

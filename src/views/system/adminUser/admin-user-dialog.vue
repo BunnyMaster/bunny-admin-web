@@ -1,9 +1,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { rules } from '@/views/system/adminUser/utils/columns';
+import { isAddUserinfo, rules } from '@/views/system/adminUser/utils/columns';
 import { FormProps } from '@/views/system/adminUser/utils/types';
 import { $t } from '@/plugins/i18n';
+import ReCol from '@/components/MyCol';
+import { sexConstant } from '@/enums/baseConstant';
+import UploadDialogImage from '@/components/Upload/UploadDialogImage.vue';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
@@ -31,37 +34,87 @@ const props = withDefaults(defineProps<FormProps>(), {
 const formRef = ref<FormInstance>();
 const form = ref(props.formInline);
 
+/**
+ * * 上传头像回调
+ * @param data
+ */
+const onUploadCallback = ({ data }) => {
+	console.log('value=>', data);
+	form.value.avatar = data.filepath;
+};
+
 defineExpose({ formRef });
 </script>
 
 <template>
-	<el-form ref="formRef" :model="form" :rules="rules" label-width="auto">
-		<el-form-item :label="$t('adminUser_username')" prop="username">
-			<el-input v-model="form.username" autocomplete="off" type="text" />
-		</el-form-item>
-		<el-form-item :label="$t('adminUser_nickName')" prop="nickName">
-			<el-input v-model="form.nickName" autocomplete="off" type="text" />
-		</el-form-item>
-		<el-form-item :label="$t('adminUser_email')" prop="email">
-			<el-input v-model="form.email" autocomplete="off" type="text" />
-		</el-form-item>
-		<el-form-item :label="$t('adminUser_phone')" prop="phone">
-			<el-input v-model="form.phone" autocomplete="off" type="text" />
-		</el-form-item>
-		<el-form-item :label="$t('adminUser_password')" prop="password">
-			<el-input v-model="form.password" autocomplete="off" type="text" />
-		</el-form-item>
-		<el-form-item :label="$t('adminUser_avatar')" prop="avatar">
-			<el-input v-model="form.avatar" autocomplete="off" type="text" />
-		</el-form-item>
-		<el-form-item :label="$t('adminUser_sex')" prop="sex">
-			<el-input v-model="form.sex" autocomplete="off" type="text" />
-		</el-form-item>
-		<el-form-item :label="$t('adminUser_summary')" prop="summary">
-			<el-input v-model="form.summary" autocomplete="off" type="text" />
-		</el-form-item>
-		<el-form-item :label="$t('adminUser_status')" prop="status">
-			<el-input v-model="form.status" autocomplete="off" type="text" />
-		</el-form-item>
+	<el-form ref="formRef" :model="form" :rules="rules" label-position="left" label-width="auto">
+		<el-row :gutter="30">
+			<!-- 用户名 -->
+			<re-col :sm="24" :value="12" :xs="24">
+				<el-form-item :label="$t('adminUser_username')" prop="username">
+					<el-input v-model="form.username" :placeholder="$t('adminUser_username')" autocomplete="off" type="text" />
+				</el-form-item>
+			</re-col>
+
+			<!-- 昵称 -->
+			<re-col :sm="24" :value="12" :xs="24">
+				<el-form-item :label="$t('adminUser_nickName')" prop="nickName">
+					<el-input v-model="form.nickName" :placeholder="$t('adminUser_nickName')" autocomplete="off" type="text" />
+				</el-form-item>
+			</re-col>
+
+			<!-- 邮箱 -->
+			<re-col :sm="24" :value="12" :xs="24">
+				<el-form-item :label="$t('adminUser_email')" prop="email">
+					<el-input v-model="form.email" :placeholder="$t('adminUser_email')" autocomplete="off" type="text" />
+				</el-form-item>
+			</re-col>
+
+			<!-- 密码 -->
+			<re-col v-show="isAddUserinfo" :sm="24" :value="12" :xs="24">
+				<el-form-item :label="$t('adminUser_password')" prop="password">
+					<el-input v-model="form.password" :placeholder="$t('adminUser_password')" autocomplete="off" show-password type="password" />
+				</el-form-item>
+			</re-col>
+
+			<!-- 手机号 -->
+			<re-col :sm="24" :value="12" :xs="24">
+				<el-form-item :label="$t('adminUser_phone')" prop="phone">
+					<el-input v-model="form.phone" :placeholder="$t('adminUser_phone')" autocomplete="off" type="text" />
+				</el-form-item>
+			</re-col>
+
+			<!-- 性别 -->
+			<re-col :sm="24" :value="isAddUserinfo ? 12 : 24" :xs="24">
+				<el-form-item :label="$t('adminUser_sex')" prop="sex">
+					<el-select v-model="form.sex" :placeholder="$t('adminUser_sex')" clearable filterable>
+						<el-option v-for="(item, index) in sexConstant" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
+					</el-select>
+				</el-form-item>
+			</re-col>
+
+			<!-- 头像 -->
+			<re-col :sm="24" :value="24" :xs="24">
+				<el-form-item :label="$t('adminUser_avatar')" prop="avatar">
+					<UploadDialogImage :image-url="form.avatar" type="avatar" @uploadCallback="onUploadCallback" />
+				</el-form-item>
+			</re-col>
+
+			<!-- 用户简介 -->
+			<re-col :sm="24" :value="24" :xs="24">
+				<el-form-item :label="$t('adminUser_summary')" prop="summary">
+					<el-input v-model="form.summary" :placeholder="$t('adminUser_summary')" autocomplete="off" maxlength="600" show-word-limit type="textarea" />
+				</el-form-item>
+			</re-col>
+
+			<!-- 用户状态 -->
+			<re-col :sm="24" :value="12" :xs="24">
+				<el-form-item :label="$t('adminUser_status')" prop="status">
+					<el-switch v-model="form.status" active-text="禁用" class="ml-2" inactive-text="正常" inline-prompt style="
+
+--el-switch-on-color: #ff4949; --el-switch-off-color: #13ce66" />
+				</el-form-item>
+			</re-col>
+		</el-row>
 	</el-form>
 </template>
