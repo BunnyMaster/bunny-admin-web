@@ -12,6 +12,7 @@ import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useMenuIconStore } from '@/store/system/menuIcon';
+import MenuIconSelectIconName from '@/views/system/menuIcon/menu-icon-select-icon-name.vue';
 
 const tableRef = ref();
 const formRef = ref();
@@ -60,11 +61,11 @@ onMounted(() => {
 <template>
 	<div class="main">
 		<el-form ref="formRef" :inline="true" :model="menuIconStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-			<el-form-item :label="$t('menuIcon_iconName')" prop="iconName">
-				<el-input v-model="menuIconStore.form.iconName" :placeholder="`${$t('input')} ${$t('iconName')}`" class="!w-[180px]" clearable />
-			</el-form-item>
 			<el-form-item :label="$t('menuIcon_iconCode')" prop="iconCode">
 				<el-input v-model="menuIconStore.form.iconCode" :placeholder="`${$t('input')} ${$t('iconCode')}`" class="!w-[180px]" clearable />
+			</el-form-item>
+			<el-form-item :label="$t('menuIcon_iconName')" prop="iconName">
+				<MenuIconSelectIconName :form-inline="menuIconStore.form" class="!w-[180px]" />
 			</el-form-item>
 			<el-form-item>
 				<el-button :icon="useRenderIcon('ri:search-line')" :loading="menuIconStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>

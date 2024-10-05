@@ -3,13 +3,15 @@ import { $t } from '@/plugins/i18n';
 import { ref } from 'vue';
 import { fetchGetIconNameList } from '@/api/v1/menuIcon';
 import LoadingSvg from '@/assets/svg/loading.svg';
+import { FormProps } from '@/views/system/menuIcon/utils/types';
 
-defineProps({
-	form: { type: Object as PropType<any> },
+const props = withDefaults(defineProps<FormProps>(), {
+	formInline: () => ({}),
 });
 
 const loading = ref(false);
 const iconNameList = ref([]);
+const form = ref(props.formInline);
 
 /**
  * * 搜索
