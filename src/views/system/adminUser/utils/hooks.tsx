@@ -11,7 +11,6 @@ import ResetPasswordDialog from '@/views/system/adminUser/reset-passwords.vue';
 import { deviceDetection } from '@pureadmin/utils';
 import CropperPreview from '@/components/CropperPreview';
 import AssignUserToRole from '@/views/system/adminUser/assign-user-to-role.vue';
-import { fetchUploadFile } from '@/api/v1/system';
 import userAvatar from '@/assets/user.jpg';
 import { fetchUploadAvatarByAdmin } from '@/api/v1/user';
 
@@ -177,14 +176,8 @@ export const onUploadAvatar = (row: any) => {
 			}),
 		beforeSure: async done => {
 			// 上传头像
-			const blob = avatarInfo.value.blob;
-			const uploadData = { file: blob, type: 'avatar' };
-			let result = await fetchUploadFile(uploadData);
-			if (result.code !== 200) return;
-
-			// 修改头像
-			const data = { userId: row.id, avatar: result.data.filepath };
-			result = await fetchUploadAvatarByAdmin(data);
+			const data = { userId: row.id, avatar: avatarInfo.value.blob };
+			const result = await fetchUploadAvatarByAdmin(data);
 			if (result.code !== 200) return;
 
 			message(result.message, { type: 'success' });
