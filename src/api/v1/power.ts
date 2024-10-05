@@ -28,3 +28,10 @@ export const fetchUpdatePower = (data: any) => {
 export const fetchDeletePower = (data: any) => {
 	return http.request<BaseResult<object>>('delete', 'power/deletePower', { data });
 };
+
+/**
+ * 获取所有权限
+ */
+export const fetchGetAllPowers = () => {
+	return http.request<BaseResult<any>>('get', `power/getAllPowers`);
+};

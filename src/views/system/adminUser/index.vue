@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { columns } from '@/views/system/adminUser/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
@@ -17,7 +17,7 @@ import Role from '@iconify-icons/ri/admin-line';
 import Password from '@iconify-icons/ri/lock-password-line';
 import More from '@iconify-icons/ep/more-filled';
 import { useAdminUserStore } from '@/store/system/adminUser';
-import { sexConstant, userStatus } from '@/enums/baseConstant';
+import { sexConstant, tableSelectButtonClass, userStatus } from '@/enums/baseConstant';
 import { deviceDetection } from '@pureadmin/utils';
 import Tree from '@/views/system/adminUser/tree.vue';
 import Airplane from '@/assets/svg/airplane.svg';
@@ -25,7 +25,6 @@ import Airplane from '@/assets/svg/airplane.svg';
 const tableRef = ref();
 const formRef = ref();
 const adminUserStore = useAdminUserStore();
-const buttonClass = computed(() => ['!h-[20px]', 'reset-margin', '!text-gray-500', 'dark:!text-white', 'dark:hover:!text-primary']);
 
 /**
  * * 当前页改变时
@@ -188,16 +187,16 @@ onMounted(() => {
 								<template #dropdown>
 									<el-dropdown-menu>
 										<el-dropdown-item>
-											<el-button :class="buttonClass" :icon="useRenderIcon(Upload)" :size="size" link type="primary" @click="onUploadAvatar(row)"> 上传头像 </el-button>
+											<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Upload)" :size="size" link type="primary" @click="onUploadAvatar(row)"> 上传头像 </el-button>
 										</el-dropdown-item>
 										<el-dropdown-item>
-											<el-button :class="buttonClass" :icon="useRenderIcon(Password)" :size="size" link type="primary" @click="onResetPassword(row)"> 重置密码 </el-button>
+											<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Password)" :size="size" link type="primary" @click="onResetPassword(row)"> 重置密码 </el-button>
 										</el-dropdown-item>
 										<el-dropdown-item>
-											<el-button :class="buttonClass" :icon="useRenderIcon(Role)" :size="size" link type="primary" @click="onAssignRolesToUser(row)"> 分配角色 </el-button>
+											<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Role)" :size="size" link type="primary" @click="onAssignRolesToUser(row)"> 分配角色 </el-button>
 										</el-dropdown-item>
 										<el-dropdown-item>
-											<el-button :class="buttonClass" :icon="useRenderIcon(Airplane)" :size="size" link type="primary" @click="onForcedOffline(row)"> 强制下线 </el-button>
+											<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Airplane)" :size="size" link type="primary" @click="onForcedOffline(row)"> 强制下线 </el-button>
 										</el-dropdown-item>
 									</el-dropdown-menu>
 								</template>

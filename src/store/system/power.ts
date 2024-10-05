@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddPower, fetchDeletePower, fetchGetPowerList, fetchUpdatePower } from '@/api/v1/power';
+import { fetchAddPower, fetchDeletePower, fetchGetAllPowers, fetchGetPowerList, fetchUpdatePower } from '@/api/v1/power';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -12,6 +12,8 @@ export const usePowerStore = defineStore('powerStore', {
 		return {
 			// 权限列表
 			datalist: [],
+			// 权限树形结构
+			treeList: [],
 			// 查询表单
 			form: {
 				// 权限编码
@@ -74,6 +76,15 @@ export const usePowerStore = defineStore('powerStore', {
 		async deletePower(data: any) {
 			const result = await fetchDeletePower(data);
 			return storeMessage(result);
+		},
+
+		/**
+		 * 获取所有权限
+		 */
+		async getAllPowers() {
+			const result = await fetchGetAllPowers();
+			if (result.code !== 200) return;
+			this.treeList = result.data;
 		},
 	},
 });

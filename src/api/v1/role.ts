@@ -28,3 +28,17 @@ export const fetchUpdateRole = (data: any) => {
 export const fetchDeleteRole = (data: any) => {
 	return http.request<BaseResult<object>>('delete', 'role/deleteRole', { data });
 };
+
+/**
+ * 获取所有角色
+ */
+export const fetchGetAllRoles = () => {
+	return http.request<BaseResult<any>>('get', `role/getAllRoles`);
+};
+
+/**
+ * 根据用户id获取所有角色
+ */
+export const fetchGetRoleListByUserId = data => {
+	return http.request<BaseResult<any>>('get', `userRole/getRoleListByUserId`, { params: data });
+};

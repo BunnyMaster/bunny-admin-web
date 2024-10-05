@@ -6,18 +6,18 @@ import { message, messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/adminUser/utils/types';
 import { $t } from '@/plugins/i18n';
 import { isAddUserinfo } from '@/views/system/adminUser/utils/columns';
-import { useRoleStore } from '@/store/system/role';
 import ResetPasswordDialog from '@/views/system/adminUser/reset-passwords.vue';
 import { deviceDetection } from '@pureadmin/utils';
 import CropperPreview from '@/components/CropperPreview';
 import AssignUserToRole from '@/views/system/adminUser/assign-user-to-role.vue';
 import userAvatar from '@/assets/user.jpg';
 import { fetchForcedOffline, fetchUploadAvatarByAdmin } from '@/api/v1/user';
+import { useUserStore } from '@/store/system/user';
 
 export const formRef = ref();
 const cropRef = ref();
 const assignRolesRef = ref();
-const roleStore = useRoleStore();
+const userStore = useUserStore();
 // 上传头像信息
 const avatarInfo = ref();
 const adminUserStore = useAdminUserStore();
@@ -232,7 +232,7 @@ export const onAssignRolesToUser = (row: any) => {
 		beforeSure: async (done: any) => {
 			// 分配用户角色
 			const data = { userId: row.id, roleIds: assignRolesRef.value.assignRoles };
-			const result = await roleStore.assignRolesToUsers(data);
+			const result = await userStore.assignRolesToUsers(data);
 
 			// 更新成功关闭弹窗
 			if (!result) return;

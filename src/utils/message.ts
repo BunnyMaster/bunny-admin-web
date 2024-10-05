@@ -127,7 +127,7 @@ export const messageBox = async (option: MessageBox = defaultBoxOption, type: an
 			return true;
 		})
 		.catch(() => {
-			message(option.cancelMessage, { type: 'warning' });
+			message(option.cancelMessage, { type: 'info' });
 			return false;
 		});
 };

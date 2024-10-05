@@ -1,16 +1,15 @@
 import editForm from '../form.vue';
 import { $t } from '@/plugins/i18n';
 import { addDialog } from '@/components/BaseDialog/index';
-import { h, reactive, ref } from 'vue';
+import { h, ref } from 'vue';
 import type { FormItemProps } from './types';
 
 import { cloneDeep, deviceDetection } from '@pureadmin/utils';
-import { userRouterStore } from '@/store/system/router';
+import { userMenuStore } from '@/store/system/menu';
+import AssignRouterToRole from '@/views/system/menu/assign-router-to-role.vue';
 
-const routerStore = userRouterStore();
-export const form = reactive({
-	title: '',
-});
+const menuStore = userMenuStore();
+const assignRouterToRolesRef = ref();
 export const formRef = ref();
 
 /**
@@ -33,9 +32,9 @@ export const getMenuType = (type, text = false) => {
  * * 获取菜单数据
  */
 export const onSearch = async () => {
-	routerStore.loading = true;
-	await routerStore.getMenuList();
-	routerStore.loading = false;
+	menuStore.loading = true;
+	await menuStore.getMenuList();
+	menuStore.loading = false;
 };
 
 export const formatHigherMenuOptions = (treeList: any) => {
@@ -58,7 +57,7 @@ export function onAdd(parentId: any = 0) {
 		props: {
 			formInline: {
 				menuType: 0,
-				higherMenuOptions: formatHigherMenuOptions(cloneDeep(routerStore.datalist)),
+				higherMenuOptions: formatHigherMenuOptions(cloneDeep(menuStore.datalist)),
 				parentId,
 				title: '',
 				name: '',
@@ -82,7 +81,7 @@ export function onAdd(parentId: any = 0) {
 				if (!valid) return;
 				delete curData.higherMenuOptions;
 
-				const result = await routerStore.addMenu(curData);
+				const result = await menuStore.addMenu(curData);
 				// 刷新表格数据
 				if (result) {
 					done();
@@ -103,7 +102,7 @@ export const onUpdate = (row?: FormItemProps) => {
 		props: {
 			formInline: {
 				menuType: row?.menuType,
-				higherMenuOptions: formatHigherMenuOptions(cloneDeep(routerStore.datalist)),
+				higherMenuOptions: formatHigherMenuOptions(cloneDeep(menuStore.datalist)),
 				parentId: row?.parentId,
 				title: row?.title,
 				name: row?.name,
@@ -129,7 +128,7 @@ export const onUpdate = (row?: FormItemProps) => {
 				delete curData.higherMenuOptions;
 
 				curData.id = row.id;
-				const result = await routerStore.updateMenu(curData);
+				const result = await menuStore.updateMenu(curData);
 				// 刷新表格数据
 				if (result) {
 					done();
@@ -145,6 +144,30 @@ export const onUpdate = (row?: FormItemProps) => {
  * @param row
  */
 export const handleDelete = async row => {
-	await routerStore.deletedMenuByIds([row.id]);
+	await menuStore.deletedMenuByIds([row.id]);
 	await onSearch();
+};
+
+/**
+ * 为路由分配角色
+ * @param row
+ */
+export const assignRolesToRouter = (row: any) => {
+	addDialog({
+		title: `为 ${row.name} 分配角色`,
+		width: '45%',
+		draggable: true,
+		closeOnClickModal: false,
+		fullscreenIcon: true,
+		contentRenderer: () => <AssignRouterToRole ref={assignRouterToRolesRef} routerId={row.id} />,
+		beforeSure: async (done: any) => {
+			// 分配用户角色
+			const data = { routerId: row.id, roleIds: assignRouterToRolesRef.value.assignRoles };
+			const result = await menuStore.assignRolesToRouter(data);
+
+			// 更新成功关闭弹窗
+			if (!result) return;
+			done();
+		},
+	});
 };

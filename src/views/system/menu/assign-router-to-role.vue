@@ -1,32 +1,32 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { useRoleStore } from '@/store/system/role';
-import { useUserStore } from '@/store/system/user';
+import { userMenuStore } from '@/store/system/menu';
 
 const props = defineProps({
-	userId: { type: String as PropType<String> },
+	routerId: { type: String as PropType<String> },
 });
 
 const roleStore = useRoleStore();
-const userStore = useUserStore();
+const menuStore = userMenuStore();
 // 分配的角色
 const assignRoles = ref([]);
 
 /**
  * * 根据用户id获取当前用户角色
  */
-const getRoleListByUserId = async () => {
+const getRoleListByRouterId = async () => {
 	// 初始化值为空数组
 	assignRoles.value = [];
 
 	// 根据用户id查询角色信息
-	const userId = props.userId;
-	assignRoles.value = await userStore.getRoleListByUserId({ userId });
+	const routerId = props.routerId;
+	assignRoles.value = await menuStore.getRoleListByRouterId({ routerId });
 };
 
 onMounted(() => {
 	roleStore.getAllRoles();
-	getRoleListByUserId();
+	getRoleListByRouterId();
 });
 
 defineExpose({ assignRoles });

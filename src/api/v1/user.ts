@@ -87,3 +87,11 @@ export const fetchUploadAvatarByAdmin = (data: any) => {
 export const fetchForcedOffline = (data: any) => {
 	return http.request<BaseResult<UserResult>>('put', 'user/forcedOffline', { data });
 };
+
+/**
+ * 为用户分配角色
+ * @param data
+ */
+export const fetchAssignRolesToUsers = (data: object) => {
+	return http.request<BaseResult<any>>('post', 'userRole/assignRolesToUsers', { data });
+};

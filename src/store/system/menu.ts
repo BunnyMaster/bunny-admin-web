@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
-import { addMenu, deletedMenuByIds, getMenusList, updateMenu } from '@/api/v1/system';
 import { storeMessage } from '@/utils/message';
 import { handleTree } from '@/utils/tree';
+import { fetchAddMenu, fetchAssignRolesToRouter, fetchDeletedMenuByIds, fetchGetMenusList, fetchGetRoleListByRouterId, fetchUpdateMenu } from '@/api/v1/menu';
 
-export const userRouterStore = defineStore('routerStore', {
+export const userMenuStore = defineStore('menuStore', {
 	state() {
 		return {
 			datalist: [],
@@ -18,7 +18,7 @@ export const userRouterStore = defineStore('routerStore', {
 		 */
 		async getMenuList() {
 			const data = { ...this.pagination, ...this.form };
-			const result = await getMenusList(data);
+			const result = await fetchGetMenusList(data);
 
 			if (result.code === 200) {
 				this.datalist = handleTree(result.data as any);
@@ -32,7 +32,7 @@ export const userRouterStore = defineStore('routerStore', {
 		 * @param data
 		 */
 		async addMenu(data: object) {
-			const result = await addMenu(data);
+			const result = await fetchAddMenu(data);
 			return storeMessage(result);
 		},
 
@@ -41,7 +41,7 @@ export const userRouterStore = defineStore('routerStore', {
 		 * @param data
 		 */
 		async updateMenu(data: object) {
-			const result = await updateMenu(data);
+			const result = await fetchUpdateMenu(data);
 			return storeMessage(result);
 		},
 
@@ -50,7 +50,26 @@ export const userRouterStore = defineStore('routerStore', {
 		 * @param data
 		 */
 		async deletedMenuByIds(data: object) {
-			const result = await deletedMenuByIds(data);
+			const result = await fetchDeletedMenuByIds(data);
+			return storeMessage(result);
+		},
+
+		/**
+		 * * 根据路由id获取角色列表
+		 * @param data
+		 */
+		async getRoleListByRouterId(data: any) {
+			const result = await fetchGetRoleListByRouterId(data);
+			if (result.code !== 200) return;
+			return result.data;
+		},
+
+		/**
+		 * * 为路由分配角色
+		 * @param data
+		 */
+		async assignRolesToRouter(data: any) {
+			const result = await fetchAssignRolesToRouter(data);
 			return storeMessage(result);
 		},
 	},

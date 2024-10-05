@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddRole, fetchDeleteRole, fetchGetRoleList, fetchUpdateRole } from '@/api/v1/role';
+import { fetchAddRole, fetchDeleteRole, fetchGetAllRoles, fetchGetRoleList, fetchUpdateRole } from '@/api/v1/role';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -53,6 +53,16 @@ export const useRoleStore = defineStore('roleStore', {
 		},
 
 		/**
+		 * * 获取所有角色
+		 */
+		async getAllRoles() {
+			const result = await fetchGetAllRoles();
+			if (result.code !== 200) return;
+
+			this.allRoleList = result.data.map(role => ({ key: role.id, label: role.description }));
+		},
+
+		/**
 		 * * 添加角色
 		 */
 		async addRole(data: any) {
@@ -74,22 +84,6 @@ export const useRoleStore = defineStore('roleStore', {
 		async deleteRole(data: any) {
 			const result = await fetchDeleteRole(data);
 			return storeMessage(result);
-		},
-
-		/**
-		 * * 根据用户id获取角色列表
-		 * @param data
-		 */
-		async getRoleListByUserId(data: any) {
-			console.log(data);
-		},
-
-		/**
-		 * * 为用户分配角色
-		 * @param data
-		 */
-		async assignRolesToUsers(data: any) {
-			console.log(data);
 		},
 	},
 });

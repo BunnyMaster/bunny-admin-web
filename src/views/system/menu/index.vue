@@ -6,30 +6,46 @@ import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import AddFill from '@iconify-icons/ri/add-circle-line';
-import { handleDelete, onAdd, onSearch, onUpdate, resetForm } from '@/views/system/menu/utils/hooks';
+import { assignRolesToRouter, handleDelete, onAdd, onSearch, onUpdate, resetForm } from '@/views/system/menu/utils/hooks';
 import form from '@/views/system/menu/form.vue';
 import PureTable from '@pureadmin/table';
 import { columns } from '@/views/system/menu/utils/columns';
-import { userRouterStore } from '@/store/system/router';
+import { userMenuStore } from '@/store/system/menu';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
+import More from '@iconify-icons/ep/more-filled';
+import { tableSelectButtonClass } from '@/enums/baseConstant';
+import Upload from '@iconify-icons/ri/upload-line';
+import { messageBox } from '@/utils/message';
 
 const formRef = ref();
 const tableRef = ref();
-const routerStore = userRouterStore();
+const routerStore = userMenuStore();
 
 /**
  * * 修改菜单是否显示
- * @param val
+ * @param row
  */
-const onchangeVisible = async (val: boolean) => {
+const onchangeVisible = async (row: any) => {
+	// 是否确认修改显示状态
+	const confirm = await messageBox({
+		title: $t('confirm_update_status'),
+		showMessage: false,
+		confirmMessage: undefined,
+		cancelMessage: $t('cancel'),
+	});
+	if (!confirm) {
+		row.visible = !row.visible;
+		return;
+	}
+
 	const data = {
-		id: val.id,
-		visible: val.visible,
-		menuType: val.menuType,
-		title: val.title,
-		name: val.name,
-		path: val.path,
+		id: row.id,
+		visible: row.visible,
+		menuType: row.menuType,
+		title: row.title,
+		name: row.name,
+		path: row.path,
 	};
 	await routerStore.updateMenu(data);
 	await onSearch();
@@ -106,13 +122,26 @@ onMounted(() => {
 					</template>
 
 					<template #operation="{ row }">
-						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> 修改 </el-button>
-						<el-button v-show="row.menuType !== 3" :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)"> 新增 </el-button>
+						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
+						<el-button v-show="row.menuType !== 3" :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)"> {{ $t('add_new') }} </el-button>
 						<el-popconfirm :title="`是否确认删除菜单名称为${$t(row.title)}的这条数据${row?.children?.length > 0 ? '注意下级菜单也会一并删除，请谨慎操作' : ''}`" @confirm="handleDelete(row)">
 							<template #reference>
-								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary"> 删除 </el-button>
+								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
+									{{ $t('delete') }}
+								</el-button>
 							</template>
 						</el-popconfirm>
+						<!-- 更多操作 -->
+						<el-dropdown>
+							<el-button :icon="useRenderIcon(More)" :size="size" class="ml-3 mt-[2px]" link type="primary" />
+							<template #dropdown>
+								<el-dropdown-menu>
+									<el-dropdown-item>
+										<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Upload)" :size="size" link type="primary" @click="assignRolesToRouter(row)"> 分配角色 </el-button>
+									</el-dropdown-item>
+								</el-dropdown-menu>
+							</template>
+						</el-dropdown>
 					</template>
 				</pure-table>
 			</template>
