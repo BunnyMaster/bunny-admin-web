@@ -20,7 +20,7 @@ export async function onSearch() {
 }
 
 /**
- * * 添加${系统菜单图标}
+ * * 添加系统菜单图标
  */
 export function onAdd() {
 	addDialog({
@@ -28,6 +28,7 @@ export function onAdd() {
 		width: '30%',
 		props: {
 			formInline: {
+				iconCode: undefined,
 				iconName: undefined,
 			},
 		},
@@ -59,6 +60,7 @@ export function onUpdate(row: any) {
 		width: '30%',
 		props: {
 			formInline: {
+				iconCode: row.iconCode,
 				iconName: row.iconName,
 			},
 		},

@@ -21,13 +21,16 @@ defineExpose({ formRef });
 
 <template>
 	<el-form ref="formRef" :model="form" :rules="rules" label-width="auto">
+		<el-form-item :label="$t('menuIcon_iconCode')" prop="iconCode">
+			<el-input v-model="form.iconCode" autocomplete="off" type="text" />
+		</el-form-item>
 		<el-form-item :label="$t('menuIcon_iconName')" prop="iconName">
 			<el-input v-model="form.iconName" autocomplete="off" type="text" />
 		</el-form-item>
 
-		<el-form-item v-show="form.iconName" :label="$t('menuIcon_preview')">
+		<el-form-item v-show="form.iconCode" :label="$t('menuIcon_preview')">
 			<div class="flex justify-center">
-				<component :is="useRenderIcon(form.iconName)" class="flex justify-center" style="font-size: 30px" />
+				<component :is="useRenderIcon(form.iconCode)" class="flex justify-center" style="font-size: 30px" />
 			</div>
 		</el-form-item>
 

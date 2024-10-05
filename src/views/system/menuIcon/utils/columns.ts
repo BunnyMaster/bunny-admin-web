@@ -6,6 +6,8 @@ export const columns: TableColumnList = [
 	{ type: 'index', index: (index: number) => index + 1 },
 	{ type: 'selection', align: 'left' },
 	{ label: $t('id'), prop: 'id' },
+	// icon 类名
+	{ label: $t('menuIcon_iconCode'), prop: 'iconCode', slot: 'iconCode' },
 	// icon 名称
 	{ label: $t('menuIcon_iconName'), prop: 'iconName', slot: 'iconName' },
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true },
@@ -17,6 +19,8 @@ export const columns: TableColumnList = [
 
 // 添加规则
 export const rules = reactive({
+	// icon 类名
+	iconCode: [{ required: true, message: `${$t('input')}${$t('menuIcon_iconCode')}`, trigger: 'blur' }],
 	// icon 名称
 	iconName: [{ required: true, message: `${$t('input')}${$t('menuIcon_iconName')}`, trigger: 'blur' }],
 });

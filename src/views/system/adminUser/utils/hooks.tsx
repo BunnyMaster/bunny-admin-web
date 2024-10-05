@@ -12,7 +12,7 @@ import { deviceDetection } from '@pureadmin/utils';
 import CropperPreview from '@/components/CropperPreview';
 import AssignUserToRole from '@/views/system/adminUser/assign-user-to-role.vue';
 import userAvatar from '@/assets/user.jpg';
-import { fetchUploadAvatarByAdmin } from '@/api/v1/user';
+import { fetchForcedOffline, fetchUploadAvatarByAdmin } from '@/api/v1/user';
 
 export const formRef = ref();
 const cropRef = ref();
@@ -239,4 +239,23 @@ export const onAssignRolesToUser = (row: any) => {
 			done();
 		},
 	});
+};
+
+/**
+ * * 强制下线
+ * @param row
+ */
+export const onForcedOffline = async (row: any) => {
+	const id = row.id;
+	const confirm = await messageBox({
+		title: $t('confirm_forcedOffline'),
+		showMessage: false,
+		confirmMessage: undefined,
+		cancelMessage: $t('cancel'),
+	});
+	if (!confirm) return;
+
+	const result = await fetchForcedOffline(id);
+	if (result.code !== 200) return;
+	message(result.message, { type: 'success' });
 };

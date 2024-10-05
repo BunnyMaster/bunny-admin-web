@@ -4,7 +4,7 @@ import { columns } from '@/views/system/dept/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onDelete, onSearch, onUpdate } from '@/views/system/dept/utils/hooks';
+import { deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/system/dept/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -35,6 +35,14 @@ const onPageSizeChange = async (value: number) => {
 };
 
 /**
+ * * 选择多行
+ * @param rows
+ */
+const onSelectionChange = (rows: Array<any>) => {
+	deleteIds.value = rows.map((row: any) => row.id);
+};
+
+/**
  * 重置表单
  * @param formEl
  */
@@ -61,9 +69,6 @@ onMounted(() => {
 			<el-form-item :label="$t('dept_summary')" prop="summary">
 				<el-input v-model="deptStore.form.summary" :placeholder="`${$t('input')}${$t('dept_summary')}`" class="!w-[180px]" clearable />
 			</el-form-item>
-			<el-form-item :label="$t('dept_remarks')" prop="remarks">
-				<el-input v-model="deptStore.form.remarks" :placeholder="`${$t('input')}${$t('dept_remarks')}`" class="!w-[180px]" clearable />
-			</el-form-item>
 			<el-form-item>
 				<el-button :icon="useRenderIcon('ri:search-line')" :loading="deptStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
 				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
@@ -73,6 +78,11 @@ onMounted(() => {
 		<PureTableBar :columns="columns" title="部门管理" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> 添加部门</el-button>
+
+				<!-- 批量删除按钮 -->
+				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+					{{ $t('delete_batches') }}
+				</el-button>
 			</template>
 
 			<template v-slot="{ size, dynamicColumns }">
@@ -94,6 +104,7 @@ onMounted(() => {
 					table-layout="auto"
 					@page-size-change="onPageSizeChange"
 					@page-current-change="onCurrentPageChange"
+					@selection-change="onSelectionChange"
 				>
 					<template #createUser="{ row }">
 						<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>

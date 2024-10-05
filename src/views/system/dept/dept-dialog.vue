@@ -15,8 +15,6 @@ const props = withDefaults(defineProps<FormProps>(), {
 		deptName: undefined,
 		// 部门简介
 		summary: undefined,
-		// 备注信息
-		remarks: undefined,
 	}),
 });
 
@@ -39,9 +37,6 @@ defineExpose({ formRef });
 		</el-form-item>
 		<el-form-item :label="$t('dept_summary')" prop="summary">
 			<el-input v-model="form.summary" autocomplete="off" type="text" />
-		</el-form-item>
-		<el-form-item :label="$t('dept_remarks')" prop="remarks">
-			<el-input v-model="form.remarks" autocomplete="off" maxlength="600" show-word-limit type="textarea" />
 		</el-form-item>
 	</el-form>
 </template>

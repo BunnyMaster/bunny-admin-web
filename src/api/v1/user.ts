@@ -79,3 +79,11 @@ export const fetchUpdateUserPasswordByAdmin = (data: any) => {
 export const fetchUploadAvatarByAdmin = (data: any) => {
 	return http.request<BaseResult<UserResult>>('put', 'user/uploadAvatarByAdmin', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
+
+/**
+ * 强制用户下线
+ * @param data
+ */
+export const fetchForcedOffline = (data: any) => {
+	return http.request<BaseResult<UserResult>>('put', 'user/forcedOffline', { data });
+};

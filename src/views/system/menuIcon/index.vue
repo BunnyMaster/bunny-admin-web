@@ -63,6 +63,9 @@ onMounted(() => {
 			<el-form-item :label="$t('menuIcon_iconName')" prop="iconName">
 				<el-input v-model="menuIconStore.form.iconName" :placeholder="`${$t('input')} ${$t('iconName')}`" class="!w-[180px]" clearable />
 			</el-form-item>
+			<el-form-item :label="$t('menuIcon_iconCode')" prop="iconCode">
+				<el-input v-model="menuIconStore.form.iconCode" :placeholder="`${$t('input')} ${$t('iconCode')}`" class="!w-[180px]" clearable />
+			</el-form-item>
 			<el-form-item>
 				<el-button :icon="useRenderIcon('ri:search-line')" :loading="menuIconStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
 				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>

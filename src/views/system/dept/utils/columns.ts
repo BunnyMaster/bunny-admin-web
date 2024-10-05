@@ -4,7 +4,7 @@ import { $t } from '@/plugins/i18n';
 // 表格列
 export const columns: TableColumnList = [
 	{ type: 'index', index: (index: number) => index + 1 },
-	// { type: 'selection', align: 'left' },
+	{ type: 'selection', align: 'left' },
 	{ label: $t('id'), prop: 'id' },
 	// 父级id
 	{ label: $t('dept_parentId'), prop: 'parentId' },
@@ -14,8 +14,6 @@ export const columns: TableColumnList = [
 	{ label: $t('dept_deptName'), prop: 'deptName' },
 	// 部门简介
 	{ label: $t('dept_summary'), prop: 'summary' },
-	// 备注信息
-	{ label: $t('dept_remarks'), prop: 'remarks' },
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 90 },
