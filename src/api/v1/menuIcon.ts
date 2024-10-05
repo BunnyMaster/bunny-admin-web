@@ -28,3 +28,11 @@ export const fetchUpdateMenuIcon = (data: any) => {
 export const fetchDeleteMenuIcon = (data: any) => {
 	return http.request<BaseResult<object>>('delete', 'menuIcon/deleteMenuIcon', { data });
 };
+
+/**
+ * 系统菜单图标---根据iconName搜索menuIc
+ * @param data
+ */
+export const fetchGetIconNameList = (data: any) => {
+	return http.request<BaseResult<object>>('get', 'menuIcon/getIconNameList', { params: data });
+};

@@ -105,9 +105,9 @@ onMounted(() => {
 					@page-current-change="onCurrentPageChange"
 					@selection-change="onSelectionChange"
 				>
-					<template #iconName="{ row }">
-						<div class="flex justify-center">
-							<component :is="useRenderIcon(row.iconName)" class="flex justify-center" style="font-size: 30px" />
+					<template #iconCode="{ row }">
+						<div v-tippy="{ content: row.iconCode }" class="flex justify-center">
+							<component :is="useRenderIcon(row.iconCode)" class="flex justify-center" style="font-size: 30px" />
 						</div>
 					</template>
 

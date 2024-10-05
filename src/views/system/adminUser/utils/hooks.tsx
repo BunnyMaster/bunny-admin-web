@@ -14,13 +14,13 @@ import userAvatar from '@/assets/user.jpg';
 import { fetchForcedOffline, fetchUploadAvatarByAdmin } from '@/api/v1/user';
 import { useUserStore } from '@/store/system/user';
 
+const adminUserStore = useAdminUserStore();
+const userStore = useUserStore();
 export const formRef = ref();
 const cropRef = ref();
 const assignRolesRef = ref();
-const userStore = useUserStore();
 // 上传头像信息
 const avatarInfo = ref();
-const adminUserStore = useAdminUserStore();
 // 重置密码表单校验Ref
 const ruleFormByRestPasswordRef = ref();
 // 重置密码表单

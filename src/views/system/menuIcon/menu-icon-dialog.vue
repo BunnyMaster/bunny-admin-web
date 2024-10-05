@@ -5,6 +5,7 @@ import { rules } from '@/views/system/menuIcon/utils/columns';
 import { FormProps } from '@/views/system/menuIcon/utils/types';
 import { $t } from '@/plugins/i18n';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import MenuIconSelectIconName from '@/views/system/menuIcon/menu-icon-select-icon-name.vue';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
@@ -25,7 +26,7 @@ defineExpose({ formRef });
 			<el-input v-model="form.iconCode" autocomplete="off" type="text" />
 		</el-form-item>
 		<el-form-item :label="$t('menuIcon_iconName')" prop="iconName">
-			<el-input v-model="form.iconName" autocomplete="off" type="text" />
+			<MenuIconSelectIconName :form="form" />
 		</el-form-item>
 
 		<el-form-item v-show="form.iconCode" :label="$t('menuIcon_preview')">
