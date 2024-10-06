@@ -16,7 +16,7 @@ import { useUserStore } from '@/store/system/user';
 
 const adminUserStore = useAdminUserStore();
 const userStore = useUserStore();
-export const formRef = ref();
+const formRef = ref();
 const cropRef = ref();
 const assignRolesRef = ref();
 // 上传头像信息

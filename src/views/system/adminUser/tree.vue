@@ -11,7 +11,7 @@ import Reset from '@iconify-icons/ri/restart-line';
 
 interface Tree {
 	id: number;
-	name: string;
+	deptName: string;
 	highlight?: boolean;
 	children?: Tree[];
 }
@@ -30,13 +30,14 @@ const highlightMap = ref({});
 const { proxy } = getCurrentInstance();
 const defaultProps = {
 	children: 'children',
-	label: 'name',
+	value: 'id',
+	label: 'deptName',
 };
 const buttonClass = computed(() => ['!h-[20px]', '!text-sm', 'reset-margin', '!text-[var(--el-text-color-regular)]', 'dark:!text-white', 'dark:hover:!text-primary']);
 
 const filterNode = (value: string, data: Tree) => {
 	if (!value) return true;
-	return data.name.includes(value);
+	return data.deptName.includes(value);
 };
 
 function nodeClick(value) {
@@ -87,7 +88,7 @@ defineExpose({ onTreeReset });
 </script>
 
 <template>
-	<div v-loading="treeLoading" :style="{ minHeight: `calc(100vh - 141px)` }" class="h-full bg-bg_color overflow-hidden relative">
+	<div v-loading="treeLoading" :style="{ minHeight: `calc(100vh - 130px)` }" class="h-full bg-bg_color overflow-hidden relative">
 		<div class="flex items-center h-[34px]">
 			<el-input v-model="searchValue" class="ml-2" clearable placeholder="请输入部门名称" size="small">
 				<template #suffix>

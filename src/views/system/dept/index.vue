@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { columns } from '@/views/system/dept/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
@@ -17,6 +17,7 @@ import { handleTree } from '@/utils/tree';
 const tableRef = ref();
 const formRef = ref();
 const deptStore = useDeptStore();
+const datalist = computed(() => handleTree(deptStore.datalist));
 
 /**
  * * 当前页改变时
@@ -73,7 +74,7 @@ onMounted(() => {
 			</el-form-item>
 		</el-form>
 
-		<PureTableBar :columns="columns" :title="$t('dept')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
+		<PureTableBar :columns="columns" :isExpandAll="true" :tableRef="tableRef?.getTableRef()" :title="$t('dept')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()"> {{ $t('add_new') }}</el-button>
 
@@ -86,9 +87,9 @@ onMounted(() => {
 			<template v-slot="{ size, dynamicColumns }">
 				<pure-table
 					ref="tableRef"
-					:adaptiveConfig="{ offsetBottom: 45 }"
+					:adaptiveConfig="{ offsetBottom: 96 }"
 					:columns="dynamicColumns"
-					:data="handleTree(deptStore.datalist)"
+					:data="datalist"
 					:header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
 					:loading="deptStore.loading"
 					:pagination="deptStore.pagination"
@@ -96,6 +97,7 @@ onMounted(() => {
 					adaptive
 					align-whole="center"
 					border
+					default-expand-all
 					highlight-current-row
 					row-key="id"
 					showOverflowTooltip

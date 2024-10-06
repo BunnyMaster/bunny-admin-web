@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { columns } from '@/views/system/adminUser/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
@@ -18,13 +18,16 @@ import Password from '@iconify-icons/ri/lock-password-line';
 import More from '@iconify-icons/ep/more-filled';
 import { useAdminUserStore } from '@/store/system/adminUser';
 import { sexConstant, tableSelectButtonClass, userStatus } from '@/enums/baseConstant';
-import { deviceDetection } from '@pureadmin/utils';
+import { deviceDetection, handleTree } from '@pureadmin/utils';
 import Tree from '@/views/system/adminUser/tree.vue';
 import Airplane from '@/assets/svg/airplane.svg';
+import { useDeptStore } from '@/store/system/dept';
 
 const tableRef = ref();
 const formRef = ref();
 const adminUserStore = useAdminUserStore();
+const deptStore = useDeptStore();
+const deptList = computed(() => handleTree(deptStore.allDeptList));
 
 /**
  * * 当前页改变时
@@ -53,14 +56,34 @@ const resetForm = async formEl => {
 	await onSearch();
 };
 
+/**
+ * * 加载部门列表
+ * @param deptName
+ */
+const onSearchDept = async (deptName: string) => {
+	deptStore.loading = true;
+	await deptStore.getAllDeptList();
+	deptStore.loading = false;
+};
+
+/**
+ * * 当树形结构选择时
+ * 搜索当前用户属于哪个部门
+ * @param dept
+ */
+const onTreeSelect = dept => {
+	console.log(dept);
+};
+
 onMounted(() => {
 	onSearch();
+	onSearchDept();
 });
 </script>
 
 <template>
 	<div :class="['flex', 'justify-between', deviceDetection() && 'flex-wrap']">
-		<tree ref="treeRef" :class="['mr-2', deviceDetection() ? 'w-full' : 'min-w-[200px]']" :treeData="[]" :treeLoading="false" @tree-select="() => {}" />
+		<tree ref="treeRef" :class="['mr-2', deviceDetection() ? 'w-full' : 'min-w-[200px]']" :treeData="deptList" :treeLoading="deptStore.loading" @tree-select="onTreeSelect" />
 		<div :class="[deviceDetection() ? ['w-full', 'mt-2'] : 'w-[calc(100%-200px)]']">
 			<el-form ref="formRef" :inline="true" :model="adminUserStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
 				<!-- 查询用户名 -->
@@ -116,7 +139,7 @@ onMounted(() => {
 				<template v-slot="{ size, dynamicColumns }">
 					<pure-table
 						ref="tableRef"
-						:adaptiveConfig="{ offsetBottom: 45 }"
+						:adaptiveConfig="{ offsetBottom: 96 }"
 						:columns="dynamicColumns"
 						:data="adminUserStore.datalist"
 						:header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"

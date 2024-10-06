@@ -5,11 +5,10 @@ import { $t } from '@/plugins/i18n';
 export const columns: TableColumnList = [
 	{ type: 'selection', align: 'left' },
 	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
-	{ label: $t('id'), prop: 'id', width: 250 },
 	// 部门名称
 	{ label: $t('dept_deptName'), prop: 'deptName', width: 160 },
 	// 管理者
-	{ label: $t('dept_manager'), prop: 'manager', width: 200 },
+	{ label: $t('dept_manager'), prop: 'manager' },
 	// 部门简介
 	{ label: $t('dept_summary'), prop: 'summary', width: 360 },
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },

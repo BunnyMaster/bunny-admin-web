@@ -94,7 +94,7 @@ onMounted(() => {
 			<template v-slot="{ size, dynamicColumns }">
 				<pure-table
 					ref="tableRef"
-					:adaptiveConfig="{ offsetBottom: 45 }"
+					:adaptiveConfig="{ offsetBottom: 96 }"
 					:columns="dynamicColumns"
 					:data="powerStore.datalist"
 					:header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
