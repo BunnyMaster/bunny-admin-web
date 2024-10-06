@@ -3,14 +3,13 @@ import { $t } from '@/plugins/i18n';
 import { addDialog } from '@/components/BaseDialog/index';
 import { h, ref } from 'vue';
 import type { FormItemProps } from './types';
-
 import { cloneDeep, deviceDetection } from '@pureadmin/utils';
 import { userMenuStore } from '@/store/system/menu';
 import AssignRouterToRole from '@/views/system/menu/assign-router-to-role.vue';
 
 const menuStore = userMenuStore();
 const assignRouterToRolesRef = ref();
-export const formRef = ref();
+const formRef = ref();
 
 /**
  * 标签栏菜单类型匹配

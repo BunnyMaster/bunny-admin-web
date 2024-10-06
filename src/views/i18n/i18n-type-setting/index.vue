@@ -44,9 +44,9 @@ onMounted(() => {
 			</el-form-item>
 		</el-form>
 
-		<PureTableBar :columns="columns" title="多语言类型管理" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
+		<PureTableBar :columns="columns" :title="$t('i18n_type')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> 添加多语言类型</el-button>
+				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
 			</template>
 
 			<template v-slot="{ size, dynamicColumns }">

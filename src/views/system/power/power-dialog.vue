@@ -26,6 +26,7 @@ defineExpose({ formRef });
 
 <template>
 	<el-form ref="formRef" :model="form" :rules="rules" label-width="auto">
+		{{ form.parentId }}
 		<el-form-item :label="$t('power_parentId')" prop="parentId">
 			<el-input v-model="form.parentId" autocomplete="off" type="text" />
 		</el-form-item>

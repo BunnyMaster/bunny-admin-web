@@ -78,7 +78,7 @@ onMounted(() => {
 		<PureTableBar :columns="columns" :title="$t('multilingual_management')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<!-- 添加多语言 -->
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_multilingual') }} </el-button>
+				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
 				<!-- 批量删除按钮 -->
 				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
 					{{ $t('delete_batches') }}

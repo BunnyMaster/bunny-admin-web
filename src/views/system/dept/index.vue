@@ -75,9 +75,9 @@ onMounted(() => {
 			</el-form-item>
 		</el-form>
 
-		<PureTableBar :columns="columns" title="部门管理" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
+		<PureTableBar :columns="columns" :title="$t('dept')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> 添加部门</el-button>
+				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()"> {{ $t('add_new') }}</el-button>
 
 				<!-- 批量删除按钮 -->
 				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
@@ -116,7 +116,7 @@ onMounted(() => {
 
 					<template #operation="{ row }">
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
-						<el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd"> {{ $t('add_new') }} </el-button>
+						<el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)"> {{ $t('add_new') }} </el-button>
 						<el-popconfirm :title="`是否确认删除 ${row.deptName}数据`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">

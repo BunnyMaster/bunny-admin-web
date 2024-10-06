@@ -2,12 +2,14 @@ import { defineStore } from 'pinia';
 import { storeMessage } from '@/utils/message';
 import { handleTree } from '@/utils/tree';
 import { fetchAddMenu, fetchAssignRolesToRouter, fetchDeletedMenuByIds, fetchGetMenusList, fetchGetRoleListByRouterId, fetchUpdateMenu } from '@/api/v1/menu';
+import { isAllEmpty } from '@pureadmin/utils';
+import { $t } from '@/plugins/i18n';
 
 export const userMenuStore = defineStore('menuStore', {
 	state() {
 		return {
 			datalist: [],
-			form: { title: undefined, visible: undefined },
+			form: { title: undefined },
 			loading: false,
 		};
 	},
@@ -17,14 +19,17 @@ export const userMenuStore = defineStore('menuStore', {
 		 * * 获取菜单列表
 		 */
 		async getMenuList() {
-			const data = { ...this.pagination, ...this.form };
-			const result = await fetchGetMenusList(data);
+			const result = await fetchGetMenusList({ ...this.pagination });
+			if (result.code !== 200) return false;
 
-			if (result.code === 200) {
-				this.datalist = handleTree(result.data as any);
-				return true;
+			// 前端搜索菜单名称
+			const title = this.form.title;
+			let newData = result.data;
+			if (!isAllEmpty(title)) {
+				newData = newData.filter(item => $t(item.title).includes(title));
 			}
-			return false;
+			this.datalist = handleTree(newData);
+			return true;
 		},
 
 		/**

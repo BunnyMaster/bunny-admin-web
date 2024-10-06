@@ -6,8 +6,7 @@ import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import AddFill from '@iconify-icons/ri/add-circle-line';
-import { assignRolesToRouter, handleDelete, onAdd, onSearch, onUpdate, resetForm } from '@/views/system/menu/utils/hooks';
-import form from '@/views/system/menu/form.vue';
+import { assignRolesToRouter, handleDelete, onAdd, onSearch, onUpdate } from '@/views/system/menu/utils/hooks';
 import PureTable from '@pureadmin/table';
 import { columns } from '@/views/system/menu/utils/columns';
 import { userMenuStore } from '@/store/system/menu';
@@ -17,6 +16,7 @@ import More from '@iconify-icons/ep/more-filled';
 import { tableSelectButtonClass } from '@/enums/baseConstant';
 import Upload from '@iconify-icons/ri/upload-line';
 import { messageBox } from '@/utils/message';
+import { FormInstance } from 'element-plus';
 
 const formRef = ref();
 const tableRef = ref();
@@ -55,7 +55,7 @@ const onchangeVisible = async (row: any) => {
  * 表单重置
  * @param formEl
  */
-const resetForm = async (formEl: any) => {
+const resetForm = async (formEl: FormInstance | undefined) => {
 	if (!formEl) return;
 	formEl.resetFields();
 	await onSearch();
@@ -68,18 +68,18 @@ onMounted(() => {
 
 <template>
 	<div class="main">
-		<el-form ref="formRef" :inline="true" :model="form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+		<el-form ref="formRef" :inline="true" :model="routerStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
 			<el-form-item label="菜单名称" prop="title">
 				<el-input v-model="routerStore.form.title" class="!w-[180px]" clearable placeholder="输入菜单名称" />
 			</el-form-item>
 			<el-form-item>
-				<el-button :icon="useRenderIcon('ri:search-line')" :loading="routerStore.loading" type="primary" @click="onSearch"> 搜索 </el-button>
-				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> 重置</el-button>
+				<el-button :icon="useRenderIcon('ri:search-line')" :loading="routerStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
+				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
 			</el-form-item>
 		</el-form>
 		<PureTableBar :columns="columns" :isExpandAll="false" :tableRef="tableRef?.getTableRef()" title="菜单管理" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()"> 新增菜单</el-button>
+				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()"> {{ $t('add_new') }}</el-button>
 			</template>
 			<template v-slot="{ size, dynamicColumns }">
 				<pure-table

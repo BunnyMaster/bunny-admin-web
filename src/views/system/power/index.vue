@@ -83,7 +83,7 @@ onMounted(() => {
 		<PureTableBar :columns="columns" :title="$t('power')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<!-- 添加权限按钮 -->
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') + $t('power') }} </el-button>
+				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()"> {{ $t('add_new') }}</el-button>
 
 				<!-- 批量删除按钮 -->
 				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
@@ -123,7 +123,7 @@ onMounted(() => {
 					<template #operation="{ row }">
 						<!-- 修改 -->
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
-
+						<el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)"> {{ $t('add_new') }} </el-button>
 						<!-- 删除 -->
 						<el-popconfirm :title="`是否确认删除 ${row.powerName}数据`" @confirm="onDelete(row)">
 							<template #reference>

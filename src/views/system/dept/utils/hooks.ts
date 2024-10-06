@@ -22,13 +22,13 @@ export async function onSearch() {
 /**
  * * 添加部门
  */
-export function onAdd() {
+export function onAdd(parentId: number = 0) {
 	addDialog({
 		title: `${$t('add_new')}${$t('dept')}`,
 		width: '30%',
 		props: {
 			formInline: {
-				parentId: undefined,
+				parentId,
 				managerId: undefined,
 				deptName: undefined,
 				summary: undefined,

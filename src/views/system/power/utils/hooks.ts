@@ -22,13 +22,13 @@ export async function onSearch() {
 /**
  * * 添加权限
  */
-export function onAdd() {
+export function onAdd(parentId = 0) {
 	addDialog({
 		title: `${$t('add_new')}${$t('power')}`,
 		width: '30%',
 		props: {
 			formInline: {
-				parentId: undefined,
+				parentId,
 				powerCode: undefined,
 				powerName: undefined,
 				requestUrl: undefined,

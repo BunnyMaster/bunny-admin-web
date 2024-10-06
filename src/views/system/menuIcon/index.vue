@@ -73,11 +73,9 @@ onMounted(() => {
 			</el-form-item>
 		</el-form>
 
-		<PureTableBar :columns="columns" title="系统菜单图标" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
+		<PureTableBar :columns="columns" :title="$t('menuIcon')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
-					{{ $t('add_new') + $t('menuIcon_iconName') }}
-				</el-button>
+				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
 
 				<!-- 批量删除按钮 -->
 				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
