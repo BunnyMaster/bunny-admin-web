@@ -9,6 +9,13 @@ export const fetchGetDeptList = (data: any) => {
 };
 
 /**
+ * 部门管理---获取所有部门管理列表
+ */
+export const fetchGetAllDeptList = () => {
+	return http.request<BaseResult<object>>('get', 'dept/getAllDeptList');
+};
+
+/**
  * 部门管理---添加部门管理
  */
 export const fetchAddDept = (data: any) => {

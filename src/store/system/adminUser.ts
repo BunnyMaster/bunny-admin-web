@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddAdminUser, fetchDeleteAdminUser, fetchGetAdminUserList, fetchUpdateAdminUser } from '@/api/v1/adminUser';
+import { fetchAddAdminUser, fetchDeleteAdminUser, fetchGetAdminUserList, fetchQueryUser, fetchUpdateAdminUser } from '@/api/v1/adminUser';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -59,6 +59,12 @@ export const useAdminUserStore = defineStore('adminUserStore', {
 			// 公共页面函数hook
 			const pagination = storePagination.bind(this);
 			return pagination(result);
+		},
+
+		async queryUser(data: any) {
+			const result = await fetchQueryUser(data);
+			if (result.code !== 200) return [];
+			return result.data;
 		},
 
 		/**

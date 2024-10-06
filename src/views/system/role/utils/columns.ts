@@ -3,8 +3,8 @@ import { $t } from '@/plugins/i18n';
 
 // 表格列
 export const columns: TableColumnList = [
-	{ type: 'index', index: (index: number) => index + 1 },
 	{ type: 'selection', align: 'left' },
+	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
 	{ label: $t('id'), prop: 'id' },
 	// 角色代码
 	{ label: $t('role_roleCode'), prop: 'roleCode' },

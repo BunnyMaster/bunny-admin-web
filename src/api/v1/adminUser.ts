@@ -9,6 +9,14 @@ export const fetchGetAdminUserList = (data: any) => {
 };
 
 /**
+ * 查询用户
+ * @param data
+ */
+export const fetchQueryUser = (data: any) => {
+	return http.request<BaseResult<object>>('get', 'user/queryUser', { params: data });
+};
+
+/**
  * 用户信息---添加用户信息
  */
 export const fetchAddAdminUser = (data: any) => {

@@ -4,8 +4,8 @@ import type { FormRules } from 'element-plus';
 import { $t } from '@/plugins/i18n';
 
 export const columns: TableColumnList = [
-	{ type: 'index', index: (index: number) => index + 1 },
 	{ type: 'selection', align: 'left' },
+	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
 	{ label: $t('id'), prop: 'id' },
 	{ label: $t('i18n.keyName'), prop: 'keyName' },
 	{ label: $t('i18n.translation'), prop: 'translation' },

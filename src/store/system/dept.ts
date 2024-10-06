@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddDept, fetchDeleteDept, fetchGetDeptList, fetchUpdateDept } from '@/api/v1/dept';
+import { fetchAddDept, fetchDeleteDept, fetchGetAllDeptList, fetchGetDeptList, fetchUpdateDept } from '@/api/v1/dept';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -12,6 +12,8 @@ export const useDeptStore = defineStore('deptStore', {
 		return {
 			// 部门列表
 			datalist: [],
+			// 所有部门列表
+			allDeptList: [],
 			// 查询表单
 			form: {
 				// 部门名称
@@ -50,6 +52,15 @@ export const useDeptStore = defineStore('deptStore', {
 			// 公共页面函数hook
 			const pagination = storePagination.bind(this);
 			return pagination(result);
+		},
+
+		/**
+		 * * 获取所有部门列表
+		 */
+		async getAllDeptList() {
+			const result = await fetchGetAllDeptList();
+			if (result.code !== 200) return;
+			this.allDeptList = result.data;
 		},
 
 		/**

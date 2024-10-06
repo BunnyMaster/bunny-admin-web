@@ -1,47 +1,43 @@
 <script lang="ts" setup>
 import { $t } from '@/plugins/i18n';
 import { ref } from 'vue';
-import { fetchGetIconNameList } from '@/api/v1/menuIcon';
 import LoadingSvg from '@/assets/svg/loading.svg';
-import { FormProps } from '@/views/system/menuIcon/utils/types';
+import { useAdminUserStore } from '@/store/system/adminUser';
+
+// 添加或者修改表单元素
+interface FormItemProps {
+	username: string;
+	manager: string;
+}
+
+// 添加或修改表单Props
+interface FormProps {
+	formInline: FormItemProps;
+}
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({}),
 });
 
+const adminUserStore = useAdminUserStore();
 const loading = ref(false);
-const iconNameList = ref([]);
+const userDataList = ref([]);
 const form = ref(props.formInline);
 
 /**
  * * 搜索
  */
-const onRequestIconName = async (keyword: string) => {
-	const data = { currentPage: 1, pageSize: 20, iconName };
+const onSearchUserinfo = async (keyword: string) => {
+	if (!keyword) return;
 	loading.value = true;
-
-	if (iconName) {
-		const result = await fetchGetIconNameList(data);
-		if (result.code === 200) iconNameList.value = result.data;
-	} else iconNameList.value = [];
-
+	userDataList.value = await adminUserStore.queryUser({ keyword });
 	loading.value = false;
 };
 </script>
 
 <template>
-	<el-select
-		v-model="form.iconName"
-		:loading="loading"
-		:placeholder="$t('input') + $t('menuIcon_iconName')"
-		:remote-method="onRequestIconName"
-		allow-create
-		clearable
-		filterable
-		remote
-		remote-show-suffix
-	>
-		<el-option v-for="menuIcon in iconNameList" :key="menuIcon.id" :label="menuIcon.iconName" :value="menuIcon.iconName" />
+	<el-select v-model="form.manager" :loading="loading" :placeholder="$t('input')" :remote-method="onSearchUserinfo" clearable filterable multiple remote remote-show-suffix>
+		<el-option v-for="item in userDataList" :key="item.id" :label="item.username" :value="item.username" />
 		<template #loading>
 			<el-icon class="is-loading">
 				<LoadingSvg />

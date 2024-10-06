@@ -3,7 +3,7 @@ export interface FormItemProps {
 	// 父级id
 	parentId: string;
 	// 管理者id
-	managerId: string;
+	manager: string[];
 	// 部门名称
 	deptName: string;
 	// 部门简介

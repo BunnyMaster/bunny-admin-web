@@ -12,6 +12,7 @@ import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useDeptStore } from '@/store/system/dept.ts';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { handleTree } from '@/utils/tree';
 
 const tableRef = ref();
 const formRef = ref();
@@ -60,9 +61,6 @@ onMounted(() => {
 <template>
 	<div class="main">
 		<el-form ref="formRef" :inline="true" :model="deptStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-			<el-form-item :label="$t('dept_managerId')" prop="managerId">
-				<el-input v-model="deptStore.form.managerId" :placeholder="`${$t('input')}${$t('dept_managerId')}`" class="!w-[180px]" clearable />
-			</el-form-item>
 			<el-form-item :label="$t('dept_deptName')" prop="deptName">
 				<el-input v-model="deptStore.form.deptName" :placeholder="`${$t('input')}${$t('dept_deptName')}`" class="!w-[180px]" clearable />
 			</el-form-item>
@@ -90,7 +88,7 @@ onMounted(() => {
 					ref="tableRef"
 					:adaptiveConfig="{ offsetBottom: 45 }"
 					:columns="dynamicColumns"
-					:data="deptStore.datalist"
+					:data="handleTree(deptStore.datalist)"
 					:header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
 					:loading="deptStore.loading"
 					:pagination="deptStore.pagination"

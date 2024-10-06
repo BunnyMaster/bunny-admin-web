@@ -1,11 +1,16 @@
 import { $t } from '@/plugins/i18n';
 import UserinfoDialog from '@/components/Table/Userinfo/UserinfoDialog.vue';
-import { addDialog } from '@/components/BaseDialog/index'; // 表格列字段
+import { addDialog } from '@/components/BaseDialog/index';
+import TableImage from '@/components/Table/TableImage.vue'; // 表格列字段
 
 // 表格列字段
 export const columns = [
 	{ label: $t('id'), prop: 'id' },
-	{ label: $t('avatar'), prop: 'avatar', slot: 'avatar' },
+	{
+		label: $t('avatar'),
+		prop: 'avatar',
+		cellRenderer: ({ row }) => <TableImage image={row.avatar} />,
+	},
 	{ label: $t('nickName'), prop: 'nickName' },
 	{ label: $t('username'), prop: 'username' },
 	{ label: $t('email'), prop: 'email', width: 180 },

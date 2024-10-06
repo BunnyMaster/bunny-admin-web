@@ -3,7 +3,6 @@ import userAvatarIcon from '@/assets/svg/user_avatar.svg?component';
 import { columns } from './columns';
 import TablePlus from '@/components/TableBar/src/TablePlus.vue';
 import { onMounted, ref } from 'vue';
-import TableImage from '@/components/Table/TableImage.vue';
 import { fetchGetUserinfoById } from '@/api/v1/user';
 import { $t } from '@/plugins/i18n';
 
@@ -48,12 +47,7 @@ onMounted(() => {
 			</el-row>
 
 			<p class="list-card-item_detail--name text-text_color_primary">{{ $t('user_details') }}</p>
-
-			<TablePlus :column="columns" :data-list="[userinfo]" :loading="loading">
-				<template #avatar>
-					<table-image :image="userinfo.avatar" />
-				</template>
-			</TablePlus>
+			<TablePlus :column="columns" :data-list="[userinfo]" :loading="loading" />
 		</div>
 		<el-empty v-else description="无数据" />
 	</div>
@@ -113,9 +107,6 @@ onMounted(() => {
 			line-height: 20px;
 			text-overflow: ellipsis;
 			-webkit-box-orient: vertical;
-		}
-
-		&--desc {
 			-webkit-line-clamp: 2;
 		}
 	}

@@ -29,7 +29,7 @@ export function onAdd(parentId: number = 0) {
 		props: {
 			formInline: {
 				parentId,
-				managerId: undefined,
+				manager: undefined,
 				deptName: undefined,
 				summary: undefined,
 			},
@@ -63,7 +63,7 @@ export function onUpdate(row: any) {
 		props: {
 			formInline: {
 				parentId: row.parentId,
-				managerId: row.managerId,
+				manager: row.manager,
 				deptName: row.deptName,
 				summary: row.summary,
 			},
