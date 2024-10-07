@@ -13,7 +13,7 @@ export const usePowerStore = defineStore('powerStore', {
 			// 权限列表
 			datalist: [],
 			// 权限树形结构
-			treeList: [],
+			allPowerList: [],
 			// 查询表单
 			form: {
 				// 权限编码
@@ -84,7 +84,7 @@ export const usePowerStore = defineStore('powerStore', {
 		async getAllPowers() {
 			const result = await fetchGetAllPowers();
 			if (result.code !== 200) return;
-			this.treeList = result.data;
+			this.allPowerList = result.data;
 		},
 	},
 });

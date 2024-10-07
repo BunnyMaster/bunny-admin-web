@@ -9,7 +9,7 @@ import { isAddUserinfo } from '@/views/system/adminUser/utils/columns';
 import ResetPasswordDialog from '@/views/system/adminUser/reset-passwords.vue';
 import { deviceDetection } from '@pureadmin/utils';
 import CropperPreview from '@/components/CropperPreview';
-import AssignUserToRole from '@/views/system/adminUser/assign-user-to-role.vue';
+import AssignUserToRole from '@/views/system/adminUser/assign-roles-to-user.vue';
 import userAvatar from '@/assets/user.jpg';
 import { fetchForcedOffline, fetchUploadAvatarByAdmin } from '@/api/v1/user';
 import { useUserStore } from '@/store/system/user';

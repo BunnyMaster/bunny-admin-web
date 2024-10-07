@@ -12,10 +12,12 @@ import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { usePowerStore } from '@/store/system/power.ts';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { handleTree } from '@pureadmin/utils';
 
 const tableRef = ref();
 const formRef = ref();
 const powerStore = usePowerStore();
+const datalist = computed(() => handleTree(powerStore.datalist));
 
 /**
  * * 当前页改变时
@@ -80,7 +82,7 @@ onMounted(() => {
 			</el-form-item>
 		</el-form>
 
-		<PureTableBar :columns="columns" :title="$t('power')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
+		<PureTableBar :columns="columns" :isExpandAll="true" :tableRef="tableRef?.getTableRef()" :title="$t('power')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<!-- 添加权限按钮 -->
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()"> {{ $t('add_new') }}</el-button>
@@ -96,7 +98,7 @@ onMounted(() => {
 					ref="tableRef"
 					:adaptiveConfig="{ offsetBottom: 96 }"
 					:columns="dynamicColumns"
-					:data="powerStore.datalist"
+					:data="datalist"
 					:header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
 					:loading="powerStore.loading"
 					:pagination="powerStore.pagination"
@@ -104,6 +106,7 @@ onMounted(() => {
 					adaptive
 					align-whole="center"
 					border
+					default-expand-all
 					highlight-current-row
 					row-key="id"
 					showOverflowTooltip

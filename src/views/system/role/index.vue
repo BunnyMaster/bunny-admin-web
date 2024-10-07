@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 import { columns } from '@/views/system/role/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/system/role/utils/hooks';
+import { contentRef, deleteIds, formRef, onAdd, onDelete, onDeleteBatch, onMenuPowerClick, onSearch, onUpdate, powerTreeIsShow, tableRef } from '@/views/system/role/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -12,9 +12,10 @@ import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useRoleStore } from '@/store/system/role.ts';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { deviceDetection } from '@pureadmin/utils';
+import Menu from '@iconify-icons/ep/menu';
+import AssignPowersToRole from '@/views/system/role/assign-powers-to-role.vue';
 
-const tableRef = ref();
-const formRef = ref();
 const roleStore = useRoleStore();
 
 /**
@@ -72,57 +73,74 @@ onMounted(() => {
 			</el-form-item>
 		</el-form>
 
-		<PureTableBar :columns="columns" :title="$t('role')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
-			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
+		<div ref="contentRef" :class="['flex', deviceDetection() ? 'flex-wrap' : '']">
+			<PureTableBar
+				:class="[powerTreeIsShow && !deviceDetection() ? '!w-[60vw]' : 'w-full']"
+				:columns="columns"
+				:title="$t('role')"
+				style="transition: width 220ms cubic-bezier(0.4, 0, 0.2, 1)"
+				@fullscreen="tableRef.setAdaptive()"
+				@refresh="onSearch"
+			>
+				<template #buttons>
+					<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
 
-				<!-- 批量删除按钮 -->
-				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
-					{{ $t('delete_batches') }}
-				</el-button>
-			</template>
+					<!-- 批量删除按钮 -->
+					<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+						{{ $t('delete_batches') }}
+					</el-button>
+				</template>
 
-			<template v-slot="{ size, dynamicColumns }">
-				<pure-table
-					ref="tableRef"
-					:adaptiveConfig="{ offsetBottom: 96 }"
-					:columns="dynamicColumns"
-					:data="roleStore.datalist"
-					:header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
-					:loading="roleStore.loading"
-					:pagination="roleStore.pagination"
-					:size="size"
-					adaptive
-					align-whole="center"
-					border
-					highlight-current-row
-					row-key="id"
-					showOverflowTooltip
-					table-layout="auto"
-					@page-size-change="onPageSizeChange"
-					@page-current-change="onCurrentPageChange"
-					@selection-change="onSelectionChange"
-				>
-					<template #createUser="{ row }">
-						<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>
-					</template>
+				<template v-slot="{ size, dynamicColumns }">
+					<pure-table
+						ref="tableRef"
+						:adaptiveConfig="{ offsetBottom: 96 }"
+						:columns="dynamicColumns"
+						:data="roleStore.datalist"
+						:header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
+						:loading="roleStore.loading"
+						:pagination="roleStore.pagination"
+						:size="size"
+						adaptive
+						align-whole="center"
+						border
+						highlight-current-row
+						row-key="id"
+						showOverflowTooltip
+						table-layout="auto"
+						@page-size-change="onPageSizeChange"
+						@page-current-change="onCurrentPageChange"
+						@selection-change="onSelectionChange"
+					>
+						<template #createUser="{ row }">
+							<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>
+						</template>
 
-					<template #updateUser="{ row }">
-						<el-button link type="primary" @click="selectUserinfo(row.updateUser)">{{ $t('table.updateUser') }} </el-button>
-					</template>
+						<template #updateUser="{ row }">
+							<el-button link type="primary" @click="selectUserinfo(row.updateUser)">{{ $t('table.updateUser') }} </el-button>
+						</template>
 
-					<template #operation="{ row }">
-						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
-						<el-popconfirm :title="`是否确认删除 ${row.roleCode}数据`" @confirm="onDelete(row)">
-							<template #reference>
-								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
-									{{ $t('delete') }}
-								</el-button>
-							</template>
-						</el-popconfirm>
-					</template>
-				</pure-table>
-			</template>
-		</PureTableBar>
+						<template #operation="{ row }">
+							<!-- 修改 -->
+							<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
+
+							<!-- 删除 -->
+							<el-popconfirm :title="`是否确认删除 ${row.roleCode}数据`" @confirm="onDelete(row)">
+								<template #reference>
+									<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
+										{{ $t('delete') }}
+									</el-button>
+								</template>
+							</el-popconfirm>
+
+							<el-button :icon="useRenderIcon(Menu)" :size="size" class="reset-margin" link type="primary" @click="onMenuPowerClick(row)"> 权限 </el-button>
+						</template>
+					</pure-table>
+				</template>
+			</PureTableBar>
+
+			<!-- 为角色分配角色 -->
+			<assign-powers-to-role />
+		</div>
 	</div>
 </template>

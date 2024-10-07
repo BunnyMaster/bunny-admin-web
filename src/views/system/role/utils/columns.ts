@@ -1,4 +1,4 @@
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import { $t } from '@/plugins/i18n';
 
 // 表格列
@@ -24,3 +24,19 @@ export const rules = reactive({
 	// 描述
 	description: [{ required: true, message: `${$t('input')}${$t('role_description')}`, trigger: 'blur' }],
 });
+
+// 权限显示图标类名
+export const iconClass = computed(() => [
+	'w-[22px]',
+	'h-[22px]',
+	'flex',
+	'justify-center',
+	'items-center',
+	'outline-none',
+	'rounded-[4px]',
+	'cursor-pointer',
+	'transition-colors',
+	'hover:bg-[#0000000f]',
+	'dark:hover:bg-[#ffffff1f]',
+	'dark:hover:text-[#ffffffd9]',
+]);

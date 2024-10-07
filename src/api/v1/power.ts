@@ -9,6 +9,13 @@ export const fetchGetPowerList = (data: any) => {
 };
 
 /**
+ * 权限---根据角色id获取权限内容
+ */
+export const fetchGetPowerListByRoleId = (data: any) => {
+	return http.request<BaseResult<object>>('get', 'rolePower/getPowerListByRoleId', { data });
+};
+
+/**
  * 权限---添加权限
  */
 export const fetchAddPower = (data: any) => {

@@ -30,3 +30,6 @@ export const rules = reactive({
 	// 请求路径
 	requestUrl: [{ required: true, message: `${$t('input')}${$t('power_requestUrl')}`, trigger: 'blur' }],
 });
+
+// 权限树形结构props
+export const powerCascadeProps = { value: 'id', label: 'powerName', emitPath: false, checkStrictly: true };
