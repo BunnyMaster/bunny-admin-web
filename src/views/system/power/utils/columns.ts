@@ -27,8 +27,6 @@ export const rules = reactive({
 	powerCode: [{ required: true, message: `${$t('input')}${$t('power_powerCode')}`, trigger: 'blur' }],
 	// 权限名称
 	powerName: [{ required: true, message: `${$t('input')}${$t('power_powerName')}`, trigger: 'blur' }],
-	// 请求路径
-	requestUrl: [{ required: true, message: `${$t('input')}${$t('power_requestUrl')}`, trigger: 'blur' }],
 });
 
 // 权限树形结构props

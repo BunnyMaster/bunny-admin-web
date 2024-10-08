@@ -1,6 +1,6 @@
 import { addDialog } from '@/components/BaseDialog/index';
 import AdminUserDialog from '@/views/system/adminUser/admin-user-dialog.vue';
-import { useAdminUserStore } from '@/store/system/adminUser.ts';
+import { useAdminUserStore } from '@/store/system/adminUser';
 import { h, reactive, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/adminUser/utils/types';
@@ -16,8 +16,11 @@ import { useUserStore } from '@/store/system/user';
 
 const adminUserStore = useAdminUserStore();
 const userStore = useUserStore();
+// 表单Ref
 const formRef = ref();
+// 剪裁头像的Ref
 const cropRef = ref();
+// 分配角色的Ref
 const assignRolesRef = ref();
 // 上传头像信息
 const avatarInfo = ref();
@@ -28,6 +31,8 @@ const restPasswordForm = reactive({
 	userId: void 0,
 	password: '',
 });
+// 批量删除id列表
+export const deleteIds = ref([]);
 
 /**
  * * 搜索初始化用户信息
@@ -137,6 +142,23 @@ export const onDelete = async (row: any) => {
 	await onSearch();
 };
 
+/**
+ * * 批量删除用户
+ */
+export const onDeleteBatch = async () => {
+	// 是否确认删除
+	const result = await messageBox({
+		title: $t('confirm_delete'),
+		showMessage: false,
+		confirmMessage: undefined,
+		cancelMessage: $t('cancel_delete'),
+	});
+	if (!result) return;
+
+	// 删除数据
+	await adminUserStore.deleteAdminUser(deleteIds.value);
+	await onSearch();
+};
 /**
  * * 更新用户状态
  * @param row

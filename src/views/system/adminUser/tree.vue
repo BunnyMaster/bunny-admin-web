@@ -8,13 +8,7 @@ import ExpandIcon from '@/assets/svg/expand.svg?component';
 import UnExpandIcon from '@/assets/svg/unexpand.svg?component';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import Reset from '@iconify-icons/ri/restart-line';
-
-interface Tree {
-	id: number;
-	deptName: string;
-	highlight?: boolean;
-	children?: Tree[];
-}
+import { Tree } from '@/views/system/adminUser/utils/types';
 
 defineProps({
 	treeLoading: Boolean,

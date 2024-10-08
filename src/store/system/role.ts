@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddRole, fetchDeleteRole, fetchGetAllRoles, fetchGetRoleList, fetchUpdateRole } from '@/api/v1/role';
+import { fetchAddRole, fetchAssignPowersToRole, fetchDeleteRole, fetchGetAllRoles, fetchGetRoleList, fetchUpdateRole } from '@/api/v1/role';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -67,6 +67,15 @@ export const useRoleStore = defineStore('roleStore', {
 		 */
 		async addRole(data: any) {
 			const result = await fetchAddRole(data);
+			return storeMessage(result);
+		},
+
+		/**
+		 * * 为角色分配权限
+		 * @param data
+		 */
+		async assignPowersToRole(data: any) {
+			const result = await fetchAssignPowersToRole(data);
 			return storeMessage(result);
 		},
 

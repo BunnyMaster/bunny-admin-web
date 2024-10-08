@@ -95,16 +95,14 @@ defineExpose({ formRef });
 			<!-- 用户简介 -->
 			<re-col :sm="24" :value="24" :xs="24">
 				<el-form-item :label="$t('adminUser_summary')" prop="summary">
-					<el-input v-model="form.summary" :placeholder="$t('adminUser_summary')" autocomplete="off" maxlength="600" show-word-limit type="textarea" />
+					<el-input v-model="form.summary" :placeholder="$t('adminUser_summary')" autocomplete="off" maxlength="200" show-word-limit type="textarea" />
 				</el-form-item>
 			</re-col>
 
 			<!-- 用户状态 -->
 			<re-col :sm="24" :value="12" :xs="24">
 				<el-form-item :label="$t('adminUser_status')" prop="status">
-					<el-switch v-model="form.status" active-text="禁用" class="ml-2" inactive-text="正常" inline-prompt style="
-
---el-switch-on-color: #ff4949; --el-switch-off-color: #13ce66" />
+					<el-switch v-model="form.status" active-text="禁用" class="ml-2" inactive-text="正常" inline-prompt style="--el-switch-on-color: #ff4949; --el-switch-off-color: #13ce66" />
 				</el-form-item>
 			</re-col>
 		</el-row>

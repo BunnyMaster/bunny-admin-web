@@ -6,6 +6,7 @@ export const isAddUserinfo = ref(false);
 
 // 表格列
 export const columns: TableColumnList = [
+	{ type: 'selection', align: 'left' },
 	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
 	// 主键
 	{ label: $t('id'), prop: 'id' },

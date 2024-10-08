@@ -1,6 +1,6 @@
 import { addDialog } from '@/components/BaseDialog/index';
 import DeptDialog from '@/views/system/dept/dept-dialog.vue';
-import { useDeptStore } from '@/store/system/dept.ts';
+import { useDeptStore } from '@/store/system/dept';
 import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/dept/utils/types';

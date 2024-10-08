@@ -5,22 +5,24 @@ import Check from '@iconify-icons/ep/check';
 import { computed, nextTick, onMounted, ref, watch } from 'vue';
 import { delay, getKeyList, handleTree, subBefore, useResizeObserver } from '@pureadmin/utils';
 import { contentRef, currentRow, onMenuPowerClick, powerTreeIsShow, powerTreeRef, tableRef } from '@/views/system/role/utils/hooks';
-import { message } from '@/utils/message';
 import { usePowerStore } from '@/store/system/power';
 import { powerCascadeProps } from '@/views/system/power/utils/columns';
+import { useRoleStore } from '@/store/system/role';
 
+const powerStore = usePowerStore();
+const roleStore = useRoleStore();
 // 是否展开全部
 const isExpandAll = ref(false);
 // 是否选择全部
 const isSelectAll = ref(false);
-const isLinkage = ref(false);
+const isLinkage = ref(true);
 // 树形选择器高度计算
 const treeHeight = ref();
 // 搜索树形结构过滤内容
 const treeSearchValue = ref();
 // 选择的树形id列表
 const treeIds = ref([]);
-const powerStore = usePowerStore();
+// 树形结构权限列表
 const datalist = computed(() => handleTree(powerStore.allPowerList));
 
 /**
@@ -34,11 +36,17 @@ const getAllPowers = async () => {
 /**
  * 菜单权限-保存
  */
-const onSave = () => {
+const onSave = async () => {
+	// 构建保存参数
 	const { id, description } = currentRow.value;
-	// 根据用户 id 调用实际项目中菜单权限修改接口
-	console.log(id, powerTreeRef.value.getCheckedKeys());
-	message(`${description} 权限修改成功`, { type: 'success' });
+	const powerIds = powerTreeRef.value.getCheckedKeys();
+	const data = { roleId: id, powerIds, description };
+
+	// 保存分配的权限
+	const result = await roleStore.assignPowersToRole(data);
+	if (!result) return;
+	currentRow.value = null;
+	powerTreeIsShow.value = false;
 };
 
 /**
@@ -46,7 +54,7 @@ const onSave = () => {
  * @param query
  * @param node
  */
-const filterMethod = (query: string, node) => node.powerName!.includes(query);
+const filterMethod = (query: string, node: any) => node.powerName!.includes(query);
 
 /**
  * * 菜单搜索

@@ -24,3 +24,11 @@ export interface FormItemProps {
 export interface FormProps {
 	formInline: FormItemProps;
 }
+
+// 树形结构
+export interface Tree {
+	id: number;
+	deptName: string;
+	highlight?: boolean;
+	children?: Tree[];
+}

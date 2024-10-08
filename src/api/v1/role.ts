@@ -9,10 +9,31 @@ export const fetchGetRoleList = (data: any) => {
 };
 
 /**
+ * 获取所有角色
+ */
+export const fetchGetAllRoles = () => {
+	return http.request<BaseResult<any>>('get', `role/getAllRoles`);
+};
+
+/**
+ * 根据用户id获取所有角色
+ */
+export const fetchGetRoleListByUserId = data => {
+	return http.request<BaseResult<any>>('get', `userRole/getRoleListByUserId`, { params: data });
+};
+
+/**
  * 角色---添加角色
  */
 export const fetchAddRole = (data: any) => {
 	return http.request<BaseResult<object>>('post', 'role/addRole', { data });
+};
+
+/**
+ * 角色---为角色分配权限
+ */
+export const fetchAssignPowersToRole = (data: any) => {
+	return http.request<BaseResult<object>>('post', 'rolePower/assignPowersToRole', { data });
 };
 
 /**
@@ -27,18 +48,4 @@ export const fetchUpdateRole = (data: any) => {
  */
 export const fetchDeleteRole = (data: any) => {
 	return http.request<BaseResult<object>>('delete', 'role/deleteRole', { data });
-};
-
-/**
- * 获取所有角色
- */
-export const fetchGetAllRoles = () => {
-	return http.request<BaseResult<any>>('get', `role/getAllRoles`);
-};
-
-/**
- * 根据用户id获取所有角色
- */
-export const fetchGetRoleListByUserId = data => {
-	return http.request<BaseResult<any>>('get', `userRole/getRoleListByUserId`, { params: data });
 };

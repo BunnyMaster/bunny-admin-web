@@ -4,7 +4,19 @@ import { columns } from '@/views/system/adminUser/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onAssignRolesToUser, onDelete, onForcedOffline, onResetPassword, onSearch, onUpdate, onUploadAvatar, updateUserStatus } from '@/views/system/adminUser/utils/hooks';
+import {
+	deleteIds,
+	onAdd,
+	onAssignRolesToUser,
+	onDelete,
+	onDeleteBatch,
+	onForcedOffline,
+	onResetPassword,
+	onSearch,
+	onUpdate,
+	onUploadAvatar,
+	updateUserStatus,
+} from '@/views/system/adminUser/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -22,12 +34,22 @@ import { deviceDetection, handleTree } from '@pureadmin/utils';
 import Tree from '@/views/system/adminUser/tree.vue';
 import Airplane from '@/assets/svg/airplane.svg';
 import { useDeptStore } from '@/store/system/dept';
+import { FormInstance } from 'element-plus';
 
 const tableRef = ref();
 const formRef = ref();
 const adminUserStore = useAdminUserStore();
 const deptStore = useDeptStore();
 const deptList = computed(() => handleTree(deptStore.allDeptList));
+
+/**
+ * * 加载部门列表
+ */
+const onSearchDept = async () => {
+	deptStore.loading = true;
+	await deptStore.getAllDeptList();
+	deptStore.loading = false;
+};
 
 /**
  * * 当前页改变时
@@ -50,20 +72,18 @@ const onPageSizeChange = async (value: number) => {
  * 重置表单
  * @param formEl
  */
-const resetForm = async formEl => {
+const resetForm = async (formEl: FormInstance) => {
 	if (!formEl) return;
 	formEl.resetFields();
 	await onSearch();
 };
 
 /**
- * * 加载部门列表
- * @param deptName
+ * * 选择多行
+ * @param rows
  */
-const onSearchDept = async (deptName: string) => {
-	deptStore.loading = true;
-	await deptStore.getAllDeptList();
-	deptStore.loading = false;
+const onSelectionChange = (rows: Array<any>) => {
+	deleteIds.value = rows.map((row: any) => row.id);
 };
 
 /**
@@ -71,7 +91,7 @@ const onSearchDept = async (deptName: string) => {
  * 搜索当前用户属于哪个部门
  * @param dept
  */
-const onTreeSelect = dept => {
+const onTreeSelect = (dept: any) => {
 	console.log(dept);
 };
 
@@ -134,6 +154,11 @@ onMounted(() => {
 			<PureTableBar :columns="columns" title="用户信息" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 				<template #buttons>
 					<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
+
+					<!-- 批量删除按钮 -->
+					<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+						{{ $t('delete_batches') }}
+					</el-button>
 				</template>
 
 				<template v-slot="{ size, dynamicColumns }">
@@ -154,6 +179,7 @@ onMounted(() => {
 						showOverflowTooltip
 						table-layout="auto"
 						@page-size-change="onPageSizeChange"
+						@selection-change="onSelectionChange"
 						@page-current-change="onCurrentPageChange"
 					>
 						<!-- 显示头像 -->
@@ -169,10 +195,8 @@ onMounted(() => {
 								class="ml-2"
 								inactive-text="正常"
 								inline-prompt
-								style="
-
---el-switch-on-color: #ff4949; --el-switch-off-color: #13ce66"
-								@change="updateUserStatus(row)"
+								style="--el-switch-on-color: #ff4949; --el-switch-off-color: #13ce66"
+								@click="updateUserStatus(row)"
 							/>
 						</template>
 

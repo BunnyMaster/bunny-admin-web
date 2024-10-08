@@ -6,6 +6,7 @@ import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/role/utils/types';
 import { $t } from '@/plugins/i18n';
 import { fetchGetPowerListByRoleId } from '@/api/v1/power';
+import { isAllEmpty } from '@pureadmin/utils';
 
 // 表格ref
 export const tableRef = ref();
@@ -131,10 +132,14 @@ export const onDeleteBatch = async () => {
  */
 export const onMenuPowerClick = async (row: any) => {
 	const { id } = row;
-	currentRow.value = row;
-	powerTreeIsShow.value = true;
-	const { data, code } = await fetchGetPowerListByRoleId({ id });
-	if (code === 200) {
+
+	if (isAllEmpty(id)) {
+		currentRow.value = null;
+		powerTreeIsShow.value = false;
+	} else {
+		currentRow.value = row;
+		powerTreeIsShow.value = true;
+		const { data } = await fetchGetPowerListByRoleId({ id });
 		powerTreeRef.value.setCheckedKeys(data);
 	}
 };

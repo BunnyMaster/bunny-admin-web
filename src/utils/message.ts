@@ -31,15 +31,6 @@ interface MessageParams {
 	onClose?: Function | null;
 }
 
-// 消息盒
-interface MessageBox {
-	message: string | undefined;
-	title: string | undefined;
-	confirmMessage: any;
-	cancelMessage: any;
-	showMessage: boolean;
-}
-
 /** 用法非常简单，参考 src/views/components/message/index.vue 文件 */
 
 /**
@@ -101,7 +92,7 @@ export const storeMessage = (result: BaseResult<any>) => {
 	return true;
 };
 
-const defaultBoxOption: MessageBox = {
+const defaultBoxOption: any = {
 	showMessage: false,
 	message: '',
 	title: '',
@@ -114,7 +105,7 @@ const defaultBoxOption: MessageBox = {
  * @param type
  * @param option
  */
-export const messageBox = async (option: MessageBox = defaultBoxOption, type: any = 'warning') => {
+export const messageBox = async (option: any = defaultBoxOption, type: any = 'warning') => {
 	return ElMessageBox.confirm(option.message, option.title, {
 		confirmButtonText: '确认',
 		cancelButtonText: '返回',
