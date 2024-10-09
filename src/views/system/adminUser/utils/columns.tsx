@@ -1,4 +1,4 @@
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { $t } from '@/plugins/i18n';
 
 // 是否是更新用户信息
@@ -34,24 +34,22 @@ export const columns: TableColumnList = [
 ];
 
 // 添加规则
-export const rules = reactive({
+export const rules: any = reactive({
 	// 用户名
 	username: [{ required: true, message: `${$t('input')}${$t('adminUser_username')}`, trigger: 'blur' }],
 	// 密码
-	password: [
-		{
-			required: isAddUserinfo,
-			message: `${$t('input')}${$t('adminUser_password')}`,
-			trigger: 'blur',
-		},
-	],
+	password: [{ required: isAddUserinfo, message: `${$t('input')}${$t('adminUser_password')}`, trigger: 'blur' }],
 	// 邮箱
 	email: [
 		{ required: true, message: `${$t('input')}${$t('adminUser_email')}`, trigger: 'blur' },
 		{ type: 'email', message: `${$t('input')}${$t('adminUser_email')}${$t('format_error')}` },
 	],
-	// 个人描述
-	summary: [{ required: true, message: `${$t('input')}${$t('adminUser_summary')}`, trigger: 'blur' }],
 	// 状态
 	status: [{ required: true, message: `${$t('input')}${$t('adminUser_status')}`, trigger: 'blur' }],
+	// 部门
+	deptId: [{ required: true, message: `${$t('input')}${$t('adminUser_dept')}`, trigger: 'blur' }],
 });
+
+export const defaultProps = { children: 'children', value: 'id', label: 'deptName' };
+
+export const buttonClass = computed(() => ['!h-[20px]', '!text-sm', 'reset-margin', '!text-[var(--el-text-color-regular)]', 'dark:!text-white', 'dark:hover:!text-primary']);

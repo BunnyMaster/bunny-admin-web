@@ -8,5 +8,5 @@ export const getRouterAsync = () => {
 
 /** 上传文件 */
 export const fetchUploadFile = (data: any) => {
-	return http.post<BaseResult<any>>('/files/upload', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
+	return http.request<BaseResult<any>>('post', '/files/upload', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };

@@ -1,11 +1,12 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { columns } from '@/views/system/adminUser/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
 import {
 	deleteIds,
+	deptList,
 	onAdd,
 	onAssignRolesToUser,
 	onDelete,
@@ -13,8 +14,10 @@ import {
 	onForcedOffline,
 	onResetPassword,
 	onSearch,
+	onTreeSelect,
 	onUpdate,
 	onUploadAvatar,
+	switchLoadMap,
 	updateUserStatus,
 } from '@/views/system/adminUser/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
@@ -30,17 +33,19 @@ import Password from '@iconify-icons/ri/lock-password-line';
 import More from '@iconify-icons/ep/more-filled';
 import { useAdminUserStore } from '@/store/system/adminUser';
 import { sexConstant, tableSelectButtonClass, userStatus } from '@/enums/baseConstant';
-import { deviceDetection, handleTree } from '@pureadmin/utils';
+import { deviceDetection } from '@pureadmin/utils';
 import Tree from '@/views/system/adminUser/tree.vue';
 import Airplane from '@/assets/svg/airplane.svg';
 import { useDeptStore } from '@/store/system/dept';
 import { FormInstance } from 'element-plus';
+import { usePublicHooks } from '@/views/hooks';
 
-const tableRef = ref();
-const formRef = ref();
 const adminUserStore = useAdminUserStore();
 const deptStore = useDeptStore();
-const deptList = computed(() => handleTree(deptStore.allDeptList));
+// 用户是否停用样式
+const { switchStyle } = usePublicHooks();
+const tableRef = ref();
+const formRef = ref();
 
 /**
  * * 加载部门列表
@@ -75,6 +80,7 @@ const onPageSizeChange = async (value: number) => {
 const resetForm = async (formEl: FormInstance) => {
 	if (!formEl) return;
 	formEl.resetFields();
+	adminUserStore.form.deptIds = undefined;
 	await onSearch();
 };
 
@@ -84,15 +90,6 @@ const resetForm = async (formEl: FormInstance) => {
  */
 const onSelectionChange = (rows: Array<any>) => {
 	deleteIds.value = rows.map((row: any) => row.id);
-};
-
-/**
- * * 当树形结构选择时
- * 搜索当前用户属于哪个部门
- * @param dept
- */
-const onTreeSelect = (dept: any) => {
-	console.log(dept);
 };
 
 onMounted(() => {
@@ -188,15 +185,17 @@ onMounted(() => {
 						</template>
 
 						<!-- 显示用户状态 -->
-						<template #status="{ row }">
+						<template #status="{ row, index }">
 							<el-switch
 								v-model="row.status"
-								active-text="禁用"
-								class="ml-2"
-								inactive-text="正常"
+								:active-value="false"
+								:inactive-value="true"
+								:loading="switchLoadMap[index]?.loading"
+								:style="switchStyle"
+								active-text="已启用"
+								inactive-text="已停用"
 								inline-prompt
-								style="--el-switch-on-color: #ff4949; --el-switch-off-color: #13ce66"
-								@click="updateUserStatus(row)"
+								@click="updateUserStatus(row, index)"
 							/>
 						</template>
 

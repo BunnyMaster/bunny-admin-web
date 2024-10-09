@@ -3,7 +3,7 @@ import userAvatarIcon from '@/assets/svg/user_avatar.svg?component';
 import { columns } from './columns';
 import TablePlus from '@/components/TableBar/src/TablePlus.vue';
 import { onMounted, ref } from 'vue';
-import { fetchGetUserinfoById } from '@/api/v1/user';
+import { fetchGetUserinfoById } from '@/api/v1/adminUser';
 import { $t } from '@/plugins/i18n';
 
 const props = defineProps({

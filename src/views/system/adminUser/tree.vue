@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, getCurrentInstance, ref, watch } from 'vue';
+import { getCurrentInstance, ref, watch } from 'vue';
 import Dept from '@iconify-icons/ri/git-branch-line';
 import More2Fill from '@iconify-icons/ri/more-2-fill';
 import OfficeBuilding from '@iconify-icons/ep/office-building';
@@ -9,6 +9,9 @@ import UnExpandIcon from '@/assets/svg/unexpand.svg?component';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import Reset from '@iconify-icons/ri/restart-line';
 import { Tree } from '@/views/system/adminUser/utils/types';
+import { buttonClass, defaultProps } from '@/views/system/adminUser/utils/columns';
+import { useAdminUserStore } from '@/store/system/adminUser';
+import { onSearch } from '@/views/system/adminUser/utils/hooks';
 
 defineProps({
 	treeLoading: Boolean,
@@ -17,17 +20,12 @@ defineProps({
 
 const emit = defineEmits(['tree-select']);
 
+const adminUserStore = useAdminUserStore();
 const treeRef = ref();
 const isExpand = ref(true);
 const searchValue = ref('');
 const highlightMap = ref({});
 const { proxy } = getCurrentInstance();
-const defaultProps = {
-	children: 'children',
-	value: 'id',
-	label: 'deptName',
-};
-const buttonClass = computed(() => ['!h-[20px]', '!text-sm', 'reset-margin', '!text-[var(--el-text-color-regular)]', 'dark:!text-white', 'dark:hover:!text-primary']);
 
 const filterNode = (value: string, data: Tree) => {
 	if (!value) return true;
@@ -71,7 +69,9 @@ function toggleRowExpansionAll(status) {
 function onTreeReset() {
 	highlightMap.value = {};
 	searchValue.value = '';
+	adminUserStore.form.deptIds = undefined;
 	toggleRowExpansionAll(true);
+	onSearch();
 }
 
 watch(searchValue, val => {

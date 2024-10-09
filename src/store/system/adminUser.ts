@@ -1,9 +1,8 @@
 import { defineStore } from 'pinia';
-import { fetchAddAdminUser, fetchDeleteAdminUser, fetchGetAdminUserList, fetchQueryUser, fetchUpdateAdminUser } from '@/api/v1/adminUser';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
-import { fetchUpdateUserPasswordByAdmin } from '@/api/v1/user';
+import { fetchAddAdminUser, fetchDeleteAdminUser, fetchGetAdminUserList, fetchQueryUser, fetchUpdateAdminUser, fetchUpdateUserPasswordByAdmin, fetchUpdateUserStatusByAdmin } from '@/api/v1/adminUser';
 
 /**
  * 用户信息 Store
@@ -29,6 +28,8 @@ export const useAdminUserStore = defineStore('adminUserStore', {
 				summary: undefined,
 				// 状态
 				status: undefined,
+				// 部门Id查询
+				deptIds: undefined,
 			},
 			// 分页查询结果
 			pagination: {
@@ -46,7 +47,7 @@ export const useAdminUserStore = defineStore('adminUserStore', {
 		/**
 		 * * 获取用户信息
 		 */
-		async getAdminUserList() {
+		getAdminUserList: async function () {
 			// 整理请求参数
 			const data = { ...this.pagination, ...this.form };
 			delete data.pageSizes;
@@ -97,6 +98,15 @@ export const useAdminUserStore = defineStore('adminUserStore', {
 		 */
 		async updateAdminUserPasswordByManager(data: any) {
 			const result: any = await fetchUpdateUserPasswordByAdmin(data);
+			return storeMessage(result);
+		},
+
+		/**
+		 * * 修改用户状态
+		 * @param data
+		 */
+		async updateUserStatusByAdmin(data: any) {
+			const result = await fetchUpdateUserStatusByAdmin(data);
 			return storeMessage(result);
 		},
 	},

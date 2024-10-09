@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { resetRouter, router, routerArrays, storageLocal, store, type userType } from '../utils';
-import { fetchAssignRolesToUsers, fetchLogin, fetchLogout, fetchPostEmailCode, refreshTokenApi } from '@/api/v1/user';
+import { fetchAssignRolesToUsers, fetchLogin, fetchLogout, fetchPostEmailCode, refreshTokenApi } from '@/api/v1/adminUser';
 import { useMultiTagsStoreHook } from '../multiTags';
 import { type DataInfo, removeToken, setToken, userKey } from '@/utils/auth';
 import { message, storeMessage } from '@/utils/message';

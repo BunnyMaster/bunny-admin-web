@@ -6,6 +6,9 @@ import { FormProps } from '@/views/system/adminUser/utils/types';
 import { $t } from '@/plugins/i18n';
 import ReCol from '@/components/MyCol';
 import { sexConstant } from '@/enums/baseConstant';
+import { deptSelector } from '@/views/system/dept/utils/columns';
+import { deptList } from '@/views/system/adminUser/utils/hooks';
+import { usePublicHooks } from '@/views/hooks';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
@@ -27,20 +30,15 @@ const props = withDefaults(defineProps<FormProps>(), {
 		summary: undefined,
 		// 状态
 		status: undefined,
+		// 部门
+		deptIds: undefined,
 	}),
 });
 
 const formRef = ref<FormInstance>();
 const form = ref(props.formInline);
-
-/**
- * * 上传头像回调
- * @param data
- */
-const onUploadCallback = ({ data }) => {
-	console.log('value=>', data);
-	form.value.avatar = data.filepath;
-};
+// 用户是否停用样式
+const { switchStyle } = usePublicHooks();
 
 defineExpose({ formRef });
 </script>
@@ -92,17 +90,28 @@ defineExpose({ formRef });
 				</el-form-item>
 			</re-col>
 
-			<!-- 用户简介 -->
-			<re-col :sm="24" :value="24" :xs="24">
-				<el-form-item :label="$t('adminUser_summary')" prop="summary">
-					<el-input v-model="form.summary" :placeholder="$t('adminUser_summary')" autocomplete="off" maxlength="200" show-word-limit type="textarea" />
+			<re-col :sm="24" :value="12" :xs="24">
+				<el-form-item :label="$t('adminUser_dept')" prop="deptId">
+					<el-cascader v-model="form.deptId" :options="deptList" :props="deptSelector" class="w-full" clearable filterable placeholder="请选择归属部门">
+						<template #default="{ node, data }">
+							<span>{{ data.deptName }}</span>
+							<span v-if="!node.isLeaf"> ({{ data.children.length }}) </span>
+						</template>
+					</el-cascader>
 				</el-form-item>
 			</re-col>
 
 			<!-- 用户状态 -->
 			<re-col :sm="24" :value="12" :xs="24">
 				<el-form-item :label="$t('adminUser_status')" prop="status">
-					<el-switch v-model="form.status" active-text="禁用" class="ml-2" inactive-text="正常" inline-prompt style="--el-switch-on-color: #ff4949; --el-switch-off-color: #13ce66" />
+					<el-switch v-model="form.status" :active-value="false" :inactive-value="true" :style="switchStyle" active-text="已启用" inactive-text="已停用" inline-prompt />
+				</el-form-item>
+			</re-col>
+
+			<!-- 用户简介 -->
+			<re-col :sm="24" :value="24" :xs="24">
+				<el-form-item :label="$t('adminUser_summary')" prop="summary">
+					<el-input v-model="form.summary" :placeholder="$t('adminUser_summary')" autocomplete="off" maxlength="200" show-word-limit type="textarea" />
 				</el-form-item>
 			</re-col>
 		</el-row>

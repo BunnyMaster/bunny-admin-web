@@ -1,21 +1,23 @@
 import { addDialog } from '@/components/BaseDialog/index';
 import AdminUserDialog from '@/views/system/adminUser/admin-user-dialog.vue';
 import { useAdminUserStore } from '@/store/system/adminUser';
-import { h, reactive, ref } from 'vue';
+import { computed, h, reactive, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/adminUser/utils/types';
 import { $t } from '@/plugins/i18n';
 import { isAddUserinfo } from '@/views/system/adminUser/utils/columns';
 import ResetPasswordDialog from '@/views/system/adminUser/reset-passwords.vue';
-import { deviceDetection } from '@pureadmin/utils';
+import { deviceDetection, handleTree } from '@pureadmin/utils';
 import CropperPreview from '@/components/CropperPreview';
 import AssignUserToRole from '@/views/system/adminUser/assign-roles-to-user.vue';
 import userAvatar from '@/assets/user.jpg';
-import { fetchForcedOffline, fetchUploadAvatarByAdmin } from '@/api/v1/user';
+import { fetchForcedOffline, fetchUploadAvatarByAdmin } from '@/api/v1/adminUser';
 import { useUserStore } from '@/store/system/user';
+import { useDeptStore } from '@/store/system/dept';
 
 const adminUserStore = useAdminUserStore();
 const userStore = useUserStore();
+const deptStore = useDeptStore();
 // 表单Ref
 const formRef = ref();
 // 剪裁头像的Ref
@@ -33,6 +35,10 @@ const restPasswordForm = reactive({
 });
 // 批量删除id列表
 export const deleteIds = ref([]);
+// 用户是否停用加载集合
+export const switchLoadMap = ref({});
+// 部门数据树形结构
+export const deptList = computed(() => handleTree(deptStore.allDeptList));
 
 /**
  * * 搜索初始化用户信息
@@ -62,6 +68,7 @@ export function onAdd() {
 				sex: undefined,
 				summary: undefined,
 				status: false,
+				deptId: undefined,
 			},
 		},
 		draggable: true,
@@ -102,6 +109,7 @@ export function onUpdate(row: any) {
 				sex: row.sex,
 				summary: row.summary,
 				status: row.status,
+				deptId: row.deptId,
 			},
 		},
 		draggable: true,
@@ -159,25 +167,49 @@ export const onDeleteBatch = async () => {
 	await adminUserStore.deleteAdminUser(deleteIds.value);
 	await onSearch();
 };
+
 /**
  * * 更新用户状态
  * @param row
+ * @param index
  */
-export const updateUserStatus = async (row: any) => {
+export const updateUserStatus = async (row: any, index: number) => {
+	// 点击时开始loading加载
+	switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
+		loading: true,
+	});
+
+	// 是否确认修改弹窗内容
 	const confirm = await messageBox({
 		title: $t('confirm_update_status'),
 		showMessage: false,
 		confirmMessage: undefined,
 		cancelMessage: $t('cancel'),
 	});
+
+	// 如果不修改将值恢复到之前状态
 	if (!confirm) {
 		row.status = !row.status;
+		switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
+			loading: false,
+		});
 		return;
 	}
-	const data = { id: row.id, username: row.username, nickName: row.nickName, email: row.email, status: row.status };
-	const result = await adminUserStore.updateAdminUser(data);
-	if (!result) return;
+
+	// 修改用户状态
+	const data = { userId: row.id, status: row.status };
+	const result = await adminUserStore.updateUserStatusByAdmin(data);
+	if (!result) {
+		row.status = !row.status;
+		switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
+			loading: false,
+		});
+		return;
+	}
 	await onSearch();
+	switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
+		loading: false,
+	});
 };
 
 /**
@@ -280,4 +312,32 @@ export const onForcedOffline = async (row: any) => {
 	const result = await fetchForcedOffline(id);
 	if (result.code !== 200) return;
 	message(result.message, { type: 'success' });
+};
+
+/**
+ * * 当树形结构选择时
+ * 搜索当前用户属于哪个部门
+ * @param dept
+ */
+export const onTreeSelect = async (dept: any) => {
+	/** 递归查找子级Id*/
+	function findChildIds(node: any, ids: string[]) {
+		ids.push(node.id);
+		if (!node.children) return ids;
+
+		// 递归查找子节点的 ID
+		for (const child of node.children) {
+			ids.push(child.id);
+			findChildIds(child, ids);
+		}
+
+		return ids;
+	}
+
+	// 查询属于这个部门下的用户
+	const list = findChildIds(dept, []);
+	const deptIds = new Set(list);
+
+	adminUserStore.form.deptIds = Array.from(deptIds);
+	await onSearch();
 };

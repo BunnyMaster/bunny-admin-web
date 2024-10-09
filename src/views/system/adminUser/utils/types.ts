@@ -18,6 +18,8 @@ export interface FormItemProps {
 	summary: string;
 	// 状态
 	status: boolean;
+	// 部门
+	deptId: string;
 }
 
 // 添加或修改表单Props

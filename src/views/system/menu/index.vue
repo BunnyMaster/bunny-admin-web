@@ -6,7 +6,7 @@ import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import AddFill from '@iconify-icons/ri/add-circle-line';
-import { assignRolesToRouter, handleDelete, onAdd, onSearch, onUpdate } from '@/views/system/menu/utils/hooks';
+import { assignRolesToRouter, handleDelete, onAdd, onchangeVisible, onSearch, onUpdate, switchLoadMap } from '@/views/system/menu/utils/hooks';
 import PureTable from '@pureadmin/table';
 import { columns } from '@/views/system/menu/utils/columns';
 import { userMenuStore } from '@/store/system/menu';
@@ -15,41 +15,14 @@ import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import More from '@iconify-icons/ep/more-filled';
 import { tableSelectButtonClass } from '@/enums/baseConstant';
 import Upload from '@iconify-icons/ri/upload-line';
-import { messageBox } from '@/utils/message';
 import { FormInstance } from 'element-plus';
+import { usePublicHooks } from '@/views/hooks';
 
 const formRef = ref();
 const tableRef = ref();
 const routerStore = userMenuStore();
-
-/**
- * * 修改菜单是否显示
- * @param row
- */
-const onchangeVisible = async (row: any) => {
-	// 是否确认修改显示状态
-	const confirm = await messageBox({
-		title: $t('confirm_update_status'),
-		showMessage: false,
-		confirmMessage: undefined,
-		cancelMessage: $t('cancel'),
-	});
-	if (!confirm) {
-		row.visible = !row.visible;
-		return;
-	}
-
-	const data = {
-		id: row.id,
-		visible: row.visible,
-		menuType: row.menuType,
-		title: row.title,
-		name: row.name,
-		path: row.path,
-	};
-	await routerStore.updateMenu(data);
-	await onSearch();
-};
+// 用户是否停用样式
+const { switchStyle } = usePublicHooks();
 
 /**
  * 表单重置
@@ -98,18 +71,17 @@ onMounted(() => {
 					showOverflowTooltip
 					table-layout="auto"
 				>
-					<template #visible="{ row }">
+					<template #visible="{ row, index }">
 						<el-switch
 							v-model="row.visible"
+							:active-value="true"
+							:inactive-value="false"
+							:loading="switchLoadMap[index]?.loading"
+							:style="switchStyle"
 							active-text="显示"
-							class="ml-2"
 							inactive-text="隐藏"
 							inline-prompt
-							style="
-
---el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
-							width="60"
-							@update:modelValue="onchangeVisible(row)"
+							@click="onchangeVisible(row, index)"
 						/>
 					</template>
 
