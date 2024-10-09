@@ -22,7 +22,11 @@ export const userI18nTypeStore = defineStore('i18nTypeStore', {
 			loading: false,
 		};
 	},
-	getters: {},
+	getters: {
+		translationTypeList(state) {
+			return state.datalist.map(item => ({ key: item.typeName, value: item.summary }));
+		},
+	},
 	actions: {
 		/**
 		 * * 获取多语言类型
