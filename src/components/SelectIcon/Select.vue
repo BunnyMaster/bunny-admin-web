@@ -35,7 +35,7 @@ const onSearch = async () => {
 	innerForm.pageSize = data.pageSize;
 	innerForm.total = data.total;
 
-	innerForm.value = false;
+	innerForm.loading = false;
 };
 
 /**
@@ -43,7 +43,7 @@ const onSearch = async () => {
  * @param value
  */
 const onChangeIcon = (value: any) => {
-	form.value.icon = value.iconName;
+	form.value.icon = value.iconCode;
 };
 
 /**
@@ -57,7 +57,7 @@ const onClear = () => {
  * * 修改当前页
  * @param value
  */
-const onCurrentChange = (value: string) => {
+const onCurrentChange = (value: number) => {
 	innerForm.currentPage = value;
 };
 
@@ -84,7 +84,7 @@ onMounted(() => {
 					class="icon-item p-2 cursor-pointer mr-2 mt-1 flex justify-center items-center border border-[#e5e7eb]"
 					@click="onChangeIcon(item)"
 				>
-					<IconifyIconOnline :icon="item.iconName" height="20px" width="20px" />
+					<IconifyIconOnline :icon="item.iconCode" height="20px" width="20px" />
 				</li>
 			</ul>
 			<el-empty v-show="innerForm.datalist.length === 0" :image-size="60" description="图标不存在" />

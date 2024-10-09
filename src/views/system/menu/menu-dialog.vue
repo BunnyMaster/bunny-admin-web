@@ -86,9 +86,7 @@ defineExpose({ menuFormRef: ruleFormRef });
 
 			<re-col :sm="24" :value="12" :xs="24">
 				<el-form-item label="是否显示">
-					<el-switch v-model="newFormInline.visible" active-text="开启" inactive-text="隐藏" inline-prompt style="
-
---el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
+					<el-switch v-model="newFormInline.visible" active-text="开启" inactive-text="隐藏" inline-prompt style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
 				</el-form-item>
 			</re-col>
 		</el-row>

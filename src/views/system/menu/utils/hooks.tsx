@@ -1,4 +1,4 @@
-import editForm from '../form.vue';
+import editForm from '../menu-dialog.vue';
 import { $t } from '@/plugins/i18n';
 import { addDialog } from '@/components/BaseDialog/index';
 import { h, ref } from 'vue';

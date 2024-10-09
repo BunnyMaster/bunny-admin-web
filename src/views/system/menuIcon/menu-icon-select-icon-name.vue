@@ -6,17 +6,20 @@ import LoadingSvg from '@/assets/svg/loading.svg';
 import { FormProps } from '@/views/system/menuIcon/utils/types';
 
 const props = withDefaults(defineProps<FormProps>(), {
-	formInline: () => ({}),
+	formInline: () => ({
+		iconCode: '',
+		iconName: '',
+	}),
 });
 
 const loading = ref(false);
-const iconNameList = ref([]);
+const iconNameList = ref();
 const form = ref(props.formInline);
 
 /**
  * * 搜索
  */
-const onRequestIconName = async (keyword: string) => {
+const onRequestIconName = async (iconName: string) => {
 	const data = { currentPage: 1, pageSize: 20, iconName };
 	loading.value = true;
 
