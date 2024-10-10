@@ -35,9 +35,7 @@ defineExpose({ formRef });
 <template>
 	<el-form ref="formRef" :model="form" :rules="rules" label-width="auto">
 		<el-form-item :label="$t('power_parentId')" prop="parentId">
-			<!--<el-cascader v-model="form.parentId" :options="datalist" :props="powerCascadeProps" class="w-full" clearable filterable show-all-levels />-->
 			<el-cascader v-model="form.parentId" :options="handleTree(powerStore.allPowerList)" :props="powerCascadeProps" class="w-full" clearable filterable show-all-levels />
-			<!--<el-input v-model="form.parentId" autocomplete="off" type="text" />-->
 		</el-form-item>
 		<el-form-item :label="$t('power_powerCode')" prop="powerCode">
 			<el-input v-model="form.powerCode" autocomplete="off" type="text" />

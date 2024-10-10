@@ -4,15 +4,16 @@ import { columns } from '@/views/system/power/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/system/power/utils/hooks';
+import { onAdd, onDelete, onDeleteBatch, onSearch, onUpdate, onUpdateBatchParent, powerIds } from '@/views/system/power/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { usePowerStore } from '@/store/system/power.ts';
+import { usePowerStore } from '@/store/system/power';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { handleTree } from '@pureadmin/utils';
+import { FormInstance } from 'element-plus';
 
 const tableRef = ref();
 const formRef = ref();
@@ -41,14 +42,14 @@ const onPageSizeChange = async (value: number) => {
  * @param rows
  */
 const onSelectionChange = (rows: Array<any>) => {
-	deleteIds.value = rows.map((row: any) => row.id);
+	powerIds.value = rows.map((row: any) => row.id);
 };
 
 /**
  * 重置表单
  * @param formEl
  */
-const resetForm = async formEl => {
+const resetForm = async (formEl: FormInstance) => {
 	if (!formEl) return;
 	formEl.resetFields();
 	await onSearch();
@@ -87,8 +88,13 @@ onMounted(() => {
 				<!-- 添加权限按钮 -->
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()"> {{ $t('add_new') }}</el-button>
 
+				<!-- 批量更新父级id -->
+				<el-button v-show="powerIds.length > 0" :icon="useRenderIcon(EditPen)" type="primary" @click="onUpdateBatchParent">
+					{{ $t('update_batches_parent') }}
+				</el-button>
+
 				<!-- 批量删除按钮 -->
-				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+				<el-button v-show="powerIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
 					{{ $t('delete_batches') }}
 				</el-button>
 			</template>

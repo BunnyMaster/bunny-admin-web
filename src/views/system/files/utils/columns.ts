@@ -4,16 +4,15 @@ import { $t } from '@/plugins/i18n';
 // 表格列
 export const columns: TableColumnList = [
 	{ type: 'index', index: (index: number) => index + 1 },
-	// { type: 'selection', align: 'left' },
-	{ label: $t('id'), prop: 'id' },
+	{ type: 'selection', align: 'left' },
 	// 文件的名称
-	{ label: $t('files_filename'), prop: 'filename' },
+	{ label: $t('files_filename'), prop: 'filename', width: 400 },
 	// 文件在服务器上的存储路径
 	{ label: $t('files_filepath'), prop: 'filepath' },
 	// 文件的MIME类型
-	{ label: $t('files_fileType'), prop: 'fileType' },
+	{ label: $t('files_fileType'), prop: 'fileType', width: 100 },
 	// 下载数量
-	{ label: $t('files_downloadCount'), prop: 'downloadCount' },
+	{ label: $t('files_downloadCount'), prop: 'downloadCount', width: 90 },
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 90 },

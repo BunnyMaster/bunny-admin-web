@@ -1,6 +1,6 @@
 import { addDialog } from '@/components/BaseDialog/index';
 import FilesDialog from '@/views/system/files/files-dialog.vue';
-import { useFilesStore } from '@/store/system/files.ts';
+import { useFilesStore } from '@/store/system/files';
 import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/files/utils/types';

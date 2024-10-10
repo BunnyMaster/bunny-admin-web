@@ -9,7 +9,7 @@ import { userI18nTypeStore } from '@/store/i18n/i18nType';
 import { onAdd, onDelete, onSearch, onUpdate } from '@/views/i18n/i18n-type-setting/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
-import TableIsDefaultTag from '@/components/TableBar/src/TableIsDefaultTag.vue';
+import TableIsDefaultTag from '@/components/Table/TableIsDefaultTag.vue';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';

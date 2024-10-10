@@ -113,12 +113,12 @@ export default defineComponent({
 			dynamicColumns.value.filter(item => $t(item.label) === $t(label))[0].hide = !val;
 		}
 
-		async function onReset() {
+		function onReset() {
 			checkAll.value = true;
 			isIndeterminate.value = false;
 			dynamicColumns.value = cloneDeep(props?.columns);
 			checkColumnList = [];
-			checkColumnList = await getKeyList(cloneDeep(props?.columns), 'label');
+			checkColumnList = getKeyList(cloneDeep(props?.columns), 'label');
 			checkedColumns.value = getKeyList(cloneDeep(filterColumns), 'label');
 		}
 

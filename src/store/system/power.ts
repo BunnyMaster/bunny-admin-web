@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddPower, fetchDeletePower, fetchGetAllPowers, fetchGetPowerList, fetchUpdatePower } from '@/api/v1/power';
+import { fetchAddPower, fetchDeletePower, fetchGetAllPowers, fetchGetPowerList, fetchUpdateBatchByPowerWithParentId, fetchUpdatePower } from '@/api/v1/power';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -67,6 +67,15 @@ export const usePowerStore = defineStore('powerStore', {
 		 */
 		async updatePower(data: any) {
 			const result = await fetchUpdatePower(data);
+			return storeMessage(result);
+		},
+
+		/**
+		 * 批量修改权限父级
+		 * @param data
+		 */
+		async updateBatchByPowerWithParentId(data: any) {
+			const result = await fetchUpdateBatchByPowerWithParentId(data);
 			return storeMessage(result);
 		},
 

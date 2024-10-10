@@ -9,6 +9,8 @@ import MenuIconSelectIconName from '@/views/system/menuIcon/menu-icon-select-ico
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
+		// icon类名
+		iconCode: undefined,
 		// icon 名称
 		iconName: undefined,
 	}),
