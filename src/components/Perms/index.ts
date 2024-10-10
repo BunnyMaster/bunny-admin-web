@@ -1,4 +1,4 @@
-import perms from "./src/perms";
+import perms from './src/perms';
 
 const Perms = perms;
 

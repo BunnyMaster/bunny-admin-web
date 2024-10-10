@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import ReCropper from '@/components/ReCropper';
 import { formatBytes } from '@pureadmin/utils';
+import { $t } from '@/plugins/i18n';
 
 defineOptions({
 	name: 'ReCropperPreview',
@@ -38,14 +39,14 @@ defineExpose({ hidePopover });
 			<template #reference>
 				<div class="w-[18vw]">
 					<ReCropper ref="refCropper" :src="imgSrc" circled @cropper="onCropper" @readied="showPopover = true" />
-					<p v-show="showPopover" class="mt-1 text-center">温馨提示：右键上方裁剪区可开启功能菜单</p>
+					<p v-show="showPopover" class="mt-1 text-center">{{ $t('cropper_preview_tips') }}</p>
 				</div>
 			</template>
 			<div class="flex flex-wrap justify-center items-center text-center">
 				<el-image v-if="cropperImg" :preview-src-list="Array.of(cropperImg)" :src="cropperImg" fit="cover" />
 				<div v-if="infos" class="mt-1">
-					<p>图像大小：{{ parseInt(infos.width) }} × {{ parseInt(infos.height) }}像素</p>
-					<p>文件大小：{{ formatBytes(infos.size) }}（{{ infos.size }} 字节）</p>
+					<p>{{ $t('image_size') }}：{{ parseInt(infos.width) }} × {{ parseInt(infos.height) }}{{ $t('pixel') }}</p>
+					<p>{{ $t('file_size') }}：{{ formatBytes(infos.size) }}（{{ infos.size }} {{ $t('bytes') }}</p>
 				</div>
 			</div>
 		</el-popover>

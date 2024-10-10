@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
+import { $t } from '@/plugins/i18n';
 
 const props = defineProps({
 	// ? 是否显示
@@ -19,12 +20,12 @@ const props = defineProps({
 	// ? 返回文字
 	cancelText: {
 		type: String as PropType<string>,
-		default: '返回',
+		default: $t('login.pureBack'),
 	},
 	// ? 确认文字
 	confirmText: {
 		type: String as PropType<string>,
-		default: '确认',
+		default: $t('buttons.pureConfirm'),
 	},
 });
 const emits = defineEmits(['onCancel', 'onConfirm']);
