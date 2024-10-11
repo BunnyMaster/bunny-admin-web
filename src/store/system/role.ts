@@ -34,9 +34,7 @@ export const useRoleStore = defineStore('roleStore', {
 	},
 	getters: {},
 	actions: {
-		/**
-		 * * 获取角色
-		 */
+		/** 获取角色 */
 		async getRoleList() {
 			// 整理请求参数
 			const data = { ...this.pagination, ...this.form };
@@ -52,9 +50,7 @@ export const useRoleStore = defineStore('roleStore', {
 			return pagination(result);
 		},
 
-		/**
-		 * * 获取所有角色
-		 */
+		/** 获取所有角色 */
 		async getAllRoles() {
 			const result = await fetchGetAllRoles();
 			if (result.code !== 200) return;
@@ -62,34 +58,25 @@ export const useRoleStore = defineStore('roleStore', {
 			this.allRoleList = result.data.map(role => ({ key: role.id, label: role.description }));
 		},
 
-		/**
-		 * * 添加角色
-		 */
+		/** 添加角色 */
 		async addRole(data: any) {
 			const result = await fetchAddRole(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 为角色分配权限
-		 * @param data
-		 */
+		/** 为角色分配权限 */
 		async assignPowersToRole(data: any) {
 			const result = await fetchAssignPowersToRole(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 修改角色
-		 */
+		/** 修改角色 */
 		async updateRole(data: any) {
 			const result = await fetchUpdateRole(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 删除角色
-		 */
+		/** 删除角色 */
 		async deleteRole(data: any) {
 			const result = await fetchDeleteRole(data);
 			return storeMessage(result);

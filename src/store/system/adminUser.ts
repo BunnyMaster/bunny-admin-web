@@ -44,9 +44,7 @@ export const useAdminUserStore = defineStore('adminUserStore', {
 	},
 	getters: {},
 	actions: {
-		/**
-		 * * 获取用户信息
-		 */
+		/** 获取用户信息 */
 		getAdminUserList: async function () {
 			// 整理请求参数
 			const data = { ...this.pagination, ...this.form };
@@ -68,43 +66,31 @@ export const useAdminUserStore = defineStore('adminUserStore', {
 			return result.data;
 		},
 
-		/**
-		 * * 添加用户信息
-		 */
+		/** 添加用户信息 */
 		async addAdminUser(data: any) {
 			const result = await fetchAddAdminUser(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 修改用户信息
-		 */
+		/** 修改用户信息 */
 		async updateAdminUser(data: any) {
 			const result = await fetchUpdateAdminUser(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 删除用户信息
-		 */
+		/** 删除用户信息 */
 		async deleteAdminUser(data: any) {
 			const result = await fetchDeleteAdminUser(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 更新用户密码
-		 * @param data
-		 */
+		/** 更新用户密码 */
 		async updateAdminUserPasswordByManager(data: any) {
 			const result: any = await fetchUpdateUserPasswordByAdmin(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 修改用户状态
-		 * @param data
-		 */
+		/** 修改用户状态 */
 		async updateUserStatusByAdmin(data: any) {
 			const result = await fetchUpdateUserStatusByAdmin(data);
 			return storeMessage(result);

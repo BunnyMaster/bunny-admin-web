@@ -120,7 +120,7 @@ onMounted(() => {
 
 					<template #operation="{ row }">
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
-						<el-popconfirm :title="`是否确认删除 ${row.iconName}数据`" @confirm="onDelete(row)">
+						<el-popconfirm :title="`${$t('delete')}${row.iconName}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}

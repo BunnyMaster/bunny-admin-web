@@ -33,7 +33,7 @@ defineExpose({ formRef });
 			<el-input v-model="form.subject" autocomplete="off" type="text" />
 		</el-form-item>
 		<el-form-item :label="$t('emailTemplate_body')" prop="body">
-			<el-input v-model="form.body" autocomplete="off" type="text" />
+			<el-input v-model="form.body" :autosize="{ minRows: 2 }" autocomplete="off" type="textarea" />
 		</el-form-item>
 		<el-form-item :label="$t('emailTemplate_type')" prop="type">
 			<el-input v-model="form.type" autocomplete="off" type="text" />

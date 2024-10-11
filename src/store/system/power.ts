@@ -36,9 +36,7 @@ export const usePowerStore = defineStore('powerStore', {
 	},
 	getters: {},
 	actions: {
-		/**
-		 * * 获取权限
-		 */
+		/** 获取权限 */
 		async getPowerList() {
 			// 整理请求参数
 			const data = { ...this.pagination, ...this.form };
@@ -54,42 +52,31 @@ export const usePowerStore = defineStore('powerStore', {
 			return pagination(result);
 		},
 
-		/**
-		 * * 添加权限
-		 */
+		/** 添加权限 */
 		async addPower(data: any) {
 			const result = await fetchAddPower(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 修改权限
-		 */
+		/** 修改权限 */
 		async updatePower(data: any) {
 			const result = await fetchUpdatePower(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * 批量修改权限父级
-		 * @param data
-		 */
+		/** 批量修改权限父级 */
 		async updateBatchByPowerWithParentId(data: any) {
 			const result = await fetchUpdateBatchByPowerWithParentId(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 删除权限
-		 */
+		/** 删除权限 */
 		async deletePower(data: any) {
 			const result = await fetchDeletePower(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * 获取所有权限
-		 */
+		/** 获取所有权限 */
 		async getAllPowers() {
 			const result = await fetchGetAllPowers();
 			if (result.code !== 200) return;

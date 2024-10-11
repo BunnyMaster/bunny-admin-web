@@ -74,12 +74,12 @@ onMounted(() => {
 					<template #visible="{ row, index }">
 						<el-switch
 							v-model="row.visible"
+							:active-text="$t('show')"
 							:active-value="true"
+							:inactive-text="$t('hidden')"
 							:inactive-value="false"
 							:loading="switchLoadMap[index]?.loading"
 							:style="switchStyle"
-							active-text="显示"
-							inactive-text="隐藏"
 							inline-prompt
 							@click="onchangeVisible(row, index)"
 						/>
@@ -96,7 +96,7 @@ onMounted(() => {
 					<template #operation="{ row }">
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
 						<el-button v-show="row.menuType !== 3" :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)"> {{ $t('add_new') }} </el-button>
-						<el-popconfirm :title="`是否确认删除菜单名称为${$t(row.title)}的这条数据${row?.children?.length > 0 ? '注意下级菜单也会一并删除，请谨慎操作' : ''}`" @confirm="handleDelete(row)">
+						<el-popconfirm :title="`${$t('delete')} ${$t(row.title)}的这条数据${row?.children?.length > 0 ? '注意下级菜单也会一并删除，请谨慎操作' : ''}`" @confirm="handleDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}

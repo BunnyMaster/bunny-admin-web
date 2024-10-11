@@ -4,18 +4,21 @@ import { columns } from '@/views/system/emailUsers/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onDelete, onSearch, onUpdate } from '@/views/system/emailUsers/utils/hooks';
+import { onAdd, onChangeDefault, onDelete, onSearch, onUpdate, switchLoadMap } from '@/views/system/emailUsers/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { useEmailUsersStore } from '@/store/system/emailUsers.ts';
+import { useEmailUsersStore } from '@/store/system/emailUsers';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { usePublicHooks } from '@/views/hooks';
 
 const tableRef = ref();
 const formRef = ref();
 const emailUsersStore = useEmailUsersStore();
+// 用户是否停用样式
+const { switchStyle } = usePublicHooks();
 
 /**
  * * 当前页改变时
@@ -73,7 +76,7 @@ onMounted(() => {
 			</el-form-item>
 		</el-form>
 
-		<PureTableBar :columns="columns" title="邮箱用户发送配置管理" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
+		<PureTableBar :columns="columns" :title="$t('email_user_send_config')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
 			</template>
@@ -98,6 +101,20 @@ onMounted(() => {
 					@page-size-change="onPageSizeChange"
 					@page-current-change="onCurrentPageChange"
 				>
+					<template #isDefault="{ row, index }">
+						<el-switch
+							v-model="row.isDefault"
+							:active-text="$t('default')"
+							:active-value="true"
+							:inactive-text="$t('no_default')"
+							:inactive-value="false"
+							:loading="switchLoadMap[index]?.loading"
+							:style="switchStyle"
+							inline-prompt
+							@click="onChangeDefault(row, index)"
+						/>
+					</template>
+
 					<template #createUser="{ row }">
 						<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>
 					</template>
@@ -108,9 +125,7 @@ onMounted(() => {
 
 					<template #operation="{ row }">
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
-						<el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd"> {{ $t('add_new') }} </el-button>
-						<!-- TODO 待完成 -->
-						<el-popconfirm :title="`是否确认删除 ${row.typeName}数据`" @confirm="onDelete(row)">
+						<el-popconfirm :title="`${$t('delete')}${row.email}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}

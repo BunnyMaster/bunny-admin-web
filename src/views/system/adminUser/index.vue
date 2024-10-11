@@ -148,7 +148,7 @@ onMounted(() => {
 				</el-form-item>
 			</el-form>
 
-			<PureTableBar :columns="columns" title="用户信息" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
+			<PureTableBar :columns="columns" :title="$t('userinfo')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 				<template #buttons>
 					<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
 
@@ -188,12 +188,12 @@ onMounted(() => {
 						<template #status="{ row, index }">
 							<el-switch
 								v-model="row.status"
+								:active-text="$t('enable')"
 								:active-value="false"
+								:inactive-text="$t('disable')"
 								:inactive-value="true"
 								:loading="switchLoadMap[index]?.loading"
 								:style="switchStyle"
-								active-text="已启用"
-								inactive-text="已停用"
 								inline-prompt
 								@click="updateUserStatus(row, index)"
 							/>
@@ -201,7 +201,9 @@ onMounted(() => {
 
 						<!-- 用户性别 -->
 						<template #sex="{ row }">
-							<el-tag :type="row.sex === 0 ? 'danger' : null" effect="plain"> {{ row.sex === 1 ? '男' : '女' }}</el-tag>
+							<el-tag :type="row.sex === 0 ? 'danger' : null" effect="plain">
+								{{ row.sex === 1 ? $t('man') : $t('female') }}
+							</el-tag>
 						</template>
 
 						<!-- 创建用户 -->
@@ -219,7 +221,7 @@ onMounted(() => {
 							<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
 
 							<!-- 删除 -->
-							<el-popconfirm :title="`是否确认删除 ${row.username}数据`" @confirm="onDelete(row)">
+							<el-popconfirm :title="`${$t('delete')} ${row.username}?`" @confirm="onDelete(row)">
 								<template #reference>
 									<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 										{{ $t('delete') }}
@@ -233,16 +235,16 @@ onMounted(() => {
 								<template #dropdown>
 									<el-dropdown-menu>
 										<el-dropdown-item>
-											<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Upload)" :size="size" link type="primary" @click="onUploadAvatar(row)"> 上传头像 </el-button>
+											<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Upload)" :size="size" link type="primary" @click="onUploadAvatar(row)"> {{ $t('upload_avatar') }} </el-button>
 										</el-dropdown-item>
 										<el-dropdown-item>
-											<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Password)" :size="size" link type="primary" @click="onResetPassword(row)"> 重置密码 </el-button>
+											<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Password)" :size="size" link type="primary" @click="onResetPassword(row)"> {{ $t('reset_passwords') }} </el-button>
 										</el-dropdown-item>
 										<el-dropdown-item>
-											<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Role)" :size="size" link type="primary" @click="onAssignRolesToUser(row)"> 分配角色 </el-button>
+											<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Role)" :size="size" link type="primary" @click="onAssignRolesToUser(row)"> {{ $t('assign_roles') }} </el-button>
 										</el-dropdown-item>
 										<el-dropdown-item>
-											<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Airplane)" :size="size" link type="primary" @click="onForcedOffline(row)"> 强制下线 </el-button>
+											<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Airplane)" :size="size" link type="primary" @click="onForcedOffline(row)"> {{ $t('forced_offline') }} </el-button>
 										</el-dropdown-item>
 									</el-dropdown-menu>
 								</template>

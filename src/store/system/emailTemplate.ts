@@ -36,9 +36,7 @@ export const useEmailTemplateStore = defineStore('emailTemplateStore', {
 	},
 	getters: {},
 	actions: {
-		/**
-		 * * 获取邮件模板表
-		 */
+		/** 获取邮件模板表 */
 		async getEmailTemplateList() {
 			// 整理请求参数
 			const data = { ...this.pagination, ...this.form };
@@ -54,25 +52,19 @@ export const useEmailTemplateStore = defineStore('emailTemplateStore', {
 			return pagination(result);
 		},
 
-		/**
-		 * * 添加邮件模板表
-		 */
+		/** 添加邮件模板表 */
 		async addEmailTemplate(data: any) {
 			const result = await fetchAddEmailTemplate(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 修改邮件模板表
-		 */
+		/** 修改邮件模板表 */
 		async updateEmailTemplate(data: any) {
 			const result = await fetchUpdateEmailTemplate(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 删除邮件模板表
-		 */
+		/** 删除邮件模板表 */
 		async deleteEmailTemplate(data: any) {
 			const result = await fetchDeleteEmailTemplate(data);
 			return storeMessage(result);

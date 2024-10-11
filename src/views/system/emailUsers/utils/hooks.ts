@@ -1,12 +1,14 @@
 import { addDialog } from '@/components/BaseDialog/index';
 import EmailUsersDialog from '@/views/system/emailUsers/email-users-dialog.vue';
-import { useEmailUsersStore } from '@/store/system/emailUsers.ts';
+import { useEmailUsersStore } from '@/store/system/emailUsers';
 import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/emailUsers/utils/types';
 import { $t } from '@/plugins/i18n';
 
 export const formRef = ref();
+// 用户是否停用加载集合
+export const switchLoadMap = ref({});
 const emailUsersStore = useEmailUsersStore();
 
 /**
@@ -109,4 +111,48 @@ export const onDelete = async (row: any) => {
 	// 删除数据
 	await emailUsersStore.deleteEmailUsers([id]);
 	await onSearch();
+};
+
+/**
+ * * 修改是否默认
+ * @param row
+ * @param index
+ */
+export const onChangeDefault = async (row: any, index: number) => {
+	// 点击时开始loading加载
+	switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
+		loading: true,
+	});
+
+	// 是否确认修改弹窗内容
+	const confirm = await messageBox({
+		title: $t('confirm_update_status'),
+		showMessage: false,
+		confirmMessage: undefined,
+		cancelMessage: $t('cancel'),
+	});
+
+	// 如果不修改将值恢复到之前状态
+	if (!confirm) {
+		row.isDefault = !row.isDefault;
+		switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
+			loading: false,
+		});
+		return;
+	}
+
+	// 修改用户状态
+	const result = await emailUsersStore.updateEmailUserStatus({ id: row.id, isDefault: row.isDefault });
+	if (!result) {
+		row.isDefault = !row.isDefault;
+		switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
+			loading: false,
+		});
+		return;
+	}
+
+	await onSearch();
+	switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
+		loading: false,
+	});
 };

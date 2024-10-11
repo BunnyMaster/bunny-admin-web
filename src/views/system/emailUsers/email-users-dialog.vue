@@ -4,6 +4,7 @@ import { FormInstance } from 'element-plus';
 import { rules } from '@/views/system/emailUsers/utils/columns';
 import { FormProps } from '@/views/system/emailUsers/utils/types';
 import { $t } from '@/plugins/i18n';
+import { usePublicHooks } from '@/views/hooks';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
@@ -26,6 +27,8 @@ const props = withDefaults(defineProps<FormProps>(), {
 
 const formRef = ref<FormInstance>();
 const form = ref(props.formInline);
+// 用户是否停用样式
+const { switchStyle } = usePublicHooks();
 
 defineExpose({ formRef });
 </script>
@@ -51,7 +54,7 @@ defineExpose({ formRef });
 			<el-input v-model="form.smtpAgreement" autocomplete="off" type="text" />
 		</el-form-item>
 		<el-form-item :label="$t('emailUsers_isDefault')" prop="isDefault">
-			<el-input v-model="form.isDefault" autocomplete="off" type="text" />
+			<el-switch v-model="form.isDefault" :active-text="$t('default')" :active-value="true" :inactive-text="$t('no_default')" :inactive-value="false" :style="switchStyle" inline-prompt />
 		</el-form-item>
 	</el-form>
 </template>

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddEmailUsers, fetchDeleteEmailUsers, fetchGetEmailUsersList, fetchUpdateEmailUsers } from '@/api/v1/emailUsers';
+import { fetchAddEmailUsers, fetchDeleteEmailUsers, fetchGetEmailUsersList, fetchUpdateEmailUsers, fetchUpdateEmailUserStatus } from '@/api/v1/emailUsers';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -56,25 +56,25 @@ export const useEmailUsersStore = defineStore('emailUsersStore', {
 			return pagination(result);
 		},
 
-		/**
-		 * * 添加邮箱用户发送配置
-		 */
+		/** 添加邮箱用户发送配置 */
 		async addEmailUsers(data: any) {
 			const result = await fetchAddEmailUsers(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 修改邮箱用户发送配置
-		 */
+		/** 修改邮箱用户发送配置 */
 		async updateEmailUsers(data: any) {
 			const result = await fetchUpdateEmailUsers(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 删除邮箱用户发送配置
-		 */
+		/** 更新邮箱用户状态 */
+		async updateEmailUserStatus(data: any) {
+			const result = await fetchUpdateEmailUserStatus(data);
+			return storeMessage(result);
+		},
+
+		/** 删除邮箱用户发送配置 */
 		async deleteEmailUsers(data: any) {
 			const result = await fetchDeleteEmailUsers(data);
 			return storeMessage(result);

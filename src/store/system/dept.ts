@@ -36,9 +36,7 @@ export const useDeptStore = defineStore('deptStore', {
 	},
 	getters: {},
 	actions: {
-		/**
-		 * * 获取部门
-		 */
+		/** 获取部门 */
 		async getDeptList() {
 			// 整理请求参数
 			const data = { ...this.pagination, ...this.form };
@@ -54,34 +52,26 @@ export const useDeptStore = defineStore('deptStore', {
 			return pagination(result);
 		},
 
-		/**
-		 * * 获取所有部门列表
-		 */
+		/** 获取所有部门列表 */
 		async getAllDeptList() {
 			const result = await fetchGetAllDeptList();
 			if (result.code !== 200) return;
 			this.allDeptList = result.data;
 		},
 
-		/**
-		 * * 添加部门
-		 */
+		/** 添加部门 */
 		async addDept(data: any) {
 			const result = await fetchAddDept(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 修改部门
-		 */
+		/** 修改部门 */
 		async updateDept(data: any) {
 			const result = await fetchUpdateDept(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 删除部门
-		 */
+		/** 删除部门 */
 		async deleteDept(data: any) {
 			const result = await fetchDeleteDept(data);
 			return storeMessage(result);

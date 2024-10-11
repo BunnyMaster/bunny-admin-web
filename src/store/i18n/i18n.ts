@@ -29,9 +29,7 @@ export const userI18nStore = defineStore('i18nStore', {
 	},
 	getters: {},
 	actions: {
-		/**
-		 * * 获取多语言
-		 */
+		/** 获取多语言 */
 		async fetchI18n() {
 			const result = await fetchGetI18n();
 
@@ -46,9 +44,8 @@ export const userI18nStore = defineStore('i18nStore', {
 				this.i18n = data;
 			}
 		},
-		/**
-		 * * 获取多语言列表
-		 */
+
+		/** 获取多语言列表 */
 		async getI18nMangeList() {
 			const data = { ...this.pagination, ...this.form };
 			delete data.pageSizes;
@@ -61,25 +58,19 @@ export const userI18nStore = defineStore('i18nStore', {
 			return pagination(result);
 		},
 
-		/**
-		 * * 添加多语言
-		 */
+		/** 添加多语言 */
 		async addI18n(data: any) {
 			const result = await fetchAddI18n(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 更新多语言
-		 */
+		/** 更新多语言 */
 		async updateI18n(data: any) {
 			const result = await fetchUpdateI18n(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 删除多语言
-		 */
+		/** 删除多语言 */
 		async deleteI18n(data: any) {
 			const result = await fetchDeleteI18n(data);
 			return storeMessage(result);

@@ -36,9 +36,7 @@ export const useFilesStore = defineStore('filesStore', {
 	},
 	getters: {},
 	actions: {
-		/**
-		 * * 获取系统文件表
-		 */
+		/** 获取系统文件表 */
 		async getFilesList() {
 			// 整理请求参数
 			const data = { ...this.pagination, ...this.form };
@@ -54,25 +52,19 @@ export const useFilesStore = defineStore('filesStore', {
 			return pagination(result);
 		},
 
-		/**
-		 * * 添加系统文件表
-		 */
+		/** 添加系统文件表 */
 		async addFiles(data: any) {
 			const result = await fetchAddFiles(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 修改系统文件表
-		 */
+		/** 修改系统文件表 */
 		async updateFiles(data: any) {
 			const result = await fetchUpdateFiles(data);
 			return storeMessage(result);
 		},
 
-		/**
-		 * * 删除系统文件表
-		 */
+		/** 删除系统文件表 */
 		async deleteFiles(data: any) {
 			const result = await fetchDeleteFiles(data);
 			return storeMessage(result);

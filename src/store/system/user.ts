@@ -37,10 +37,7 @@ export const useUserStore = defineStore({
 			return false;
 		},
 
-		/**
-		 * * 发送邮箱验证码
-		 * @param email
-		 */
+		/** 发送邮箱验证码 */
 		async postEmailCode(email: string) {
 			const response = await fetchPostEmailCode({ email });
 			if (response.code === 200) {
@@ -52,9 +49,7 @@ export const useUserStore = defineStore({
 			return false;
 		},
 
-		/**
-		 * 前端登出（不调用接口）
-		 */
+		/** 前端登出（不调用接口） */
 		async logOut() {
 			// 登出
 			const result = await fetchLogout();
@@ -73,9 +68,7 @@ export const useUserStore = defineStore({
 			message(result.message, { type: 'error' });
 		},
 
-		/**
-		 * 刷新`token`
-		 */
+		/** 刷新`token` */
 		async handRefreshToken(data: any) {
 			const result = await refreshTokenApi({ ...data, readMeDay: this.readMeDay });
 			if (result.code === 200) {
@@ -86,20 +79,14 @@ export const useUserStore = defineStore({
 			return false;
 		},
 
-		/**
-		 * * 根据用户id获取角色列表
-		 * @param data
-		 */
+		/** 根据用户id获取角色列表 */
 		async getRoleListByUserId(data: any) {
 			const result = await fetchGetRoleListByUserId(data);
 			if (result.code !== 200) return;
 			return result.data;
 		},
 
-		/**
-		 * * 为用户分配角色
-		 * @param data
-		 */
+		/** 为用户分配角色 */
 		async assignRolesToUsers(data: any) {
 			const result = await fetchAssignRolesToUsers(data);
 			return storeMessage(result);

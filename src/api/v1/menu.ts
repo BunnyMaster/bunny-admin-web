@@ -1,9 +1,9 @@
 import { http } from '@/api/service/request';
-import type { BaseResult, ResultTable } from '@/api/service/types';
+import type { BaseResult } from '@/api/service/types';
 
 /** 菜单管理-列表 */
 export const fetchGetMenusList = (data?: any) => {
-	return http.request<BaseResult<ResultTable>>('get', `router/getMenusList`, { params: data });
+	return http.request<BaseResult<any>>('get', `router/getMenusList`, { params: data });
 };
 
 /** 菜单管理-添加菜单 */
