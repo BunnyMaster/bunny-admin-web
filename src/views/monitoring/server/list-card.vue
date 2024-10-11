@@ -42,7 +42,9 @@ const cardLogoClass = computed(() => ['list-card-item_detail--logo', { 'list-car
 			<p class="list-card-item_detail--name text-text_color_primary">
 				{{ product.key }}
 			</p>
-			<p v-for="(detail, index) in product.details" :key="index" class="list-card-item_detail--desc" style="margin-bottom: 0; height: 20px">{{ detail.key }} : {{ detail.value }}</p>
+			<el-text v-for="(detail, index) in product.details" :key="index">
+				<div>{{ detail.key }}：{{ detail.value }}</div>
+			</el-text>
 		</div>
 	</div>
 </template>
@@ -106,8 +108,7 @@ const cardLogoClass = computed(() => ['list-card-item_detail--logo', { 'list-car
 	}
 
 	&__disabled {
-		.list-card-item_detail--name,
-		.list-card-item_detail--desc {
+		.list-card-item_detail--name {
 			color: var(--el-text-color-disabled);
 		}
 

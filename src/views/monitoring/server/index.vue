@@ -26,7 +26,6 @@ const onSearch = async () => {
 		status: value.status === 'UP',
 		details: value.details && Object.entries(value.details).map(([key, value]: any) => ({ key, value })),
 	}));
-	console.log(datalist.value);
 
 	loading.value = false;
 };
