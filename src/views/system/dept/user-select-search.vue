@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<FormProps>(), {
 
 const adminUserStore = useAdminUserStore();
 const loading = ref(false);
-const userDataList = ref([]);
+const userDataList = ref();
 const form = ref(props.formInline);
 
 /**

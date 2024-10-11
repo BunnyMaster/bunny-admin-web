@@ -10,3 +10,8 @@ export const getRouterAsync = () => {
 export const fetchUploadFile = (data: any) => {
 	return http.request<BaseResult<any>>('post', '/files/upload', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
+
+/** 系统监控-系统服务获取 */
+export const fetchSystemHealthList = () => {
+	return http.request<any>('get', '/health');
+};
