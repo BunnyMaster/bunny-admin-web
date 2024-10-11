@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<FormProps>(), {
 		// 邮箱协议
 		smtpAgreement: undefined,
 		// 是否为默认邮件
-		isDefault: undefined,
+		isDefault: false,
 	}),
 });
 
@@ -48,10 +48,10 @@ defineExpose({ formRef });
 			<el-input v-model="form.host" autocomplete="off" type="text" />
 		</el-form-item>
 		<el-form-item :label="$t('emailUsers_port')" prop="port">
-			<el-input v-model="form.port" autocomplete="off" type="text" />
+			<el-input v-model="form.port" autocomplete="off" max="9999" type="number" />
 		</el-form-item>
 		<el-form-item :label="$t('emailUsers_smtpAgreement')" prop="smtpAgreement">
-			<el-input v-model="form.smtpAgreement" autocomplete="off" type="text" />
+			<el-input v-model="form.smtpAgreement" autocomplete="off" maxlength="10" show-word-limit type="text" />
 		</el-form-item>
 		<el-form-item :label="$t('emailUsers_isDefault')" prop="isDefault">
 			<el-switch v-model="form.isDefault" :active-text="$t('default')" :active-value="true" :inactive-text="$t('no_default')" :inactive-value="false" :style="switchStyle" inline-prompt />

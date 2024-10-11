@@ -4,7 +4,7 @@ import { columns } from '@/views/system/emailUsers/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onChangeDefault, onDelete, onSearch, onUpdate, switchLoadMap } from '@/views/system/emailUsers/utils/hooks';
+import { deleteIds, onAdd, onChangeDefault, onDelete, onDeleteBatch, onSearch, onUpdate, switchLoadMap } from '@/views/system/emailUsers/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -13,6 +13,7 @@ import { $t } from '@/plugins/i18n';
 import { useEmailUsersStore } from '@/store/system/emailUsers';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { usePublicHooks } from '@/views/hooks';
+import { FormInstance } from 'element-plus';
 
 const tableRef = ref();
 const formRef = ref();
@@ -41,10 +42,18 @@ const onPageSizeChange = async (value: number) => {
  * 重置表单
  * @param formEl
  */
-const resetForm = async formEl => {
+const resetForm = async (formEl: FormInstance | undefined) => {
 	if (!formEl) return;
 	formEl.resetFields();
 	await onSearch();
+};
+
+/**
+ * * 选择多行
+ * @param rows
+ */
+const onSelectionChange = (rows: Array<any>) => {
+	deleteIds.value = rows.map((row: any) => row.id);
 };
 
 onMounted(() => {
@@ -79,6 +88,11 @@ onMounted(() => {
 		<PureTableBar :columns="columns" :title="$t('email_user_send_config')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
+
+				<!-- 批量删除按钮 -->
+				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+					{{ $t('delete_batches') }}
+				</el-button>
 			</template>
 
 			<template v-slot="{ size, dynamicColumns }">
@@ -98,6 +112,7 @@ onMounted(() => {
 					row-key="id"
 					showOverflowTooltip
 					table-layout="auto"
+					@selection-change="onSelectionChange"
 					@page-size-change="onPageSizeChange"
 					@page-current-change="onCurrentPageChange"
 				>

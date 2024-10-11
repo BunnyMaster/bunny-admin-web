@@ -3,8 +3,8 @@ import { $t } from '@/plugins/i18n';
 
 // 表格列
 export const columns: TableColumnList = [
-	{ type: 'index', index: (index: number) => index + 1 },
 	{ type: 'selection', align: 'left' },
+	{ type: 'index', index: (index: number) => index + 1 },
 	// 文件的名称
 	{ label: $t('files_filename'), prop: 'filename', width: 400 },
 	// 文件在服务器上的存储路径
@@ -28,6 +28,4 @@ export const rules = reactive({
 	filepath: [{ required: true, message: `${$t('input')}${$t('files_filepath')}`, trigger: 'blur' }],
 	// 文件的MIME类型
 	fileType: [{ required: true, message: `${$t('input')}${$t('files_fileType')}`, trigger: 'blur' }],
-	// 下载数量
-	downloadCount: [{ required: true, message: `${$t('input')}${$t('files_downloadCount')}`, trigger: 'blur' }],
 });

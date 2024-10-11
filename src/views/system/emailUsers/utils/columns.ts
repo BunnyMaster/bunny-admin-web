@@ -27,9 +27,12 @@ export const columns: TableColumnList = [
 ];
 
 // 添加规则
-export const rules = reactive({
+export const rules: any = reactive({
 	// 邮箱
-	email: [{ required: true, message: `${$t('input')}${$t('emailUsers_email')}`, trigger: 'blur' }],
+	email: [
+		{ required: true, message: `${$t('input')}${$t('emailUsers_email')}`, trigger: 'blur' },
+		{ type: 'email', message: `${$t('input')}${$t('adminUser_email')}${$t('format_error')}` },
+	],
 	// 密码
 	password: [{ required: true, message: `${$t('input')}${$t('emailUsers_password')}`, trigger: 'blur' }],
 	// Host地址

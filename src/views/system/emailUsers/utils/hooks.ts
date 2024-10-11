@@ -9,6 +9,8 @@ import { $t } from '@/plugins/i18n';
 export const formRef = ref();
 // 用户是否停用加载集合
 export const switchLoadMap = ref({});
+// 删除ids
+export const deleteIds = ref([]);
 const emailUsersStore = useEmailUsersStore();
 
 /**
@@ -35,7 +37,7 @@ export function onAdd() {
 				host: undefined,
 				port: undefined,
 				smtpAgreement: undefined,
-				isDefault: undefined,
+				isDefault: false,
 			},
 		},
 		draggable: true,
@@ -110,6 +112,26 @@ export const onDelete = async (row: any) => {
 
 	// 删除数据
 	await emailUsersStore.deleteEmailUsers([id]);
+	await onSearch();
+};
+
+/**
+ * 批量删除
+ */
+export const onDeleteBatch = async () => {
+	const ids = deleteIds.value;
+
+	// 是否确认删除
+	const result = await messageBox({
+		title: $t('confirm_delete'),
+		showMessage: false,
+		confirmMessage: undefined,
+		cancelMessage: $t('cancel_delete'),
+	});
+	if (!result) return;
+
+	// 删除数据
+	await emailUsersStore.deleteEmailUsers(ids);
 	await onSearch();
 };
 
