@@ -4,10 +4,6 @@ import ReCropper from '@/components/ReCropper';
 import { formatBytes } from '@pureadmin/utils';
 import { $t } from '@/plugins/i18n';
 
-defineOptions({
-	name: 'ReCropperPreview',
-});
-
 defineProps({
 	imgSrc: String,
 });
@@ -35,7 +31,7 @@ defineExpose({ hidePopover });
 
 <template>
 	<div v-loading="!showPopover" element-loading-background="transparent">
-		<el-popover ref="popoverRef" :visible="showPopover" placement="right" width="18vw">
+		<el-popover ref="popoverRef" :visible="showPopover" placement="right" popper-style="top:260px" width="18vw">
 			<template #reference>
 				<div class="w-[18vw]">
 					<ReCropper ref="refCropper" :src="imgSrc" circled @cropper="onCropper" @readied="showPopover = true" />
@@ -43,7 +39,7 @@ defineExpose({ hidePopover });
 				</div>
 			</template>
 			<div class="flex flex-wrap justify-center items-center text-center">
-				<el-image v-if="cropperImg" :preview-src-list="Array.of(cropperImg)" :src="cropperImg" fit="cover" />
+				<el-image v-if="cropperImg" :preview-src-list="Array.of(cropperImg)" :src="cropperImg" class="cropper-img-preview" fit="contain" />
 				<div v-if="infos" class="mt-1">
 					<p>{{ $t('image_size') }}：{{ parseInt(infos.width) }} × {{ parseInt(infos.height) }}{{ $t('pixel') }}</p>
 					<p>{{ $t('file_size') }}：{{ formatBytes(infos.size) }}（{{ infos.size }} {{ $t('bytes') }}</p>
@@ -52,3 +48,13 @@ defineExpose({ hidePopover });
 		</el-popover>
 	</div>
 </template>
+
+<style lang="scss" scoped>
+.cropper-img-preview {
+	height: 200px;
+
+	:deep(.el-image__inner) {
+		max-height: 310px;
+	}
+}
+</style>

@@ -4,13 +4,13 @@ import { columns } from '@/views/monitor/files/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onDelete, onSearch, onUpdate } from '@/views/monitor/files/utils/hooks';
+import { onAdd, onDelete, onDeleteBatch, onDownload, onSearch, onUpdate, selectIds } from '@/views/monitor/files/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { useFilesStore } from '@/store/monitor/files.ts';
+import { useFilesStore } from '@/store/monitor/files';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { FormInstance } from 'element-plus';
 
@@ -18,31 +18,28 @@ const tableRef = ref();
 const formRef = ref();
 const filesStore = useFilesStore();
 
-/**
- * * 当前页改变时
- */
+/** 当前页改变时 */
 const onCurrentPageChange = async (value: number) => {
 	filesStore.pagination.currentPage = value;
 	await onSearch();
 };
 
-/**
- * * 当分页发生变化
- * @param value
- */
+/** 当分页发生变化 */
 const onPageSizeChange = async (value: number) => {
 	filesStore.pagination.pageSize = value;
 	await onSearch();
 };
 
-/**
- * 重置表单
- * @param formEl
- */
+/** 重置表单 */
 const resetForm = async (formEl: FormInstance) => {
 	if (!formEl) return;
 	formEl.resetFields();
 	await onSearch();
+};
+
+/** 选择多行 */
+const onSelectionChange = (rows: Array<any>) => {
+	selectIds.value = rows.map((row: any) => row.id);
 };
 
 onMounted(() => {
@@ -74,6 +71,11 @@ onMounted(() => {
 		<PureTableBar :columns="columns" title="系统文件管理" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
+
+				<!-- 批量删除按钮 -->
+				<el-button v-show="selectIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+					{{ $t('delete_batches') }}
+				</el-button>
 			</template>
 
 			<template v-slot="{ size, dynamicColumns }">
@@ -94,6 +96,7 @@ onMounted(() => {
 					showOverflowTooltip
 					table-layout="auto"
 					@page-size-change="onPageSizeChange"
+					@selection-change="onSelectionChange"
 					@page-current-change="onCurrentPageChange"
 				>
 					<template #createUser="{ row }">
@@ -106,6 +109,7 @@ onMounted(() => {
 
 					<template #operation="{ row }">
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
+						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onDownload(row)"> {{ $t('download') }} </el-button>
 						<el-popconfirm :title="`${$t('delete')} ${row.filename}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">

@@ -47,36 +47,26 @@ const { switchStyle } = usePublicHooks();
 const tableRef = ref();
 const formRef = ref();
 
-/**
- * * 加载部门列表
- */
+/** 加载部门列表 */
 const onSearchDept = async () => {
 	deptStore.loading = true;
 	await deptStore.getAllDeptList();
 	deptStore.loading = false;
 };
 
-/**
- * * 当前页改变时
- */
+/** 当前页改变时 */
 const onCurrentPageChange = async (value: number) => {
 	adminUserStore.pagination.currentPage = value;
 	await onSearch();
 };
 
-/**
- * * 当分页发生变化
- * @param value
- */
+/** 当分页发生变化 */
 const onPageSizeChange = async (value: number) => {
 	adminUserStore.pagination.pageSize = value;
 	await onSearch();
 };
 
-/**
- * 重置表单
- * @param formEl
- */
+/** 重置表单 */
 const resetForm = async (formEl: FormInstance) => {
 	if (!formEl) return;
 	formEl.resetFields();
@@ -84,10 +74,7 @@ const resetForm = async (formEl: FormInstance) => {
 	await onSearch();
 };
 
-/**
- * * 选择多行
- * @param rows
- */
+/** 选择多行 */
 const onSelectionChange = (rows: Array<any>) => {
 	deleteIds.value = rows.map((row: any) => row.id);
 };
@@ -181,7 +168,13 @@ onMounted(() => {
 					>
 						<!-- 显示头像 -->
 						<template #avatar="{ row }">
-							<el-image :preview-src-list="Array.of(row.avatar || userAvatar)" :src="row.avatar || userAvatar" class="w-[24px] h-[24px] rounded-full align-middle" fit="cover" preview-teleported />
+							<el-image :preview-src-list="Array.of(row.avatar || userAvatar)" :src="row.avatar || userAvatar" class="w-[24px] h-[24px] rounded-full align-middle" fit="cover" preview-teleported>
+								<template #error>
+									<div class="image-slot">
+										<img :src="userAvatar" alt="" />
+									</div>
+								</template>
+							</el-image>
 						</template>
 
 						<!-- 显示用户状态 -->

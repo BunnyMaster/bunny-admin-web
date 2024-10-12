@@ -26,8 +26,8 @@ export const columns: TableColumnList = [
 	{ label: $t('adminUser_sex'), prop: 'sex', slot: 'sex' },
 	// 个人描述
 	{ label: $t('adminUser_summary'), prop: 'summary', width: 460 },
-	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160, fixed: 'right' },
-	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160, fixed: 'right' },
+	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
+	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 90, fixed: 'right' },
 	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 90, fixed: 'right' },
 	{ label: $t('table.operation'), fixed: 'right', width: 210, slot: 'operation' },

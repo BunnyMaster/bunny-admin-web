@@ -109,7 +109,7 @@ export default defineComponent({
 		async function init() {
 			const imgEl = unref(imgElRef);
 			if (!imgEl) return;
-			cropper.value = new Cropper(imgEl, {
+			const result: any = new Cropper(imgEl, {
 				...defaultOptions,
 				ready: () => {
 					isReady.value = true;
@@ -127,6 +127,14 @@ export default defineComponent({
 				},
 				...props.options,
 			});
+
+			if (!result.ready) {
+				isReady.value = true;
+				realTimeCroppered();
+				emit('readied', cropper.value);
+			}
+
+			cropper.value = result;
 		}
 
 		function realTimeCroppered() {
