@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { rules } from '@/views/system/files/utils/columns';
-import { FormProps } from '@/views/system/files/utils/types';
+import { rules } from '@/views/monitor/files/utils/columns';
+import { FormProps } from '@/views/monitor/files/utils/types';
 import { $t } from '@/plugins/i18n';
 
 const props = withDefaults(defineProps<FormProps>(), {

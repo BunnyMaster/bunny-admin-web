@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<FormProps>(), {
 		// 状态
 		status: undefined,
 		// 部门
-		deptIds: undefined,
+		deptId: undefined,
 	}),
 });
 

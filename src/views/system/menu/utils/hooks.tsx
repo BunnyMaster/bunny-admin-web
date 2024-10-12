@@ -126,12 +126,15 @@ export const onUpdate = (row?: FormItemProps) => {
 		beforeSure: (done, { options }) => {
 			const menuFormRef = formRef.value.menuFormRef;
 			const curData = options.props.formInline as FormItemProps;
+			delete curData.higherMenuOptions;
+
+			// 表单验证
 			menuFormRef.validate(async (valid: any) => {
 				if (!valid) return;
-				delete curData.higherMenuOptions;
-
+				curData.parentId = curData.parentId ?? 0;
 				curData.id = row.id;
 				const result = await menuStore.updateMenu(curData);
+
 				// 刷新表格数据
 				if (result) {
 					done();

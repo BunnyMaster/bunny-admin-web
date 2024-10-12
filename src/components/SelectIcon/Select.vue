@@ -24,9 +24,11 @@ const form = ref(props.formInline);
  */
 const onSearch = async () => {
 	innerForm.loading = true;
+	const { currentPage, pageSize } = innerForm;
 
 	// 获取数据
-	const baseResult = await fetchGetMenuIconList(innerForm);
+	const baseResult = await fetchGetMenuIconList({ currentPage, pageSize });
+	if (baseResult.code !== 200) return;
 	const data = baseResult.data;
 
 	// 赋值内容
@@ -34,7 +36,6 @@ const onSearch = async () => {
 	innerForm.currentPage = data.pageNo;
 	innerForm.pageSize = data.pageSize;
 	innerForm.total = data.total;
-
 	innerForm.loading = false;
 };
 
@@ -49,16 +50,15 @@ const onChangeIcon = (value: any) => {
 /**
  * * 清除图标
  */
-const onClear = () => {
-	form.value.icon = '';
-};
+const onClear = () => (form.value.icon = '');
 
 /**
  * * 修改当前页
  * @param value
  */
-const onCurrentChange = (value: number) => {
+const onCurrentChange = async (value: number) => {
 	innerForm.currentPage = value;
+	await onSearch();
 };
 
 onMounted(() => {
@@ -76,12 +76,12 @@ onMounted(() => {
 				</div>
 			</template>
 
-			<ul class="flex flex-wrap px-2 ml-2">
+			<ul class="flex flex-wrap px-2 ml-2 h-[210px]">
 				<li
 					v-for="(item, key) in innerForm.datalist"
 					:key="key"
+					:class="`icon-item p-2 cursor-pointer mr-2 mt-1 flex justify-center items-center border border-[#e5e7eb] ${item.iconCode === form.icon ? 'current' : ''}`"
 					:title="item.iconName"
-					class="icon-item p-2 cursor-pointer mr-2 mt-1 flex justify-center items-center border border-[#e5e7eb]"
 					@click="onChangeIcon(item)"
 				>
 					<IconifyIconOnline :icon="item.iconCode" height="20px" width="20px" />
@@ -109,7 +109,17 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
+.current {
+	color: var(--el-color-primary);
+	border-color: var(--el-color-primary);
+	transition: all 0.4s;
+	transform: scaleX(1.05);
+}
+
 .icon-item {
+	width: 38px;
+	height: 38px;
+
 	&:hover {
 		color: var(--el-color-primary);
 		border-color: var(--el-color-primary);

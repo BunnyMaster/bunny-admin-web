@@ -1,18 +1,18 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/system/menuIcon/utils/columns';
+import { columns } from '@/views/configuration/menuIcon/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/system/menuIcon/utils/hooks';
+import { deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/configuration/menuIcon/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { useMenuIconStore } from '@/store/system/menuIcon';
-import MenuIconSelectIconName from '@/views/system/menuIcon/menu-icon-select-icon-name.vue';
+import { useMenuIconStore } from '@/store/configuration/menuIcon';
+import MenuIconSelectIconName from '@/views/configuration/menuIcon/menu-icon-select-icon-name.vue';
 
 const tableRef = ref();
 const formRef = ref();

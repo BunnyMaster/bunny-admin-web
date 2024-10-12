@@ -1,48 +1,48 @@
 import { addDialog } from '@/components/BaseDialog/index';
-import EmailTemplateDialog from '@/views/system/emailTemplate/email-template-dialog.vue';
-import { useEmailTemplateStore } from '@/store/system/emailTemplate.ts';
+import FilesDialog from '@/views/monitor/files/files-dialog.vue';
+import { useFilesStore } from '@/store/monitor/files';
 import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
-import type { FormItemProps } from '@/views/system/emailTemplate/utils/types';
+import type { FormItemProps } from '@/views/monitor/files/utils/types';
 import { $t } from '@/plugins/i18n';
 
 export const formRef = ref();
-const emailTemplateStore = useEmailTemplateStore();
+const filesStore = useFilesStore();
 
 /**
- * * 搜索初始化邮件模板表
+ * * 搜索初始化系统文件表
  */
 export async function onSearch() {
-	emailTemplateStore.loading = true;
-	await emailTemplateStore.getEmailTemplateList();
-	emailTemplateStore.loading = false;
+	filesStore.loading = true;
+	await filesStore.getFilesList();
+	filesStore.loading = false;
 }
 
 /**
- * * 添加邮件模板表
+ * * 添加系统文件表
  */
 export function onAdd() {
 	addDialog({
-		title: `${$t('add_new')}${$t('emailTemplate')}`,
+		title: `${$t('add_new')}${$t('files')}`,
 		width: '30%',
 		props: {
 			formInline: {
-				templateName: undefined,
-				subject: undefined,
-				body: undefined,
-				type: undefined,
+				filename: undefined,
+				filepath: undefined,
+				fileType: undefined,
+				downloadCount: undefined,
 			},
 		},
 		draggable: true,
 		fullscreenIcon: true,
 		closeOnClickModal: false,
-		contentRenderer: () => h(EmailTemplateDialog, { ref: formRef }),
+		contentRenderer: () => h(FilesDialog, { ref: formRef }),
 		beforeSure: (done, { options }) => {
 			const form = options.props.formInline as FormItemProps;
 			formRef.value.formRef.validate(async (valid: any) => {
 				if (!valid) return;
 
-				const result = await emailTemplateStore.addEmailTemplate(form);
+				const result = await filesStore.addFiles(form);
 				if (!result) return;
 				done();
 				await onSearch();
@@ -52,31 +52,31 @@ export function onAdd() {
 }
 
 /**
- * * 更新邮件模板表
+ * * 更新系统文件表
  * @param row
  */
 export function onUpdate(row: any) {
 	addDialog({
-		title: `${$t('modify')}${$t('emailTemplate')}`,
+		title: `${$t('modify')}${$t('files')}`,
 		width: '30%',
 		props: {
 			formInline: {
-				templateName: row.templateName,
-				subject: row.subject,
-				body: row.body,
-				type: row.type,
+				filename: row.filename,
+				filepath: row.filepath,
+				fileType: row.fileType,
+				downloadCount: row.downloadCount,
 			},
 		},
 		draggable: true,
 		fullscreenIcon: true,
 		closeOnClickModal: false,
-		contentRenderer: () => h(EmailTemplateDialog, { ref: formRef }),
+		contentRenderer: () => h(FilesDialog, { ref: formRef }),
 		beforeSure: (done, { options }) => {
 			const form = options.props.formInline as FormItemProps;
 			formRef.value.formRef.validate(async (valid: any) => {
 				if (!valid) return;
 
-				const result = await emailTemplateStore.updateEmailTemplate({ ...form, id: row.id });
+				const result = await filesStore.updateFiles({ ...form, id: row.id });
 				if (!result) return;
 				done();
 				await onSearch();
@@ -86,7 +86,7 @@ export function onUpdate(row: any) {
 }
 
 /**
- * * 删除邮件模板表
+ * * 删除系统文件表
  */
 export const onDelete = async (row: any) => {
 	const id = row.id;
@@ -101,6 +101,6 @@ export const onDelete = async (row: any) => {
 	if (!result) return;
 
 	// 删除数据
-	await emailTemplateStore.deleteEmailTemplate([id]);
+	await filesStore.deleteFiles([id]);
 	await onSearch();
 };

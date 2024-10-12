@@ -1,9 +1,9 @@
 import { addDialog } from '@/components/BaseDialog/index';
-import EmailUsersDialog from '@/views/system/emailUsers/email-users-dialog.vue';
-import { useEmailUsersStore } from '@/store/system/emailUsers';
+import EmailUsersDialog from '@/views/configuration/emailUsers/email-users-dialog.vue';
+import { useEmailUsersStore } from '@/store/configuration/emailUsers';
 import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
-import type { FormItemProps } from '@/views/system/emailUsers/utils/types';
+import type { FormItemProps } from '@/views/configuration/emailUsers/utils/types';
 import { $t } from '@/plugins/i18n';
 
 export const formRef = ref();

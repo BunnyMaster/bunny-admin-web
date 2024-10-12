@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { rules } from '@/views/system/emailTemplate/utils/columns';
-import { FormProps } from '@/views/system/emailTemplate/utils/types';
+import { rules } from '@/views/configuration/emailTemplate/utils/columns';
+import { FormProps } from '@/views/configuration/emailTemplate/utils/types';
 import { $t } from '@/plugins/i18n';
 
 const props = withDefaults(defineProps<FormProps>(), {

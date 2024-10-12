@@ -7,18 +7,18 @@ export const columns: TableColumnList = [
 	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
 	// 邮箱
 	{ label: $t('emailUsers_email'), prop: 'email' },
-	// 邮件模板
-	{ label: $t('emailUsers_emailTemplate'), prop: 'emailTemplate' },
+	// // 邮件模板
+	// { label: $t('emailUsers_emailTemplate'), prop: 'emailTemplate' },
 	// 密码
 	{ label: $t('emailUsers_password'), prop: 'password' },
 	// Host地址
 	{ label: $t('emailUsers_host'), prop: 'host' },
 	// 端口号
-	{ label: $t('emailUsers_port'), prop: 'port' },
+	{ label: $t('emailUsers_port'), prop: 'port', width: 90 },
 	// 邮箱协议
-	{ label: $t('emailUsers_smtpAgreement'), prop: 'smtpAgreement' },
+	{ label: $t('emailUsers_smtpAgreement'), prop: 'smtpAgreement', width: 100 },
 	// 是否为默认邮件
-	{ label: $t('emailUsers_isDefault'), prop: 'isDefault', slot: 'isDefault' },
+	{ label: $t('emailUsers_isDefault'), prop: 'isDefault', slot: 'isDefault', width: 100 },
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 90 },

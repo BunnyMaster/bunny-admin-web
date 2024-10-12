@@ -16,8 +16,6 @@ export const useEmailUsersStore = defineStore('emailUsersStore', {
 			form: {
 				// 邮箱
 				email: undefined,
-				// 使用邮件模板
-				emailTemplate: undefined,
 				// Host地址
 				host: undefined,
 				// 端口号

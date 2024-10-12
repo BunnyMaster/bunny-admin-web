@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { rules } from '@/views/system/emailUsers/utils/columns';
-import { FormProps } from '@/views/system/emailUsers/utils/types';
+import { rules } from '@/views/configuration/emailUsers/utils/columns';
+import { FormProps } from '@/views/configuration/emailUsers/utils/types';
 import { $t } from '@/plugins/i18n';
 import { usePublicHooks } from '@/views/hooks';
+import { fetchGetAllEmailTemplates } from '@/api/v1/emailTemplate';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
@@ -29,6 +30,22 @@ const formRef = ref<FormInstance>();
 const form = ref(props.formInline);
 // 用户是否停用样式
 const { switchStyle } = usePublicHooks();
+// 邮件模板列表
+const emailTemplateList = ref();
+
+/** 查询所有邮件模板 */
+const getAllEmailTemplates = async () => {
+	const result = await fetchGetAllEmailTemplates();
+	if (result.code !== 200) return;
+	emailTemplateList.value = result.data.map(({ id, templateName }) => ({
+		value: id,
+		label: templateName,
+	}));
+};
+
+onMounted(() => {
+	getAllEmailTemplates();
+});
 
 defineExpose({ formRef });
 </script>
@@ -39,7 +56,9 @@ defineExpose({ formRef });
 			<el-input v-model="form.email" autocomplete="off" type="text" />
 		</el-form-item>
 		<el-form-item :label="$t('emailUsers_emailTemplate')" prop="emailTemplate">
-			<el-input v-model="form.emailTemplate" autocomplete="off" type="text" />
+			<el-select v-model="form.emailTemplate" :placeholder="$t('input') + $t('emailUsers_emailTemplate')" clearable filterable>
+				<el-option v-for="(item, index) in emailTemplateList" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
+			</el-select>
 		</el-form-item>
 		<el-form-item :label="$t('emailUsers_password')" prop="password">
 			<el-input v-model="form.password" autocomplete="off" type="text" />

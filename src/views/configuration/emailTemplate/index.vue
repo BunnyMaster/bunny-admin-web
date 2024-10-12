@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/system/emailTemplate/utils/columns';
+import { columns } from '@/views/configuration/emailTemplate/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onDelete, onSearch, onUpdate } from '@/views/system/emailTemplate/utils/hooks';
+import { onAdd, onDelete, onSearch, onUpdate } from '@/views/configuration/emailTemplate/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { useEmailTemplateStore } from '@/store/system/emailTemplate.ts';
+import { useEmailTemplateStore } from '@/store/configuration/emailTemplate.ts';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 
 const tableRef = ref();

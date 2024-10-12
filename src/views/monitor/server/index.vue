@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import ListCard from '@/views/monitoring/server/list-card.vue';
+import ListCard from '@/views/monitor/server/list-card.vue';
 import { fetchSystemHealthList } from '@/api/v1/system';
 import { $t } from '@/plugins/i18n';
 

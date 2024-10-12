@@ -1,10 +1,6 @@
 <script lang="ts" setup>
 import { computed, PropType } from 'vue';
-import shopIcon from '@/assets/svg/shop.svg?component';
-import laptopIcon from '@/assets/svg/laptop.svg?component';
-import serviceIcon from '@/assets/svg/service.svg?component';
-import calendarIcon from '@/assets/svg/calendar.svg?component';
-import userAvatarIcon from '@/assets/svg/user_avatar.svg?component';
+import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 
 interface CardProductType {
 	type: string;
@@ -27,11 +23,11 @@ const cardLogoClass = computed(() => ['list-card-item_detail--logo', { 'list-car
 		<div class="list-card-item_detail bg-bg_color">
 			<el-row justify="space-between">
 				<div :class="cardLogoClass">
-					<shopIcon v-if="product.type === 'db'" />
-					<calendarIcon v-if="product.type === 'redis'" />
-					<serviceIcon v-if="product.type === 'ping'" />
-					<userAvatarIcon v-if="product.type === 'minio'" />
-					<laptopIcon v-if="product.type === 'diskSpace'" />
+					<component :is="useRenderIcon('raphael:db')" v-if="product.type === 'db'" />
+					<component :is="useRenderIcon('devicon:redis')" v-if="product.type === 'redis'" />
+					<component :is="useRenderIcon('material-symbols:terminal')" v-if="product.type === 'ping'" />
+					<component :is="useRenderIcon('simple-icons:minio')" v-if="product.type === 'minio'" />
+					<component :is="useRenderIcon('mage:compact-disk')" v-if="product.type === 'diskSpace'" />
 				</div>
 				<div class="list-card-item_detail--operation">
 					<el-tag :color="product.status ? '#00a870' : '#eee'" class="mx-1 list-card-item_detail--operation--tag" effect="dark">

@@ -3,7 +3,7 @@ import { $t } from '@/plugins/i18n';
 import { ref } from 'vue';
 import { fetchGetIconNameList } from '@/api/v1/menuIcon';
 import LoadingSvg from '@/assets/svg/loading.svg';
-import { FormProps } from '@/views/system/menuIcon/utils/types';
+import { FormProps } from '@/views/configuration/menuIcon/utils/types';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({

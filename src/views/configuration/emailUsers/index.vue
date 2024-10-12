@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/system/emailUsers/utils/columns';
+import { columns } from '@/views/configuration/emailUsers/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { deleteIds, onAdd, onChangeDefault, onDelete, onDeleteBatch, onSearch, onUpdate, switchLoadMap } from '@/views/system/emailUsers/utils/hooks';
+import { deleteIds, onAdd, onChangeDefault, onDelete, onDeleteBatch, onSearch, onUpdate, switchLoadMap } from '@/views/configuration/emailUsers/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { useEmailUsersStore } from '@/store/system/emailUsers';
+import { useEmailUsersStore } from '@/store/configuration/emailUsers';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { usePublicHooks } from '@/views/hooks';
 import { FormInstance } from 'element-plus';
@@ -66,9 +66,6 @@ onMounted(() => {
 		<el-form ref="formRef" :inline="true" :model="emailUsersStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
 			<el-form-item :label="$t('emailUsers_email')" prop="email">
 				<el-input v-model="emailUsersStore.form.email" :placeholder="`${$t('input')}${$t('emailUsers_email')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-			<el-form-item :label="$t('emailUsers_emailTemplate')" prop="emailTemplate">
-				<el-input v-model="emailUsersStore.form.emailTemplate" :placeholder="`${$t('input')}${$t('emailUsers_emailTemplate')}`" class="!w-[180px]" clearable />
 			</el-form-item>
 			<el-form-item :label="$t('emailUsers_host')" prop="host">
 				<el-input v-model="emailUsersStore.form.host" :placeholder="`${$t('input')}${$t('emailUsers_host')}`" class="!w-[180px]" clearable />
