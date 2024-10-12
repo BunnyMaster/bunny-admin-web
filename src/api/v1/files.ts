@@ -7,8 +7,13 @@ export const fetchGetFilesList = (data: any) => {
 };
 
 /** 系统文件管理---下载系统文件 */
-export const fetchDownloadFiles = (data: any) => {
-	return http.request<any>('get', `files/downloadFiles/${data.id}`);
+export const downloadFilesByFileId = (data: any) => {
+	return http.request<any>('get', `files/downloadFilesByFileId/${data.id}`, { responseType: 'blob' });
+};
+
+/** 系统文件管理---下载系统文件 */
+export const downloadFilesByFilepath = (data: any) => {
+	return http.request<any>('get', `files/downloadFilesByFilepath`, { params: data, responseType: 'blob' });
 };
 
 /** 系统文件管理---添加系统文件管理 */

@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import userAvatarIcon from '@/assets/svg/user_avatar.svg?component';
-import { columns } from './columns';
-import TablePlus from '@/components/TableBar/src/TablePlus.vue';
 import { onMounted, ref } from 'vue';
 import { fetchGetUserinfoById } from '@/api/v1/adminUser';
+import userAvatarIcon from '@/assets/svg/user_avatar.svg?component';
 import { $t } from '@/plugins/i18n';
 
 const props = defineProps({
@@ -35,22 +33,42 @@ onMounted(() => {
 </script>
 
 <template>
-	<div class="list-card-item">
-		<div v-if="userId && userinfo" class="list-card-item_detail bg-bg_color">
-			<el-row justify="space-between">
+	<div v-if="userId && userinfo" class="list-card-item bg-bg_color">
+		<el-row justify="space-between">
+			<div class="flex flex-row justify-center items-center">
 				<div class="list-card-item_detail--logo">
 					<userAvatarIcon />
 				</div>
-				<el-tag :color="userinfo.status ? '#F67676' : '#00a870'" class="mx-1 list-card-item_detail--operation--tag" effect="dark">
-					{{ $t('user_status') }}：{{ userinfo.status ? $t('disable') : $t('normal') }}
-				</el-tag>
-			</el-row>
+				<h1 class="list-card-item_detail--name">{{ $t('user_details') }}</h1>
+			</div>
+			<el-tag :color="userinfo.status ? '#F67676' : '#00a870'" class="mx-1 list-card-item_detail--operation--tag" effect="dark">
+				{{ $t('user_status') }}：{{ userinfo.status ? $t('disable') : $t('normal') }}
+			</el-tag>
+		</el-row>
 
-			<p class="list-card-item_detail--name text-text_color_primary">{{ $t('user_details') }}</p>
-			<TablePlus :column="columns" :data-list="[userinfo]" :loading="loading" />
-		</div>
-		<el-empty v-else description="无数据" />
+		<el-descriptions border>
+			<el-descriptions-item :label="$t('avatar')" :width="100" align="center">
+				<el-image :src="userinfo.avatar" style="width: 100px; height: 100px" />
+			</el-descriptions-item>
+			<el-descriptions-item :label="$t('username')" :width="100">{{ userinfo.username }}</el-descriptions-item>
+			<el-descriptions-item :label="$t('nickName')" :width="100">{{ userinfo.nickName }}</el-descriptions-item>
+
+			<el-descriptions-item :label="$t('email')"> {{ userinfo.email }}</el-descriptions-item>
+			<el-descriptions-item :label="$t('phone')">{{ userinfo.phone }}</el-descriptions-item>
+			<el-descriptions-item :label="$t('sex')">
+				<el-tag v-if="userinfo.sex === 1">男</el-tag>
+				<el-tag v-if="userinfo.sex === 0" type="danger">女</el-tag>
+			</el-descriptions-item>
+
+			<el-descriptions-item :label="$t('personDescription')" span="3">
+				{{ userinfo.personDescription }}
+			</el-descriptions-item>
+
+			<el-descriptions-item :label="$t('table.createTime')" span="1.5">{{ userinfo.createTime }}</el-descriptions-item>
+			<el-descriptions-item :label="$t('table.updateTime')" span="1.5">{{ userinfo.updateTime }}</el-descriptions-item>
+		</el-descriptions>
 	</div>
+	<el-empty v-else :description="$t('no_data')" />
 </template>
 
 <style lang="scss" scoped>
@@ -63,10 +81,6 @@ onMounted(() => {
 	border-radius: 3px;
 
 	&_detail {
-		flex: 1;
-		min-height: 140px;
-		padding: 24px 32px;
-
 		&--logo {
 			display: flex;
 			align-items: center;
@@ -88,26 +102,15 @@ onMounted(() => {
 			height: 100%;
 
 			&--tag {
+				margin: 15px 0;
 				border: 0;
 			}
 		}
 
 		&--name {
-			margin: 24px 0 8px;
+			margin: 0 0 0 8px;
 			font-size: 16px;
 			font-weight: 400;
-		}
-
-		&--desc {
-			display: -webkit-box;
-			height: 40px;
-			margin-bottom: 24px;
-			overflow: hidden;
-			font-size: 12px;
-			line-height: 20px;
-			text-overflow: ellipsis;
-			-webkit-box-orient: vertical;
-			-webkit-line-clamp: 2;
 		}
 	}
 

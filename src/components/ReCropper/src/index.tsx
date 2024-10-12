@@ -128,11 +128,8 @@ export default defineComponent({
 				...props.options,
 			});
 
-			if (!result.ready) {
-				isReady.value = true;
-				realTimeCroppered();
-				emit('readied', cropper.value);
-			}
+			// 如果图片不存在直接将加载变为加载完成
+			if (!result.ready) emit('readied', cropper.value);
 
 			cropper.value = result;
 		}

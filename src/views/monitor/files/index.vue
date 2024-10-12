@@ -4,8 +4,9 @@ import { columns } from '@/views/monitor/files/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onDelete, onDeleteBatch, onDownload, onSearch, onUpdate, selectIds } from '@/views/monitor/files/utils/hooks';
+import { onAdd, onDelete, onDeleteBatch, onDownload, onDownloadBatch, onSearch, onUpdate, selectRows } from '@/views/monitor/files/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
+import Download from '@iconify-icons/ep/download';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
@@ -39,7 +40,7 @@ const resetForm = async (formEl: FormInstance) => {
 
 /** 选择多行 */
 const onSelectionChange = (rows: Array<any>) => {
-	selectIds.value = rows.map((row: any) => row.id);
+	selectRows.value = rows;
 };
 
 onMounted(() => {
@@ -72,8 +73,13 @@ onMounted(() => {
 			<template #buttons>
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
 
+				<!-- 批量下载 -->
+				<el-button v-show="selectRows.length > 0" :icon="useRenderIcon(Download)" type="success" @click="onDownloadBatch">
+					{{ $t('download_batch') }}
+				</el-button>
+
 				<!-- 批量删除按钮 -->
-				<el-button v-show="selectIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+				<el-button v-show="selectRows.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
 					{{ $t('delete_batches') }}
 				</el-button>
 			</template>

@@ -51,3 +51,24 @@ import { getQueryMap, subBefore } from '@pureadmin/utils';
 		return;
 	}
 })();
+
+/**
+ * 批量创建下载链接
+ * @param blob
+ * @param filename
+ */
+export function download(blob: any, filename: string) {
+	// 创建一个临时的 URL，用于下载文件
+	const a = document.createElement('a');
+	const url = window.URL.createObjectURL(new Blob([blob]));
+	a.href = url;
+
+	// 创建一个<a>元素，设置其 download 属性和 href 属性，模拟点击下载
+	a.download = filename;
+	document.body.appendChild(a);
+	a.click();
+
+	// 清理创建的临时元素和 URL
+	URL.revokeObjectURL(url);
+	document.body.removeChild(a);
+}

@@ -5,9 +5,11 @@ import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/monitor/files/utils/types';
 import { $t } from '@/plugins/i18n';
+import { downloadFilesByFileId, downloadFilesByFilepath } from '@/api/v1/files';
+import { download } from '@/utils/sso';
 
-// 选择的id列表
-export const selectIds = ref([]);
+// 选择的row列表
+export const selectRows = ref([]);
 export const formRef = ref();
 const filesStore = useFilesStore();
 
@@ -109,7 +111,7 @@ export const onDelete = async (row: any) => {
 
 /** 批量删除 */
 export const onDeleteBatch = async () => {
-	const ids = selectIds.value;
+	const ids = selectRows.value.map(row => row.id);
 
 	// 是否确认删除
 	const result = await messageBox({
@@ -130,18 +132,16 @@ export const onDeleteBatch = async () => {
  * @param row
  */
 export const onDownload = async (row: any) => {
-	const id = row.id;
+	const blob = await downloadFilesByFilepath({ filepath: row.filepath });
 
-	fetch(`/admin/files/downloadFiles/${id}`)
-		.then(response => response.blob()) // 将响应转换为Blob对象
-		.then(blob => {
-			// 创建一个链接元素
-			const link = document.createElement('a');
-			link.href = URL.createObjectURL(blob);
-			link.download = 'filename.jpg'; // 指定下载文件名
-			document.body.appendChild(link);
-			link.click(); // 模拟点击
-			document.body.removeChild(link); // 下载后移除元素
-		})
-		.catch(error => console.error('下载失败:', error));
+	download(blob, row.filename);
+};
+
+/** 批量下载文件 */
+export const onDownloadBatch = () => {
+	selectRows.value.forEach(async row => {
+		const blob = await downloadFilesByFileId({ id: row.id });
+
+		download(blob, row.filename);
+	});
 };

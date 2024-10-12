@@ -6,6 +6,8 @@ import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/configuration/emailTemplate/utils/types';
 import { $t } from '@/plugins/i18n';
 
+// 选择的row列表
+export const selectRows = ref([]);
 export const formRef = ref();
 const emailTemplateStore = useEmailTemplateStore();
 
@@ -102,5 +104,23 @@ export const onDelete = async (row: any) => {
 
 	// 删除数据
 	await emailTemplateStore.deleteEmailTemplate([id]);
+	await onSearch();
+};
+
+/** 批量删除 */
+export const onDeleteBatch = async () => {
+	const ids = selectRows.value.map((row: any) => row.id);
+
+	// 是否确认删除
+	const result = await messageBox({
+		title: $t('confirm_delete'),
+		showMessage: false,
+		confirmMessage: undefined,
+		cancelMessage: $t('cancel_delete'),
+	});
+	if (!result) return;
+
+	// 删除数据
+	await emailTemplateStore.deleteEmailTemplate(ids);
 	await onSearch();
 };

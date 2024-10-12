@@ -4,7 +4,7 @@ import { columns } from '@/views/configuration/emailTemplate/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onDelete, onSearch, onUpdate } from '@/views/configuration/emailTemplate/utils/hooks';
+import { onAdd, onDelete, onDeleteBatch, onSearch, onUpdate, selectRows } from '@/views/configuration/emailTemplate/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -44,6 +44,11 @@ const resetForm = async formEl => {
 	await onSearch();
 };
 
+/** 选择多行 */
+const onSelectionChange = (rows: Array<any>) => {
+	selectRows.value = rows;
+};
+
 onMounted(() => {
 	onSearch();
 });
@@ -73,6 +78,11 @@ onMounted(() => {
 		<PureTableBar :columns="columns" title="邮件模板表" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
+
+				<!-- 批量删除按钮 -->
+				<el-button v-show="selectRows.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+					{{ $t('delete_batches') }}
+				</el-button>
 			</template>
 
 			<template v-slot="{ size, dynamicColumns }">
@@ -92,6 +102,7 @@ onMounted(() => {
 					row-key="id"
 					showOverflowTooltip
 					table-layout="auto"
+					@selection-change="onSelectionChange"
 					@page-size-change="onPageSizeChange"
 					@page-current-change="onCurrentPageChange"
 				>
