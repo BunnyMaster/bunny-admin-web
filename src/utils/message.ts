@@ -76,11 +76,6 @@ export const message = (message: string | VNode | (() => VNode), params?: Messag
 };
 
 /**
- * 关闭所有 `Message` 消息提示函数
- */
-export const closeAllMessage = (): void => ElMessage.closeAll();
-
-/**
  * 仓库消息展示
  * @param result
  */

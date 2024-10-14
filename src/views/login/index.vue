@@ -13,6 +13,7 @@ import globalization from '@/assets/svg/globalization.svg?component';
 import Check from '@iconify-icons/ep/check';
 
 import LoginForm from '@/views/login/login-form.vue';
+import { userI18nTypeStore } from '@/store/i18n/i18nType';
 
 defineOptions({
 	name: 'Login',
@@ -24,7 +25,8 @@ initStorage();
 const { dataTheme, overallStyle, dataThemeChange } = useDataThemeChange();
 dataThemeChange(overallStyle.value);
 const { title, getDropdownItemStyle, getDropdownItemClass } = useNav();
-const { locale, translationCh, translationEn } = useTranslationLang();
+const { locale, translation } = useTranslationLang();
+const i18nTypeStore = userI18nTypeStore();
 </script>
 
 <template>
@@ -39,15 +41,17 @@ const { locale, translationCh, translationEn } = useTranslationLang();
 				<globalization class="hover:text-primary hover:!bg-[transparent] w-[20px] h-[20px] ml-1.5 cursor-pointer outline-none duration-300" />
 				<template #dropdown>
 					<el-dropdown-menu class="translation">
-						<el-dropdown-item :class="['dark:!text-white', getDropdownItemClass(locale, 'zh')]" :style="getDropdownItemStyle(locale, 'zh')" @click="translationCh">
-							<IconifyIconOffline v-show="locale === 'zh'" :icon="Check" class="check-zh" />
-							简体中文
-						</el-dropdown-item>
-						<el-dropdown-item :class="['dark:!text-white', getDropdownItemClass(locale, 'en')]" :style="getDropdownItemStyle(locale, 'en')" @click="translationEn">
-							<span v-show="locale === 'en'" class="check-en">
+						<el-dropdown-item
+							v-for="item in i18nTypeStore.translationTypeList"
+							:key="item.key"
+							:class="['dark:!text-white', getDropdownItemClass(locale, item.key)]"
+							:style="getDropdownItemStyle(locale, item.key)"
+							@click="translation(item.key)"
+						>
+							<span v-show="locale === item.key" class="check">
 								<IconifyIconOffline :icon="Check" />
 							</span>
-							English
+							{{ item.value }}
 						</el-dropdown-item>
 					</el-dropdown-menu>
 				</template>

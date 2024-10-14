@@ -10,7 +10,7 @@ import { useUserStore } from '@/store/system/user';
 import { message } from '@/utils/message';
 import { getTopMenu, initRouter } from '@/router/utils';
 import Motion from './utils/motion';
-import type { FormInstance } from 'element-plus';
+import { ElMessage, FormInstance } from 'element-plus';
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -76,6 +76,7 @@ const onLogin = async (formEl: FormInstance | undefined) => {
 				// 获取后端路由
 				await initRouter();
 				router.push(getTopMenu(true).path).then(() => {
+					ElMessage.closeAll();
 					message(t('login.loginSuccess'), { type: 'success' });
 				});
 			}
