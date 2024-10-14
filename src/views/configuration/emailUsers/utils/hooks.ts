@@ -32,7 +32,6 @@ export function onAdd() {
 		props: {
 			formInline: {
 				email: undefined,
-				emailTemplate: undefined,
 				password: undefined,
 				host: undefined,
 				port: undefined,
@@ -69,7 +68,6 @@ export function onUpdate(row: any) {
 		props: {
 			formInline: {
 				email: row.email,
-				emailTemplate: row.emailTemplate,
 				password: row.password,
 				host: row.host,
 				port: row.port,

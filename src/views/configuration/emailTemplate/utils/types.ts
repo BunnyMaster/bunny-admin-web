@@ -2,6 +2,8 @@
 export interface FormItemProps {
 	// 模板名称
 	templateName: string;
+	// 模板名称
+	emailUser: string;
 	// 主题
 	subject: string;
 	// 邮件内容

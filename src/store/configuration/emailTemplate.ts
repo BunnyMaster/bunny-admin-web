@@ -3,6 +3,7 @@ import { fetchAddEmailTemplate, fetchDeleteEmailTemplate, fetchGetEmailTemplateL
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
+import { fetchGetAllMailboxConfigurationUsers } from '@/api/v1/emailUsers';
 
 /**
  * 邮件模板表 Store
@@ -12,6 +13,8 @@ export const useEmailTemplateStore = defineStore('emailTemplateStore', {
 		return {
 			// 邮件模板表列表
 			datalist: [],
+			// 邮件模板用户列表
+			emailUserList: [],
 			// 查询表单
 			form: {
 				// 模板名称
@@ -34,7 +37,13 @@ export const useEmailTemplateStore = defineStore('emailTemplateStore', {
 			loading: false,
 		};
 	},
-	getters: {},
+	getters: {
+		getMailboxConfigurationUser(state) {
+			const map = {};
+			state.emailUserList.forEach(user => (map[user.value] = user.key));
+			return map;
+		},
+	},
 	actions: {
 		/** 获取邮件模板表 */
 		async getEmailTemplateList() {
@@ -50,6 +59,14 @@ export const useEmailTemplateStore = defineStore('emailTemplateStore', {
 			// 公共页面函数hook
 			const pagination = storePagination.bind(this);
 			return pagination(result);
+		},
+
+		/** 获取所有邮箱配置用户 */
+		async getAllMailboxConfigurationUsers() {
+			const result = await fetchGetAllMailboxConfigurationUsers();
+			if (result.code !== 200) return;
+
+			this.emailUserList = result.data;
 		},
 
 		/** 添加邮件模板表 */

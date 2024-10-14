@@ -50,6 +50,7 @@ const onSelectionChange = (rows: Array<any>) => {
 };
 
 onMounted(() => {
+	emailTemplateStore.getAllMailboxConfigurationUsers();
 	onSearch();
 });
 </script>
@@ -106,6 +107,10 @@ onMounted(() => {
 					@page-size-change="onPageSizeChange"
 					@page-current-change="onCurrentPageChange"
 				>
+					<template #emailUser="{ row }">
+						{{ emailTemplateStore.getMailboxConfigurationUser[row.emailUser] }}
+					</template>
+
 					<template #createUser="{ row }">
 						<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>
 					</template>

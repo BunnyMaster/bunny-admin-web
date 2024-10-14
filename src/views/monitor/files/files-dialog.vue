@@ -29,6 +29,10 @@ const upload = ref();
 const form = ref(props.formInline);
 const filesStore = useFilesStore();
 
+/**
+ * * 修改时替换之前文件
+ * @param files
+ */
 const handleExceed: UploadProps['onExceed'] = files => {
 	upload.value!.clearFiles();
 	const file = files[0] as UploadRawFile;

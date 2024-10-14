@@ -7,6 +7,8 @@ export const columns: TableColumnList = [
 	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
 	// 模板名称
 	{ label: $t('emailTemplate_templateName'), prop: 'templateName' },
+	// 模板名称
+	{ label: $t('emailTemplate_emailUser'), prop: 'emailUser', slot: 'emailUser' },
 	// 主题
 	{ label: $t('emailTemplate_subject'), prop: 'subject' },
 	// 邮件内容
@@ -24,6 +26,8 @@ export const columns: TableColumnList = [
 export const rules = reactive({
 	// 模板名称
 	templateName: [{ required: true, message: `${$t('input')}${$t('emailTemplate_templateName')}`, trigger: 'blur' }],
+	// 模板名称
+	emailUser: [{ required: true, message: `${$t('input')}${$t('emailTemplate_templateName')}`, trigger: 'blur' }],
 	// 主题
 	subject: [{ required: true, message: `${$t('input')}${$t('emailTemplate_subject')}`, trigger: 'blur' }],
 	// 邮件内容

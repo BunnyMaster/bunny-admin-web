@@ -1,6 +1,6 @@
 import { addDialog } from '@/components/BaseDialog/index';
 import EmailTemplateDialog from '@/views/configuration/emailTemplate/email-template-dialog.vue';
-import { useEmailTemplateStore } from '@/store/configuration/emailTemplate.ts';
+import { useEmailTemplateStore } from '@/store/configuration/emailTemplate';
 import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/configuration/emailTemplate/utils/types';
@@ -30,6 +30,7 @@ export function onAdd() {
 		props: {
 			formInline: {
 				templateName: undefined,
+				emailUser: undefined,
 				subject: undefined,
 				body: undefined,
 				type: undefined,
@@ -64,6 +65,7 @@ export function onUpdate(row: any) {
 		props: {
 			formInline: {
 				templateName: row.templateName,
+				emailUser: row.emailUser,
 				subject: row.subject,
 				body: row.body,
 				type: row.type,

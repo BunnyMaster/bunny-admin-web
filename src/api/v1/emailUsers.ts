@@ -6,6 +6,11 @@ export const fetchGetEmailUsersList = (data: any) => {
 	return http.request<BaseResult<ResultTable>>('get', `emailUsers/getEmailUsersList/${data.currentPage}/${data.pageSize}`, { params: data });
 };
 
+/** 邮箱用户发送配置管理---获取所有邮箱配置用户 */
+export const fetchGetAllMailboxConfigurationUsers = () => {
+	return http.request<BaseResult<any>>('get', 'emailUsers/getAllMailboxConfigurationUsers');
+};
+
 /** 邮箱用户发送配置管理---添加邮箱用户发送配置管理 */
 export const fetchAddEmailUsers = (data: any) => {
 	return http.request<BaseResult<object>>('post', 'emailUsers/addEmailUsers', { data });
