@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddEmailTemplate, fetchDeleteEmailTemplate, fetchGetEmailTemplateList, fetchUpdateEmailTemplate } from '@/api/v1/emailTemplate';
+import { fetchAddEmailTemplate, fetchDeleteEmailTemplate, fetchGetEmailTemplateList, fetchGetEmailTypes, fetchUpdateEmailTemplate } from '@/api/v1/emailTemplate';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -15,6 +15,8 @@ export const useEmailTemplateStore = defineStore('emailTemplateStore', {
 			datalist: [],
 			// 邮件模板用户列表
 			emailUserList: [],
+			// 邮件类型枚举
+			allEmailTypes: [],
 			// 查询表单
 			form: {
 				// 模板名称
@@ -67,6 +69,13 @@ export const useEmailTemplateStore = defineStore('emailTemplateStore', {
 			if (result.code !== 200) return;
 
 			this.emailUserList = result.data;
+		},
+
+		/** 获取模板类型字段 */
+		async getEmailTypes() {
+			const result = await fetchGetEmailTypes();
+			if (result.code !== 200) return;
+			this.allEmailTypes = result.data;
 		},
 
 		/** 添加邮件模板表 */

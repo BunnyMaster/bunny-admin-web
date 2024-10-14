@@ -6,6 +6,11 @@ export const fetchGetEmailTemplateList = (data: any) => {
 	return http.request<BaseResult<ResultTable>>('get', `emailTemplate/getEmailTemplateList/${data.currentPage}/${data.pageSize}`, { params: data });
 };
 
+/** 邮件模板表---获取模板类型字段 */
+export const fetchGetEmailTypes = () => {
+	return http.request<BaseResult<any>>('get', 'emailTemplate/getEmailTypes');
+};
+
 /** 邮件模板表---添加邮件模板表 */
 export const fetchAddEmailTemplate = (data: any) => {
 	return http.request<BaseResult<object>>('post', 'emailTemplate/addEmailTemplate', { data });

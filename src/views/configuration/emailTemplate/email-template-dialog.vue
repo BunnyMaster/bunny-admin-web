@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
 import { rules } from '@/views/configuration/emailTemplate/utils/columns';
 import { FormProps } from '@/views/configuration/emailTemplate/utils/types';
@@ -23,8 +23,11 @@ const props = withDefaults(defineProps<FormProps>(), {
 
 const formRef = ref<FormInstance>();
 const form = ref(props.formInline);
-const emailUserList = ref();
 const emailTemplateStore = useEmailTemplateStore();
+
+onMounted(() => {
+	emailTemplateStore.getEmailTypes();
+});
 
 defineExpose({ formRef });
 </script>
@@ -55,7 +58,9 @@ defineExpose({ formRef });
 
 		<!--配置邮件类型-->
 		<el-form-item :label="$t('emailTemplate_type')" prop="type">
-			<el-input v-model="form.type" autocomplete="off" type="text" />
+			<el-select v-model="form.type" :placeholder="$t('emailTemplate_type')" clearable filterable>
+				<el-option v-for="(item, index) in emailTemplateStore.allEmailTypes" :key="index" :label="item.key" :navigationBar="false" :value="item.value" />
+			</el-select>
 		</el-form-item>
 	</el-form>
 </template>
