@@ -3,20 +3,19 @@ import { $t } from '@/plugins/i18n';
 import { ref } from 'vue';
 import LoadingSvg from '@/assets/svg/loading.svg';
 import { useAdminUserStore } from '@/store/system/adminUser';
-
-// 添加或者修改表单元素
-interface FormItemProps {
-	username: string;
-	manager: string;
-}
-
-// 添加或修改表单Props
-interface FormProps {
-	formInline: FormItemProps;
-}
+import { FormProps } from '@/views/system/dept/utils/types';
 
 const props = withDefaults(defineProps<FormProps>(), {
-	formInline: () => ({}),
+	formInline: () => ({
+		// 父级id
+		parentId: undefined,
+		// 管理者id
+		manager: undefined,
+		// 部门名称
+		deptName: undefined,
+		// 部门简介
+		summary: undefined,
+	}),
 });
 
 const adminUserStore = useAdminUserStore();

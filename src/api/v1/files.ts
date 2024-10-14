@@ -16,14 +16,24 @@ export const downloadFilesByFilepath = (data: any) => {
 	return http.request<any>('get', `files/downloadFilesByFilepath`, { params: data, responseType: 'blob' });
 };
 
+/** 系统文件管理---获取所有文件类型 */
+export const fetchGetAllMediaTypes = () => {
+	return http.request<BaseResult<any>>('get', `files/getAllMediaTypes`);
+};
+
+/** 系统文件管理---获取所有文件类型 */
+export const fetchGetAllFilesStoragePath = () => {
+	return http.request<BaseResult<any>>('get', `files/getAllFilesStoragePath`);
+};
+
 /** 系统文件管理---添加系统文件管理 */
 export const fetchAddFiles = (data: any) => {
-	return http.request<BaseResult<object>>('post', 'files/addFiles', { data });
+	return http.request<BaseResult<any>>('post', 'files/addFiles', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
 
 /** 系统文件管理---更新系统文件管理 */
 export const fetchUpdateFiles = (data: any) => {
-	return http.request<BaseResult<object>>('put', 'files/updateFiles', { data });
+	return http.request<BaseResult<object>>('put', 'files/updateFiles', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
 
 /** 系统文件管理---删除系统文件管理 */

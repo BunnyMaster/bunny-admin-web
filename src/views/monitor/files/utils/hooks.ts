@@ -7,6 +7,7 @@ import type { FormItemProps } from '@/views/monitor/files/utils/types';
 import { $t } from '@/plugins/i18n';
 import { downloadFilesByFileId, downloadFilesByFilepath } from '@/api/v1/files';
 import { download } from '@/utils/sso';
+import type { UploadFiles } from 'element-plus';
 
 // 选择的row列表
 export const selectRows = ref([]);
@@ -31,10 +32,10 @@ export function onAdd() {
 		width: '30%',
 		props: {
 			formInline: {
-				filename: undefined,
 				filepath: undefined,
-				fileType: undefined,
-				downloadCount: undefined,
+				downloadCount: 0,
+				files: [],
+				isAdd: false,
 			},
 		},
 		draggable: true,
@@ -46,7 +47,12 @@ export function onAdd() {
 			formRef.value.formRef.validate(async (valid: any) => {
 				if (!valid) return;
 
-				const result = await filesStore.addFiles(form);
+				// 添加文件
+				form.files = (form.files as UploadFiles).map(file => file.raw);
+				const data = { filepath: form.filepath, downloadCount: form.downloadCount, files: form.files };
+				const result = await filesStore.addFiles(data);
+
+				// 成功后关闭窗口
 				if (!result) return;
 				done();
 				await onSearch();
@@ -66,9 +72,10 @@ export function onUpdate(row: any) {
 		props: {
 			formInline: {
 				filename: row.filename,
-				filepath: row.filepath,
 				fileType: row.fileType,
+				filepath: row.filepath,
 				downloadCount: row.downloadCount,
+				isUpload: true,
 			},
 		},
 		draggable: true,
@@ -80,7 +87,11 @@ export function onUpdate(row: any) {
 			formRef.value.formRef.validate(async (valid: any) => {
 				if (!valid) return;
 
+				// 更新文件
+				form.files = (form.files as UploadFiles).map(file => file.raw);
 				const result = await filesStore.updateFiles({ ...form, id: row.id });
+
+				// 更新完成
 				if (!result) return;
 				done();
 				await onSearch();
@@ -89,9 +100,7 @@ export function onUpdate(row: any) {
 	});
 }
 
-/**
- * * 删除系统文件表
- */
+/** 删除系统文件表 */
 export const onDelete = async (row: any) => {
 	const id = row.id;
 

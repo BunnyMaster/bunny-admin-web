@@ -8,6 +8,10 @@ export interface FormItemProps {
 	fileType: string;
 	// 下载数量
 	downloadCount: number;
+	// 文件内容
+	files: any;
+	// 是否是上传
+	isUpload: boolean;
 }
 
 // 添加或修改表单Props

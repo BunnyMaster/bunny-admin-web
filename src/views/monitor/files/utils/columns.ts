@@ -21,11 +21,17 @@ export const columns: TableColumnList = [
 ];
 
 // 添加规则
-export const rules = reactive({
-	// 文件的名称
-	filename: [{ required: true, message: `${$t('input')}${$t('files_filename')}`, trigger: 'blur' }],
+export const addRules = reactive({
 	// 文件在服务器上的存储路径
 	filepath: [{ required: true, message: `${$t('input')}${$t('files_filepath')}`, trigger: 'blur' }],
+	// 文件列表
+	files: [{ required: true, message: `${$t('files')}`, trigger: 'blur' }],
+});
+
+// 上传规则
+export const uploadRules = reactive({
+	// 文件的名称
+	filename: [{ required: true, message: `${$t('input')}${$t('files_filename')}`, trigger: 'blur' }],
 	// 文件的MIME类型
 	fileType: [{ required: true, message: `${$t('input')}${$t('files_fileType')}`, trigger: 'blur' }],
 });

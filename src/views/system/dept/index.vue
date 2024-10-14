@@ -10,9 +10,10 @@ import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { useDeptStore } from '@/store/system/dept.ts';
+import { useDeptStore } from '@/store/system/dept';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { handleTree } from '@/utils/tree';
+import { FormInstance } from 'element-plus';
 
 const tableRef = ref();
 const formRef = ref();
@@ -48,7 +49,7 @@ const onSelectionChange = (rows: Array<any>) => {
  * 重置表单
  * @param formEl
  */
-const resetForm = async formEl => {
+const resetForm = async (formEl: FormInstance | undefined) => {
 	if (!formEl) return;
 	formEl.resetFields();
 	await onSearch();

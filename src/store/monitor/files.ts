@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddFiles, fetchDeleteFiles, fetchGetFilesList, fetchUpdateFiles } from '@/api/v1/files';
+import { fetchAddFiles, fetchDeleteFiles, fetchGetAllFilesStoragePath, fetchGetAllMediaTypes, fetchGetFilesList, fetchUpdateFiles } from '@/api/v1/files';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -12,6 +12,10 @@ export const useFilesStore = defineStore('filesStore', {
 		return {
 			// 系统文件表列表
 			datalist: [],
+			// 所有文件类型
+			allMediaTypes: [],
+			// 所有文件存储路径
+			allFilesStoragePath: [],
 			// 查询表单
 			form: {
 				// 文件的名称
@@ -50,6 +54,22 @@ export const useFilesStore = defineStore('filesStore', {
 			// 公共页面函数hook
 			const pagination = storePagination.bind(this);
 			return pagination(result);
+		},
+
+		/** 获取所有文件类型 */
+		async getAllMediaTypes() {
+			const result = await fetchGetAllMediaTypes();
+			if (result.code === 200) {
+				this.allMediaTypes = result.data;
+			}
+		},
+
+		/** 获取所有文件类型 */
+		async getAllFilesStoragePath() {
+			const result = await fetchGetAllFilesStoragePath();
+			if (result.code === 200) {
+				this.allFilesStoragePath = result.data;
+			}
 		},
 
 		/** 添加系统文件表 */
