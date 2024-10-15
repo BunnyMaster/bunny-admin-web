@@ -4,7 +4,7 @@ import { columns } from '@/views/monitor/schedulers/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onDelete, onSearch, onUpdate } from '@/views/monitor/schedulers/utils/hooks';
+import { deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/monitor/schedulers/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -36,6 +36,14 @@ const onPageSizeChange = async (value: number) => {
 };
 
 /**
+ * * 选择多行
+ * @param rows
+ */
+const onSelectionChange = (rows: Array<any>) => {
+	deleteIds.value = rows.map((row: any) => row.id);
+};
+
+/**
  * 重置表单
  * @param formEl
  */
@@ -59,8 +67,8 @@ onMounted(() => {
 			<el-form-item :label="$t('schedulers_jobGroup')" prop="jobGroup">
 				<el-input v-model="schedulersStore.form.jobGroup" :placeholder="`${$t('input')}${$t('schedulers_jobGroup')}`" class="!w-[180px]" clearable />
 			</el-form-item>
-			<el-form-item :label="$t('description')" prop="description">
-				<el-input v-model="schedulersStore.form.description" :placeholder="`${$t('input')}${$t('description')}`" class="!w-[180px]" clearable />
+			<el-form-item :label="$t('schedulers_description')" prop="description">
+				<el-input v-model="schedulersStore.form.description" :placeholder="`${$t('input')}${$t('schedulers_description')}`" class="!w-[180px]" clearable />
 			</el-form-item>
 			<el-form-item :label="$t('schedulers_jobClassName')" prop="jobClassName">
 				<el-input v-model="schedulersStore.form.jobClassName" :placeholder="`${$t('input')}${$t('schedulers_jobClassName')}`" class="!w-[180px]" clearable />
@@ -71,6 +79,9 @@ onMounted(() => {
 			<el-form-item :label="$t('schedulers_triggerState')" prop="triggerState">
 				<el-input v-model="schedulersStore.form.triggerState" :placeholder="`${$t('input')}${$t('schedulers_triggerState')}`" class="!w-[180px]" clearable />
 			</el-form-item>
+			<el-form-item :label="$t('schedulers_jobMethodName')" prop="jobMethodName">
+				<el-input v-model="schedulersStore.form.jobMethodName" :placeholder="`${$t('input')}${$t('schedulers_jobMethodName')}`" class="!w-[180px]" clearable />
+			</el-form-item>
 			<el-form-item>
 				<el-button :icon="useRenderIcon('ri:search-line')" :loading="schedulersStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
 				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
@@ -80,6 +91,11 @@ onMounted(() => {
 		<PureTableBar :columns="columns" title="Schedulers视图" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
+
+				<!-- 批量删除按钮 -->
+				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+					{{ $t('delete_batches') }}
+				</el-button>
 			</template>
 
 			<template v-slot="{ size, dynamicColumns }">
@@ -100,6 +116,7 @@ onMounted(() => {
 					showOverflowTooltip
 					table-layout="auto"
 					@page-size-change="onPageSizeChange"
+					@selection-change="onSelectionChange"
 					@page-current-change="onCurrentPageChange"
 				>
 					<template #createUser="{ row }">

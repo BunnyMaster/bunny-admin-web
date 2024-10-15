@@ -17,10 +17,8 @@ const props = withDefaults(defineProps<FormProps>(), {
 		jobClassName: undefined,
 		// corn表达式
 		cronExpression: undefined,
-		// 触发器名称
-		triggerName: undefined,
-		// triggerState触发器状态
-		triggerState: undefined,
+		// 执行方法
+		jobMethodName: undefined,
 	}),
 });
 
@@ -38,7 +36,7 @@ defineExpose({ formRef });
 		<el-form-item :label="$t('schedulers_jobGroup')" prop="jobGroup">
 			<el-input v-model="form.jobGroup" autocomplete="off" type="text" />
 		</el-form-item>
-		<el-form-item :label="$t('description')" prop="description">
+		<el-form-item :label="$t('schedulers_description')" prop="description">
 			<el-input v-model="form.description" autocomplete="off" type="text" />
 		</el-form-item>
 		<el-form-item :label="$t('schedulers_jobClassName')" prop="jobClassName">
@@ -47,11 +45,8 @@ defineExpose({ formRef });
 		<el-form-item :label="$t('schedulers_cronExpression')" prop="cronExpression">
 			<el-input v-model="form.cronExpression" autocomplete="off" type="text" />
 		</el-form-item>
-		<el-form-item :label="$t('schedulers_triggerName')" prop="triggerName">
-			<el-input v-model="form.triggerName" autocomplete="off" type="text" />
-		</el-form-item>
-		<el-form-item :label="$t('schedulers_triggerState')" prop="triggerState">
-			<el-input v-model="form.triggerState" autocomplete="off" type="text" />
+		<el-form-item :label="$t('schedulers_jobMethodName')" prop="jobMethodName">
+			<el-input v-model="form.jobMethodName" autocomplete="off" type="text" />
 		</el-form-item>
 	</el-form>
 </template>

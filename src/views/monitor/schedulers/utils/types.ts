@@ -10,10 +10,8 @@ export interface FormItemProps {
 	jobClassName: string;
 	// corn表达式
 	cronExpression: string;
-	// 触发器名称
-	triggerName: string;
-	// triggerState触发器状态
-	triggerState: string;
+	// 执行方法
+	jobMethodName: string;
 }
 
 // 添加或修改表单Props

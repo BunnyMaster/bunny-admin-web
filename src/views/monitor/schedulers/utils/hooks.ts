@@ -1,12 +1,14 @@
 import { addDialog } from '@/components/BaseDialog/index';
 import SchedulersDialog from '@/views/monitor/schedulers/schedulers-dialog.vue';
-import { useSchedulersStore } from '@/store/monitor/schedulers.ts';
+import { useSchedulersStore } from '@/store/monitor/schedulers';
 import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/monitor/schedulers/utils/types';
 import { $t } from '@/plugins/i18n';
 
 export const formRef = ref();
+// 删除ids
+export const deleteIds = ref([]);
 const schedulersStore = useSchedulersStore();
 
 /**
@@ -32,8 +34,7 @@ export function onAdd() {
 				description: undefined,
 				jobClassName: undefined,
 				cronExpression: undefined,
-				triggerName: undefined,
-				triggerState: undefined,
+				jobMethodName: undefined,
 			},
 		},
 		draggable: true,
@@ -69,8 +70,7 @@ export function onUpdate(row: any) {
 				description: row.description,
 				jobClassName: row.jobClassName,
 				cronExpression: row.cronExpression,
-				triggerName: row.triggerName,
-				triggerState: row.triggerState,
+				jobMethodName: row.jobMethodName,
 			},
 		},
 		draggable: true,
@@ -108,5 +108,25 @@ export const onDelete = async (row: any) => {
 
 	// 删除数据
 	await schedulersStore.deleteSchedulers([id]);
+	await onSearch();
+};
+
+/**
+ * 批量删除
+ */
+export const onDeleteBatch = async () => {
+	const ids = deleteIds.value;
+
+	// 是否确认删除
+	const result = await messageBox({
+		title: $t('confirm_delete'),
+		showMessage: false,
+		confirmMessage: undefined,
+		cancelMessage: $t('cancel_delete'),
+	});
+	if (!result) return;
+
+	// 删除数据
+	await schedulersStore.deleteSchedulers(ids);
 	await onSearch();
 };

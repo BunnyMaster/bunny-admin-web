@@ -26,6 +26,8 @@ export const useSchedulersStore = defineStore('schedulersStore', {
 				triggerName: undefined,
 				// triggerState触发器状态
 				triggerState: undefined,
+				// 执行方法
+				jobMethodName: undefined,
 			},
 			// 分页查询结果
 			pagination: {
