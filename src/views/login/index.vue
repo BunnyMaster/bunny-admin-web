@@ -3,7 +3,7 @@ import Motion from './utils/motion';
 import { useNav } from '@/layout/hooks/useNav';
 import { useLayout } from '@/layout/hooks/useLayout';
 import { avatar, bg, illustration } from './utils/static';
-import { toRaw } from 'vue';
+import { onMounted, toRaw } from 'vue';
 import { useTranslationLang } from '@/layout/hooks/useTranslationLang';
 import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange';
 
@@ -27,6 +27,10 @@ dataThemeChange(overallStyle.value);
 const { title, getDropdownItemStyle, getDropdownItemClass } = useNav();
 const { locale, translation } = useTranslationLang();
 const i18nTypeStore = userI18nTypeStore();
+
+onMounted(() => {
+	i18nTypeStore.getI18nTypeList();
+});
 </script>
 
 <template>

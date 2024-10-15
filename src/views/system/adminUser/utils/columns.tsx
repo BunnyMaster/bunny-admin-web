@@ -26,6 +26,10 @@ export const columns: TableColumnList = [
 	{ label: $t('adminUser_sex'), prop: 'sex', slot: 'sex' },
 	// 个人描述
 	{ label: $t('adminUser_summary'), prop: 'summary', width: 460 },
+	// 登录的IP地址
+	{ label: $t('lastLoginIp'), prop: 'lastLoginIp', width: 130 },
+	// IP地区
+	{ label: $t('lastLoginIpAddress'), prop: 'lastLoginIpAddress', width: 130 },
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
 	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 90, fixed: 'right' },

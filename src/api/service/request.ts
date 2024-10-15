@@ -118,7 +118,7 @@ class PureHttp {
 	private httpInterceptorsResponse(): void {
 		const instance = PureHttp.axiosInstance;
 		instance.interceptors.response.use(
-			(response: PureHttpResponse) => {
+			async (response: PureHttpResponse) => {
 				const $config = response.config;
 				const data = response.data;
 
@@ -128,8 +128,8 @@ class PureHttp {
 				// 登录过期，和异常处理
 				if (data.code === 208) {
 					message(data.message, { type: 'warning' });
-					router.push('/').then();
 					removeToken();
+					await router.push('/login');
 				} else if (data.code >= 201 && data.code < 300) {
 					message(data.message, { type: 'warning' });
 				} else if (data.code > 300) {

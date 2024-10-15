@@ -5,7 +5,7 @@ FROM nginx
 RUN rm /etc/nginx/conf.d/default.conf
 
 # 将自定义的 Nginx 配置文件复制到容器中
-COPY nginx.conf /etc/nginx/conf.d/
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # 设置时区，构建镜像时执行的命令
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
