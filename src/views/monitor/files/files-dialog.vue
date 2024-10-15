@@ -59,14 +59,14 @@ defineExpose({ formRef });
 		<el-form-item :label="$t('files_filepath')" prop="filepath">
 			<el-input v-if="form.isUpload" v-model="form.filepath" autocomplete="off" disabled type="text" />
 
-			<el-select v-else v-model="form.filepath" :placeholder="$t('files_filepath')" clearable filterable>
+			<el-select v-else v-model="form.filepath" :placeholder="$t('select') + $t('files_filepath')" clearable filterable>
 				<el-option v-for="(item, index) in filesStore.allFilesStoragePath" :key="index" :label="item" :navigationBar="false" :value="item" />
 			</el-select>
 		</el-form-item>
 
 		<!-- 文件类型---上传显示 -->
 		<el-form-item v-show="form.isUpload" :label="$t('files_fileType')" prop="fileType">
-			<el-select v-model="form.fileType" :placeholder="$t('files_fileType')" clearable filterable>
+			<el-select v-model="form.fileType" :placeholder="$t('select') + $t('files_fileType')" clearable filterable>
 				<el-option v-for="(item, index) in filesStore.allMediaTypes" :key="index" :label="item" :navigationBar="false" :value="item" />
 			</el-select>
 		</el-form-item>

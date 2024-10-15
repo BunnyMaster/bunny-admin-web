@@ -5,7 +5,6 @@ import { $t } from '@/plugins/i18n';
 export const columns: TableColumnList = [
 	{ type: 'selection', align: 'left' },
 	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
-	{ label: $t('id'), prop: 'id' },
 	// 任务名称
 	{ label: $t('schedulers_jobName'), prop: 'jobName' },
 	// 任务分组
@@ -16,8 +15,6 @@ export const columns: TableColumnList = [
 	{ label: $t('schedulers_jobClassName'), prop: 'jobClassName' },
 	// corn表达式
 	{ label: $t('schedulers_cronExpression'), prop: 'cronExpression' },
-	// 执行方法
-	{ label: $t('schedulers_jobMethodName'), prop: 'jobMethodName' },
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 90 },
@@ -37,6 +34,4 @@ export const rules = reactive({
 	jobClassName: [{ required: true, message: `${$t('input')}${$t('schedulers_jobClassName')}`, trigger: 'blur' }],
 	// corn表达式
 	cronExpression: [{ required: true, message: `${$t('input')}${$t('schedulers_cronExpression')}`, trigger: 'blur' }],
-	// 执行方法
-	jobMethodName: [{ required: true, message: `${$t('input')}${$t('schedulers_jobMethodName')}`, trigger: 'blur' }],
 });

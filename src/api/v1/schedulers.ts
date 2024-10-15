@@ -6,6 +6,11 @@ export const fetchGetSchedulersList = (data: any) => {
 	return http.request<BaseResult<ResultTable>>('get', `schedulers/getSchedulersList/${data.currentPage}/${data.pageSize}`, { params: data });
 };
 
+/** Schedulers视图---获取所有可用调度任务 */
+export const fetchGetAllScheduleJobList = () => {
+	return http.request<BaseResult<ResultTable>>('get', 'schedulers/getAllScheduleJobList');
+};
+
 /** Schedulers视图---添加Schedulers视图 */
 export const fetchAddSchedulers = (data: any) => {
 	return http.request<BaseResult<object>>('post', 'schedulers/addSchedulers', { data });

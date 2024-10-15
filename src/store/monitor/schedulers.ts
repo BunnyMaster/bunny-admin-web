@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddSchedulers, fetchDeleteSchedulers, fetchGetSchedulersList, fetchUpdateSchedulers } from '@/api/v1/schedulers';
+import { fetchAddSchedulers, fetchDeleteSchedulers, fetchGetAllScheduleJobList, fetchGetSchedulersList, fetchUpdateSchedulers } from '@/api/v1/schedulers';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -12,6 +12,8 @@ export const useSchedulersStore = defineStore('schedulersStore', {
 		return {
 			// Schedulers视图列表
 			datalist: [],
+			// Schedulers视图列表
+			allScheduleJobList: [],
 			// 查询表单
 			form: {
 				// 任务名称
@@ -56,6 +58,13 @@ export const useSchedulersStore = defineStore('schedulersStore', {
 			// 公共页面函数hook
 			const pagination = storePagination.bind(this);
 			return pagination(result);
+		},
+
+		/** 获取所有可用调度任务 */
+		async getAllScheduleJobList() {
+			const result = await fetchGetAllScheduleJobList();
+			if (result.code !== 200) return;
+			this.allScheduleJobList = result.data;
 		},
 
 		/** 添加Schedulers视图 */

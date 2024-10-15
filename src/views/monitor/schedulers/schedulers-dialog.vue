@@ -1,9 +1,11 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
 import { rules } from '@/views/monitor/schedulers/utils/columns';
 import { FormProps } from '@/views/monitor/schedulers/utils/types';
 import { $t } from '@/plugins/i18n';
+import { useSchedulersGroupStore } from '@/store/monitor/schedulersGroup';
+import { useSchedulersStore } from '@/store/monitor/schedulers';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
@@ -24,29 +26,49 @@ const props = withDefaults(defineProps<FormProps>(), {
 
 const formRef = ref<FormInstance>();
 const form = ref(props.formInline);
+const schedulersStore = useSchedulersStore();
+const schedulersGroupStore = useSchedulersGroupStore();
+
+onMounted(() => {
+	// 获取所有可用调度任务
+	schedulersStore.getAllScheduleJobList();
+
+	// 获取所有任务调度分组
+	schedulersGroupStore.getAllSchedulersGroup();
+});
 
 defineExpose({ formRef });
 </script>
 
 <template>
 	<el-form ref="formRef" :model="form" :rules="rules" label-width="auto">
+		<!-- 任务名称 -->
 		<el-form-item :label="$t('schedulers_jobName')" prop="jobName">
-			<el-input v-model="form.jobName" autocomplete="off" type="text" />
+			<el-input v-model="form.jobName" :placeholder="$t('input') + $t('schedulers_jobName')" autocomplete="off" type="text" />
 		</el-form-item>
+
+		<!-- 任务分组 -->
 		<el-form-item :label="$t('schedulers_jobGroup')" prop="jobGroup">
-			<el-input v-model="form.jobGroup" autocomplete="off" type="text" />
+			<el-select v-model="form.jobGroup" :placeholder="$t('select') + $t('schedulers_jobGroup')" clearable filterable>
+				<el-option v-for="(item, index) in schedulersGroupStore.allSchedulersGroup" :key="index" :label="item.groupName" :navigationBar="false" :value="item.groupName" />
+			</el-select>
 		</el-form-item>
+
+		<!-- 任务详情 -->
 		<el-form-item :label="$t('schedulers_description')" prop="description">
-			<el-input v-model="form.description" autocomplete="off" type="text" />
+			<el-input v-model="form.description" :placeholder="$t('input') + $t('schedulers_description')" autocomplete="off" type="text" />
 		</el-form-item>
+
+		<!-- 需要执行的任务类名 -->
 		<el-form-item :label="$t('schedulers_jobClassName')" prop="jobClassName">
-			<el-input v-model="form.jobClassName" autocomplete="off" type="text" />
+			<el-select v-model="form.jobClassName" :placeholder="$t('select') + $t('schedulers_jobClassName')" clearable filterable>
+				<el-option v-for="(item, index) in schedulersStore.allScheduleJobList" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
+			</el-select>
 		</el-form-item>
+
+		<!-- 执行的corn表达式 -->
 		<el-form-item :label="$t('schedulers_cronExpression')" prop="cronExpression">
-			<el-input v-model="form.cronExpression" autocomplete="off" type="text" />
-		</el-form-item>
-		<el-form-item :label="$t('schedulers_jobMethodName')" prop="jobMethodName">
-			<el-input v-model="form.jobMethodName" autocomplete="off" type="text" />
+			<el-input v-model="form.cronExpression" :placeholder="$t('input') + $t('schedulers_cronExpression')" autocomplete="off" type="text" />
 		</el-form-item>
 	</el-form>
 </template>
