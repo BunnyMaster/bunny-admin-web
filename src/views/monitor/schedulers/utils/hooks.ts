@@ -93,7 +93,7 @@ export function onUpdate(row: any) {
  * * 删除Schedulers视图
  */
 export const onDelete = async (row: any) => {
-	const id = row.id;
+	const data = { jobName: row.jobName, jobGroup: row.jobGroup };
 
 	// 是否确认删除
 	const result = await messageBox({
@@ -105,7 +105,7 @@ export const onDelete = async (row: any) => {
 	if (!result) return;
 
 	// 删除数据
-	await schedulersStore.deleteSchedulers([id]);
+	await schedulersStore.deleteSchedulers(data);
 	await onSearch();
 };
 
