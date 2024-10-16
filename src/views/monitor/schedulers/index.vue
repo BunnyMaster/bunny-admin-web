@@ -4,7 +4,7 @@ import { columns } from '@/views/monitor/schedulers/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/monitor/schedulers/utils/hooks';
+import { onAdd, onDelete, onSearch, onUpdate } from '@/views/monitor/schedulers/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -33,14 +33,6 @@ const onCurrentPageChange = async (value: number) => {
 const onPageSizeChange = async (value: number) => {
 	schedulersStore.pagination.pageSize = value;
 	await onSearch();
-};
-
-/**
- * * 选择多行
- * @param rows
- */
-const onSelectionChange = (rows: Array<any>) => {
-	deleteIds.value = rows.map((row: any) => row.id);
 };
 
 /**
@@ -88,11 +80,6 @@ onMounted(() => {
 		<PureTableBar :columns="columns" title="Schedulers视图" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
-
-				<!-- 批量删除按钮 -->
-				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
-					{{ $t('delete_batches') }}
-				</el-button>
 			</template>
 
 			<template v-slot="{ size, dynamicColumns }">
@@ -113,7 +100,6 @@ onMounted(() => {
 					showOverflowTooltip
 					table-layout="auto"
 					@page-size-change="onPageSizeChange"
-					@selection-change="onSelectionChange"
 					@page-current-change="onCurrentPageChange"
 				>
 					<template #createUser="{ row }">

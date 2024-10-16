@@ -7,8 +7,6 @@ export const columns: TableColumnList = [
 	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
 	// 邮箱
 	{ label: $t('emailUsers_email'), prop: 'email' },
-	// // 邮件模板
-	// { label: $t('emailUsers_emailTemplate'), prop: 'emailTemplate' },
 	// 密码
 	{ label: $t('emailUsers_password'), prop: 'password' },
 	// Host地址

@@ -7,8 +7,6 @@ import type { FormItemProps } from '@/views/monitor/schedulers/utils/types';
 import { $t } from '@/plugins/i18n';
 
 export const formRef = ref();
-// 删除ids
-export const deleteIds = ref([]);
 const schedulersStore = useSchedulersStore();
 
 /**
@@ -106,25 +104,5 @@ export const onDelete = async (row: any) => {
 
 	// 删除数据
 	await schedulersStore.deleteSchedulers(data);
-	await onSearch();
-};
-
-/**
- * 批量删除
- */
-export const onDeleteBatch = async () => {
-	const ids = deleteIds.value;
-
-	// 是否确认删除
-	const result = await messageBox({
-		title: $t('confirm_delete'),
-		showMessage: false,
-		confirmMessage: undefined,
-		cancelMessage: $t('cancel_delete'),
-	});
-	if (!result) return;
-
-	// 删除数据
-	await schedulersStore.deleteSchedulers(ids);
 	await onSearch();
 };

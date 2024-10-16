@@ -3,7 +3,6 @@ import { $t } from '@/plugins/i18n';
 
 // 表格列
 export const columns: TableColumnList = [
-	{ type: 'selection', align: 'left' },
 	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
 	// 任务名称
 	{ label: $t('schedulers_jobName'), prop: 'jobName' },
