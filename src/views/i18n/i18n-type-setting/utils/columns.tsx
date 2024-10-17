@@ -5,7 +5,6 @@ export const editMap = ref({});
 
 export const columns: TableColumnList = [
 	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
-	{ label: $t('id'), prop: 'id' },
 	{ label: $t('i18n_typeName'), prop: 'typeName' },
 	{ label: $t('i18n_summary'), prop: 'summary' },
 	{ label: $t('isDefault'), prop: 'isDefault', slot: 'isDefault' },

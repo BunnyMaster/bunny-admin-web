@@ -5,7 +5,6 @@ import { $t } from '@/plugins/i18n';
 export const columns: TableColumnList = [
 	{ type: 'selection', align: 'left' },
 	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
-	{ label: $t('id'), prop: 'id' },
 	// icon 类名
 	{ label: $t('menuIcon_iconCode'), prop: 'iconCode', slot: 'iconCode' },
 	// icon 名称

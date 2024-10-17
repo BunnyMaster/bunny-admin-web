@@ -8,8 +8,6 @@ export const isAddUserinfo = ref(false);
 export const columns: TableColumnList = [
 	{ type: 'selection', align: 'left' },
 	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
-	// 主键
-	{ label: $t('id'), prop: 'id' },
 	// 用户名
 	{ label: $t('adminUser_username'), prop: 'username', width: 260 },
 	// 状态

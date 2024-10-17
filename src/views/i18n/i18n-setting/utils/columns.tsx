@@ -6,7 +6,6 @@ import { $t } from '@/plugins/i18n';
 export const columns: TableColumnList = [
 	{ type: 'selection', align: 'left' },
 	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
-	{ label: $t('id'), prop: 'id' },
 	{ label: $t('i18n.keyName'), prop: 'keyName' },
 	{ label: $t('i18n.translation'), prop: 'translation' },
 	{ label: $t('i18n.typeName'), prop: 'typeName' },
