@@ -54,11 +54,6 @@ defineExpose({ formRef });
 			</el-select>
 		</el-form-item>
 
-		<!-- 任务详情 -->
-		<el-form-item :label="$t('schedulers_description')" prop="description">
-			<el-input v-model="form.description" :placeholder="$t('input') + $t('schedulers_description')" autocomplete="off" type="text" />
-		</el-form-item>
-
 		<!-- 需要执行的任务类名 -->
 		<el-form-item :label="$t('schedulers_jobClassName')" prop="jobClassName">
 			<el-select v-model="form.jobClassName" :placeholder="$t('select') + $t('schedulers_jobClassName')" clearable filterable>
@@ -69,6 +64,11 @@ defineExpose({ formRef });
 		<!-- 执行的corn表达式 -->
 		<el-form-item :label="$t('schedulers_cronExpression')" prop="cronExpression">
 			<el-input v-model="form.cronExpression" :placeholder="$t('input') + $t('schedulers_cronExpression')" autocomplete="off" type="text" />
+		</el-form-item>
+
+		<!-- 任务详情 -->
+		<el-form-item :label="$t('schedulers_description')" prop="description">
+			<el-input v-model="form.description" :placeholder="$t('input') + $t('schedulers_description')" autocomplete="off" type="text" />
 		</el-form-item>
 	</el-form>
 </template>

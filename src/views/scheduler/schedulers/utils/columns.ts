@@ -27,8 +27,6 @@ export const rules = reactive({
 	jobName: [{ required: true, message: `${$t('input')}${$t('schedulers_jobName')}`, trigger: 'blur' }],
 	// 任务分组
 	jobGroup: [{ required: true, message: `${$t('input')}${$t('schedulers_jobGroup')}`, trigger: 'blur' }],
-	// 任务详情
-	description: [{ required: true, message: `${$t('input')}${$t('schedulers_description')}`, trigger: 'blur' }],
 	// 任务类名称
 	jobClassName: [{ required: true, message: `${$t('input')}${$t('schedulers_jobClassName')}`, trigger: 'blur' }],
 	// corn表达式
