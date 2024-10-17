@@ -16,6 +16,8 @@ export const useMenuIconStore = defineStore('menuIconStore', {
 			form: {
 				// icon 名称
 				iconName: undefined,
+				// 图标码
+				iconCode: undefined,
 			},
 			// 分页查询结果
 			pagination: {

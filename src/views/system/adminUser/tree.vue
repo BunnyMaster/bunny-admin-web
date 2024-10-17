@@ -12,6 +12,7 @@ import { Tree } from '@/views/system/adminUser/utils/types';
 import { buttonClass, defaultProps } from '@/views/system/adminUser/utils/columns';
 import { useAdminUserStore } from '@/store/system/adminUser';
 import { onSearch } from '@/views/system/adminUser/utils/hooks';
+import { $t } from '../../../plugins/i18n';
 
 defineProps({
 	treeLoading: Boolean,
@@ -84,7 +85,7 @@ defineExpose({ onTreeReset });
 <template>
 	<div v-loading="treeLoading" :style="{ minHeight: `calc(100vh - 130px)` }" class="h-full bg-bg_color overflow-hidden relative">
 		<div class="flex items-center h-[34px]">
-			<el-input v-model="searchValue" class="ml-2" clearable placeholder="请输入部门名称" size="small">
+			<el-input v-model="searchValue" :placeholder="$t('input') + $t('adminUser_dept')" class="ml-2" clearable size="small">
 				<template #suffix>
 					<el-icon class="el-input__icon">
 						<IconifyIconOffline v-show="searchValue.length === 0" icon="ri:search-line" />
@@ -97,11 +98,13 @@ defineExpose({ onTreeReset });
 					<el-dropdown-menu>
 						<el-dropdown-item>
 							<el-button :class="buttonClass" :icon="useRenderIcon(isExpand ? ExpandIcon : UnExpandIcon)" link type="primary" @click="toggleRowExpansionAll(!isExpand)">
-								{{ isExpand ? '折叠全部' : '展开全部' }}
+								{{ isExpand ? $t('fold_all') : $t('unfold_all') }}
 							</el-button>
 						</el-dropdown-item>
 						<el-dropdown-item>
-							<el-button :class="buttonClass" :icon="useRenderIcon(Reset)" link type="primary" @click="onTreeReset"> 重置状态 </el-button>
+							<el-button :class="buttonClass" :icon="useRenderIcon(Reset)" link type="primary" @click="onTreeReset">
+								{{ $t('buttons.reset') }}
+							</el-button>
 						</el-dropdown-item>
 					</el-dropdown-menu>
 				</template>

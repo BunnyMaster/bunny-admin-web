@@ -96,7 +96,7 @@ onMounted(() => {
 					<template #operation="{ row }">
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
 						<el-button v-show="row.menuType !== 3" :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)"> {{ $t('add_new') }} </el-button>
-						<el-popconfirm :title="`${$t('delete')} ${$t(row.title)}的这条数据${row?.children?.length > 0 ? '注意下级菜单也会一并删除，请谨慎操作' : ''}`" @confirm="handleDelete(row)">
+						<el-popconfirm :title="`${$t('delete')} ${row.title}?`" @confirm="handleDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}
@@ -109,7 +109,7 @@ onMounted(() => {
 							<template #dropdown>
 								<el-dropdown-menu>
 									<el-dropdown-item>
-										<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Upload)" :size="size" link type="primary" @click="assignRolesToRouter(row)"> 分配角色 </el-button>
+										<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Upload)" :size="size" link type="primary" @click="assignRolesToRouter(row)"> {{ $t('assign_roles') }} </el-button>
 									</el-dropdown-item>
 								</el-dropdown-menu>
 							</template>

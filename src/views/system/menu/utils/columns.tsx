@@ -43,7 +43,7 @@ export const columns: TableColumnList = [
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 90 },
 	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 90 },
-	{ label: '操作', fixed: 'right', width: 210, slot: 'operation', width: 240 },
+	{ label: $t('table.operation'), fixed: 'right', width: 210, slot: 'operation' },
 ];
 
 /** 自定义表单规则校验 */

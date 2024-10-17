@@ -92,7 +92,7 @@ defineExpose({ formRef });
 
 			<re-col :sm="24" :value="12" :xs="24">
 				<el-form-item :label="$t('adminUser_dept')" prop="deptId">
-					<el-cascader v-model="form.deptId" :options="deptList" :props="deptSelector" class="w-full" clearable filterable placeholder="请选择归属部门">
+					<el-cascader v-model="form.deptId" :options="deptList" :placeholder="$t('select') + $t('adminUser_dept')" :props="deptSelector" class="w-full" clearable filterable>
 						<template #default="{ node, data }">
 							<span>{{ data.deptName }}</span>
 							<span v-if="!node.isLeaf"> ({{ data.children.length }}) </span>
@@ -104,7 +104,7 @@ defineExpose({ formRef });
 			<!-- 用户状态 -->
 			<re-col :sm="24" :value="12" :xs="24">
 				<el-form-item :label="$t('adminUser_status')" prop="status">
-					<el-switch v-model="form.status" :active-value="false" :inactive-value="true" :style="switchStyle" active-text="已启用" inactive-text="已停用" inline-prompt />
+					<el-switch v-model="form.status" :active-text="$t('enable')" :active-value="false" :inactive-text="$t('disable')" :inactive-value="true" :style="switchStyle" inline-prompt />
 				</el-form-item>
 			</re-col>
 

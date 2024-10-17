@@ -76,7 +76,7 @@ onMounted(() => {
 			</el-form-item>
 		</el-form>
 
-		<PureTableBar :columns="columns" title="邮件模板表" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
+		<PureTableBar :columns="columns" :title="$t('emailTemplate')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
 

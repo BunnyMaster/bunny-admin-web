@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { useRoleStore } from '@/store/system/role';
 import { userMenuStore } from '@/store/system/menu';
+import { $t } from '@/plugins/i18n';
 
 const props = defineProps({
 	routerId: { type: String as PropType<String> },
@@ -36,12 +37,12 @@ defineExpose({ assignRoles });
 	<div class="flex justify-center">
 		<el-transfer
 			v-model="assignRoles"
-			:button-texts="['收回', '添加']"
+			:button-texts="[$t('take_back'), $t('add')]"
 			:data="roleStore.allRoleList"
-			:format="{ noChecked: '总数 ${total}', hasChecked: '${checked}/${total}' }"
-			:titles="['未添加', '已添加']"
+			:filter-placeholder="$t('Searching_for_router')"
+			:format="{ noChecked: `${$t('total')} $\{total}`, hasChecked: '${checked}/${total}' }"
+			:titles="[$t('not_added'), $t('added')]"
 			class="m-3"
-			filter-placeholder="搜索角色"
 			filterable
 		/>
 	</div>

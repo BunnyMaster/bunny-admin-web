@@ -1,48 +1,51 @@
 import { addDialog } from '@/components/BaseDialog/index';
-import SchedulersGroupDialog from '@/views/monitor/schedulersGroup/schedulers-group-dialog.vue';
-import { useSchedulersGroupStore } from '@/store/monitor/schedulersGroup';
+import SchedulersDialog from '@/views/scheduler/schedulers/schedulers-dialog.vue';
+import { useSchedulersStore } from '@/store/monitor/schedulers';
 import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
-import type { FormItemProps } from '@/views/monitor/schedulersGroup/utils/types';
+import type { FormItemProps } from '@/views/scheduler/schedulers/utils/types';
 import { $t } from '@/plugins/i18n';
 
 export const formRef = ref();
 // 删除ids
 export const deleteIds = ref([]);
-const schedulersGroupStore = useSchedulersGroupStore();
+const schedulersStore = useSchedulersStore();
 
 /**
- * * 搜索初始化任务调度分组
+ * * 搜索初始化Schedulers视图
  */
 export async function onSearch() {
-	schedulersGroupStore.loading = true;
-	await schedulersGroupStore.getSchedulersGroupList();
-	schedulersGroupStore.loading = false;
+	schedulersStore.loading = true;
+	await schedulersStore.getSchedulersList();
+	schedulersStore.loading = false;
 }
 
 /**
- * * 添加任务调度分组
+ * * 添加Schedulers视图
  */
 export function onAdd() {
 	addDialog({
-		title: `${$t('add_new')}${$t('schedulersGroup')}`,
+		title: `${$t('add_new')}${$t('schedulers')}`,
 		width: '30%',
 		props: {
 			formInline: {
-				groupName: undefined,
+				jobName: undefined,
+				jobGroup: undefined,
 				description: undefined,
+				jobClassName: undefined,
+				cronExpression: undefined,
 			},
 		},
 		draggable: true,
 		fullscreenIcon: true,
 		closeOnClickModal: false,
-		contentRenderer: () => h(SchedulersGroupDialog, { ref: formRef }),
+		contentRenderer: () => h(SchedulersDialog, { ref: formRef }),
 		beforeSure: (done, { options }) => {
 			const form = options.props.formInline as FormItemProps;
 			formRef.value.formRef.validate(async (valid: any) => {
 				if (!valid) return;
 
-				const result = await schedulersGroupStore.addSchedulersGroup(form);
+				const result = await schedulersStore.addSchedulers(form);
 				if (!result) return;
 				done();
 				await onSearch();
@@ -52,29 +55,32 @@ export function onAdd() {
 }
 
 /**
- * * 更新任务调度分组
+ * * 更新Schedulers视图
  * @param row
  */
 export function onUpdate(row: any) {
 	addDialog({
-		title: `${$t('modify')}${$t('schedulersGroup')}`,
+		title: `${$t('modify')}${$t('schedulers')}`,
 		width: '30%',
 		props: {
 			formInline: {
-				groupName: row.groupName,
+				jobName: row.jobName,
+				jobGroup: row.jobGroup,
 				description: row.description,
+				jobClassName: row.jobClassName,
+				cronExpression: row.cronExpression,
 			},
 		},
 		draggable: true,
 		fullscreenIcon: true,
 		closeOnClickModal: false,
-		contentRenderer: () => h(SchedulersGroupDialog, { ref: formRef }),
+		contentRenderer: () => h(SchedulersDialog, { ref: formRef }),
 		beforeSure: (done, { options }) => {
 			const form = options.props.formInline as FormItemProps;
 			formRef.value.formRef.validate(async (valid: any) => {
 				if (!valid) return;
 
-				const result = await schedulersGroupStore.updateSchedulersGroup({ ...form, id: row.id });
+				const result = await schedulersStore.updateSchedulers({ ...form, id: row.id });
 				if (!result) return;
 				done();
 				await onSearch();
@@ -84,10 +90,10 @@ export function onUpdate(row: any) {
 }
 
 /**
- * * 删除任务调度分组
+ * * 删除Schedulers视图
  */
 export const onDelete = async (row: any) => {
-	const id = row.id;
+	const data = { jobName: row.jobName, jobGroup: row.jobGroup };
 
 	// 是否确认删除
 	const result = await messageBox({
@@ -99,7 +105,7 @@ export const onDelete = async (row: any) => {
 	if (!result) return;
 
 	// 删除数据
-	await schedulersGroupStore.deleteSchedulersGroup([id]);
+	await schedulersStore.deleteSchedulers(data);
 	await onSearch();
 };
 
@@ -119,6 +125,6 @@ export const onDeleteBatch = async () => {
 	if (!result) return;
 
 	// 删除数据
-	await schedulersGroupStore.deleteSchedulersGroup(ids);
+	await schedulersStore.deleteSchedulers(ids);
 	await onSearch();
 };

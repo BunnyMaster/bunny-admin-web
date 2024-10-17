@@ -218,7 +218,7 @@ export const updateUserStatus = async (row: any, index: number) => {
  */
 export const onUploadAvatar = (row: any) => {
 	addDialog({
-		title: '裁剪、上传头像',
+		title: $t('crop_and_upload_avatars'),
 		width: '40%',
 		closeOnClickModal: false,
 		fullscreen: deviceDetection(),

@@ -5,6 +5,7 @@ import { rules } from '@/views/i18n/i18n-type-setting/utils/columns';
 import { FormProps } from '@/views/i18n/i18n-type-setting/utils/types';
 import { frameSureOptions } from '@/enums';
 import Segmented from '@/components/Segmented';
+import { $t } from '@/plugins/i18n';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
@@ -22,16 +23,14 @@ defineExpose({ formRef });
 
 <template>
 	<el-form ref="formRef" :model="form" :rules="rules" label-width="auto">
-		<el-form-item label="语言名称" prop="typeName">
-			<el-input v-model="form.typeName" autocomplete="off" type="text" />
+		<el-form-item :label="$t('i18n_typeName')" prop="typeName">
+			<el-input v-model="form.typeName" :placeholder="$t('select') + $t('i18n_typeName')" autocomplete="off" type="text" />
 		</el-form-item>
-		<el-form-item label="语言详情" prop="summary">
-			<el-input v-model="form.summary" autocomplete="off" type="text" />
+		<el-form-item :label="$t('i18n_summary')" prop="summary">
+			<el-input v-model="form.summary" :placeholder="$t('select') + $t('i18n_summary')" autocomplete="off" type="text" />
 		</el-form-item>
-		<el-form-item label="是否为默认语言" prop="isDefault">
-			<el-form-item label="是否为默认语言">
-				<Segmented :modelValue="form.isDefault ? 0 : 1" :options="frameSureOptions" @change="({ option: { value } }) => (form.isDefault = value)" />
-			</el-form-item>
+		<el-form-item :label="$t('isDefault')" prop="isDefault">
+			<Segmented :modelValue="form.isDefault ? 0 : 1" :options="frameSureOptions" @change="({ option: { value } }) => (form.isDefault = value)" />
 		</el-form-item>
 	</el-form>
 </template>

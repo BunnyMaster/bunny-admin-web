@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { computed, PropType } from 'vue';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { $t } from '@/plugins/i18n';
 
 interface CardProductType {
 	type: string;
@@ -31,7 +32,7 @@ const cardLogoClass = computed(() => ['list-card-item_detail--logo', { 'list-car
 				</div>
 				<div class="list-card-item_detail--operation">
 					<el-tag :color="product.status ? '#00a870' : '#eee'" class="mx-1 list-card-item_detail--operation--tag" effect="dark">
-						{{ product.status ? '已启用' : '已停用' }}
+						{{ product.status ? $t('enable') : $t('disable') }}
 					</el-tag>
 				</div>
 			</el-row>
