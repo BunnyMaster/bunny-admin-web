@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { storeMessage } from '@/utils/message';
 import { handleTree } from '@/utils/tree';
-import { fetchAddMenu, fetchAssignRolesToRouter, fetchDeletedMenuByIds, fetchGetMenusList, fetchGetRoleListByRouterId, fetchUpdateMenu } from '@/api/v1/menu';
+import { fetchAddMenu, fetchAssignRolesToRouter, fetchDeletedMenuByIds, fetchGetMenusList, fetchGetRoleListByRouterId, fetchUpdateMenu, fetchUpdateMenuByIdWithRank } from '@/api/v1/menu';
 import { isAllEmpty } from '@pureadmin/utils';
 import { $t } from '@/plugins/i18n';
 
@@ -39,6 +39,12 @@ export const userMenuStore = defineStore('menuStore', {
 		/** 更新菜单 */
 		async updateMenu(data: object) {
 			const result = await fetchUpdateMenu(data);
+			return storeMessage(result);
+		},
+
+		/** 快速更新菜单排序 */
+		async updateMenuByIdWithRank(data: object) {
+			const result = await fetchUpdateMenuByIdWithRank(data);
 			return storeMessage(result);
 		},
 

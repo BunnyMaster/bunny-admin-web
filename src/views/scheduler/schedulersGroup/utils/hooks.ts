@@ -1,6 +1,6 @@
 import { addDialog } from '@/components/BaseDialog/index';
 import SchedulersGroupDialog from '@/views/scheduler/schedulersGroup/schedulers-group-dialog.vue';
-import { useSchedulersGroupStore } from '@/store/monitor/schedulersGroup';
+import { useSchedulersGroupStore } from '@/store/scheduler/schedulersGroup';
 import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/scheduler/schedulersGroup/utils/types';

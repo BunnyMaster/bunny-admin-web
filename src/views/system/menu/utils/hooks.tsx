@@ -20,7 +20,7 @@ const formRef = ref();
  * @param type
  * @param text
  */
-export const getMenuType = (type, text = false) => {
+export const getMenuType = (type: number, text: boolean = false): any => {
 	switch (type) {
 		case 0:
 			return text ? '菜单' : 'primary';
@@ -197,6 +197,27 @@ export const onchangeVisible = async (row: any, index: number) => {
 	switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
 		loading: false,
 	});
+};
+
+/**
+ * * 更新菜单排序
+ * @param row
+ */
+export const onChangeMenuRank = async (row: any) => {
+	const data = { id: row.id, rank: row.rank };
+
+	// 是否确认修改显示状态
+	const confirm = await messageBox({
+		title: $t('confirm_update_sort'),
+		showMessage: false,
+		confirmMessage: undefined,
+		cancelMessage: $t('cancel'),
+	});
+
+	// 取消修改
+	if (!confirm) return;
+
+	await routerStore.updateMenuByIdWithRank(data);
 };
 
 /**

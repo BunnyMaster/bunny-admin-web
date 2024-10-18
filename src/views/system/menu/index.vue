@@ -6,7 +6,7 @@ import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import AddFill from '@iconify-icons/ri/add-circle-line';
-import { assignRolesToRouter, handleDelete, onAdd, onchangeVisible, onSearch, onUpdate, switchLoadMap } from '@/views/system/menu/utils/hooks';
+import { assignRolesToRouter, handleDelete, onAdd, onChangeMenuRank, onchangeVisible, onSearch, onUpdate, switchLoadMap } from '@/views/system/menu/utils/hooks';
 import PureTable from '@pureadmin/table';
 import { columns } from '@/views/system/menu/utils/columns';
 import { userMenuStore } from '@/store/system/menu';
@@ -83,6 +83,10 @@ onMounted(() => {
 							inline-prompt
 							@click="onchangeVisible(row, index)"
 						/>
+					</template>
+
+					<template #rank="{ row }">
+						<el-input v-model="row.rank" :max="9999" :min="1" type="number" @change="onChangeMenuRank(row)" />
 					</template>
 
 					<template #createUser="{ row }">

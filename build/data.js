@@ -1,3 +1,6 @@
+/**
+ * * 自动创建权限内容
+ */
 (async function requestPath() {
 	// 获取基础paths对象
 	const response = await fetch('http://localhost:7070/v3/api-docs/admin%E7%AE%A1%E7%90%86%E5%91%98%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82', { method: 'GET' });

@@ -1,5 +1,6 @@
 import { h, reactive } from 'vue';
 import type { FormRules } from 'element-plus';
+import { ElTag } from 'element-plus';
 import { $t } from '@/plugins/i18n';
 import { isAllEmpty } from '@pureadmin/utils';
 import { getMenuType } from '@/views/system/menu/utils/hooks';
@@ -26,9 +27,9 @@ export const columns: TableColumnList = [
 		prop: 'menuType',
 		width: 100,
 		cellRenderer: ({ row, props }) => (
-			<el-tag size={props.size} type={getMenuType(row.menuType)} effect='plain'>
+			<ElTag size={props.size} type={getMenuType(row.menuType)} effect='plain'>
 				{getMenuType(row.menuType, true)}
-			</el-tag>
+			</ElTag>
 		),
 	},
 	{ label: '路由路径', prop: 'path' },
@@ -37,13 +38,13 @@ export const columns: TableColumnList = [
 		prop: 'component',
 		formatter: ({ path, component }) => (isAllEmpty(component) ? path : component),
 	},
-	{ label: '排序', prop: 'rank', width: 100 },
+	{ label: '排序', prop: 'rank', width: 80, slot: 'rank' },
 	{ label: '隐藏', prop: 'visible', slot: 'visible', width: 100 },
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true },
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 90 },
 	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 90 },
-	{ label: $t('table.operation'), fixed: 'right', width: 210, slot: 'operation' },
+	{ label: $t('table.operation'), fixed: 'right', width: 230, slot: 'operation' },
 ];
 
 /** 自定义表单规则校验 */

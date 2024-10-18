@@ -4,8 +4,8 @@ import { FormInstance } from 'element-plus';
 import { rules } from '@/views/scheduler/schedulers/utils/columns';
 import { FormProps } from '@/views/scheduler/schedulers/utils/types';
 import { $t } from '@/plugins/i18n';
-import { useSchedulersGroupStore } from '@/store/monitor/schedulersGroup';
-import { useSchedulersStore } from '@/store/monitor/schedulers';
+import { useSchedulersGroupStore } from '@/store/scheduler/schedulersGroup';
+import { useSchedulersStore } from '@/store/scheduler/schedulers';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
