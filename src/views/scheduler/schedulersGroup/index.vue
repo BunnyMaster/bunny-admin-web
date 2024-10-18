@@ -105,18 +105,21 @@ onMounted(() => {
 					@page-current-change="onCurrentPageChange"
 				>
 					<template #createUser="{ row }">
-						<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>
+						<el-button v-show="row.createUser" link type="primary" @click="selectUserinfo(row.createUser)">
+							{{ $t('table.createUser') }}
+						</el-button>
 					</template>
 
 					<template #updateUser="{ row }">
-						<el-button link type="primary" @click="selectUserinfo(row.updateUser)">{{ $t('table.updateUser') }} </el-button>
+						<el-button v-show="row.updateUser" link type="primary" @click="selectUserinfo(row.updateUser)">
+							{{ $t('table.updateUser') }}
+						</el-button>
 					</template>
 
 					<template #operation="{ row }">
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
 						<el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd"> {{ $t('add_new') }} </el-button>
-						<!-- TODO 待完成 -->
-						<el-popconfirm :title="`${$t('delete')}${row.email}?`" @confirm="onDelete(row)">
+						<el-popconfirm :title="`${$t('delete')}${row.groupName}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}

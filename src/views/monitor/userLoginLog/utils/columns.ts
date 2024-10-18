@@ -16,7 +16,7 @@ export const columns: TableColumnList = [
 	// 登录时代理
 	{ label: $t('userLoginLog_userAgent'), prop: 'userAgent', width: 200 },
 	// 操作类型
-	{ label: $t('userLoginLog_type'), prop: 'type', width: 90 },
+	{ label: $t('userLoginLog_type'), prop: 'type', width: 130 },
 	// 标识客户端是否是通过Ajax发送请求的
 	{ label: $t('userLoginLog_xRequestedWith'), prop: 'xRequestedWith', width: 150 },
 	// 用户代理的品牌和版本

@@ -106,11 +106,15 @@ onMounted(() => {
 					@page-current-change="onCurrentPageChange"
 				>
 					<template #createUser="{ row }">
-						<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>
+						<el-button v-show="row.createUser" link type="primary" @click="selectUserinfo(row.createUser)">
+							{{ $t('table.createUser') }}
+						</el-button>
 					</template>
 
 					<template #updateUser="{ row }">
-						<el-button link type="primary" @click="selectUserinfo(row.updateUser)">{{ $t('table.updateUser') }} </el-button>
+						<el-button v-show="row.updateUser" link type="primary" @click="selectUserinfo(row.updateUser)">
+							{{ $t('table.updateUser') }}
+						</el-button>
 					</template>
 
 					<template #operation="{ row }">

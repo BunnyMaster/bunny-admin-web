@@ -199,14 +199,16 @@ onMounted(() => {
 							</el-tag>
 						</template>
 
-						<!-- 创建用户 -->
 						<template #createUser="{ row }">
-							<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>
+							<el-button v-show="row.createUser" link type="primary" @click="selectUserinfo(row.createUser)">
+								{{ $t('table.createUser') }}
+							</el-button>
 						</template>
 
-						<!-- 更新用户 -->
 						<template #updateUser="{ row }">
-							<el-button link type="primary" @click="selectUserinfo(row.updateUser)">{{ $t('table.updateUser') }} </el-button>
+							<el-button v-show="row.updateUser" link type="primary" @click="selectUserinfo(row.updateUser)">
+								{{ $t('table.updateUser') }}
+							</el-button>
 						</template>
 
 						<template #operation="{ row }">
