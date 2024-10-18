@@ -3,7 +3,6 @@ import UserLoginLogDialog from '@/views/monitor/userLoginLog/user-login-log-dial
 import { useUserLoginLogStore } from '@/store/monitor/userLoginLog';
 import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
-import type { FormItemProps } from '@/views/monitor/userLoginLog/utils/types';
 import { $t } from '@/plugins/i18n';
 
 export const formRef = ref();
@@ -21,12 +20,12 @@ export async function onSearch() {
 }
 
 /**
- * * 更新用户登录日志
+ * * 查看用户登录日志
  * @param row
  */
-export function onUpdate(row: any) {
+export function onView(row: any) {
 	addDialog({
-		title: `${$t('modify')}${$t('userLoginLog')}`,
+		title: `${$t('view')}${$t('userLoginLog')}`,
 		width: '30%',
 		props: {
 			formInline: {
@@ -39,36 +38,17 @@ export function onUpdate(row: any) {
 				type: row.type,
 				xRequestedWith: row.xRequestedWith,
 				secChUa: row.secChUa,
-				secChUaArch: row.secChUaArch,
-				secChUaBitness: row.secChUaBitness,
 				secChUaMobile: row.secChUaMobile,
-				secChUaModel: row.secChUaModel,
 				secChUaPlatform: row.secChUaPlatform,
-				secChUaPlatformVersion: row.secChUaPlatformVersion,
-				contentDpr: row.contentDpr,
-				deviceMemory: row.deviceMemory,
-				dpr: row.dpr,
-				viewportWidth: row.viewportWidth,
-				width: row.width,
-				downlink: row.downlink,
-				ect: row.ect,
-				rtt: row.rtt,
 			},
 		},
 		draggable: true,
 		fullscreenIcon: true,
 		closeOnClickModal: false,
 		contentRenderer: () => h(UserLoginLogDialog, { ref: formRef }),
-		beforeSure: (done, { options }) => {
-			const form = options.props.formInline as FormItemProps;
-			formRef.value.formRef.validate(async (valid: any) => {
-				if (!valid) return;
-
-				const result = await userLoginLogStore.updateUserLoginLog({ ...form, id: row.id });
-				if (!result) return;
-				done();
-				await onSearch();
-			});
+		beforeSure: async done => {
+			done();
+			await onSearch();
 		},
 	});
 }

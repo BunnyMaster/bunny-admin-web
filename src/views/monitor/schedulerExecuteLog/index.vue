@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 import { columns } from '@/views/monitor/schedulerExecuteLog/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
-import { deleteIds, onDelete, onDeleteBatch, onSearch } from '@/views/monitor/schedulerExecuteLog/utils/hooks';
+import { deleteIds, onDelete, onDeleteBatch, onSearch, onView } from '@/views/monitor/schedulerExecuteLog/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
@@ -11,6 +11,7 @@ import { $t } from '@/plugins/i18n';
 import { useQuartzExecuteLogStore } from '@/store/monitor/quartzExecuteLog';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { FormInstance } from 'element-plus';
+import View from '@iconify-icons/ep/view';
 
 const tableRef = ref();
 const formRef = ref();
@@ -83,7 +84,7 @@ onMounted(() => {
 			</el-form-item>
 		</el-form>
 
-		<PureTableBar :columns="columns" title="调度任务执行日志" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
+		<PureTableBar :columns="columns" :title="$t('quartzExecuteLog')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<!-- 批量删除按钮 -->
 				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
@@ -121,6 +122,7 @@ onMounted(() => {
 					</template>
 
 					<template #operation="{ row }">
+						<el-button :icon="useRenderIcon(View)" :size="size" class="reset-margin" link type="primary" @click="onView(row)"> {{ $t('view') }} </el-button>
 						<el-popconfirm :title="`${$t('delete')}${row.jobName}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">

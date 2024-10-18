@@ -1,7 +1,9 @@
 import { useQuartzExecuteLogStore } from '@/store/monitor/quartzExecuteLog';
-import { ref } from 'vue';
+import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
 import { $t } from '@/plugins/i18n';
+import { addDialog } from '@/components/BaseDialog/index';
+import ScheduleExecuteLog from '@/views/monitor/schedulerExecuteLog/schedule-execute-log.vue';
 
 export const formRef = ref();
 // 删除ids
@@ -15,6 +17,37 @@ export async function onSearch() {
 	quartzExecuteLogStore.loading = true;
 	await quartzExecuteLogStore.getQuartzExecuteLogList();
 	quartzExecuteLogStore.loading = false;
+}
+
+/**
+ * * 查看用户登录日志
+ * @param row
+ */
+export function onView(row: any) {
+	addDialog({
+		title: `${$t('view')}${$t('schedulerExecuteLog')}`,
+		width: '30%',
+		props: {
+			formInline: {
+				jobName: row.jobName,
+				jobGroup: row.jobGroup,
+				jobClassName: row.jobClassName,
+				cronExpression: row.cronExpression,
+				triggerName: row.triggerName,
+				executeResult: row.executeResult,
+				duration: row.duration,
+				endTime: row.endTime,
+			},
+		},
+		draggable: true,
+		fullscreenIcon: true,
+		closeOnClickModal: false,
+		contentRenderer: () => h(ScheduleExecuteLog, { ref: formRef }),
+		beforeSure: async done => {
+			done();
+			await onSearch();
+		},
+	});
 }
 
 /**

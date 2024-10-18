@@ -1,4 +1,5 @@
 import { $t } from '@/plugins/i18n';
+import { reactive } from 'vue';
 
 // 表格列
 export const columns: TableColumnList = [
@@ -24,5 +25,7 @@ export const columns: TableColumnList = [
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 90 },
 	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 90 },
-	{ label: $t('table.operation'), fixed: 'right', width: 100, slot: 'operation' },
+	{ label: $t('table.operation'), fixed: 'right', width: 160, slot: 'operation' },
 ];
+// 添加规则
+export const rules = reactive({});

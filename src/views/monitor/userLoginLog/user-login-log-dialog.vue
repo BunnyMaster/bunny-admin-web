@@ -25,34 +25,14 @@ const props = withDefaults(defineProps<FormProps>(), {
 		xRequestedWith: undefined,
 		// 用户代理的品牌和版本
 		secChUa: undefined,
-		// 用户代理的底层平台架构
-		secChUaArch: undefined,
 		// 用户代理的底层CPU架构位数
 		secChUaBitness: undefined,
 		// 用户代理是否在手机设备上运行
 		secChUaMobile: undefined,
-		// 用户代理的设备模型
-		secChUaModel: undefined,
 		// 用户代理的底层操作系统/平台
 		secChUaPlatform: undefined,
-		// 用户代理的底层操作系统版本
-		secChUaPlatformVersion: undefined,
-		// 客户端设备像素比
-		contentDpr: undefined,
-		// 客户端RAM内存的近似值
-		deviceMemory: undefined,
-		// 客户端设备像素比
-		dpr: undefined,
-		// 布局视口宽度
-		viewportWidth: undefined,
-		// 所需资源宽度
-		width: undefined,
 		// 客户端连接到服务器的近似带宽
 		downlink: undefined,
-		// 有效连接类型
-		ect: undefined,
-		// 应用层往返时间
-		rtt: undefined,
 	}),
 });
 
@@ -76,7 +56,7 @@ defineExpose({ formRef });
 
 		<!-- 登录token -->
 		<el-form-item :label="$t('userLoginLog_token')" prop="token">
-			<el-input v-model="form.token" :placeholder="$t('input') + $t('userLoginLog_token')" autocomplete="off" type="text" />
+			<el-input v-model="form.token" :autosize="{ minRows: 2, maxRows: 8 }" :placeholder="$t('input') + $t('userLoginLog_token')" autocomplete="off" type="textarea" />
 		</el-form-item>
 
 		<!-- 登录Ip -->
@@ -91,7 +71,7 @@ defineExpose({ formRef });
 
 		<!-- 登录时代理 -->
 		<el-form-item :label="$t('userLoginLog_userAgent')" prop="userAgent">
-			<el-input v-model="form.userAgent" :placeholder="$t('input') + $t('userLoginLog_userAgent')" autocomplete="off" type="text" />
+			<el-input v-model="form.userAgent" :autosize="{ minRows: 2, maxRows: 8 }" :placeholder="$t('input') + $t('userLoginLog_userAgent')" autocomplete="off" type="textarea" />
 		</el-form-item>
 
 		<!-- 操作类型 -->
@@ -109,74 +89,14 @@ defineExpose({ formRef });
 			<el-input v-model="form.secChUa" :placeholder="$t('input') + $t('userLoginLog_secChUa')" autocomplete="off" type="text" />
 		</el-form-item>
 
-		<!-- 用户代理的底层平台架构 -->
-		<el-form-item :label="$t('userLoginLog_secChUaArch')" prop="secChUaArch">
-			<el-input v-model="form.secChUaArch" :placeholder="$t('input') + $t('userLoginLog_secChUaArch')" autocomplete="off" type="text" />
-		</el-form-item>
-
-		<!-- 用户代理的底层CPU架构位数 -->
-		<el-form-item :label="$t('userLoginLog_secChUaBitness')" prop="secChUaBitness">
-			<el-input v-model="form.secChUaBitness" :placeholder="$t('input') + $t('userLoginLog_secChUaBitness')" autocomplete="off" type="text" />
-		</el-form-item>
-
 		<!-- 用户代理是否在手机设备上运行 -->
 		<el-form-item :label="$t('userLoginLog_secChUaMobile')" prop="secChUaMobile">
 			<el-input v-model="form.secChUaMobile" :placeholder="$t('input') + $t('userLoginLog_secChUaMobile')" autocomplete="off" type="text" />
 		</el-form-item>
 
-		<!-- 用户代理的设备模型 -->
-		<el-form-item :label="$t('userLoginLog_secChUaModel')" prop="secChUaModel">
-			<el-input v-model="form.secChUaModel" :placeholder="$t('input') + $t('userLoginLog_secChUaModel')" autocomplete="off" type="text" />
-		</el-form-item>
-
 		<!-- 用户代理的底层操作系统/平台 -->
 		<el-form-item :label="$t('userLoginLog_secChUaPlatform')" prop="secChUaPlatform">
 			<el-input v-model="form.secChUaPlatform" :placeholder="$t('input') + $t('userLoginLog_secChUaPlatform')" autocomplete="off" type="text" />
-		</el-form-item>
-
-		<!-- 用户代理的底层操作系统版本 -->
-		<el-form-item :label="$t('userLoginLog_secChUaPlatformVersion')" prop="secChUaPlatformVersion">
-			<el-input v-model="form.secChUaPlatformVersion" :placeholder="$t('input') + $t('userLoginLog_secChUaPlatformVersion')" autocomplete="off" type="text" />
-		</el-form-item>
-
-		<!-- 客户端设备像素比 -->
-		<el-form-item :label="$t('userLoginLog_contentDpr')" prop="contentDpr">
-			<el-input v-model="form.contentDpr" :placeholder="$t('input') + $t('userLoginLog_contentDpr')" autocomplete="off" type="text" />
-		</el-form-item>
-
-		<!-- 客户端RAM内存的近似值 -->
-		<el-form-item :label="$t('userLoginLog_deviceMemory')" prop="deviceMemory">
-			<el-input v-model="form.deviceMemory" :placeholder="$t('input') + $t('userLoginLog_deviceMemory')" autocomplete="off" type="text" />
-		</el-form-item>
-
-		<!-- 客户端设备像素比 -->
-		<el-form-item :label="$t('userLoginLog_dpr')" prop="dpr">
-			<el-input v-model="form.dpr" :placeholder="$t('input') + $t('userLoginLog_dpr')" autocomplete="off" type="text" />
-		</el-form-item>
-
-		<!-- 布局视口宽度 -->
-		<el-form-item :label="$t('userLoginLog_viewportWidth')" prop="viewportWidth">
-			<el-input v-model="form.viewportWidth" :placeholder="$t('input') + $t('userLoginLog_viewportWidth')" autocomplete="off" type="text" />
-		</el-form-item>
-
-		<!-- 所需资源宽度 -->
-		<el-form-item :label="$t('userLoginLog_width')" prop="width">
-			<el-input v-model="form.width" :placeholder="$t('input') + $t('userLoginLog_width')" autocomplete="off" type="text" />
-		</el-form-item>
-
-		<!-- 客户端连接到服务器的近似带宽 -->
-		<el-form-item :label="$t('userLoginLog_downlink')" prop="downlink">
-			<el-input v-model="form.downlink" :placeholder="$t('input') + $t('userLoginLog_downlink')" autocomplete="off" type="text" />
-		</el-form-item>
-
-		<!-- 有效连接类型 -->
-		<el-form-item :label="$t('userLoginLog_ect')" prop="ect">
-			<el-input v-model="form.ect" :placeholder="$t('input') + $t('userLoginLog_ect')" autocomplete="off" type="text" />
-		</el-form-item>
-
-		<!-- 应用层往返时间 -->
-		<el-form-item :label="$t('userLoginLog_rtt')" prop="rtt">
-			<el-input v-model="form.rtt" :placeholder="$t('input') + $t('userLoginLog_rtt')" autocomplete="off" type="text" />
 		</el-form-item>
 	</el-form>
 </template>
