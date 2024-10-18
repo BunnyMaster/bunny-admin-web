@@ -23,7 +23,7 @@ const { t } = useI18n();
 const ruleForm = reactive({
 	username: '1319900154@qq.com',
 	password: 'admin123',
-	emailCode: '',
+	emailCode: '1',
 });
 
 /**

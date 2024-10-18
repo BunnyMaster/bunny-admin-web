@@ -1,9 +1,9 @@
 import { addDialog } from '@/components/BaseDialog/index';
-import QuartzExecuteLogDialog from '@/views/scheduler/quartzExecuteLog/quartz-execute-log-dialog.vue';
-import { useQuartzExecuteLogStore } from '@/store/scheduler/quartzExecuteLog';
+import QuartzExecuteLogDialog from '@/views/monitor/schedulerExecuteLog/quartz-execute-log-dialog.vue';
+import { useQuartzExecuteLogStore } from '@/store/monitor/quartzExecuteLog';
 import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
-import type { FormItemProps } from '@/views/scheduler/quartzExecuteLog/utils/types';
+import type { FormItemProps } from '@/views/monitor/schedulerExecuteLog/utils/types';
 import { $t } from '@/plugins/i18n';
 
 export const formRef = ref();

@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/scheduler/quartzExecuteLog/utils/columns';
+import { columns } from '@/views/monitor/schedulerExecuteLog/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
-import { deleteIds, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/scheduler/quartzExecuteLog/utils/hooks';
+import { deleteIds, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/monitor/schedulerExecuteLog/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { useQuartzExecuteLogStore } from '@/store/scheduler/quartzExecuteLog';
+import { useQuartzExecuteLogStore } from '@/store/monitor/quartzExecuteLog';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { FormInstance } from 'element-plus';
 
