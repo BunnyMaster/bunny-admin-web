@@ -21,11 +21,13 @@ export const useUserLoginLogStore = defineStore('userLoginLogStore', {
 				// 登录token
 				token: undefined,
 				// 登录Ip
-				ip: undefined,
+				ipRegion: undefined,
 				// 登录Ip地点
 				ipAddress: undefined,
 				// 登录时代理
 				userAgent: undefined,
+				// 操作类型
+				type: undefined,
 			},
 			// 分页查询结果
 			pagination: {

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchDeleteQuartzExecuteLog, fetchGetQuartzExecuteLogList, fetchUpdateQuartzExecuteLog } from '@/api/v1/quartzExecuteLog';
+import { fetchDeleteQuartzExecuteLog, fetchGetQuartzExecuteLogList } from '@/api/v1/quartzExecuteLog';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -54,12 +54,6 @@ export const useQuartzExecuteLogStore = defineStore('quartzExecuteLogStore', {
 			// 公共页面函数hook
 			const pagination = storePagination.bind(this);
 			return pagination(result);
-		},
-
-		/** 修改调度任务执行日志 */
-		async updateQuartzExecuteLog(data: any) {
-			const result = await fetchUpdateQuartzExecuteLog(data);
-			return storeMessage(result);
 		},
 
 		/** 删除调度任务执行日志 */

@@ -69,14 +69,17 @@ onMounted(() => {
 			<el-form-item :label="$t('userLoginLog_token')" prop="token">
 				<el-input v-model="userLoginLogStore.form.token" :placeholder="`${$t('input')}${$t('userLoginLog_token')}`" class="!w-[180px]" clearable />
 			</el-form-item>
-			<el-form-item :label="$t('userLoginLog_ip')" prop="ip">
-				<el-input v-model="userLoginLogStore.form.ip" :placeholder="`${$t('input')}${$t('userLoginLog_ip')}`" class="!w-[180px]" clearable />
+			<el-form-item :label="$t('userLoginLog_ipRegion')" prop="ip">
+				<el-input v-model="userLoginLogStore.form.ipRegion" :placeholder="`${$t('input')}${$t('userLoginLog_ipRegion')}`" class="!w-[180px]" clearable />
 			</el-form-item>
 			<el-form-item :label="$t('userLoginLog_ipAddress')" prop="ipAddress">
 				<el-input v-model="userLoginLogStore.form.ipAddress" :placeholder="`${$t('input')}${$t('userLoginLog_ipAddress')}`" class="!w-[180px]" clearable />
 			</el-form-item>
 			<el-form-item :label="$t('userLoginLog_userAgent')" prop="userAgent">
 				<el-input v-model="userLoginLogStore.form.userAgent" :placeholder="`${$t('input')}${$t('userLoginLog_userAgent')}`" class="!w-[180px]" clearable />
+			</el-form-item>
+			<el-form-item :label="$t('userLoginLog_type')" prop="type">
+				<el-input v-model="userLoginLogStore.form.type" :placeholder="`${$t('input')}${$t('userLoginLog_type')}`" class="!w-[180px]" clearable />
 			</el-form-item>
 			<el-form-item>
 				<el-button :icon="useRenderIcon('ri:search-line')" :loading="userLoginLogStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
@@ -114,11 +117,15 @@ onMounted(() => {
 					@page-current-change="onCurrentPageChange"
 				>
 					<template #createUser="{ row }">
-						<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>
+						<el-button v-show="row.createUser" link type="primary" @click="selectUserinfo(row.createUser)">
+							{{ $t('table.createUser') }}
+						</el-button>
 					</template>
 
 					<template #updateUser="{ row }">
-						<el-button link type="primary" @click="selectUserinfo(row.updateUser)">{{ $t('table.updateUser') }} </el-button>
+						<el-button v-show="row.updateUser" link type="primary" @click="selectUserinfo(row.updateUser)">
+							{{ $t('table.updateUser') }}
+						</el-button>
 					</template>
 
 					<template #operation="{ row }">

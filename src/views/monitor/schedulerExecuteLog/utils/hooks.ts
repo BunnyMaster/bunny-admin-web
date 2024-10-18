@@ -1,9 +1,6 @@
-import { addDialog } from '@/components/BaseDialog/index';
-import QuartzExecuteLogDialog from '@/views/monitor/schedulerExecuteLog/quartz-execute-log-dialog.vue';
 import { useQuartzExecuteLogStore } from '@/store/monitor/quartzExecuteLog';
-import { h, ref } from 'vue';
+import { ref } from 'vue';
 import { messageBox } from '@/utils/message';
-import type { FormItemProps } from '@/views/monitor/schedulerExecuteLog/utils/types';
 import { $t } from '@/plugins/i18n';
 
 export const formRef = ref();
@@ -18,44 +15,6 @@ export async function onSearch() {
 	quartzExecuteLogStore.loading = true;
 	await quartzExecuteLogStore.getQuartzExecuteLogList();
 	quartzExecuteLogStore.loading = false;
-}
-
-/**
- * * 更新调度任务执行日志
- * @param row
- */
-export function onUpdate(row: any) {
-	addDialog({
-		title: `${$t('modify')}${$t('quartzExecuteLog')}`,
-		width: '30%',
-		props: {
-			formInline: {
-				jobName: row.jobName,
-				jobGroup: row.jobGroup,
-				jobClassName: row.jobClassName,
-				cronExpression: row.cronExpression,
-				triggerName: row.triggerName,
-				executeResult: row.executeResult,
-				duration: row.duration,
-				endTime: row.endTime,
-			},
-		},
-		draggable: true,
-		fullscreenIcon: true,
-		closeOnClickModal: false,
-		contentRenderer: () => h(QuartzExecuteLogDialog, { ref: formRef }),
-		beforeSure: (done, { options }) => {
-			const form = options.props.formInline as FormItemProps;
-			formRef.value.formRef.validate(async (valid: any) => {
-				if (!valid) return;
-
-				const result = await quartzExecuteLogStore.updateQuartzExecuteLog({ ...form, id: row.id });
-				if (!result) return;
-				done();
-				await onSearch();
-			});
-		},
-	});
 }
 
 /**

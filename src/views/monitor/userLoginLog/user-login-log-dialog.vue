@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<FormProps>(), {
 		// 登录token
 		token: undefined,
 		// 登录Ip
-		ip: undefined,
+		ipRegion: undefined,
 		// 登录Ip地点
 		ipAddress: undefined,
 		// 登录时代理
@@ -46,8 +46,8 @@ defineExpose({ formRef });
 		</el-form-item>
 
 		<!-- 登录Ip -->
-		<el-form-item :label="$t('userLoginLog_ip')" prop="ip">
-			<el-input v-model="form.ip" :placeholder="$t('input') + $t('userLoginLog_ip')" autocomplete="off" type="text" />
+		<el-form-item :label="$t('userLoginLog_ipRegion')" prop="ip">
+			<el-input v-model="form.ipRegion" :placeholder="$t('input') + $t('userLoginLog_ipRegion')" autocomplete="off" type="text" />
 		</el-form-item>
 
 		<!-- 登录Ip地点 -->

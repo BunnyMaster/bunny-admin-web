@@ -3,9 +3,8 @@ import { onMounted, ref } from 'vue';
 import { columns } from '@/views/monitor/schedulerExecuteLog/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
-import { deleteIds, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/monitor/schedulerExecuteLog/utils/hooks';
+import { deleteIds, onDelete, onDeleteBatch, onSearch } from '@/views/monitor/schedulerExecuteLog/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
-import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
@@ -122,7 +121,6 @@ onMounted(() => {
 					</template>
 
 					<template #operation="{ row }">
-						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
 						<el-popconfirm :title="`${$t('delete')}${row.jobName}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
