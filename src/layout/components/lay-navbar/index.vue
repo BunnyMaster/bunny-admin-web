@@ -14,12 +14,17 @@ import Setting from '@iconify-icons/ri/settings-3-line';
 import Check from '@iconify-icons/ep/check';
 import { $t } from '@/plugins/i18n';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
+import { onMounted } from 'vue';
 
 const { layout, device, logout, onPanel, pureApp, username, userAvatar, avatarsStyle, toggleSideBar, getDropdownItemStyle, getDropdownItemClass } = useNav();
 
 const { locale, translation } = useTranslationLang();
 
 const i18nTypeStore = userI18nTypeStore();
+
+onMounted(() => {
+	i18nTypeStore.getI18nTypeList();
+});
 </script>
 
 <template>
