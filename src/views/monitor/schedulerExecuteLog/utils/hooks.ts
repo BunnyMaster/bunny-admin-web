@@ -25,7 +25,7 @@ export async function onSearch() {
  */
 export function onView(row: any) {
 	addDialog({
-		title: `${$t('view')}${$t('schedulerExecuteLog')}`,
+		title: `${$t('view')}${$t('quartzExecuteLog')}`,
 		width: '30%',
 		props: {
 			formInline: {
