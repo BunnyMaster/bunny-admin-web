@@ -21,6 +21,16 @@ export const fetchUpdateSchedulers = (data: any) => {
 	return http.request<BaseResult<object>>('put', 'schedulers/updateSchedulers', { data });
 };
 
+/** Schedulers视图---暂停任务 */
+export const fetchPauseSchedulers = (data: any) => {
+	return http.request<BaseResult<object>>('put', 'schedulers/pauseSchedulers', { data });
+};
+
+/** Schedulers视图---恢复任务 */
+export const fetchResumeSchedulers = (data: any) => {
+	return http.request<BaseResult<object>>('put', 'schedulers/resumeSchedulers', { data });
+};
+
 /** Schedulers视图---删除Schedulers视图 */
 export const fetchDeleteSchedulers = (data: any) => {
 	return http.request<BaseResult<object>>('delete', 'schedulers/deleteSchedulers', { data });

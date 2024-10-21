@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { rules } from '@/views/monitor/schedulerExecuteLog/utils/columns';
+import { rules, state } from '@/views/monitor/schedulerExecuteLog/utils/columns';
 import { FormProps } from '@/views/monitor/schedulerExecuteLog/utils/types';
 import { $t } from '@/plugins/i18n';
+import VueJsonPretty from 'vue-json-pretty';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
@@ -61,17 +62,22 @@ defineExpose({ formRef });
 
 		<!-- 执行结果 -->
 		<el-form-item :label="$t('quartzExecuteLog_executeResult')" prop="executeResult">
-			<el-input v-model="form.executeResult" :placeholder="$t('input') + $t('quartzExecuteLog_executeResult')" autocomplete="off" type="text" />
+			<VueJsonPretty
+				:data="JSON.parse(form.executeResult)"
+				:deep="state.deep"
+				:editable="state.editable"
+				:editable-trigger="state.editableTrigger as any"
+				:show-double-quotes="state.showDoubleQuotes"
+				:show-icon="state.showIcon"
+				:show-length="state.showLength"
+				:show-line="state.showLine"
+				:show-line-number="state.showLineNumber"
+			/>
 		</el-form-item>
 
 		<!-- 用执行时间户Id -->
 		<el-form-item :label="$t('quartzExecuteLog_duration')" prop="duration">
 			<el-input v-model="form.duration" :placeholder="$t('input') + $t('quartzExecuteLog_duration')" autocomplete="off" type="text" />
-		</el-form-item>
-
-		<!-- 结束时间 -->
-		<el-form-item :label="$t('quartzExecuteLog_endTime')" prop="endTime">
-			<el-input v-model="form.endTime" :placeholder="$t('input') + $t('quartzExecuteLog_endTime')" autocomplete="off" type="text" />
 		</el-form-item>
 	</el-form>
 </template>

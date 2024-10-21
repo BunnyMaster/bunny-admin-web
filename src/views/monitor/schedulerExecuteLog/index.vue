@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/monitor/schedulerExecuteLog/utils/columns';
+import { columns, state } from '@/views/monitor/schedulerExecuteLog/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
 import { deleteIds, onDelete, onDeleteBatch, onSearch, onView } from '@/views/monitor/schedulerExecuteLog/utils/hooks';
@@ -12,6 +12,8 @@ import { useQuartzExecuteLogStore } from '@/store/monitor/quartzExecuteLog';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { FormInstance } from 'element-plus';
 import View from '@iconify-icons/ep/view';
+import VueJsonPretty from 'vue-json-pretty';
+import 'vue-json-pretty/lib/styles.css';
 
 const tableRef = ref();
 const formRef = ref();
@@ -75,9 +77,6 @@ onMounted(() => {
 			<el-form-item :label="$t('quartzExecuteLog_triggerName')" prop="triggerName">
 				<el-input v-model="quartzExecuteLogStore.form.triggerName" :placeholder="`${$t('input')}${$t('quartzExecuteLog_triggerName')}`" class="!w-[180px]" clearable />
 			</el-form-item>
-			<el-form-item :label="$t('quartzExecuteLog_endTime')" prop="endTime">
-				<el-input v-model="quartzExecuteLogStore.form.endTime" :placeholder="`${$t('input')}${$t('quartzExecuteLog_endTime')}`" class="!w-[180px]" clearable />
-			</el-form-item>
 			<el-form-item>
 				<el-button :icon="useRenderIcon('ri:search-line')" :loading="quartzExecuteLogStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
 				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
@@ -113,6 +112,20 @@ onMounted(() => {
 					@selection-change="onSelectionChange"
 					@page-current-change="onCurrentPageChange"
 				>
+					<template #executeResult="{ row }">
+						<VueJsonPretty
+							:data="JSON.parse(row.executeResult)"
+							:deep="state.deep"
+							:editable="state.editable"
+							:editable-trigger="state.editableTrigger as any"
+							:show-double-quotes="state.showDoubleQuotes"
+							:show-icon="state.showIcon"
+							:show-length="state.showLength"
+							:show-line="state.showLine"
+							:show-line-number="state.showLineNumber"
+						/>
+					</template>
+
 					<template #createUser="{ row }">
 						<el-button v-show="row.createUser" link type="primary" @click="selectUserinfo(row.createUser)">
 							{{ $t('table.createUser') }}

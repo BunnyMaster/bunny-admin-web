@@ -16,11 +16,9 @@ export const columns: TableColumnList = [
 	// 触发器名称
 	{ label: $t('quartzExecuteLog_triggerName'), prop: 'triggerName' },
 	// 执行结果
-	{ label: $t('quartzExecuteLog_executeResult'), prop: 'executeResult', width: 210 },
+	{ label: $t('quartzExecuteLog_executeResult'), prop: 'executeResult', width: 410, slot: 'executeResult' },
 	// 执行时间
 	{ label: $t('quartzExecuteLog_duration'), prop: 'duration' },
-	// 结束时间
-	{ label: $t('quartzExecuteLog_endTime'), prop: 'endTime' },
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 90 },
@@ -29,3 +27,14 @@ export const columns: TableColumnList = [
 ];
 // 添加规则
 export const rules = reactive({});
+
+export const state = reactive({
+	showLine: true,
+	showLineNumber: true,
+	showDoubleQuotes: true,
+	showLength: true,
+	editable: true,
+	showIcon: true,
+	editableTrigger: 'click',
+	deep: 3,
+});

@@ -4,7 +4,7 @@ import { columns } from '@/views/scheduler/schedulers/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onDelete, onSearch, onUpdate } from '@/views/scheduler/schedulers/utils/hooks';
+import { onAdd, onDelete, onPause, onResume, onSearch, onUpdate } from '@/views/scheduler/schedulers/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -116,6 +116,18 @@ onMounted(() => {
 
 					<template #operation="{ row }">
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
+
+						<!-- 暂停-->
+						<el-button v-if="row.triggerState === 'ACQUIRED'" :icon="useRenderIcon('line-md:pause')" :size="size" class="reset-margin" link type="primary" @click="onPause(row)">
+							{{ $t('pause') }}
+						</el-button>
+
+						<!-- 恢复 -->
+						<el-button v-if="row.triggerState === 'PAUSED'" :icon="useRenderIcon('material-symbols:resume')" :size="size" class="reset-margin" link type="primary" @click="onResume(row)">
+							{{ $t('resume') }}
+						</el-button>
+
+						<!-- 删除 -->
 						<el-popconfirm :title="`${$t('delete')}${row.jobName}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">

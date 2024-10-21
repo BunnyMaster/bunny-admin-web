@@ -36,7 +36,6 @@ export function onView(row: any) {
 				triggerName: row.triggerName,
 				executeResult: row.executeResult,
 				duration: row.duration,
-				endTime: row.endTime,
 			},
 		},
 		draggable: true,

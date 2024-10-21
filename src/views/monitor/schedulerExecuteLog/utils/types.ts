@@ -14,8 +14,6 @@ export interface FormItemProps {
 	executeResult: any;
 	// 执行时间
 	duration: number;
-	// 结束时间
-	endTime: any;
 }
 
 // 添加或修改表单Props

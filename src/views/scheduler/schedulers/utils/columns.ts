@@ -12,12 +12,12 @@ export const columns: TableColumnList = [
 	{ label: $t('schedulers_description'), prop: 'description' },
 	// 任务类名称
 	{ label: $t('schedulers_jobClassName'), prop: 'jobClassName' },
+	// 触发器名称
+	{ label: $t('schedulers_triggerName'), prop: 'triggerName' },
+	// 触发器状态
+	{ label: $t('schedulers_triggerState'), prop: 'triggerState' },
 	// corn表达式
 	{ label: $t('schedulers_cronExpression'), prop: 'cronExpression' },
-	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
-	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
-	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 90 },
-	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 90 },
 	{ label: $t('table.operation'), fixed: 'right', width: 210, slot: 'operation' },
 ];
 

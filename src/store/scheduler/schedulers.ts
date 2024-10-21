@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddSchedulers, fetchDeleteSchedulers, fetchGetAllScheduleJobList, fetchGetSchedulersList, fetchUpdateSchedulers } from '@/api/v1/schedulers';
+import { fetchAddSchedulers, fetchDeleteSchedulers, fetchGetAllScheduleJobList, fetchGetSchedulersList, fetchPauseSchedulers, fetchResumeSchedulers, fetchUpdateSchedulers } from '@/api/v1/schedulers';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -82,6 +82,18 @@ export const useSchedulersStore = defineStore('schedulersStore', {
 		/** 删除Schedulers视图 */
 		async deleteSchedulers(data: any) {
 			const result = await fetchDeleteSchedulers(data);
+			return storeMessage(result);
+		},
+
+		/** 暂停任务 */
+		async pauseSchedulers(data: any) {
+			const result = await fetchPauseSchedulers(data);
+			return storeMessage(result);
+		},
+
+		/** 恢复任务 */
+		async resumeSchedulers(data: any) {
+			const result = await fetchResumeSchedulers(data);
 			return storeMessage(result);
 		},
 	},

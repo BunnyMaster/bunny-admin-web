@@ -87,9 +87,7 @@ export function onUpdate(row: any) {
 	});
 }
 
-/**
- * * 删除Schedulers视图
- */
+/** 删除Schedulers视图 */
 export const onDelete = async (row: any) => {
 	const data = { jobName: row.jobName, jobGroup: row.jobGroup };
 
@@ -104,5 +102,41 @@ export const onDelete = async (row: any) => {
 
 	// 删除数据
 	await schedulersStore.deleteSchedulers(data);
+	await onSearch();
+};
+
+/** 暂停任务 */
+export const onPause = async (row: any) => {
+	const data = { jobName: row.jobName, jobGroup: row.jobGroup };
+
+	// 是否确认删除
+	const result = await messageBox({
+		title: $t('confirm_update_status'),
+		showMessage: false,
+		confirmMessage: undefined,
+		cancelMessage: $t('cancel'),
+	});
+	if (!result) return;
+
+	// 暂停任务
+	await schedulersStore.pauseSchedulers(data);
+	await onSearch();
+};
+
+/** 恢复任务 */
+export const onResume = async (row: any) => {
+	const data = { jobName: row.jobName, jobGroup: row.jobGroup };
+
+	// 是否确认删除
+	const result = await messageBox({
+		title: $t('confirm_update_status'),
+		showMessage: false,
+		confirmMessage: undefined,
+		cancelMessage: $t('cancel'),
+	});
+	if (!result) return;
+
+	// 恢复任务
+	await schedulersStore.resumeSchedulers(data);
 	await onSearch();
 };
