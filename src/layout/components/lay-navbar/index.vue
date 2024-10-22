@@ -9,12 +9,12 @@ import LaySidebarBreadCrumb from '../lay-sidebar/components/SidebarBreadCrumb.vu
 import LaySidebarTopCollapse from '../lay-sidebar/components/SidebarTopCollapse.vue';
 
 import GlobalizationIcon from '@/assets/svg/globalization.svg?component';
-import LogoutCircleRLine from '@iconify-icons/ri/logout-circle-r-line';
 import Setting from '@iconify-icons/ri/settings-3-line';
 import Check from '@iconify-icons/ep/check';
 import { $t } from '@/plugins/i18n';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
 import { onMounted } from 'vue';
+import DropdownMenu from '@/layout/components/lay-navbar/dropdown-menu.vue';
 
 const { layout, device, logout, onPanel, pureApp, username, userAvatar, avatarsStyle, toggleSideBar, getDropdownItemStyle, getDropdownItemClass } = useNav();
 
@@ -63,20 +63,8 @@ onMounted(() => {
 			<!-- 消息通知 -->
 			<LayNotice id="header-notice" />
 			<!-- 退出登录 -->
-			<el-dropdown trigger="click">
-				<span class="el-dropdown-link navbar-bg-hover select-none">
-					<img :src="userAvatar" :style="avatarsStyle" alt="" />
-					<p v-if="username" class="dark:text-white">{{ username }}</p>
-				</span>
-				<template #dropdown>
-					<el-dropdown-menu class="logout">
-						<el-dropdown-item @click="logout">
-							<IconifyIconOffline :icon="LogoutCircleRLine" style="margin: 5px" />
-							{{ $t('buttons.pureLoginOut') }}
-						</el-dropdown-item>
-					</el-dropdown-menu>
-				</template>
-			</el-dropdown>
+			<dropdown-menu />
+			<!-- 打开设置 -->
 			<span :title="$t('buttons.pureOpenSystemSet')" class="set-icon navbar-bg-hover" @click="onPanel">
 				<IconifyIconOffline :icon="Setting" />
 			</span>
@@ -104,26 +92,6 @@ onMounted(() => {
 		min-width: 280px;
 		height: 48px;
 		color: #000000d9;
-
-		.el-dropdown-link {
-			display: flex;
-			align-items: center;
-			justify-content: space-around;
-			height: 48px;
-			padding: 10px;
-			color: #000000d9;
-			cursor: pointer;
-
-			p {
-				font-size: 14px;
-			}
-
-			img {
-				width: 22px;
-				height: 22px;
-				border-radius: 50%;
-			}
-		}
 	}
 
 	.breadcrumb-container {

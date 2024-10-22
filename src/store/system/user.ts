@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { resetRouter, router, routerArrays, storageLocal, store, type userType } from '../utils';
-import { fetchAssignRolesToUsers, fetchLogin, fetchLogout, fetchPostEmailCode, refreshTokenApi } from '@/api/v1/adminUser';
+import { fetchAssignRolesToUsers, fetchGetUserinfo, fetchLogin, fetchLogout, fetchPostEmailCode, refreshTokenApi } from '@/api/v1/adminUser';
 import { useMultiTagsStoreHook } from '../multiTags';
 import { type DataInfo, removeToken, setToken, userKey } from '@/utils/auth';
 import { message, storeMessage } from '@/utils/message';
@@ -77,6 +77,15 @@ export const useUserStore = defineStore({
 			}
 			message(result.message, { type: 'error' });
 			return false;
+		},
+
+		/** 获取用户信息 */
+		async getUserinfo() {
+			const result = await fetchGetUserinfo();
+			if (result.code === 200) {
+				return result.data;
+			}
+			return {};
 		},
 
 		/** 根据用户id获取角色列表 */

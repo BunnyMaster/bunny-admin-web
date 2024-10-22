@@ -8,10 +8,10 @@ export const fetchGetPowerList = (data: any) => {
 
 /** 权限---根据角色id获取权限内容 */
 export const fetchGetPowerListByRoleId = (data: any) => {
-	return http.request<BaseResult<object>>('get', 'rolePower/getPowerListByRoleId', { params: data });
+	return http.request<BaseResult<object>>('get', 'rolePower/noManage/getPowerListByRoleId', { params: data });
 };
 
-/** 获取所有权限 */
+/** 权限---获取所有权限 */
 export const fetchGetAllPowers = () => {
 	return http.request<BaseResult<any>>('get', `power/getAllPowers`);
 };

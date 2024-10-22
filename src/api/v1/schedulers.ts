@@ -8,7 +8,7 @@ export const fetchGetSchedulersList = (data: any) => {
 
 /** Schedulers视图---获取所有可用调度任务 */
 export const fetchGetAllScheduleJobList = () => {
-	return http.request<BaseResult<ResultTable>>('get', 'schedulers/getAllScheduleJobList');
+	return http.request<BaseResult<ResultTable>>('get', 'schedulers/noManage/getAllScheduleJobList');
 };
 
 /** Schedulers视图---添加Schedulers视图 */

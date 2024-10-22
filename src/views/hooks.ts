@@ -27,7 +27,6 @@ export function usePublicHooks() {
 					};
 		};
 	});
-
 	return {
 		/** 当前网页是否为`dark`模式 */
 		isDark,

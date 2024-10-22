@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchDeleteUserLoginLog, fetchGetUserLoginLogList } from '@/api/v1/userLoginLog';
+import { fetchDeleteUserLoginLog, fetchGetUserLoginLogList, fetchGetUserLoginLogListByLocalUser } from '@/api/v1/userLoginLog';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -64,6 +64,14 @@ export const useUserLoginLogStore = defineStore('userLoginLogStore', {
 			// 公共页面函数hook
 			const pagination = storePagination.bind(this);
 			return pagination(result);
+		},
+
+		/** 分页查询根据用户Id用户登录日志内容 */
+		async getUserLoginLogListByLocalUser(data: any) {
+			const baseResult = await fetchGetUserLoginLogListByLocalUser(data);
+			if (baseResult.code === 200) {
+				return baseResult.data;
+			}
 		},
 
 		/** 删除用户登录日志 */

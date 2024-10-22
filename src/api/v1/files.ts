@@ -18,10 +18,10 @@ export const downloadFilesByFilepath = (data: any) => {
 
 /** 系统文件管理---获取所有文件类型 */
 export const fetchGetAllMediaTypes = () => {
-	return http.request<BaseResult<any>>('get', `files/getAllMediaTypes`);
+	return http.request<BaseResult<any>>('get', `files/noManage/getAllMediaTypes`);
 };
 
-/** 系统文件管理---获取所有文件类型 */
+/** 系统文件管理---获取所有文件存储基础路径 */
 export const fetchGetAllFilesStoragePath = () => {
 	return http.request<BaseResult<any>>('get', `files/getAllFilesStoragePath`);
 };

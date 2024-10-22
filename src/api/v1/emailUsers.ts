@@ -8,7 +8,7 @@ export const fetchGetEmailUsersList = (data: any) => {
 
 /** 邮箱用户发送配置管理---获取所有邮箱配置用户 */
 export const fetchGetAllMailboxConfigurationUsers = () => {
-	return http.request<BaseResult<any>>('get', 'emailUsers/getAllMailboxConfigurationUsers');
+	return http.request<BaseResult<any>>('get', 'emailUsers/noManage/getAllMailboxConfigurationUsers');
 };
 
 /** 邮箱用户发送配置管理---添加邮箱用户发送配置管理 */

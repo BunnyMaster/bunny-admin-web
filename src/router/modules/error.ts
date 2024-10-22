@@ -1,8 +1,8 @@
 import { $t } from '@/plugins/i18n';
 
 export default {
-	path: '/error',
-	redirect: '/error/403',
+	path: '/Error',
+	redirect: '/Error/403',
 	meta: {
 		icon: 'ri:information-line',
 		showLink: false,
@@ -11,25 +11,25 @@ export default {
 	},
 	children: [
 		{
-			path: '/error/403',
+			path: '/Error/403',
 			name: '403',
-			component: () => import('@/components/error/403.vue'),
+			component: () => import('@/components/Error/403.vue'),
 			meta: {
 				title: $t('menus.pureFourZeroOne'),
 			},
 		},
 		{
-			path: '/error/404',
+			path: '/Error/404',
 			name: '404',
-			component: () => import('@/components/error/404.vue'),
+			component: () => import('@/components/Error/404.vue'),
 			meta: {
 				title: $t('menus.pureFourZeroFour'),
 			},
 		},
 		{
-			path: '/error/500',
+			path: '/Error/500',
 			name: '500',
-			component: () => import('@/components/error/500.vue'),
+			component: () => import('@/components/Error/500.vue'),
 			meta: {
 				title: $t('menus.pureFive'),
 			},

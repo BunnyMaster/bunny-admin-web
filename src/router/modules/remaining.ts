@@ -27,4 +27,14 @@ export default [
 			},
 		],
 	},
+	{
+		path: '/account-settings',
+		name: 'AccountSettings',
+		component: () => import('@/views/account-settings/index.vue'),
+		meta: {
+			title: 'buttons.accountSettings',
+			showLink: false,
+			rank: 104,
+		},
+	},
 ] satisfies Array<RouteConfigsTable>;
