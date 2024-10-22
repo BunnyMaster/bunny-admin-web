@@ -2,52 +2,18 @@
 import { useRouter } from 'vue-router';
 import { onBeforeMount, ref } from 'vue';
 import { Text } from '@/components/Text';
-import Profile from './profile.vue';
-import Preferences from './references.vue';
-import SecurityLog from './security-log.vue';
 import { deviceDetection, useGlobal } from '@pureadmin/utils';
-import AccountManagement from './account-management.vue';
 import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange';
 import LaySidebarTopCollapse from '@/layout/components/lay-sidebar/components/SidebarTopCollapse.vue';
 import leftLine from '@iconify-icons/ri/arrow-left-s-line';
-import ProfileIcon from '@iconify-icons/ri/user-3-line';
-import PreferencesIcon from '@iconify-icons/ri/settings-3-line';
-import SecurityLogIcon from '@iconify-icons/ri/window-line';
-import AccountManagementIcon from '@iconify-icons/ri/profile-line';
 import { $t } from '@/plugins/i18n';
 import { userInfos } from '@/views/account-settings/utils/hooks';
+import { panes } from '@/views/account-settings/utils/columns';
 
 const router = useRouter();
 const isOpen = ref(!deviceDetection());
 const { $storage } = useGlobal<GlobalPropertiesApi>();
 const witchPane = ref('profile');
-
-const panes = [
-	{
-		key: 'profile',
-		label: '个人信息',
-		icon: ProfileIcon,
-		component: Profile,
-	},
-	{
-		key: 'preferences',
-		label: '偏好设置',
-		icon: PreferencesIcon,
-		component: Preferences,
-	},
-	{
-		key: 'securityLog',
-		label: '安全日志',
-		icon: SecurityLogIcon,
-		component: SecurityLog,
-	},
-	{
-		key: 'accountManagement',
-		label: '账户管理',
-		icon: AccountManagementIcon,
-		component: AccountManagement,
-	},
-];
 
 onBeforeMount(() => {
 	useDataThemeChange().dataThemeChange($storage.layout?.overallStyle);

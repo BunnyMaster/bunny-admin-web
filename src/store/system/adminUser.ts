@@ -2,7 +2,16 @@ import { defineStore } from 'pinia';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
-import { fetchAddAdminUser, fetchDeleteAdminUser, fetchGetAdminUserList, fetchQueryUser, fetchUpdateAdminUser, fetchUpdateUserPasswordByAdmin, fetchUpdateUserStatusByAdmin } from '@/api/v1/adminUser';
+import {
+	fetchAddAdminUser,
+	fetchDeleteAdminUser,
+	fetchGetAdminUserList,
+	fetchQueryUser,
+	fetchUpdateAdminUser,
+	fetchUpdateAdminUserByLocalUser,
+	fetchUpdateUserPasswordByAdmin,
+	fetchUpdateUserStatusByAdmin,
+} from '@/api/v1/adminUser';
 
 /**
  * 用户信息 Store
@@ -60,6 +69,7 @@ export const useAdminUserStore = defineStore('adminUserStore', {
 			return pagination(result);
 		},
 
+		/** 查询用户 */
 		async queryUser(data: any) {
 			const result = await fetchQueryUser(data);
 			if (result.code !== 200) return [];
@@ -69,6 +79,12 @@ export const useAdminUserStore = defineStore('adminUserStore', {
 		/** 添加用户信息 */
 		async addAdminUser(data: any) {
 			const result = await fetchAddAdminUser(data);
+			return storeMessage(result);
+		},
+
+		/** 修改本地用户信息 */
+		async updateAdminUserByLocalUser(data: any) {
+			const result = await fetchUpdateAdminUserByLocalUser(data);
 			return storeMessage(result);
 		},
 

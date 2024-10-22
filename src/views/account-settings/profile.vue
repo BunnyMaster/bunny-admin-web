@@ -3,110 +3,121 @@ import { onMounted, ref } from 'vue';
 import { message } from '@/utils/message';
 import type { FormInstance } from 'element-plus';
 import ReCropperPreview from '@/components/CropperPreview';
-import { createFormData, deviceDetection } from '@pureadmin/utils';
+import { deviceDetection } from '@pureadmin/utils';
 import uploadLine from '@iconify-icons/ri/upload-line';
-import { useUserStore } from '@/store/system/user';
 import { rules } from '@/views/account-settings/utils/columns';
-import { onSearch, userInfos } from '@/views/account-settings/utils/hooks';
+import { cropperBlob, handleSubmitImage, isShow, onSearchByUserinfo, uploadAvatarSrc, userInfos } from '@/views/account-settings/utils/hooks';
+import { $t } from '@/plugins/i18n';
+import { sexConstant } from '@/enums/baseConstant';
+import { useAdminUserStore } from '@/store/system/adminUser';
 
-const imgSrc = ref('');
-const cropperBlob = ref();
-const cropRef = ref();
-const uploadRef = ref();
-const isShow = ref(false);
 const userInfoFormRef = ref<FormInstance>();
-const userStore = useUserStore();
+const uploadRef = ref();
+const cropRef = ref();
+// 剪裁完成后头像地址，base64内容
+const imgBase64Src = ref('');
 
-function queryEmail(queryString, callback) {
-	const emailList = [{ value: '@qq.com' }, { value: '@126.com' }, { value: '@163.com' }];
-	let results = [];
-	let queryList = [];
-	emailList.map(item => queryList.push({ value: queryString.split('@')[0] + item.value }));
-	results = queryString ? queryList.filter(item => item.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0) : queryList;
-	callback(results);
-}
+const adminUserStore = useAdminUserStore();
 
-const onChange = uploadFile => {
-	const reader = new FileReader();
-	reader.onload = e => {
-		imgSrc.value = e.target.result as string;
-		isShow.value = true;
-	};
-	reader.readAsDataURL(uploadFile.raw);
-};
-
+/** 关闭弹窗 */
 const handleClose = () => {
 	cropRef.value.hidePopover();
 	uploadRef.value.clearFiles();
 	isShow.value = false;
 };
 
+/** 剪裁头像 */
 const onCropper = ({ blob }) => (cropperBlob.value = blob);
 
-const handleSubmitImage = () => {
-	const formData = createFormData({
-		files: new File([cropperBlob.value], 'avatar'),
-	});
-	// formUpload(formData)
-	// 	.then(({ success, data }) => {
-	// 		if (success) {
-	// 			message('更新头像成功', { type: 'success' });
-	// 			handleClose();
-	// 		} else {
-	// 			message('更新头像失败');
-	// 		}
-	// 	})
-	// 	.catch(error => {
-	// 		message(`提交异常 ${error}`, { type: 'error' });
-	// 	});
+/** 头像修改内容 */
+const onChange = (uploadFile: any) => {
+	const reader = new FileReader();
+	reader.onload = e => {
+		imgBase64Src.value = e.target.result as string;
+		isShow.value = true;
+		console.log(imgBase64Src.value);
+	};
+	reader.readAsDataURL(uploadFile.raw);
 };
 
-// 更新信息
+/** 提交表单 */
 const onSubmit = async (formEl: FormInstance) => {
-	await formEl.validate((valid, fields) => {
+	await formEl.validate(async valid => {
 		if (valid) {
-			console.log(userInfos);
-			message('更新信息成功', { type: 'success' });
+			// 如果用户修改了头像，将上传的路径赋值进去
+			const avatar = uploadAvatarSrc.value;
+			if (avatar) userInfos.avatar = avatar;
+
+			await adminUserStore.updateAdminUserByLocalUser(userInfos);
+			await onSearchByUserinfo();
 		} else {
-			console.log('Error submit!', fields);
+			message($t('required_fields'), { type: 'warning' });
 		}
 	});
 };
 
 onMounted(() => {
-	onSearch();
+	onSearchByUserinfo();
 });
 </script>
 
 <template>
 	<div :class="['min-w-[180px]', deviceDetection() ? 'max-w-[100%]' : 'max-w-[70%]']">
 		<h3 class="my-8">个人信息</h3>
+
+		<!-- 头像 -->
 		<el-form ref="userInfoFormRef" :model="userInfos" :rules="rules" label-position="top">
-			<el-form-item label="头像">
+			<el-form-item :label="$t('avatar')">
 				<el-avatar :size="80" :src="userInfos.avatar" />
-				<el-upload ref="uploadRef" :auto-upload="false" :limit="1" :on-change="onChange" :show-file-list="false" accept="image/*" action="#">
+				<el-upload ref="uploadRef" :auto-upload="false" :limit="1" :on-change="onChange" :show-file-list="false" accept="image/*">
 					<el-button class="ml-4" plain>
 						<IconifyIconOffline :icon="uploadLine" />
-						<span class="ml-2">更新头像</span>
+						<span class="ml-2">{{ $t('upload_avatar') }}</span>
 					</el-button>
+					<template #tip>
+						<div class="el-upload__tip text-red-600">{{ $t('upload_user_avatar_tip') }}</div>
+					</template>
 				</el-upload>
 			</el-form-item>
-			<el-form-item label="昵称" prop="nickname">
-				<el-input v-model="userInfos.nickname" placeholder="请输入昵称" />
+
+			<!-- 用户名 -->
+			<el-form-item :label="$t('adminUser_username')" prop="username">
+				<el-input v-model="userInfos.username" :placeholder="$t('adminUser_username')" autocomplete="off" type="text" />
 			</el-form-item>
-			<el-form-item label="邮箱" prop="email">
-				<el-autocomplete v-model="userInfos.email" :fetch-suggestions="queryEmail" :trigger-on-focus="false" class="w-full" clearable placeholder="请输入邮箱" />
+
+			<!-- 昵称 -->
+			<el-form-item :label="$t('adminUser_nickName')" prop="nickName">
+				<el-input v-model="userInfos.nickName" :placeholder="$t('adminUser_nickName')" autocomplete="off" type="text" />
 			</el-form-item>
-			<el-form-item label="联系电话">
-				<el-input v-model="userInfos.phone" clearable placeholder="请输入联系电话" />
+
+			<!-- 邮箱 -->
+			<el-form-item :label="$t('adminUser_email')" prop="email">
+				<el-input v-model="userInfos.email" :placeholder="$t('adminUser_email')" autocomplete="off" type="text" />
 			</el-form-item>
-			<el-form-item label="简介">
-				<el-input v-model="userInfos.description" :autosize="{ minRows: 6, maxRows: 8 }" maxlength="56" placeholder="请输入简介" show-word-limit type="textarea" />
+
+			<!-- 手机号 -->
+			<el-form-item :label="$t('adminUser_phone')" prop="phone">
+				<el-input v-model="userInfos.phone" :placeholder="$t('adminUser_phone')" autocomplete="off" type="text" />
 			</el-form-item>
-			<el-button type="primary" @click="onSubmit(userInfoFormRef)"> 更新信息</el-button>
+
+			<!-- 性别 -->
+			<el-form-item :label="$t('adminUser_sex')" prop="sex">
+				<el-select v-model="userInfos.sex" :placeholder="$t('adminUser_sex')" clearable filterable>
+					<el-option v-for="(item, index) in sexConstant" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
+				</el-select>
+			</el-form-item>
+
+			<!-- 用户简介 -->
+			<el-form-item :label="$t('adminUser_summary')" prop="summary">
+				<el-input v-model="userInfos.summary" :autosize="{ minRows: 3, maxRows: 6 }" :placeholder="$t('adminUser_summary')" autocomplete="off" maxlength="200" show-word-limit type="textarea" />
+			</el-form-item>
+
+			<!-- 更新信息 -->
+			<el-button type="primary" @click="onSubmit(userInfoFormRef)"> {{ $t('update_information') }}</el-button>
 		</el-form>
+
 		<el-dialog v-model="isShow" :before-close="handleClose" :closeOnClickModal="false" :fullscreen="deviceDetection()" destroy-on-close title="编辑头像" width="40%">
-			<ReCropperPreview ref="cropRef" :imgSrc="imgSrc" @cropper="onCropper" />
+			<ReCropperPreview ref="cropRef" :imgSrc="imgBase64Src" @cropper="onCropper" />
 			<template #footer>
 				<div class="dialog-footer">
 					<el-button bg text @click="handleClose">取消</el-button>

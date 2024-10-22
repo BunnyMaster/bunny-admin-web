@@ -69,6 +69,11 @@ export const fetchAddAdminUser = (data: any) => {
 	return http.request<BaseResult<object>>('post', 'user/addAdminUser', { data });
 };
 
+/** 用户信息---更新本地用户信息 */
+export const fetchUpdateAdminUserByLocalUser = (data: any) => {
+	return http.request<BaseResult<object>>('put', 'user/noManage/updateAdminUserByLocalUser', { data });
+};
+
 /** 用户信息---更新用户信息 */
 export const fetchUpdateAdminUser = (data: any) => {
 	return http.request<BaseResult<object>>('put', 'user/updateAdminUser', { data });
