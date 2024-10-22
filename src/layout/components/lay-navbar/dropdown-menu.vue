@@ -2,6 +2,7 @@
 import { useNav } from '@/layout/hooks/useNav';
 import LogoutCircleRLine from '@iconify-icons/ri/logout-circle-r-line';
 import { $t } from '@/plugins/i18n';
+import AccountSettingsIcon from '@iconify-icons/ri/user-settings-line';
 import { useRouter } from 'vue-router';
 
 const { logout, username, userAvatar, avatarsStyle } = useNav();
@@ -16,9 +17,8 @@ const router = useRouter();
 		</span>
 		<template #dropdown>
 			<el-dropdown-item @click="router.push({ name: 'AccountSettings' })">
-				<IconifyIconOffline :icon="LogoutCircleRLine" style="margin: 5px" />
-				账户设置
-				<!--{{ $t('buttons.pureLoginOut') }}-->
+				<IconifyIconOffline :icon="AccountSettingsIcon" style="margin: 5px" />
+				{{ $t('buttons.pureAccountSettings') }}
 			</el-dropdown-item>
 			<el-dropdown-menu class="logout">
 				<el-dropdown-item @click="logout">

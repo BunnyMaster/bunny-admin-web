@@ -64,9 +64,9 @@ export const fetchQueryUser = (data: any) => {
 	return http.request<BaseResult<object>>('get', 'user/noManage/queryUser', { params: data });
 };
 
-/** 用户信息---添加用户信息 */
-export const fetchAddAdminUser = (data: any) => {
-	return http.request<BaseResult<object>>('post', 'user/addAdminUser', { data });
+/** 用户信息---更新用户信息 */
+export const fetchUpdateAdminUser = (data: any) => {
+	return http.request<BaseResult<object>>('put', 'user/updateAdminUser', { data });
 };
 
 /** 用户信息---更新本地用户信息 */
@@ -74,9 +74,14 @@ export const fetchUpdateAdminUserByLocalUser = (data: any) => {
 	return http.request<BaseResult<object>>('put', 'user/noManage/updateAdminUserByLocalUser', { data });
 };
 
-/** 用户信息---更新用户信息 */
-export const fetchUpdateAdminUser = (data: any) => {
-	return http.request<BaseResult<object>>('put', 'user/updateAdminUser', { data });
+/** 用户信息---更新本地用户密码 */
+export const fetchUpdateUserPasswordByLocalUser = (data: any) => {
+	return http.request<BaseResult<object>>('put', 'user/noManage/updateUserPasswordByLocalUser', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
+};
+
+/** 用户信息---添加用户信息 */
+export const fetchAddAdminUser = (data: any) => {
+	return http.request<BaseResult<object>>('post', 'user/addAdminUser', { data });
 };
 
 /** 用户信息---删除用户信息 */

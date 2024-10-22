@@ -6,7 +6,7 @@ import { message, messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/adminUser/utils/types';
 import { $t } from '@/plugins/i18n';
 import { isAddUserinfo } from '@/views/system/adminUser/utils/columns';
-import ResetPasswordDialog from '@/views/system/adminUser/reset-passwords.vue';
+import ResetPasswordDialog from '@/components/Table/ResetPasswords.vue';
 import { deviceDetection, handleTree } from '@pureadmin/utils';
 import CropperPreview from '@/components/CropperPreview';
 import AssignUserToRole from '@/views/system/adminUser/assign-roles-to-user.vue';

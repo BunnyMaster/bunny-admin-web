@@ -10,6 +10,7 @@ import {
 	fetchUpdateAdminUser,
 	fetchUpdateAdminUserByLocalUser,
 	fetchUpdateUserPasswordByAdmin,
+	fetchUpdateUserPasswordByLocalUser,
 	fetchUpdateUserStatusByAdmin,
 } from '@/api/v1/adminUser';
 
@@ -97,6 +98,12 @@ export const useAdminUserStore = defineStore('adminUserStore', {
 		/** 删除用户信息 */
 		async deleteAdminUser(data: any) {
 			const result = await fetchDeleteAdminUser(data);
+			return storeMessage(result);
+		},
+
+		/** 更新本地用户密码 */
+		async updateUserPasswordByLocalUser(data: any) {
+			const result: any = await fetchUpdateUserPasswordByLocalUser(data);
 			return storeMessage(result);
 		},
 

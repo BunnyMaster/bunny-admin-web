@@ -9,8 +9,10 @@ import { $t } from '@/plugins/i18n';
 export const cropperBlob = ref();
 // 上传地址路径
 export const uploadAvatarSrc = ref();
+
 // 剪裁头像是否显示
 export const isShow = ref(false);
+
 const userStore = useUserStore();
 
 // 用户信息内容
