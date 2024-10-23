@@ -72,7 +72,7 @@ declare global {
 	interface TableColumnList extends Array<TableColumns> {}
 
 	/**
-	 * 对应 `public/platform-config.json` 文件的类型声明
+	 * 对应 `server/platform-config` 文件的类型声明
 	 * @see {@link https://pure-admin.github.io/pure-admin-doc/pages/config/#platform-config-json}
 	 */
 	interface PlatformConfigs {

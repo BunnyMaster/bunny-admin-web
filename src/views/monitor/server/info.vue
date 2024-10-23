@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
-import { $t } from '@/plugins/i18n';
 import { cardClass, cardLogoClass } from '@/views/monitor/server/utils/columns';
 
 defineProps({
@@ -15,11 +14,6 @@ defineProps({
 				<el-row justify="space-between">
 					<div :class="cardLogoClass">
 						<component :is="useRenderIcon('devicon:java')" />
-					</div>
-					<div class="list-card-item_detail--operation">
-						<el-tag class="mx-1 list-card-item_detail--operation--tag" color="#00a870" effect="dark">
-							{{ $t('enable') }}
-						</el-tag>
 					</div>
 				</el-row>
 				<p class="list-card-item_detail--name text-text_color_primary">java</p>
@@ -45,11 +39,6 @@ defineProps({
 				<el-row justify="space-between">
 					<div :class="cardLogoClass">
 						<component :is="useRenderIcon('mdi:server')" />
-					</div>
-					<div class="list-card-item_detail--operation">
-						<el-tag class="mx-1 list-card-item_detail--operation--tag" color="#00a870" effect="dark">
-							{{ $t('enable') }}
-						</el-tag>
 					</div>
 				</el-row>
 				<p class="list-card-item_detail--name text-text_color_primary">系统信息</p>
