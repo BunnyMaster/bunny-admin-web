@@ -14,12 +14,8 @@ export const useUserLoginLogStore = defineStore('userLoginLogStore', {
 			datalist: [],
 			// 查询表单
 			form: {
-				// 用户Id
-				userId: undefined,
 				// 用户名
 				username: undefined,
-				// 登录token
-				token: undefined,
 				// 登录Ip
 				ipAddress: undefined,
 				// 登录Ip归属地
@@ -30,18 +26,12 @@ export const useUserLoginLogStore = defineStore('userLoginLogStore', {
 				type: undefined,
 				// 标识客户端是否是通过Ajax发送请求的
 				xRequestedWith: undefined,
-				// 用户代理的品牌和版本
-				secChUa: undefined,
-				// 用户代理是否在手机设备上运行
-				secChUaMobile: undefined,
-				// 用户代理的底层操作系统/平台
-				secChUaPlatform: undefined,
 			},
 			// 分页查询结果
 			pagination: {
 				currentPage: 1,
-				pageSize: 150,
-				total: 100,
+				pageSize: 30,
+				total: 1,
 				pageSizes,
 			},
 			// 加载

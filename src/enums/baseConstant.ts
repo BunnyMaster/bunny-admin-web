@@ -35,5 +35,5 @@ export const userStatus = [
 /**
  * * 分页默认数组个数
  */
-export const pageSizes: number[] = [15, 30, 50, 100, 150, 200, 300];
+export const pageSizes: number[] = [15, 30, 50, 100, 150];
 export const tableSelectButtonClass = computed(() => ['!h-[20px]', 'reset-margin', '!text-gray-500', 'dark:!text-white', 'dark:hover:!text-primary']);

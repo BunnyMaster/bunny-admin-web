@@ -60,19 +60,9 @@ onMounted(() => {
 <template>
 	<div class="main">
 		<el-form ref="formRef" :inline="true" :model="userLoginLogStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-			<!-- 用户Id -->
-			<el-form-item :label="$t('userLoginLog_userId')" prop="userId">
-				<el-input v-model="userLoginLogStore.form.userId" :placeholder="`${$t('input')}${$t('userLoginLog_userId')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-
 			<!-- 用户名 -->
 			<el-form-item :label="$t('userLoginLog_username')" prop="username">
 				<el-input v-model="userLoginLogStore.form.username" :placeholder="`${$t('input')}${$t('userLoginLog_username')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-
-			<!-- 登录token -->
-			<el-form-item :label="$t('userLoginLog_token')" prop="token">
-				<el-input v-model="userLoginLogStore.form.token" :placeholder="`${$t('input')}${$t('userLoginLog_token')}`" class="!w-[180px]" clearable />
 			</el-form-item>
 
 			<!-- 登录Ip -->
@@ -85,11 +75,6 @@ onMounted(() => {
 				<el-input v-model="userLoginLogStore.form.ipRegion" :placeholder="`${$t('input')}${$t('userLoginLog_ipRegion')}`" class="!w-[180px]" clearable />
 			</el-form-item>
 
-			<!-- 登录时代理 -->
-			<el-form-item :label="$t('userLoginLog_userAgent')" prop="userAgent">
-				<el-input v-model="userLoginLogStore.form.userAgent" :placeholder="`${$t('input')}${$t('userLoginLog_userAgent')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-
 			<!-- 操作类型 -->
 			<el-form-item :label="$t('userLoginLog_type')" prop="type">
 				<el-input v-model="userLoginLogStore.form.type" :placeholder="`${$t('input')}${$t('userLoginLog_type')}`" class="!w-[180px]" clearable />
@@ -98,21 +83,6 @@ onMounted(() => {
 			<!-- 标识客户端是否是通过Ajax发送请求的 -->
 			<el-form-item :label="$t('userLoginLog_xRequestedWith')" prop="xRequestedWith">
 				<el-input v-model="userLoginLogStore.form.xRequestedWith" :placeholder="`${$t('input')}${$t('userLoginLog_xRequestedWith')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-
-			<!-- 用户代理的品牌和版本 -->
-			<el-form-item :label="$t('userLoginLog_secChUa')" prop="secChUa">
-				<el-input v-model="userLoginLogStore.form.secChUa" :placeholder="`${$t('input')}${$t('userLoginLog_secChUa')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-
-			<!-- 用户代理是否在手机设备上运行 -->
-			<el-form-item :label="$t('userLoginLog_secChUaMobile')" prop="secChUaMobile">
-				<el-input v-model="userLoginLogStore.form.secChUaMobile" :placeholder="`${$t('input')}${$t('userLoginLog_secChUaMobile')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-
-			<!-- 用户代理的底层操作系统/平台 -->
-			<el-form-item :label="$t('userLoginLog_secChUaPlatform')" prop="secChUaPlatform">
-				<el-input v-model="userLoginLogStore.form.secChUaPlatform" :placeholder="`${$t('input')}${$t('userLoginLog_secChUaPlatform')}`" class="!w-[180px]" clearable />
 			</el-form-item>
 
 			<el-form-item>

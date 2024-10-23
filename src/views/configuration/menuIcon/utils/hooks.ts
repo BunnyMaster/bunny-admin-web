@@ -15,7 +15,9 @@ export const deleteIds = ref([]);
  */
 export async function onSearch() {
 	menuIconStore.loading = true;
+
 	await menuIconStore.getMenuIconList();
+
 	menuIconStore.loading = false;
 }
 

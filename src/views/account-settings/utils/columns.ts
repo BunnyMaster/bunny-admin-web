@@ -10,33 +10,19 @@ import AccountManagementIcon from '@iconify-icons/ri/profile-line';
 import AccountManagement from '@/views/account-settings/account-management.vue';
 
 export const columns: TableColumnList = [
-	// { type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
-	// // 用户名
-	// { label: $t('userLoginLog_username'), prop: 'username', width: 180 },
+	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
+	// 用户名
+	{ label: $t('userLoginLog_username'), prop: 'username', width: 180 },
 	// // 登录Ip
 	// { label: $t('userLoginLog_ipAddress'), prop: 'ipAddress', width: 140 },
 	// 登录Ip归属地
 	{ label: $t('userLoginLog_ipRegion'), prop: 'ipRegion' },
 	// // 登录时代理
-	// { label: $t('userLoginLog_userAgent'), prop: 'userAgent', width: 200 },
+	// { label: $t('userLoginLog_userAgent'), prop: 'userAgent' },
 	// 操作类型
 	{ label: $t('userLoginLog_type'), prop: 'type' },
 	// // 标识客户端是否是通过Ajax发送请求的
 	// { label: $t('userLoginLog_xRequestedWith'), prop: 'xRequestedWith', width: 150 },
-	// 用户代理的品牌和版本
-	{
-		label: $t('userLoginLog_secChUa'),
-		prop: 'secChUa',
-		formatter: ({ secChUa }) => {
-			const regex = /"([^"]+)";/;
-			const match = regex.exec(secChUa);
-			return match ? match[1] : secChUa;
-		},
-	},
-	// // 用户代理是否在手机设备上运行
-	// { label: $t('userLoginLog_secChUaMobile'), prop: 'secChUaMobile', width: 130 },
-	// 用户代理的底层操作系统/平台
-	{ label: $t('userLoginLog_secChUaPlatform'), prop: 'secChUaPlatform' },
 	// 创建时间也就是操作时间
 	{
 		label: $t('op_time'),

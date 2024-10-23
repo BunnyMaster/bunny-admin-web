@@ -17,14 +17,6 @@ export interface FormItemProps {
 	type: string;
 	// 标识客户端是否是通过Ajax发送请求的
 	xRequestedWith: string;
-	// 用户代理的品牌和版本
-	secChUa: string;
-	// 用户代理是否在手机设备上运行
-	secChUaMobile: string;
-	// 用户代理的设备模型
-	secChUaModel: string;
-	// 用户代理的底层操作系统/平台
-	secChUaPlatform: string;
 }
 
 // 添加或修改表单Props

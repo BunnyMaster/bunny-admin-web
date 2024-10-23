@@ -6,7 +6,7 @@ export const fetchGetFilesList = (data: any) => {
 	return http.request<BaseResult<ResultTable>>('get', `files/getFilesList/${data.currentPage}/${data.pageSize}`, { params: data });
 };
 
-/** 系统文件管理---根据I下载系统文件d */
+/** 系统文件管理---根据Id下载系统文件 */
 export const downloadFilesByFileId = (data: any) => {
 	return http.request<any>('get', `files/downloadFilesByFileId/${data.id}`, { responseType: 'blob' });
 };

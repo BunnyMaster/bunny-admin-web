@@ -19,7 +19,7 @@ export const userI18nStore = defineStore('i18nStore', {
 			pagination: {
 				currentPage: 1,
 				pageSize: 150,
-				total: 100,
+				total: 1,
 				pageSizes,
 				background: true,
 			},

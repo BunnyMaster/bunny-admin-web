@@ -30,8 +30,8 @@ export const useQuartzExecuteLogStore = defineStore('quartzExecuteLogStore', {
 			// 分页查询结果
 			pagination: {
 				currentPage: 1,
-				pageSize: 150,
-				total: 100,
+				pageSize: 30,
+				total: 1,
 				pageSizes,
 			},
 			// 加载

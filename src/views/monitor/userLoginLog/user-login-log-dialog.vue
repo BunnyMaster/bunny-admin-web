@@ -23,14 +23,6 @@ const props = withDefaults(defineProps<FormProps>(), {
 		type: undefined,
 		// 标识客户端是否是通过Ajax发送请求的
 		xRequestedWith: undefined,
-		// 用户代理的品牌和版本
-		secChUa: undefined,
-		// 用户代理的底层CPU架构位数
-		secChUaBitness: undefined,
-		// 用户代理是否在手机设备上运行
-		secChUaMobile: undefined,
-		// 用户代理的底层操作系统/平台
-		secChUaPlatform: undefined,
 		// 客户端连接到服务器的近似带宽
 		downlink: undefined,
 	}),
@@ -82,21 +74,6 @@ defineExpose({ formRef });
 		<!-- 标识客户端是否是通过Ajax发送请求的 -->
 		<el-form-item :label="$t('userLoginLog_xRequestedWith')" prop="xRequestedWith">
 			<el-input v-model="form.xRequestedWith" :placeholder="$t('input') + $t('userLoginLog_xRequestedWith')" autocomplete="off" type="text" />
-		</el-form-item>
-
-		<!-- 用户代理的品牌和版本 -->
-		<el-form-item :label="$t('userLoginLog_secChUa')" prop="secChUa">
-			<el-input v-model="form.secChUa" :placeholder="$t('input') + $t('userLoginLog_secChUa')" autocomplete="off" type="text" />
-		</el-form-item>
-
-		<!-- 用户代理是否在手机设备上运行 -->
-		<el-form-item :label="$t('userLoginLog_secChUaMobile')" prop="secChUaMobile">
-			<el-input v-model="form.secChUaMobile" :placeholder="$t('input') + $t('userLoginLog_secChUaMobile')" autocomplete="off" type="text" />
-		</el-form-item>
-
-		<!-- 用户代理的底层操作系统/平台 -->
-		<el-form-item :label="$t('userLoginLog_secChUaPlatform')" prop="secChUaPlatform">
-			<el-input v-model="form.secChUaPlatform" :placeholder="$t('input') + $t('userLoginLog_secChUaPlatform')" autocomplete="off" type="text" />
 		</el-form-item>
 	</el-form>
 </template>
