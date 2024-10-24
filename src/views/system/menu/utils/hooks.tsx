@@ -146,6 +146,15 @@ export const onUpdate = (row?: FormItemProps) => {
  * @param row
  */
 export const handleDelete = async row => {
+	// 是否确认删除
+	const result = await messageBox({
+		title: $t('confirmDelete'),
+		showMessage: false,
+		confirmMessage: undefined,
+		cancelMessage: $t('confirmDelete'),
+	});
+	if (!result) return;
+
 	await menuStore.deletedMenuByIds([row.id]);
 	await onSearch();
 };
