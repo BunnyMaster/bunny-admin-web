@@ -86,7 +86,7 @@ onMounted(() => {
 		<PureTableBar :columns="columns" :isExpandAll="true" :tableRef="tableRef?.getTableRef()" :title="$t('power')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<!-- 添加权限按钮 -->
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()"> {{ $t('add_new') }}</el-button>
+				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()"> {{ $t('addNew') }}</el-button>
 
 				<!-- 批量更新父级id -->
 				<el-button v-show="powerIds.length > 0" :icon="useRenderIcon(EditPen)" type="primary" @click="onUpdateBatchParent">
@@ -136,7 +136,7 @@ onMounted(() => {
 					<template #operation="{ row }">
 						<!-- 修改 -->
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
-						<el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)"> {{ $t('add_new') }} </el-button>
+						<el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)"> {{ $t('addNew') }} </el-button>
 						<!-- 删除 -->
 						<el-popconfirm :title="`${$t('delete')}${row.powerName}?`" @confirm="onDelete(row)">
 							<template #reference>

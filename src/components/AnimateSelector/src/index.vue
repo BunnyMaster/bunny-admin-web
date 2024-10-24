@@ -11,7 +11,7 @@ defineOptions({
 defineProps({
 	placeholder: {
 		type: String,
-		default: $t('please_select_animation'),
+		default: $t('pleaseSelectAnimation'),
 	},
 });
 
@@ -85,7 +85,7 @@ function onMouseleave() {
 							</h4>
 						</li>
 					</ul>
-					<el-empty v-show="animatesList.length === 0" :description="`${searchVal} ${$t('animation_not_exist')}`" :image-size="60" />
+					<el-empty v-show="animatesList.length === 0" :description="`${searchVal} ${$t('animationNotExist')}`" :image-size="60" />
 				</el-scrollbar>
 			</div>
 		</template>

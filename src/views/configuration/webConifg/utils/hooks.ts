@@ -1,5 +1,8 @@
-import { fetchPlatformConfig } from '@/api/v1/system';
 import { ref } from 'vue';
+import type { FormInstance } from 'element-plus';
+import { fetchGetWebConfig, fetchUpdateWebConfiguration } from '@/api/v1/configuration';
+import { message, messageBox } from '@/utils/message';
+import { $t } from '@/plugins/i18n';
 
 export const form = ref({
 	version: '', // 应用程序的版本
@@ -32,7 +35,32 @@ export const form = ref({
 
 /** 获取前端配置文件 */
 export const onSearch = async () => {
-	const result = await fetchPlatformConfig();
-	console.log(result);
-	form.value = result;
+	const result = await fetchGetWebConfig();
+	if (result.code !== 200) return;
+	form.value = result.data;
+};
+
+/** 提交表单 */
+export const submitForm = async (formEl: FormInstance | undefined) => {
+	if (!formEl) return;
+	await formEl.validate(async valid => {
+		if (valid) {
+			// 是否确认修改弹窗内容
+			const confirm = await messageBox({
+				title: $t('confirmUpdateConfiguration'),
+				showMessage: false,
+				confirmMessage: undefined,
+				cancelMessage: $t('cancel'),
+			});
+			if (!confirm) return;
+
+			// 修改内容
+			const result = await fetchUpdateWebConfiguration(form.value);
+			if (result.code !== 200) return;
+
+			// 提交成功后刷新
+			await onSearch();
+			message(result.message, { type: 'success' });
+		}
+	});
 };

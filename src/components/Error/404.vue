@@ -16,7 +16,7 @@ const router = useRouter();
 		<div class="ml-12">
 			<p v-motion :enter="{ opacity: 1, y: 0, transition: { delay: 80 } }" :initial="{ opacity: 0, y: 100 }" class="font-medium text-4xl mb-4 dark:text-white">404</p>
 			<p v-motion :enter="{ opacity: 1, y: 0, transition: { delay: 120 } }" :initial="{ opacity: 0, y: 100 }" class="mb-4 text-gray-500">
-				{{ $t('sorry_page_not_found') }}
+				{{ $t('sorryPageNotFound') }}
 			</p>
 			<el-button
 				v-motion
@@ -28,7 +28,7 @@ const router = useRouter();
 				type="primary"
 				@click="router.push('/')"
 			>
-				{{ $t('return_to_homepage') }}
+				{{ $t('returnToHomepage') }}
 			</el-button>
 		</div>
 	</div>

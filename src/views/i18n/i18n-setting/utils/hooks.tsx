@@ -25,7 +25,7 @@ export const onSearch = async () => {
  */
 export const onAdd = () => {
 	addDialog({
-		title: $t('add_multilingual'),
+		title: $t('addMultilingual'),
 		width: '30%',
 		props: { formInline: { keyName: '', translation: '', typeName: '' } },
 		draggable: true,
@@ -109,11 +109,11 @@ export const onUpdate = (row: any) => {
  */
 export const onDelete = async (row: any) => {
 	const isConfirm = await messageBox({
-		message: $t('confirm_delete'),
+		message: $t('confirmDelete'),
 		title: $t('delete_warning'),
 		showMessage: false,
 		confirmMessage: $t('delete_success'),
-		cancelMessage: $t('cancel_delete'),
+		cancelMessage: $t('confirmDelete'),
 	});
 
 	if (isConfirm) {
@@ -127,11 +127,11 @@ export const onDelete = async (row: any) => {
  */
 export const onDeleteBatch = async () => {
 	const isConfirm = await messageBox({
-		message: $t('confirm_delete'),
+		message: $t('confirmDelete'),
 		title: $t('delete_warning'),
 		showMessage: false,
 		confirmMessage: $t('delete_success'),
-		cancelMessage: $t('cancel_delete'),
+		cancelMessage: $t('confirmDelete'),
 	});
 
 	if (isConfirm) {

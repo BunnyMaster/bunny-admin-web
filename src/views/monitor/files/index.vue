@@ -71,7 +71,7 @@ onMounted(() => {
 
 		<PureTableBar :columns="columns" :title="$t('system_file')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('add_new') }}</el-button>
+				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('addNew') }}</el-button>
 
 				<!-- 批量下载 -->
 				<el-button v-show="selectRows.length > 0" :icon="useRenderIcon(Download)" type="success" @click="onDownloadBatch">

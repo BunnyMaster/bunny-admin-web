@@ -25,7 +25,7 @@ export async function onSearch() {
  */
 export function onAdd() {
 	addDialog({
-		title: `${$t('add_new')}${$t('schedulersGroup')}`,
+		title: `${$t('addNew')}${$t('schedulersGroup')}`,
 		width: '30%',
 		props: {
 			formInline: {
@@ -91,10 +91,10 @@ export const onDelete = async (row: any) => {
 
 	// 是否确认删除
 	const result = await messageBox({
-		title: $t('confirm_delete'),
+		title: $t('confirmDelete'),
 		showMessage: false,
 		confirmMessage: undefined,
-		cancelMessage: $t('cancel_delete'),
+		cancelMessage: $t('confirmDelete'),
 	});
 	if (!result) return;
 
@@ -111,10 +111,10 @@ export const onDeleteBatch = async () => {
 
 	// 是否确认删除
 	const result = await messageBox({
-		title: $t('confirm_delete'),
+		title: $t('confirmDelete'),
 		showMessage: false,
 		confirmMessage: undefined,
-		cancelMessage: $t('cancel_delete'),
+		cancelMessage: $t('confirmDelete'),
 	});
 	if (!result) return;
 

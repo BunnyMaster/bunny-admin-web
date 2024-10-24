@@ -10,8 +10,3 @@ export const getRouterAsync = () => {
 export const fetchUploadFile = (data: any) => {
 	return http.request<BaseResult<any>>('post', '/files/upload', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
-
-/** 获取前端配置文件 */
-export const fetchPlatformConfig = () => {
-	return http.request<any>('get', '/files/noManage/resourceFiles/platform-config.json');
-};

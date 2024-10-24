@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { App } from 'vue';
 
 let config: object = {};
-const { VITE_PUBLIC_PATH, VITE_BASE_API } = import.meta.env;
+const { VITE_BASE_API } = import.meta.env;
 
 const setConfig = (cfg?: unknown) => {
 	config = Object.assign(config, cfg);
@@ -31,7 +31,7 @@ export const getPlatformConfig = async (app: App): Promise<undefined> => {
 	app.config.globalProperties.$config = getConfig();
 	return axios({
 		method: 'get',
-		url: `${VITE_BASE_API}/files/noManage/resourceFiles/platform-config.json`,
+		url: `${VITE_BASE_API}/config/noAuth/webConfig`,
 	})
 		.then(({ data: config }) => {
 			let $config = app.config.globalProperties.$config;
