@@ -13,7 +13,7 @@ export const columns: TableColumnList = [
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 90 },
 	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 90 },
-	{ label: $t('table.operation'), fixed: 'right', width: 210, slot: 'operation' },
+	{ label: $t('table.operation'), fixed: 'right', width: 240, slot: 'operation' },
 ];
 
 // 添加规则

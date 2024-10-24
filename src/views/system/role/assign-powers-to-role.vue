@@ -25,17 +25,13 @@ const treeIds = ref([]);
 // 树形结构权限列表
 const datalist = computed(() => handleTree(powerStore.allPowerList));
 
-/**
- * 获取所有权限
- */
+/** 获取所有权限 */
 const getAllPowers = async () => {
 	await powerStore.getAllPowers();
 	treeIds.value = getKeyList(powerStore.allPowerList, 'id');
 };
 
-/**
- * 菜单权限-保存
- */
+/** 保存 */
 const onSave = async () => {
 	// 构建保存参数
 	const { id, description } = currentRow.value;

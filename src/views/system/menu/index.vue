@@ -104,7 +104,7 @@ onMounted(() => {
 					<template #operation="{ row }">
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
 						<el-button v-show="row.menuType !== 3" :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)"> {{ $t('addNew') }} </el-button>
-						<el-popconfirm :title="`${$t('delete')} ${row.title}?`" @confirm="handleDelete(row)">
+						<el-popconfirm :title="`${$t('delete')} ${$t(row.title)}?`" @confirm="handleDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}

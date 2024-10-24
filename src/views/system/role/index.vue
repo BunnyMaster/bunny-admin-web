@@ -137,7 +137,7 @@ onMounted(() => {
 								</template>
 							</el-popconfirm>
 
-							<el-button :icon="useRenderIcon(Menu)" :size="size" class="reset-margin" link type="primary" @click="onMenuPowerClick(row)"> {{ $t('power_setting') }}} </el-button>
+							<el-button :icon="useRenderIcon(Menu)" :size="size" class="reset-margin" link type="primary" @click="onMenuPowerClick(row)"> {{ $t('power_setting') }} </el-button>
 						</template>
 					</pure-table>
 				</template>

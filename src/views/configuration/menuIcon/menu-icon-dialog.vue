@@ -27,6 +27,7 @@ defineExpose({ formRef });
 		<el-form-item :label="$t('menuIcon_iconCode')" prop="iconCode">
 			<el-input v-model="form.iconCode" autocomplete="off" type="text" />
 		</el-form-item>
+
 		<el-form-item :label="$t('menuIcon_iconName')" prop="iconName">
 			<MenuIconSelectIconName :formInline="form" />
 		</el-form-item>

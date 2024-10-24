@@ -2,17 +2,16 @@ import { addDialog } from '@/components/BaseDialog/index';
 import UserLoginLogDialog from '@/views/monitor/userLoginLog/user-login-log-dialog.vue';
 import { useUserLoginLogStore } from '@/store/monitor/userLoginLog';
 import { h, ref } from 'vue';
-import { messageBox } from '@/utils/message';
+import { message, messageBox } from '@/utils/message';
 import { $t } from '@/plugins/i18n';
+import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 
 export const formRef = ref();
 // 删除ids
 export const deleteIds = ref([]);
 const userLoginLogStore = useUserLoginLogStore();
 
-/**
- * * 搜索初始化用户登录日志
- */
+/** 搜索初始化用户登录日志 */
 export async function onSearch() {
 	userLoginLogStore.loading = true;
 	await userLoginLogStore.getUserLoginLogList();
@@ -50,9 +49,7 @@ export function onView(row: any) {
 	});
 }
 
-/**
- * * 删除用户登录日志
- */
+/** 删除用户登录日志 */
 export const onDelete = async (row: any) => {
 	const id = row.id;
 
@@ -70,22 +67,32 @@ export const onDelete = async (row: any) => {
 	await onSearch();
 };
 
-/**
- * 批量删除
- */
+/** 批量删除 */
 export const onDeleteBatch = async () => {
 	const ids = deleteIds.value;
+	const formDeletedBatchRef = ref();
 
-	// 是否确认删除
-	const result = await messageBox({
-		title: $t('confirmDelete'),
-		showMessage: false,
-		confirmMessage: undefined,
-		cancelMessage: $t('confirmDelete'),
+	addDialog({
+		title: $t('deleteBatchTip'),
+		width: '30%',
+		props: { formInline: { confirmText: '' } },
+		draggable: true,
+		fullscreenIcon: true,
+		closeOnClickModal: false,
+		contentRenderer: () => h(DeleteBatchDialog, { ref: formDeletedBatchRef }),
+		beforeSure: (done, { options }) => {
+			formDeletedBatchRef.value.formDeletedBatchRef.validate(async (valid: any) => {
+				if (!valid) return;
+
+				const text = options.props.formInline.confirmText.toLowerCase();
+				if (text === 'yes' || text === 'y') {
+					// 删除数据
+					await userLoginLogStore.deleteUserLoginLog(ids);
+					await onSearch();
+
+					done();
+				} else message($t('deleteBatchTip'), { type: 'warning' });
+			});
+		},
 	});
-	if (!result) return;
-
-	// 删除数据
-	await userLoginLogStore.deleteUserLoginLog(ids);
-	await onSearch();
 };

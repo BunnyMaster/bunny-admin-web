@@ -2,9 +2,10 @@ import { addDialog } from '@/components/BaseDialog/index';
 import EmailTemplateDialog from '@/views/configuration/emailTemplate/email-template-dialog.vue';
 import { useEmailTemplateStore } from '@/store/configuration/emailTemplate';
 import { h, ref } from 'vue';
-import { messageBox } from '@/utils/message';
+import { message, messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/configuration/emailTemplate/utils/types';
 import { $t } from '@/plugins/i18n';
+import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 
 // 选择的row列表
 export const selectRows = ref([]);
@@ -89,9 +90,7 @@ export function onUpdate(row: any) {
 	});
 }
 
-/**
- * * 删除邮件模板表
- */
+/** 删除邮件模板表 */
 export const onDelete = async (row: any) => {
 	const id = row.id;
 
@@ -112,17 +111,29 @@ export const onDelete = async (row: any) => {
 /** 批量删除 */
 export const onDeleteBatch = async () => {
 	const ids = selectRows.value.map((row: any) => row.id);
+	const formDeletedBatchRef = ref();
 
-	// 是否确认删除
-	const result = await messageBox({
-		title: $t('confirmDelete'),
-		showMessage: false,
-		confirmMessage: undefined,
-		cancelMessage: $t('confirmDelete'),
+	addDialog({
+		title: $t('deleteBatchTip'),
+		width: '30%',
+		props: { formInline: { confirmText: '' } },
+		draggable: true,
+		fullscreenIcon: true,
+		closeOnClickModal: false,
+		contentRenderer: () => h(DeleteBatchDialog, { ref: formDeletedBatchRef }),
+		beforeSure: (done, { options }) => {
+			formDeletedBatchRef.value.formDeletedBatchRef.validate(async (valid: any) => {
+				if (!valid) return;
+
+				const text = options.props.formInline.confirmText.toLowerCase();
+				if (text === 'yes' || text === 'y') {
+					// 删除数据
+					await emailTemplateStore.deleteEmailTemplate(ids);
+					await onSearch();
+
+					done();
+				} else message($t('deleteBatchTip'), { type: 'warning' });
+			});
+		},
 	});
-	if (!result) return;
-
-	// 删除数据
-	await emailTemplateStore.deleteEmailTemplate(ids);
-	await onSearch();
 };

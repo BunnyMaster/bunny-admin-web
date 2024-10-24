@@ -23,7 +23,7 @@ export const fetchGetAllMediaTypes = () => {
 
 /** 系统文件管理---获取所有文件存储基础路径 */
 export const fetchGetAllFilesStoragePath = () => {
-	return http.request<BaseResult<any>>('get', `files/getAllFilesStoragePath`);
+	return http.request<BaseResult<any>>('get', `files/noManage/getAllFilesStoragePath`);
 };
 
 /** 系统文件管理---添加系统文件管理 */

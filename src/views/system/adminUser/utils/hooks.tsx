@@ -14,6 +14,7 @@ import userAvatar from '@/assets/user.jpg';
 import { fetchForcedOffline, fetchUploadAvatarByAdmin } from '@/api/v1/adminUser';
 import { useUserStore } from '@/store/system/user';
 import { useDeptStore } from '@/store/system/dept';
+import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 
 const adminUserStore = useAdminUserStore();
 const userStore = useUserStore();
@@ -49,9 +50,7 @@ export async function onSearch() {
 	adminUserStore.loading = false;
 }
 
-/**
- * * 添加用户信息
- */
+/** 添加用户信息 */
 export function onAdd() {
 	isAddUserinfo.value = true;
 	addDialog({
@@ -130,9 +129,7 @@ export function onUpdate(row: any) {
 	});
 }
 
-/**
- * * 删除用户信息
- */
+/** 删除用户信息 */
 export const onDelete = async (row: any) => {
 	const id = row.id;
 
@@ -150,22 +147,33 @@ export const onDelete = async (row: any) => {
 	await onSearch();
 };
 
-/**
- * * 批量删除用户
- */
+/** 批量删除用户 */
 export const onDeleteBatch = async () => {
-	// 是否确认删除
-	const result = await messageBox({
-		title: $t('confirmDelete'),
-		showMessage: false,
-		confirmMessage: undefined,
-		cancelMessage: $t('confirmDelete'),
-	});
-	if (!result) return;
+	const formDeletedBatchRef = ref();
 
-	// 删除数据
-	await adminUserStore.deleteAdminUser(deleteIds.value);
-	await onSearch();
+	addDialog({
+		title: $t('deleteBatchTip'),
+		width: '30%',
+		props: { formInline: { confirmText: '' } },
+		draggable: true,
+		fullscreenIcon: true,
+		closeOnClickModal: false,
+		contentRenderer: () => h(DeleteBatchDialog, { ref: formDeletedBatchRef }),
+		beforeSure: (done, { options }) => {
+			formDeletedBatchRef.value.formDeletedBatchRef.validate(async (valid: any) => {
+				if (!valid) return;
+
+				const text = options.props.formInline.confirmText.toLowerCase();
+				if (text === 'yes' || text === 'y') {
+					// 删除数据
+					await adminUserStore.deleteAdminUser(deleteIds.value);
+					await onSearch();
+
+					done();
+				} else message($t('deleteBatchTip'), { type: 'warning' });
+			});
+		},
+	});
 };
 
 /**

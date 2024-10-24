@@ -31,9 +31,7 @@ export const getMenuType = (type: number, text: boolean = false): any => {
 	}
 };
 
-/**
- * * 获取菜单数据
- */
+/** 获取菜单数据 */
 export const onSearch = async () => {
 	menuStore.loading = true;
 	await menuStore.getMenuList();
@@ -51,9 +49,7 @@ export const formatHigherMenuOptions = (treeList: any) => {
 	return newTreeList;
 };
 
-/**
- * * 添加菜单
- */
+/** 添加菜单 */
 export function onAdd(parentId: any = 0) {
 	addDialog({
 		title: `新增菜单`,

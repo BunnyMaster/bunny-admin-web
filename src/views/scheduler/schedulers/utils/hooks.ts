@@ -9,18 +9,14 @@ import { $t } from '@/plugins/i18n';
 export const formRef = ref();
 const schedulersStore = useSchedulersStore();
 
-/**
- * * 搜索初始化Schedulers视图
- */
+/** 搜索初始化Schedulers视图 */
 export async function onSearch() {
 	schedulersStore.loading = true;
 	await schedulersStore.getSchedulersList();
 	schedulersStore.loading = false;
 }
 
-/**
- * * 添加Schedulers视图
- */
+/** 添加Schedulers视图 */
 export function onAdd() {
 	addDialog({
 		title: `${$t('addNew')}${$t('schedulers')}`,

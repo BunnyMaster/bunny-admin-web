@@ -32,12 +32,12 @@
 			};
 
 			// 整理子级内容信息
-			const powerCode = key.replace('/admin', '').replace('/{page}/{limit}', '').replace('/{id}', '').replace('/', '');
+			const powerCode = key.replace('/admin/', '').replace(/\/\{.*?\}/g, '');
 			const item = {
 				parentId: info.id,
 				powerCode: powerCode.replaceAll('/', '::'),
 				powerName: description,
-				requestUrl: key.replace('{page}', '\\d+').replace('{limit}', '\\d+').replace('/{id}', '\\d+'),
+				requestUrl: key.replace(/\/{.*/, '/.*'),
 			};
 
 			// 向父级内容添加子级Children内容
@@ -76,7 +76,7 @@ async function add(data) {
 		headers: {
 			'Content-Type': 'application/json',
 			token:
-				'eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAA_yWLQQqDMBBF7zJrUzJ24iSuirtuvINxJtCCtlYDLdK7G3D3ee_9HdYcoYUuz_MPKtDvG1rkOjiPTU0V5FU_dynsnP0wacnxiiFYi45uy3IZX1O5PrdHMWNiFK9kUiQxpMwmKDrjZUiaohA3Fv4HKp13G3cAAAA.qDzOIts0Wckglwm3L-BcprzRiW06ARC6Q8jN9qbVjQ0',
+				'eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAA_yWLywrCMBAA_2XPjeSxZEtP4s2L_7DpbqBCorUGLMV_N-BtGGYO2FqCCS6t1h0G0M8TJkfBhtFbHwdom76u0t0fb1y05yxlqed1Pc2P0q_7e-lS3JwUkQxhDgZzFMPZkUmWhTX6EYnh-wMBQi1DcgAAAA.II3lcc1R1pX8G6eaEVkCxxDXkscN4c6p89zn7FzFhaU',
 		},
 		body: JSON.stringify(data),
 	});

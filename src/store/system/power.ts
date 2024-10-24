@@ -26,7 +26,7 @@ export const usePowerStore = defineStore('powerStore', {
 			// 分页查询结果
 			pagination: {
 				currentPage: 1,
-				pageSize: 30,
+				pageSize: 150,
 				total: 1,
 				pageSizes,
 			},

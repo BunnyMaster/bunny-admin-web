@@ -2,30 +2,27 @@ import { addDialog } from '@/components/BaseDialog/index';
 import PowerDialog from '@/views/system/power/power-dialog.vue';
 import { usePowerStore } from '@/store/system/power';
 import { h, reactive, ref } from 'vue';
-import { messageBox } from '@/utils/message';
+import { message, messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/power/utils/types';
 import { $t } from '@/plugins/i18n';
 import { handleTree } from '@pureadmin/utils';
 import { powerCascadeProps } from '@/views/system/power/utils/columns';
 import { ElCascader, ElForm, ElFormItem } from 'element-plus';
+import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 
 export const formRef = ref();
 // 批量点击id列表
 export const powerIds = ref([]);
 const powerStore = usePowerStore();
 
-/**
- * * 搜索初始化权限
- */
+/** 搜索初始化权限 */
 export async function onSearch() {
 	powerStore.loading = true;
 	await powerStore.getPowerList();
 	powerStore.loading = false;
 }
 
-/**
- * * 添加权限
- */
+/** 添加权限 */
 export function onAdd(parentId = 0) {
 	addDialog({
 		title: `${$t('addNew')}${$t('power')}`,
@@ -90,9 +87,7 @@ export function onUpdate(row: any) {
 	});
 }
 
-/**
- * * 删除权限
- */
+/** 删除权限 */
 export const onDelete = async (row: any) => {
 	const id = row.id;
 
@@ -110,29 +105,37 @@ export const onDelete = async (row: any) => {
 	await onSearch();
 };
 
-/**
- * 批量删除
- */
+/** 批量删除 */
 export const onDeleteBatch = async () => {
 	const ids = powerIds.value;
+	const formDeletedBatchRef = ref();
 
-	// 是否确认删除
-	const result = await messageBox({
-		title: $t('confirmDelete'),
-		showMessage: false,
-		confirmMessage: undefined,
-		cancelMessage: $t('confirmDelete'),
+	addDialog({
+		title: $t('deleteBatchTip'),
+		width: '30%',
+		props: { formInline: { confirmText: '' } },
+		draggable: true,
+		fullscreenIcon: true,
+		closeOnClickModal: false,
+		contentRenderer: () => h(DeleteBatchDialog, { ref: formDeletedBatchRef }),
+		beforeSure: (done, { options }) => {
+			formDeletedBatchRef.value.formDeletedBatchRef.validate(async (valid: any) => {
+				if (!valid) return;
+
+				const text = options.props.formInline.confirmText.toLowerCase();
+				if (text === 'yes' || text === 'y') {
+					// 删除数据
+					await powerStore.deletePower(ids);
+					await onSearch();
+
+					done();
+				} else message($t('deleteBatchTip'), { type: 'warning' });
+			});
+		},
 	});
-	if (!result) return;
-
-	// 删除数据
-	await powerStore.deletePower(ids);
-	await onSearch();
 };
 
-/**
- * * 批量更新父级id
- */
+/** 批量更新父级id */
 export const onUpdateBatchParent = async () => {
 	const formUpdateParentRef = ref();
 	const form = reactive({

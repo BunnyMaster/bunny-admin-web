@@ -2,30 +2,27 @@ import { addDialog } from '@/components/BaseDialog/index';
 import FilesDialog from '@/views/monitor/files/files-dialog.vue';
 import { useFilesStore } from '@/store/monitor/files';
 import { h, ref } from 'vue';
-import { messageBox } from '@/utils/message';
+import { message, messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/monitor/files/utils/types';
 import { $t } from '@/plugins/i18n';
 import { downloadFilesByFileId, downloadFilesByFilepath } from '@/api/v1/files';
 import { download } from '@/utils/sso';
 import type { UploadFiles } from 'element-plus';
+import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 
 // 选择的row列表
 export const selectRows = ref([]);
 export const formRef = ref();
 const filesStore = useFilesStore();
 
-/**
- * * 搜索初始化系统文件表
- */
+/** 搜索初始化系统文件表 */
 export async function onSearch() {
 	filesStore.loading = true;
 	await filesStore.getFilesList();
 	filesStore.loading = false;
 }
 
-/**
- * * 添加系统文件表
- */
+/** 添加系统文件表 */
 export function onAdd() {
 	addDialog({
 		title: `${$t('addNew')}${$t('files')}`,
@@ -87,8 +84,12 @@ export function onUpdate(row: any) {
 			formRef.value.formRef.validate(async (valid: any) => {
 				if (!valid) return;
 
+				// 判断是否更新了文件
+				if (form.files) {
+					form.files = (form.files as UploadFiles).map(file => file.raw);
+				}
+
 				// 更新文件
-				form.files = (form.files as UploadFiles).map(file => file.raw);
 				const result = await filesStore.updateFiles({ ...form, id: row.id });
 
 				// 更新完成
@@ -121,19 +122,31 @@ export const onDelete = async (row: any) => {
 /** 批量删除 */
 export const onDeleteBatch = async () => {
 	const ids = selectRows.value.map(row => row.id);
+	const formDeletedBatchRef = ref();
 
-	// 是否确认删除
-	const result = await messageBox({
-		title: $t('confirmDelete'),
-		showMessage: false,
-		confirmMessage: undefined,
-		cancelMessage: $t('confirmDelete'),
+	addDialog({
+		title: $t('deleteBatchTip'),
+		width: '30%',
+		props: { formInline: { confirmText: '' } },
+		draggable: true,
+		fullscreenIcon: true,
+		closeOnClickModal: false,
+		contentRenderer: () => h(DeleteBatchDialog, { ref: formDeletedBatchRef }),
+		beforeSure: (done, { options }) => {
+			formDeletedBatchRef.value.formDeletedBatchRef.validate(async (valid: any) => {
+				if (!valid) return;
+
+				const text = options.props.formInline.confirmText.toLowerCase();
+				if (text === 'yes' || text === 'y') {
+					// 删除数据
+					await filesStore.deleteFiles(ids);
+					await onSearch();
+
+					done();
+				} else message($t('deleteBatchTip'), { type: 'warning' });
+			});
+		},
 	});
-	if (!result) return;
-
-	// 删除数据
-	await filesStore.deleteFiles(ids);
-	await onSearch();
 };
 
 /**
