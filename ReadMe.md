@@ -212,5 +212,6 @@ docker build -f Dockerfile -t bunny_auth_web:1.0.0 . && docker run -p 80:80 --na
 
 # 展望未来
 
-1. 定时邮件发送参数可在前端配置，动态形式
-2. 首页看板内容
+1. 首页看板内容
+2. 服务器资源使用可视化展示
+3. 将文件上传服务改成本地的oss，Minio感觉不需要未来会删除
