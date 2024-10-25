@@ -272,6 +272,8 @@ export const onResetPassword = (row: any) => {
 
 					// 更新成功关闭弹窗
 					if (!result) return;
+					restPasswordForm.password = '';
+					restPasswordForm.userId = undefined;
 					done();
 				}
 			});

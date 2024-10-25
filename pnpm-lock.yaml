@@ -71,6 +71,9 @@ importers:
       echarts:
         specifier: ^5.5.0
         version: 5.5.1
+      echarts-gl:
+        specifier: ^2.0.9
+        version: 2.0.9(echarts@5.5.1)
       el-table-infinite-scroll:
         specifier: ^3.0.3
         version: 3.0.6(typescript@5.5.4)
@@ -2049,6 +2052,9 @@ packages:
   cjs-module-lexer@1.4.0:
     resolution: {integrity: sha512-N1NGmowPlGBLsOZLPvm48StN04V4YvQRL0i6b7ctrVY3epjP/ct7hFLOItz6pDIvRjwpfPxi52a2UWV2ziir8g==}
 
+  claygl@1.3.0:
+    resolution: {integrity: sha512-+gGtJjT6SSHD2l2yC3MCubW/sCV40tZuSs5opdtn79vFSGUgp/lH139RNEQ6Jy078/L0aV8odCw8RSrUcMfLaQ==}
+
   cli-boxes@3.0.0:
     resolution: {integrity: sha512-/lzGpEWL/8PfI0BmBOPRwp0c/wFNX1RdUML3jK/RcSBA9T8mZDdQpqYBKtCFTOfQbwPqWEOpjqW+Fnayc0969g==}
     engines: {node: '>=10'}
@@ -2601,6 +2607,11 @@ packages:
 
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
+
+  echarts-gl@2.0.9:
+    resolution: {integrity: sha512-oKeMdkkkpJGWOzjgZUsF41DOh6cMsyrGGXimbjK2l6Xeq/dBQu4ShG2w2Dzrs/1bD27b2pLTGSaUzouY191gzA==}
+    peerDependencies:
+      echarts: ^5.1.2
 
   echarts@5.5.1:
     resolution: {integrity: sha512-Fce8upazaAXUVUVsjgV6mBnGuqgO+JNDlcgF79Dksy4+wgGpQB2lmYoO4TSweFg/mZITdpGHomw/cNBJZj1icA==}
@@ -7912,6 +7923,8 @@ snapshots:
 
   cjs-module-lexer@1.4.0: {}
 
+  claygl@1.3.0: {}
+
   cli-boxes@3.0.0: {}
 
   cli-cursor@3.1.0:
@@ -8510,6 +8523,12 @@ snapshots:
       stream-shift: 1.0.3
 
   eastasianwidth@0.2.0: {}
+
+  echarts-gl@2.0.9(echarts@5.5.1):
+    dependencies:
+      claygl: 1.3.0
+      echarts: 5.5.1
+      zrender: 5.6.0
 
   echarts@5.5.1:
     dependencies:

@@ -35,7 +35,6 @@ const onChange = (uploadFile: any) => {
 	reader.onload = e => {
 		imgBase64Src.value = e.target.result as string;
 		isShow.value = true;
-		console.log(imgBase64Src.value);
 	};
 	reader.readAsDataURL(uploadFile.raw);
 };

@@ -8,6 +8,7 @@ import router from './router';
 import { useElementPlus } from '@/plugins/elementPlus';
 import { injectResponsiveStorage } from '@/utils/responsive';
 import { createApp, type Directive } from 'vue';
+import * as echarts from 'echarts';
 
 import Table from '@pureadmin/table';
 // import PureDescriptions from "@pureadmin/descriptions";
@@ -45,7 +46,7 @@ app.component('IconifyIconOnline', IconifyIconOnline);
 app.component('FontIcon', FontIcon);
 app.component('Auth', Auth);
 app.component('Perms', Perms);
-
+app.config.globalProperties.$echarts = echarts;
 app.use(VueTippy);
 
 getPlatformConfig(app).then(async config => {
