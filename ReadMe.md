@@ -8,210 +8,257 @@ Gitee地址
 - [前端地址](https://gitee.com/BunnyBoss/bunny-admin-web)
 - [后端地址](https://gitee.com/BunnyBoss/bunny-admin-server)
 
-# 功能介绍
+# 产品特点
 
-系统使用的是物理删除，但是引用了逻辑删除，使用mybatisPlus如果需要逻辑删除只需要将原先删除方法调用成mybatisplus自身的删除方法即可。
+前端项目基于[pure-admin](https://github.com/pure-admin/pure-admin-thin)开源项目进行了改进和优化，RBAC（基于角色的访问控制）。在我项目中，后端负责验证请求地址的访问权限。
 
-作为权限管理系统，校验功能已经路由功能都是由后端完成，后端使用SpringSecurity
+整个项目都采用响应式设计，可以兼容移动设备，除了表格显示在移动端可能不够友好外，其他方面表现良好。由于表格本身具有一定的复杂性，手机上查看效果可能不理想，目前无法对其进行修改。
 
-系统权限功能使用RBAC模型
+![image-20241026032407486](./image/ReadMe/image-20241026032407486.png)
 
-## 系统设置
+## 1. 首页定制
 
-### 系统菜单
+提供了自定义首页的功能，可以根据个人喜好替换首页内容。我将首页设计成类似Git提交的内容，以便更直观地查看信息。
 
-当用户登录时会根据，当前角色获取自身的菜单路由，防止返回不该返回的页面，之后权限和角色关联，根据用户权限查询可以访问的菜单内容，如果权限中没有这个路径那么会告知`无权访问`。
+## 2. 系统设置
 
-管理员需要在配置时，配置菜单和角色之间的关系，用户也要和角色关联，角色会关联权限表，返回路由时只返回当前用户可以访问的菜单。
+系统设置包含基本的权限管理配置。
 
-- 前端做递归，排序后端也做了
-- 快捷排序，快捷禁用菜单
-- 路由菜单图标需要再系统配置中添加菜单图标
+### 系统菜单管理
 
-![image-20241023090359575](images/image-20241023090359575.png)
+系统菜单管理功能允许您快速调整菜单内容的排序、显示和隐藏。删除功能采用逻辑删除，菜单名称通常与路由名称相同。如果菜单名称重复，系统会跳转至最后一个具有相同名称的路径，因此请确保菜单名称的唯一性。
 
-为菜单分配角色
+系统菜单图标支持动态图标。
 
-![image-20241023090640516](images/image-20241023090640516.png)
+![image-20241026025901761](./image/ReadMe/image-20241026025901761.png)
+
+在添加外链时，路由名称即为外链地址。
+
+![image-20241026025825052](./image/ReadMe/image-20241026025825052.png)
 
 ### 用户管理
 
-强制下线就是将Redis中用户信息删除
+筛选条件和部门筛选可以同时进行选择。
 
-用户禁用先改数据库之后将Redis中数据进行删除
+其中系统中有一个默认用户是不会在前台用户进行展示的`Administrator`这个用户是系统预留，以防出错或维护使用
 
-![image-20241023091239212](images/image-20241023091239212.png)
+![image-20241026030000099](./image/ReadMe/image-20241026030000099.png)
 
-#### 关于用户管理事务问题
+### 角色权限管理
 
-如果用户禁用失败或者删除Redis失败需要回滚事务，在Spring中，有集成的事务，只需要简单的配置下即可，
+权限管理中的权限添加支持树型结构。
 
-### 角色管理
+![image-20241026030034998](./image/ReadMe/image-20241026030034998.png)
 
-![image-20241023091310533](images/image-20241023091310533.png)
+![image-20241026030057212](./image/ReadMe/image-20241026030057212.png)
 
-### 权限管理
+在新增权限时，请求地址可以是正则表达式或者Java中的antpath，两者皆可兼容。
 
-权限管理可以设置父级内容，在前端文件中有`data.js`，可以自动生成权限相关内容。
+![image-20241026030247782](./image/ReadMe/image-20241026030247782.png)
 
-![image-20241023091328271](images/image-20241023091328271.png)
+部门管理同样采用树型结构。
 
-**前端文件**
+![image-20241026030105402](./image/ReadMe/image-20241026030105402.png)
 
-![image-20241023091503966](images/image-20241023091503966.png)
-
-### 部门管理
-
-![image-20241023092027273](images/image-20241023092027273.png)
-
-## 系统配置
+## 3. 系统配置
 
 ### 菜单图标
 
-![image-20241023092123926](images/image-20241023092123926.png)
+![image-20241026030355125](./image/ReadMe/image-20241026030355125.png)
 
 ### 邮件用户配置
 
-发送邮件时，如果没有选定用户会去找默认用户，如果默认用户也没有会报错。
+发送验证码时，若未配置用户默认值，则会使用默认地址发送。若默认地址也未配置，则会提示未设置默认邮箱用户。
 
-![image-20241023092145274](images/image-20241023092145274.png)
+默认选项最终只有一个。
+
+其中默认选项无论有多少用户最终默认的只会有一个
+
+![image-20241026030534421](./image/ReadMe/image-20241026030534421.png)
 
 ### 邮件模板
 
-邮箱验证码，
+第一个是发送验证码邮件模板
 
-![image-20241023092250382](images/image-20241023092250382.png)
+![image-20241026030557224](./image/ReadMe/image-20241026030557224.png)
 
-#### 模板类型说明
+### 前端页面配置
 
-根据后端的枚举类进行返回
+因为这个模板作者将配置选项放在了前端文件中的`public`文件夹下， 配置选项现已变为动态，交给后端管理
 
-![image-20241023092355799](images/image-20241023092355799.png)
+![image-20241026030621707](./image/ReadMe/image-20241026030621707.png)
 
-后端文件
-
-![image-20241023092439168](images/image-20241023092439168.png)
-
-## 系统监控
+## 4. 系统监控
 
 ### 服务监控
 
-服务监控来自springboot中actuator框架
+查看当前服务的CPU占用情况，使用SpringBoot中的`actuator`端点。图表每2秒请求一次，页面兼容移动设备。
 
-![image-20241023092520931](images/image-20241023092520931.png)
-
-IDEA中也有集成只要使用了actuator包即可看到服务内容、健康检查等
-
-详细参考官网API，当然如果需要后台服监控页面，德国工程师帮我们写了一个页面。
-
-![image-20241023092652996](images/image-20241023092652996.png)
-
-也可以看到当前的请求API有哪些
-
-![image-20241023093159928](images/image-20241023093159928.png)
-
-#### 相关admin服务包
-
-或许在有些服务中不需要这个页面，有服务监控的功能，配置也简单，我之前我使用在这个项目中，和部分业务功能有些冲突，与其这样不如自己写个简单的也可以
-
-```xml
-
-<dependency>
-  <groupId>de.codecentric</groupId>
-  <artifactId>spring-boot-admin-starter-server</artifactId>
-  <version>3.3.4</version>
-</dependency>
-<dependency>
-<groupId>de.codecentric</groupId>
-<artifactId>spring-boot-admin-starter-client</artifactId>
-<version>3.2.3</version>
-</dependency>
-```
+![image-20241026031050902](./image/ReadMe/image-20241026031050902.png)
 
 ### 后台文件管理
 
-用户上传的文件和头像内容都在这里，文件存储位置在Minio中
-
-![image-20241023093247261](images/image-20241023093247261.png)
+![image-20241026031117116](./image/ReadMe/image-20241026031117116.png)
 
 ### 用户登录日志
 
-![image-20241023093317701](images/image-20241023093317701.png)
+![image-20241026031206836](./image/ReadMe/image-20241026031206836.png)
 
 ### 任务执行日志
 
-当前设定的定时任务有关，目前有数据库备份，和简单的定时任务示例内容都在这，使用JS对象可视化，数据多时会有些卡顿
+使用任务调度时执行状态都会记录在这个里面
 
-![image-20241023093407627](images/image-20241023093407627.png)
+![image-20241026031240109](./image/ReadMe/image-20241026031240109.png)
 
-## 定时任务
+### 系统缓存
 
-### 调度任务
+项目中使用了SpringCache，如果请求的内容可以缓存在SpringCache中
 
-其实就是定时任务，集成框架quartz，持久化存储任务
+![image-20241026031252429](./image/ReadMe/image-20241026031252429.png)
 
-![image-20241023093546293](images/image-20241023093546293.png)
+## 5. 定时任务
 
-### 任务调度分组
+![image-20241026031339987](./image/ReadMe/image-20241026031339987.png)
 
-![image-20241023093602223](images/image-20241023093602223.png)
+![image-20241026031346612](./image/ReadMe/image-20241026031346612.png)
 
-## 多语言管理
+## 6. 多语言
 
-### 多语言
+![image-20241026031403524](./image/ReadMe/image-20241026031403524.png)
 
-![image-20241023093639866](images/image-20241023093639866.png)
+![image-20241026031411689](./image/ReadMe/image-20241026031411689.png)
 
-### 多语言类型
+## 外部页面
 
-如果以后还需要其它语言可以在这个地方添加
+![image-20241026031448707](./image/ReadMe/image-20241026031448707.png)
 
-![image-20241023093654135](images/image-20241023093654135.png)
+# 环境部署
 
-## 其它功能
+使用Docker进行部署，后端接口地址以`/admin`开头，但前端默认请求前缀为`/api`，因此在请求时需要进行替换。详细内容请参考以下【项目部署】说明。
 
-![image-20241023093729543](images/image-20241023093729543.png)
+## 配置相关
 
-### 账户设置
+### docker文件
 
-![image-20241023093749870](images/image-20241023093749870.png)
+```dockerfile
+# 使用官方的 Nginx 镜像作为基础镜像
+FROM nginx
 
-![image-20241023093759347](images/image-20241023093759347.png)
+# 删除默认的 Nginx 配置文件
+RUN rm /etc/nginx/conf.d/default.conf
 
-![image-20241023093807425](images/image-20241023093807425.png)
+# 将自定义的 Nginx 配置文件复制到容器中
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-### 数据库事务
+# 设置时区，构建镜像时执行的命令
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN echo "Asia/Shanghai" > /etc/timezone
 
-数据库事务在Springboot中只需要一个注解，通常我们还需要redis事务，在Redis中配置开启即可。
+# 创建一个目录来存放前端项目文件
+WORKDIR /usr/share/nginx/html
 
-![image-20241023094104297](images/image-20241023094104297.png)
+# 将前端项目打包文件复制到 Nginx 的默认静态文件目录
+COPY dist/ /usr/share/nginx/html
+# 复制到nginx目录下
+COPY dist/ /etc/nginx/html
 
-### 去除字符串空格
+# 暴露 Nginx 的默认端口
+EXPOSE 80
 
-在项目中，会统一进行空白字符串去除，配置项也在config文件夹下
+# 自动启动 Nginx
+CMD ["nginx", "-g", "daemon off;"]
+```
 
-![image-20241023094247311](images/image-20241023094247311.png)
+### NGINX文件
 
-> 更多配置看这里
->
-> ![image-20241023094311326](images/image-20241023094311326.png)
+在请求中会使用代理所以会拿不到用户真实的IP地址，素以在要NGINX侠做下面的配置，这样用户在访问时就可以拿到真实的IP了
 
-# Docker配置详情
+```nginx
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+```
 
-如果想更改端口号，前面的对外访问的端口号，后面是容器也就是服务本身端口号
-![img.png](images/1.png)
+NGINX的文件
 
-项目本身端口号
-![img.png](images/2.png)
+```
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
 
-部署命令
+server {
+    listen       80;
+    listen       [::]:80;
+    server_name  localhost;
+
+    location / {
+        root   /etc/nginx/html;
+        index  index.html index.htm;
+        try_files $uri /index.html;
+    }
+
+    # 后端跨域请求
+    location ~/admin/ {
+        proxy_pass http://172.17.0.1:8000;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    error_page  404              404.html;
+
+    location = /50x.html {
+        root   html;
+    }
+}
+```
+
+## 项目部署
+
+使用WebStorm进行项目部署，项目上线时默认端口为80。因此，Docker默认暴露的IP端口也应为80，NGINX中默认暴露的端口也是80，三者应一一对应。
+
+若无法下载，请先使用pnpm下载。若不需使用pnpm，请删除或修改相应内容。
+
+![image-20241026025057129](./image/ReadMe/image-20241026025057129.png)
+
+### docker配置
+
+![image-20241026024116090](./image/ReadMe/image-20241026024116090.png)
+
+### 配置环境
+
+设置启动端口号和项目地址机器后端请求地址
+
+![image-20241026024813858](./image/ReadMe/image-20241026024813858.png)
+
+#### 配置线上环境
+
+设置项目启动端口号，线上环境默认请求路径为`/admin`，需在NGINX中将访问请求前缀更改为`/admin`。
+
+![image-20241026024940747](./image/ReadMe/image-20241026024940747.png)
+
+![image-20241026024243785](./image/ReadMe/image-20241026024243785.png)
+
+#### 配置开发环境
+
+开发环境默认IP为7000，若与本地项目端口冲突，请修改。后端请求地址为7070。
+
+前端设置的请求前缀为`/api`，但后端接受的前缀为`/admin`，因此需在服务中修改此内容。
+
+![image-20241026024318644](./image/ReadMe/image-20241026024318644.png)
+
+**修改请求路径**
+
+![image-20241026031651591](./image/ReadMe/image-20241026031651591.png)
+
+### 部署命令
 
 ```bash
-docker build -f Dockerfile -t bunny_auth_web:1.0.0 . && docker run -p 80:80 --name bunny_auth_web --restart always bunny_auth_web:1.0.0 
+docker build -f Dockerfile -t bunny_auth_web:1.0.0 . && docker run -p 80:80 --name bunny_auth_web --restart always bunny_auth_web:1.0.0
 ```
 
 # 展望未来
 
-1. 首页看板内容
-2. 服务器资源使用可视化展示
-3. 将文件上传服务改成本地的oss，Minio感觉不需要未来会删除
+1. 计划将文件上传服务改为本地的OSS，Minio可能会被移除。
