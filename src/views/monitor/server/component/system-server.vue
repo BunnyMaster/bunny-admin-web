@@ -13,7 +13,7 @@ const formatValue = (va: any) => {
 
 <template>
 	<!-- 系统状态 -->
-	<el-col :lg="6" :md="8" :sm="12" :xl="4" :xs="24">
+	<el-col :lg="12" :md="12" :sm="24" :xl="6" :xs="24">
 		<div :class="cardClass">
 			<div class="list-card-item_detail bg-bg_color">
 				<el-row justify="space-between">
@@ -41,7 +41,7 @@ const formatValue = (va: any) => {
 	</el-col>
 
 	<!-- 数据库状态 -->
-	<el-col :lg="6" :md="8" :sm="12" :xl="4" :xs="24">
+	<el-col :lg="12" :md="12" :sm="24" :xl="6" :xs="24">
 		<div :class="cardClass">
 			<div class="list-card-item_detail bg-bg_color">
 				<el-row justify="space-between">
@@ -60,14 +60,9 @@ const formatValue = (va: any) => {
 					<div>数据库类型：{{ systemServerInfo?.components?.db?.details.database }}</div>
 					<div>验证查询：{{ systemServerInfo?.components?.db?.details.validationQuery }}</div>
 				</el-text>
-			</div>
-		</div>
-	</el-col>
+				<el-divider />
 
-	<!-- Redis状态 -->
-	<el-col :lg="6" :md="8" :sm="12" :xl="4" :xs="24">
-		<div :class="cardClass">
-			<div class="list-card-item_detail bg-bg_color">
+				<!-- Redis状态 -->
 				<el-row justify="space-between">
 					<div :class="cardLogoClass">
 						<component :is="useRenderIcon('devicon:redis')" />
@@ -86,6 +81,8 @@ const formatValue = (va: any) => {
 			</div>
 		</div>
 	</el-col>
+
+	<el-col :lg="12" :md="12" :sm="24" :xl="6" :xs="24" />
 </template>
 
 <style lang="scss" scoped>

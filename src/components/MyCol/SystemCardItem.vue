@@ -1,52 +1,28 @@
 <script lang="ts" setup>
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+// import 'echarts-gl';
 import { cardClass, cardLogoClass } from '@/views/monitor/server/utils/columns';
 
 defineProps({
-	info: { type: Object as PropType<any> },
+	title: String,
+	xl: { type: Number, default: 6 },
+	lg: { type: Number, default: 12 },
+	md: { type: Number, default: 12 },
+	sm: { type: Number, default: 24 },
+	xs: { type: Number, default: 24 },
 });
 </script>
 
 <template>
-	<el-col :lg="6" :md="8" :sm="12" :xl="4" :xs="24">
+	<el-col :lg="lg" :md="md" :sm="sm" :xl="xl" :xs="xs">
 		<div :class="cardClass">
 			<div class="list-card-item_detail bg-bg_color">
 				<el-row justify="space-between">
 					<div :class="cardLogoClass">
-						<component :is="useRenderIcon('devicon:java')" />
+						<slot name="icon" />
 					</div>
 				</el-row>
-				<p class="list-card-item_detail--name text-text_color_primary">java</p>
-				<el-text>
-					<div>Java版本：{{ info?.java?.version }}</div>
-
-					<div>供应商：{{ info?.java?.vendor?.name }}</div>
-					<div>供应商版本：{{ info?.java?.vendor?.version }}</div>
-
-					<div>运行时：{{ info?.java?.runtime?.name }}</div>
-					<div>运行时版本：{{ info?.java?.runtime?.version }}</div>
-
-					<div>jvm：{{ info?.java?.jvm?.name }}</div>
-					<div>jvm版本：{{ info?.java?.jvm?.version }}</div>
-				</el-text>
-			</div>
-		</div>
-	</el-col>
-
-	<el-col :lg="6" :md="8" :sm="12" :xl="4" :xs="24">
-		<div :class="cardClass">
-			<div class="list-card-item_detail bg-bg_color">
-				<el-row justify="space-between">
-					<div :class="cardLogoClass">
-						<component :is="useRenderIcon('mdi:server')" />
-					</div>
-				</el-row>
-				<p class="list-card-item_detail--name text-text_color_primary">系统信息</p>
-				<el-text>
-					<div>系统名称： {{ info?.os?.name }}</div>
-					<div>系统版本： {{ info?.os?.version }}</div>
-					<div>系统架构： {{ info?.os?.arch }}</div>
-				</el-text>
+				<p class="list-card-item_detail--name text-text_color_primary">{{ title }}</p>
+				<slot name="default" />
 			</div>
 		</div>
 	</el-col>
