@@ -10,7 +10,7 @@ export const columns: TableColumnList = [
 	// 登录Ip
 	{ label: $t('userLoginLog_ipAddress'), prop: 'ipAddress', width: 130 },
 	// 登录Ip归属地
-	{ label: $t('userLoginLog_ipRegion'), prop: 'ipRegion', width: 100 },
+	{ label: $t('userLoginLog_ipRegion'), prop: 'ipRegion', width: 160 },
 	// 登录时代理
 	{ label: $t('userLoginLog_userAgent'), prop: 'userAgent' },
 	// 操作类型
