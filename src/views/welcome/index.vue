@@ -1,16 +1,29 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import ReCol from '@/components/MyCol';
 import { useDark } from './utils';
-import WelcomeTable from './components/table/index.vue';
 import { ReNormalCountTo } from '@/components/CountTo';
-import { ChartBar, ChartLine, ChartRound } from './components/charts';
-import Segmented, { type OptionsType } from '@/components/Segmented';
-import { barChartData, chartData, latestNewsData, progressData } from './data';
+import { ChartLine, ChartRound } from './components/charts';
+import { chartData } from './utils/data';
+import { getServerCommitList, getWebCommitList, serverCommitList, webCommitList } from '@/views/welcome/utils/hooks';
+import WebReadMe from '@/views/welcome/components/web-read-me.vue';
+import { TabsPaneContext } from 'element-plus';
+import ServerReadMe from '@/views/welcome/components/server-read-me.vue';
 
 const { isDark } = useDark();
-let curWeek = ref(1); // 0上周、1本周
-const optionsBasis: Array<OptionsType> = [{ label: '上周' }, { label: '本周' }];
+
+// 当前tab名称
+const activeName = ref('web');
+
+// 修改tab名称
+const onTabClick = (tab: TabsPaneContext, _: Event) => {
+	activeName.value = tab.paneName;
+};
+
+onMounted(() => {
+	getWebCommitList();
+	getServerCommitList();
+});
 </script>
 
 <template>
@@ -48,57 +61,64 @@ const optionsBasis: Array<OptionsType> = [{ label: '上周' }, { label: '本周'
 				</el-card>
 			</re-col>
 
-			<re-col v-motion :enter="{ opacity: 1, y: 0, transition: { delay: 400 } }" :initial="{ opacity: 0, y: 100 }" :value="18" :xs="24" class="mb-[18px]">
-				<el-card class="bar-card" shadow="never">
-					<div class="flex justify-between">
-						<span class="text-md font-medium">分析概览</span>
-						<Segmented v-model="curWeek" :options="optionsBasis" />
-					</div>
-					<div class="flex justify-between items-start mt-3">
-						<ChartBar :questionData="barChartData[curWeek].questionData" :requireData="barChartData[curWeek].requireData" />
-					</div>
-				</el-card>
-			</re-col>
+			<el-row :gutter="24" class="w-[100%] justify-around">
+				<re-col v-motion :enter="{ opacity: 1, y: 0, transition: { delay: 560 } }" :initial="{ opacity: 0, y: 100 }" :lg="16" :sm="24" :xl="18" :xs="24" class="mb-[18px]">
+					<el-card class="h-[1178px] overflow-y-auto" shadow="never">
+						<el-tabs v-model="activeName" class="demo-tabs" @tab-click="onTabClick">
+							<el-tab-pane label="前端文档" name="web">
+								<web-read-me class="mt-3 h-[100%]" />
+							</el-tab-pane>
+							<el-tab-pane label="后端文档" name="server">
+								<server-read-me class="mt-3 h-[100%]" />
+							</el-tab-pane>
+						</el-tabs>
+					</el-card>
+				</re-col>
 
-			<re-col v-motion :enter="{ opacity: 1, y: 0, transition: { delay: 480 } }" :initial="{ opacity: 0, y: 100 }" :value="6" :xs="24" class="mb-[18px]">
-				<el-card shadow="never">
-					<div class="flex justify-between">
-						<span class="text-md font-medium">解决概率</span>
-					</div>
-					<div v-for="(item, index) in progressData" :key="index" :class="['flex', 'justify-between', 'items-start', index === 0 ? 'mt-8' : 'mt-[2.15rem]']">
-						<el-progress :color="item.color" :duration="item.duration" :percentage="item.percentage" :stroke-width="21" :text-inside="true" striped striped-flow />
-						<span class="text-nowrap ml-2 text-text_color_regular text-sm">
-							{{ item.week }}
-						</span>
-					</div>
-				</el-card>
-			</re-col>
+				<re-col v-motion :enter="{ opacity: 1, y: 0, transition: { delay: 640 } }" :initial="{ opacity: 0, y: 100 }" :lg="8" :sm="24" :xl="6" :xs="24">
+					<el-card class="mb-[18px]" shadow="never">
+						<div class="flex justify-between">
+							<span class="text-md font-medium">前端代码近期20次更改</span>
+						</div>
+						<el-scrollbar class="mt-3" max-height="504">
+							<el-timeline>
+								<el-timeline-item v-for="(item, index) in webCommitList" :key="index" :timestamp="item.date" center placement="top">
+									<p class="text-text_color_regular text-sm">
+										<el-link :href="item.html_url" :title="item.message" :underline="false" target="_blank">
+											{{ `提交信息：${item.message}，提交用户：` }}
+										</el-link>
+										<el-link :href="item.url" :title="item.name" :underline="false" target="_blank">
+											<el-avatar :size="16" :src="item.avatar_url" class="align-middle" />
+											{{ `${item.name}` }}
+										</el-link>
+									</p>
+								</el-timeline-item>
+							</el-timeline>
+						</el-scrollbar>
+					</el-card>
 
-			<re-col v-motion :enter="{ opacity: 1, y: 0, transition: { delay: 560 } }" :initial="{ opacity: 0, y: 100 }" :value="18" :xs="24" class="mb-[18px]">
-				<el-card class="h-[580px]" shadow="never">
-					<div class="flex justify-between">
-						<span class="text-md font-medium">数据统计</span>
-					</div>
-					<WelcomeTable class="mt-3" />
-				</el-card>
-			</re-col>
-
-			<re-col v-motion :enter="{ opacity: 1, y: 0, transition: { delay: 640 } }" :initial="{ opacity: 0, y: 100 }" :value="6" :xs="24" class="mb-[18px]">
-				<el-card shadow="never">
-					<div class="flex justify-between">
-						<span class="text-md font-medium">最新动态</span>
-					</div>
-					<el-scrollbar class="mt-3" max-height="504">
-						<el-timeline>
-							<el-timeline-item v-for="(item, index) in latestNewsData" :key="index" :timestamp="item.date" center placement="top">
-								<p class="text-text_color_regular text-sm">
-									{{ `新增 ${item.requiredNumber} 条问题，${item.resolveNumber} 条已解决` }}
-								</p>
-							</el-timeline-item>
-						</el-timeline>
-					</el-scrollbar>
-				</el-card>
-			</re-col>
+					<el-card shadow="never">
+						<div class="flex justify-between">
+							<span class="text-md font-medium">后端代码近期20次更改</span>
+						</div>
+						<el-scrollbar class="mt-3" max-height="504">
+							<el-timeline>
+								<el-timeline-item v-for="(item, index) in serverCommitList" :key="index" :timestamp="item.date" center placement="top">
+									<p class="text-text_color_regular text-sm">
+										<el-link :href="item.html_url" :title="item.message" :underline="false" target="_blank">
+											{{ `提交信息：${item.message}，提交用户：` }}
+										</el-link>
+										<el-link :href="item.url" :title="item.name" :underline="false" target="_blank">
+											<el-avatar :size="16" :src="item.avatar_url" class="align-middle" />
+											{{ `${item.name}` }}
+										</el-link>
+									</p>
+								</el-timeline-item>
+							</el-timeline>
+						</el-scrollbar>
+					</el-card>
+				</re-col>
+			</el-row>
 		</el-row>
 	</div>
 </template>
