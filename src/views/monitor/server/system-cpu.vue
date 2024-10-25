@@ -59,18 +59,20 @@ const option = reactive<UtilsEChartsOption>({
 
 /** 初始化数据 */
 const onSearch = async () => {
-	// 获取数据
-	const result = await fetchSystemCPU();
-	const value = result.measurements[0].value ?? 0;
-
 	// 保留数组中的最新10条数据
 	if (seriesData.value.length > 5) {
 		seriesData.value = seriesData.value.slice(-5);
 		xSeriesData.value = xSeriesData.value.slice(-5);
 	}
 
-	seriesData.value.push(value * 100);
-	xSeriesData.value.push(dayjs().format('mm:ss'));
+	// 获取数据
+	const result = await fetchSystemCPU();
+	const measurement = result.measurements[0];
+	if (measurement) {
+		const value = measurement.value;
+		seriesData.value.push(value * 100);
+		xSeriesData.value.push(dayjs().format('mm:ss'));
+	}
 
 	myChart.value.setOption({
 		xAxis: { data: xSeriesData.value },
