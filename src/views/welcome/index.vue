@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import ReCol from '@/components/MyCol';
-import { useDark } from './utils';
+import { useDark } from './utils/utils';
 import { ReNormalCountTo } from '@/components/CountTo';
-import { ChartLine, ChartRound } from './components/charts';
+import ChartLine from '@/views/welcome/components/ChartLine.vue';
+import ChartRound from '@/views/welcome/components/ChartRound.vue';
 import { chartData } from './utils/data';
 import { getServerCommitList, getWebCommitList, serverCommitList, webCommitList } from '@/views/welcome/utils/hooks';
 import WebReadMe from '@/views/welcome/components/web-read-me.vue';
@@ -78,7 +79,7 @@ onMounted(() => {
 				<re-col v-motion :enter="{ opacity: 1, y: 0, transition: { delay: 640 } }" :initial="{ opacity: 0, y: 100 }" :lg="8" :sm="24" :xl="6" :xs="24">
 					<el-card class="mb-[18px]" shadow="never">
 						<div class="flex justify-between">
-							<span class="text-md font-medium">前端代码近期20次更改</span>
+							<span class="text-md font-medium">前端git近期20次更改</span>
 						</div>
 						<el-scrollbar class="mt-3" max-height="504">
 							<el-timeline>
@@ -87,9 +88,9 @@ onMounted(() => {
 										<el-link :href="item.html_url" :title="item.message" :underline="false" target="_blank">
 											{{ `提交信息：${item.message}，提交用户：` }}
 										</el-link>
-										<el-link :href="item.url" :title="item.name" :underline="false" target="_blank">
+										<el-link :href="item.url" :title="item.username" :underline="false" target="_blank">
 											<el-avatar :size="16" :src="item.avatar_url" class="align-middle" />
-											{{ `${item.name}` }}
+											{{ ` ${item.username}` }}
 										</el-link>
 									</p>
 								</el-timeline-item>
@@ -99,7 +100,7 @@ onMounted(() => {
 
 					<el-card shadow="never">
 						<div class="flex justify-between">
-							<span class="text-md font-medium">后端代码近期20次更改</span>
+							<span class="text-md font-medium">后端git近期20次更改</span>
 						</div>
 						<el-scrollbar class="mt-3" max-height="504">
 							<el-timeline>
@@ -108,9 +109,9 @@ onMounted(() => {
 										<el-link :href="item.html_url" :title="item.message" :underline="false" target="_blank">
 											{{ `提交信息：${item.message}，提交用户：` }}
 										</el-link>
-										<el-link :href="item.url" :title="item.name" :underline="false" target="_blank">
+										<el-link :href="item.url" :title="item.username" :underline="false" target="_blank">
 											<el-avatar :size="16" :src="item.avatar_url" class="align-middle" />
-											{{ `${item.name}` }}
+											{{ ` ${item.username}` }}
 										</el-link>
 									</p>
 								</el-timeline-item>

@@ -7,7 +7,7 @@ const content = ref();
 
 /** 获取文档信息 */
 const onSearch = async () => {
-	const response = await fetch('https://gitee.com/api/v5/repos/BunnyBoss/bunny-admin-web/contents/ReadMe.md?access_token=1dc76ba34226aea3eca52c1121c51617');
+	const response = await fetch('http://129.211.31.58:3000/api/v1/repos/auth/auth-web/contents/ReadMe.md');
 	const json = await response.json();
 	content.value = decode(json.content);
 };

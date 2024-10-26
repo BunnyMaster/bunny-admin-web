@@ -20,6 +20,8 @@ export const columns: TableColumnList = [
 
 // 添加规则
 export const rules = reactive({
+	// 管理员
+	manager: [{ required: true, message: `${$t('input')}${$t('dept_manager')}`, trigger: 'blur' }],
 	// 部门名称
 	deptName: [{ required: true, message: `${$t('input')}${$t('dept_deptName')}`, trigger: 'blur' }],
 	// 部门简介
