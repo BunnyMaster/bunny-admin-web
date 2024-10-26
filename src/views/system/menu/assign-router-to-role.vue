@@ -22,7 +22,9 @@ const getRoleListByRouterId = async () => {
 
 	// 根据用户id查询角色信息
 	const routerId = props.routerId;
-	assignRoles.value = await menuStore.getRoleListByRouterId({ routerId });
+	if (routerId) {
+		assignRoles.value = await menuStore.getRoleListByRouterId({ routerId });
+	}
 };
 
 onMounted(() => {

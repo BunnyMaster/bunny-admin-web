@@ -7,46 +7,23 @@ import { cloneDeep, deviceDetection } from '@pureadmin/utils';
 import { userMenuStore } from '@/store/system/menu';
 import AssignRouterToRole from '@/views/system/menu/assign-router-to-role.vue';
 import { messageBox } from '@/utils/message';
+import { formatHigherMenuOptions } from '@/views/system/menu/utils/columns';
 
 // 用户是否停用加载集合
 export const switchLoadMap = ref({});
+// 选择多行
+export const selectIds = ref([]);
+export const tableRef = ref();
+const assignRouterToRolesRef = ref();
+const dialogFormRef = ref();
 const menuStore = userMenuStore();
 const routerStore = userMenuStore();
-const assignRouterToRolesRef = ref();
-const formRef = ref();
-
-/**
- * 标签栏菜单类型匹配
- * @param type
- * @param text
- */
-export const getMenuType = (type: number, text: boolean = false): any => {
-	switch (type) {
-		case 0:
-			return text ? '菜单' : 'primary';
-		case 1:
-			return text ? 'iframe' : 'warning';
-		case 2:
-			return text ? '外链' : 'danger';
-	}
-};
 
 /** 获取菜单数据 */
 export const onSearch = async () => {
 	menuStore.loading = true;
 	await menuStore.getMenuList();
 	menuStore.loading = false;
-};
-
-export const formatHigherMenuOptions = (treeList: any) => {
-	if (!treeList || !treeList.length) return;
-	const newTreeList = [];
-	for (let i = 0; i < treeList.length; i++) {
-		treeList[i].title = $t(treeList[i].title);
-		formatHigherMenuOptions(treeList[i].children);
-		newTreeList.push(treeList[i]);
-	}
-	return newTreeList;
 };
 
 /** 添加菜单 */
@@ -72,9 +49,9 @@ export function onAdd(parentId: any = 0) {
 		draggable: true,
 		closeOnClickModal: false,
 		fullscreenIcon: true,
-		contentRenderer: () => h(editForm, { ref: formRef }),
+		contentRenderer: () => h(editForm, { ref: dialogFormRef }),
 		beforeSure: (done, { options }) => {
-			const menuFormRef = formRef.value.menuFormRef;
+			const menuFormRef = dialogFormRef.value.menuFormRef;
 			const curData = options.props.formInline as FormItemProps;
 			menuFormRef.validate(async (valid: any) => {
 				if (!valid) return;
@@ -118,9 +95,9 @@ export const onUpdate = (row?: FormItemProps) => {
 		fullscreen: deviceDetection(),
 		fullscreenIcon: true,
 		closeOnClickModal: false,
-		contentRenderer: () => h(editForm, { ref: formRef }),
+		contentRenderer: () => h(editForm, { ref: dialogFormRef }),
 		beforeSure: (done, { options }) => {
-			const menuFormRef = formRef.value.menuFormRef;
+			const menuFormRef = dialogFormRef.value.menuFormRef;
 			const curData = options.props.formInline as FormItemProps;
 			delete curData.higherMenuOptions;
 
@@ -145,7 +122,7 @@ export const onUpdate = (row?: FormItemProps) => {
  * * 删除菜单
  * @param row
  */
-export const handleDelete = async row => {
+export const onDelete = async row => {
 	// 是否确认删除
 	const result = await messageBox({
 		title: $t('confirmDelete'),
@@ -239,7 +216,7 @@ export const assignRolesToRouter = (row: any) => {
 		contentRenderer: () => <AssignRouterToRole ref={assignRouterToRolesRef} routerId={row.id} />,
 		beforeSure: async (done: any) => {
 			// 分配用户角色
-			const data = { routerId: row.id, roleIds: assignRouterToRolesRef.value.assignRoles };
+			const data = { routerIds: [row.id], roleIds: assignRouterToRolesRef.value.assignRoles };
 			const result = await menuStore.assignRolesToRouter(data);
 
 			// 更新成功关闭弹窗
@@ -247,4 +224,52 @@ export const assignRolesToRouter = (row: any) => {
 			done();
 		},
 	});
+};
+
+/** 批量为路由分配角色 */
+export const assignBatchRolesToRouter = () => {
+	addDialog({
+		title: $t('assignBatchRolesToRouter'),
+		width: '45%',
+		draggable: true,
+		closeOnClickModal: false,
+		fullscreenIcon: true,
+		contentRenderer: () => <AssignRouterToRole ref={assignRouterToRolesRef} />,
+		beforeSure: async (done: any) => {
+			// 表格功能
+			const { clearSelection } = tableRef.value.getTableRef();
+
+			// 分配用户角色
+			const data = { routerIds: selectIds.value, roleIds: assignRouterToRolesRef.value.assignRoles };
+			const result = await menuStore.assignRolesToRouter(data);
+
+			// 更新成功关闭弹窗
+			if (!result) return;
+			clearSelection();
+			done();
+		},
+	});
+};
+
+/** 清除选中所以角色 */
+export const clearAllRolesSelect = async () => {
+	// 表格功能
+	const { clearSelection } = tableRef.value.getTableRef();
+
+	const confirm = await messageBox({
+		title: $t('batchUpdates'),
+		showMessage: false,
+		confirmMessage: undefined,
+		cancelMessage: $t('cancel'),
+	});
+
+	// 取消修改
+	if (!confirm) return;
+
+	// 分配用户角色
+	const result = await menuStore.clearAllRolesSelect(selectIds.value);
+
+	// 更新成功关闭弹窗
+	if (!result) return;
+	clearSelection();
 };

@@ -1,7 +1,16 @@
 import { defineStore } from 'pinia';
 import { storeMessage } from '@/utils/message';
 import { handleTree } from '@/utils/tree';
-import { fetchAddMenu, fetchAssignRolesToRouter, fetchDeletedMenuByIds, fetchGetMenusList, fetchGetRoleListByRouterId, fetchUpdateMenu, fetchUpdateMenuByIdWithRank } from '@/api/v1/menu';
+import {
+	fetchAddMenu,
+	fetchAssignRolesToRouter,
+	fetchClearAllRolesSelect,
+	fetchDeletedMenuByIds,
+	fetchGetMenusList,
+	fetchGetRoleListByRouterId,
+	fetchUpdateMenu,
+	fetchUpdateMenuByIdWithRank,
+} from '@/api/v1/menu';
 import { isAllEmpty } from '@pureadmin/utils';
 import { $t } from '@/plugins/i18n';
 
@@ -64,6 +73,12 @@ export const userMenuStore = defineStore('menuStore', {
 		/** 为路由分配角色 */
 		async assignRolesToRouter(data: any) {
 			const result = await fetchAssignRolesToRouter(data);
+			return storeMessage(result);
+		},
+
+		/** 清除选中菜单所有角色 */
+		async clearAllRolesSelect(data: any) {
+			const result = await fetchClearAllRolesSelect(data);
 			return storeMessage(result);
 		},
 	},

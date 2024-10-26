@@ -23,6 +23,11 @@ export const fetchAssignRolesToRouter = (data: any) => {
 	return http.request<BaseResult<any>>('post', `routerRole/assignRolesToRouter`, { data });
 };
 
+/** 菜单管理-清除选中菜单所有角色 */
+export const fetchClearAllRolesSelect = (data: any) => {
+	return http.request<BaseResult<any>>('delete', `routerRole/clearAllRolesSelect`, { data });
+};
+
 /** 菜单管理-更新菜单 */
 export const fetchUpdateMenu = (data?: any) => {
 	return http.request<BaseResult<any>>('put', `router/updateMenu`, { data });

@@ -6,7 +6,20 @@ import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import AddFill from '@iconify-icons/ri/add-circle-line';
-import { assignRolesToRouter, handleDelete, onAdd, onChangeMenuRank, onchangeVisible, onSearch, onUpdate, switchLoadMap } from '@/views/system/menu/utils/hooks';
+import {
+	assignBatchRolesToRouter,
+	assignRolesToRouter,
+	clearAllRolesSelect,
+	onAdd,
+	onChangeMenuRank,
+	onchangeVisible,
+	onDelete,
+	onSearch,
+	onUpdate,
+	selectIds,
+	switchLoadMap,
+	tableRef,
+} from '@/views/system/menu/utils/hooks';
 import PureTable from '@pureadmin/table';
 import { columns } from '@/views/system/menu/utils/columns';
 import { userMenuStore } from '@/store/system/menu';
@@ -19,7 +32,6 @@ import { FormInstance } from 'element-plus';
 import { usePublicHooks } from '@/views/hooks';
 
 const formRef = ref();
-const tableRef = ref();
 const routerStore = userMenuStore();
 // 用户是否停用样式
 const { switchStyle } = usePublicHooks();
@@ -32,6 +44,14 @@ const resetForm = async (formEl: FormInstance | undefined) => {
 	if (!formEl) return;
 	formEl.resetFields();
 	await onSearch();
+};
+
+/**
+ * * 选择多行
+ * @param rows
+ */
+const onSelectionChange = (rows: Array<any>) => {
+	selectIds.value = rows.map((row: any) => row.id);
 };
 
 onMounted(() => {
@@ -50,10 +70,18 @@ onMounted(() => {
 				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
 			</el-form-item>
 		</el-form>
-		<PureTableBar :columns="columns" :isExpandAll="false" :tableRef="tableRef?.getTableRef()" title="菜单管理" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
+		<PureTableBar :columns="columns" :isExpandAll="false" :tableRef="tableRef?.getTableRef()" title="菜单管理" @fullscreen="tableRef?.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
+				<!-- 添加菜单 -->
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()"> {{ $t('addNew') }}</el-button>
+
+				<!-- 批量分配角色 -->
+				<el-button v-show="selectIds.length > 0" :icon="useRenderIcon('iwwa:assign')" type="warning" @click="assignBatchRolesToRouter()"> {{ $t('assignBatchRolesToRouter') }} </el-button>
+
+				<!-- 清除选中所以角色 -->
+				<el-button v-show="selectIds.length > 0" :icon="useRenderIcon('ic:baseline-clear')" type="danger" @click="clearAllRolesSelect()"> {{ $t('clearAllRolesSelect') }} </el-button>
 			</template>
+
 			<template v-slot="{ size, dynamicColumns }">
 				<pure-table
 					ref="tableRef"
@@ -70,6 +98,7 @@ onMounted(() => {
 					row-key="id"
 					showOverflowTooltip
 					table-layout="auto"
+					@selection-change="onSelectionChange"
 				>
 					<template #visible="{ row, index }">
 						<el-switch
@@ -102,9 +131,14 @@ onMounted(() => {
 					</template>
 
 					<template #operation="{ row }">
+						<!-- 修改 -->
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
+
+						<!-- 新增 -->
 						<el-button v-show="row.menuType !== 3" :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)"> {{ $t('addNew') }} </el-button>
-						<el-popconfirm :title="`${$t('delete')} ${$t(row.title)}?`" @confirm="handleDelete(row)">
+
+						<!-- 删除操作 -->
+						<el-popconfirm :title="`${$t('delete')} ${$t(row.title)}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}
