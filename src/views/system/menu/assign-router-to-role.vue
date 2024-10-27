@@ -38,7 +38,7 @@ defineExpose({ assignRoles });
 
 <template>
 	<div class="flex flex-col items-center">
-		<el-text v-show="warning" class="mx-1" type="warning">{{ warning }}</el-text>
+		<el-text v-show="warning" class="mx-1" type="danger">{{ warning }}</el-text>
 		<el-transfer
 			v-model="assignRoles"
 			:button-texts="[$t('take_back'), $t('add')]"

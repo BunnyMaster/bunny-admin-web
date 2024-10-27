@@ -10,7 +10,6 @@ import { computed, defineComponent, h, onBeforeMount, onMounted, reactive, ref }
 import { useI18n } from 'vue-i18n';
 import { useLayout } from './hooks/useLayout';
 import { setType } from './types';
-
 import BackTopIcon from '@/assets/svg/back_top.svg?component';
 import LayContent from './components/lay-content/index.vue';
 import LayNavbar from './components/lay-navbar/index.vue';
@@ -18,6 +17,7 @@ import LaySetting from './components/lay-setting/index.vue';
 import NavHorizontal from './components/lay-sidebar/NavHorizontal.vue';
 import NavVertical from './components/lay-sidebar/NavVertical.vue';
 import LayTag from './components/lay-tag/index.vue';
+import { useUserStore } from '@/store/system/user';
 
 const { t } = useI18n();
 const appWrapperRef = ref();
@@ -26,6 +26,7 @@ const { layout } = useLayout();
 const isMobile = deviceDetection();
 const pureSetting = useSettingStoreHook();
 const { $storage } = useGlobal<GlobalPropertiesApi>();
+const userStore = useUserStore();
 
 const set: setType = reactive({
 	sidebar: computed(() => {
@@ -104,9 +105,9 @@ useResizeObserver(appWrapperRef, entries => {
 });
 
 onMounted(() => {
-	if (isMobile) {
-		toggle('mobile', false);
-	}
+	if (isMobile) toggle('mobile', false);
+	// 获取用户信息
+	userStore.getUserinfo();
 });
 
 onBeforeMount(() => {

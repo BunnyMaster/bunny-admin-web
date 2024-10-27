@@ -261,7 +261,7 @@ export const clearAllRolesSelect = async () => {
 		draggable: true,
 		closeOnClickModal: false,
 		fullscreenIcon: true,
-		contentRenderer: () => <ElText type={'warning'}>{$t('clearAllRolesSelectTip')}</ElText>,
+		contentRenderer: () => <ElText type={'danger'}>{$t('clearAllRolesSelectTip')}</ElText>,
 		beforeSure: async () => {
 			// 表格功能
 			const { clearSelection } = tableRef.value.getTableRef();
@@ -272,7 +272,7 @@ export const clearAllRolesSelect = async () => {
 				draggable: true,
 				closeOnClickModal: false,
 				fullscreenIcon: true,
-				contentRenderer: () => <ElText type={'warning'}>{$t('clearAllRolesSelectTip')}</ElText>,
+				contentRenderer: () => <ElText type={'danger'}>{$t('clearAllRolesSelectTip')}</ElText>,
 				beforeSure: async () => {
 					// 清除所有角色
 					const result = await menuStore.clearAllRolesSelect(selectIds.value);
