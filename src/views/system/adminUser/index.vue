@@ -96,8 +96,8 @@ onMounted(() => {
 				</el-form-item>
 
 				<!-- 查询昵称 -->
-				<el-form-item :label="$t('adminUser_nickName')" prop="nickName">
-					<el-input v-model="adminUserStore.form.nickName" :placeholder="`${$t('input')}${$t('adminUser_nickName')}`" class="!w-[180px]" clearable />
+				<el-form-item :label="$t('adminUser_nickname')" prop="nickname">
+					<el-input v-model="adminUserStore.form.nickname" :placeholder="`${$t('input')}${$t('adminUser_nickname')}`" class="!w-[180px]" clearable />
 				</el-form-item>
 
 				<!-- 查询邮箱 -->

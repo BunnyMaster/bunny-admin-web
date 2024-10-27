@@ -27,7 +27,7 @@ export const useAdminUserStore = defineStore('adminUserStore', {
 				// 用户名
 				username: undefined,
 				// 昵称
-				nickName: undefined,
+				nickname: undefined,
 				// 邮箱
 				email: undefined,
 				// 手机号

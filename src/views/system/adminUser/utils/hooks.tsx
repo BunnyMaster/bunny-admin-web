@@ -59,7 +59,7 @@ export function onAdd() {
 		props: {
 			formInline: {
 				username: undefined,
-				nickName: undefined,
+				nickname: undefined,
 				email: undefined,
 				phone: undefined,
 				password: undefined,
@@ -100,7 +100,7 @@ export function onUpdate(row: any) {
 		props: {
 			formInline: {
 				username: row.username,
-				nickName: row.nickName,
+				nickname: row.nickname,
 				email: row.email,
 				phone: row.phone,
 				password: row.password,

@@ -13,8 +13,8 @@ export const columns: TableColumnList = [
 	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
 	// 用户名
 	{ label: $t('userLoginLog_username'), prop: 'username', width: 180 },
-	// // 登录Ip
-	// { label: $t('userLoginLog_ipAddress'), prop: 'ipAddress', width: 140 },
+	// 登录Ip
+	{ label: $t('userLoginLog_ipAddress'), prop: 'ipAddress', width: 140 },
 	// 登录Ip归属地
 	{ label: $t('userLoginLog_ipRegion'), prop: 'ipRegion' },
 	// // 登录时代理
@@ -35,8 +35,7 @@ export const columns: TableColumnList = [
 
 // 修改用户信息规则校验
 export const rules = reactive<FormRules<any>>({
-	username: [{ required: true, message: '昵称必填', trigger: 'blur' }],
-	nickName: [{ required: true, message: '昵称必填', trigger: 'blur' }],
+	nickname: [{ required: true, message: '昵称必填', trigger: 'blur' }],
 	email: [{ required: true, message: '昵称必填', trigger: 'blur' }],
 });
 

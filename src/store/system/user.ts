@@ -49,9 +49,8 @@ export const useUserStore = defineStore({
 			return false;
 		},
 
-		/** 前端登出（不调用接口） */
+		/** 前端登出 */
 		async logOut() {
-			// 登出
 			const result = await fetchLogout();
 			if (result.code == 200) {
 				this.username = '';
@@ -83,7 +82,9 @@ export const useUserStore = defineStore({
 		async getUserinfo() {
 			const result = await fetchGetUserinfo();
 			if (result.code === 200) {
-				return result.data;
+				const data = result.data;
+				setToken(data);
+				return data;
 			}
 			return {};
 		},

@@ -2,22 +2,20 @@
 import Motion from './utils/motion';
 import { useNav } from '@/layout/hooks/useNav';
 import { useLayout } from '@/layout/hooks/useLayout';
-import { avatar, bg, illustration } from './utils/static';
+import bg from '@/assets/login/bg.png';
+import avatar from '@/assets/login/avatar.svg?component';
+import illustration from '@/assets/login/illustration.svg?component';
 import { onMounted, toRaw } from 'vue';
 import { useTranslationLang } from '@/layout/hooks/useTranslationLang';
 import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange';
-
 import dayIcon from '@/assets/svg/day.svg?component';
 import darkIcon from '@/assets/svg/dark.svg?component';
 import globalization from '@/assets/svg/globalization.svg?component';
 import Check from '@iconify-icons/ep/check';
-
 import LoginForm from '@/views/login/login-form.vue';
+import LoginEmail from '@/views/login/login-email.vue';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
-
-defineOptions({
-	name: 'Login',
-});
+import { currentPage } from '@/views/login/utils/hooks';
 
 const { initStorage } = useLayout();
 initStorage();
@@ -73,7 +71,8 @@ onMounted(() => {
 					</Motion>
 
 					<!-- 登录表单 -->
-					<login-form />
+					<login-form v-if="currentPage === 0" />
+					<login-email v-if="currentPage === 1" />
 				</div>
 			</div>
 		</div>

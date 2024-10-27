@@ -13,7 +13,7 @@ export const columns: TableColumnList = [
 	// 状态
 	{ label: $t('adminUser_status'), prop: 'status', slot: 'status' },
 	// 昵称
-	{ label: $t('adminUser_nickName'), prop: 'nickName', width: 260 },
+	{ label: $t('adminUser_nickname'), prop: 'nickname', width: 260 },
 	// 邮箱
 	{ label: $t('adminUser_email'), prop: 'email', width: 260 },
 	// 手机号

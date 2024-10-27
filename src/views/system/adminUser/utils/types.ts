@@ -3,7 +3,7 @@ export interface FormItemProps {
 	// 用户名
 	username: string;
 	// 昵称
-	nickName: string;
+	nickname: string;
 	// 邮箱
 	email: string;
 	// 手机号

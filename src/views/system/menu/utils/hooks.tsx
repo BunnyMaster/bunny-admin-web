@@ -1,6 +1,6 @@
 import editForm from '../menu-dialog.vue';
 import { $t } from '@/plugins/i18n';
-import { addDialog } from '@/components/BaseDialog/index';
+import { addDialog, closeAllDialog } from '@/components/BaseDialog/index';
 import { h, ref } from 'vue';
 import type { FormItemProps } from './types';
 import { cloneDeep, deviceDetection } from '@pureadmin/utils';
@@ -8,6 +8,7 @@ import { userMenuStore } from '@/store/system/menu';
 import AssignRouterToRole from '@/views/system/menu/assign-router-to-role.vue';
 import { messageBox } from '@/utils/message';
 import { formatHigherMenuOptions } from '@/views/system/menu/utils/columns';
+import { ElText } from 'element-plus';
 
 // 用户是否停用加载集合
 export const switchLoadMap = ref({});
@@ -234,6 +235,7 @@ export const assignBatchRolesToRouter = () => {
 		draggable: true,
 		closeOnClickModal: false,
 		fullscreenIcon: true,
+		props: { warning: $t('assignBatchRolesToRouterTip') },
 		contentRenderer: () => <AssignRouterToRole ref={assignRouterToRolesRef} />,
 		beforeSure: async (done: any) => {
 			// 表格功能
@@ -253,23 +255,34 @@ export const assignBatchRolesToRouter = () => {
 
 /** 清除选中所以角色 */
 export const clearAllRolesSelect = async () => {
-	// 表格功能
-	const { clearSelection } = tableRef.value.getTableRef();
-
-	const confirm = await messageBox({
+	addDialog({
 		title: $t('batchUpdates'),
-		showMessage: false,
-		confirmMessage: undefined,
-		cancelMessage: $t('cancel'),
+		width: '35%',
+		draggable: true,
+		closeOnClickModal: false,
+		fullscreenIcon: true,
+		contentRenderer: () => <ElText type={'warning'}>{$t('clearAllRolesSelectTip')}</ElText>,
+		beforeSure: async () => {
+			// 表格功能
+			const { clearSelection } = tableRef.value.getTableRef();
+
+			addDialog({
+				title: $t('doubleCheck'),
+				width: '30%',
+				draggable: true,
+				closeOnClickModal: false,
+				fullscreenIcon: true,
+				contentRenderer: () => <ElText type={'warning'}>{$t('clearAllRolesSelectTip')}</ElText>,
+				beforeSure: async () => {
+					// 清除所有角色
+					const result = await menuStore.clearAllRolesSelect(selectIds.value);
+
+					// 更新成功关闭弹窗
+					if (!result) return;
+					clearSelection();
+					closeAllDialog();
+				},
+			});
+		},
 	});
-
-	// 取消修改
-	if (!confirm) return;
-
-	// 分配用户角色
-	const result = await menuStore.clearAllRolesSelect(selectIds.value);
-
-	// 更新成功关闭弹窗
-	if (!result) return;
-	clearSelection();
 };

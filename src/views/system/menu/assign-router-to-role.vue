@@ -6,6 +6,7 @@ import { $t } from '@/plugins/i18n';
 
 const props = defineProps({
 	routerId: { type: String as PropType<String> },
+	warning: { type: String as PropType<String> },
 });
 
 const roleStore = useRoleStore();
@@ -36,7 +37,8 @@ defineExpose({ assignRoles });
 </script>
 
 <template>
-	<div class="flex justify-center">
+	<div class="flex flex-col items-center">
+		<el-text v-show="warning" class="mx-1" type="warning">{{ warning }}</el-text>
 		<el-transfer
 			v-model="assignRoles"
 			:button-texts="[$t('take_back'), $t('add')]"

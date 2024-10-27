@@ -47,7 +47,11 @@ const onSubmit = async (formEl: FormInstance) => {
 			const avatar = uploadAvatarSrc.value;
 			if (avatar) userInfos.avatar = avatar;
 
-			await adminUserStore.updateAdminUserByLocalUser(userInfos);
+			// 更新用户信息
+			const result = await adminUserStore.updateAdminUserByLocalUser(userInfos);
+			if (!result) return;
+
+			// 重新加载用户信息
 			await onSearchByUserinfo();
 		} else {
 			message($t('required_fields'), { type: 'warning' });
@@ -81,12 +85,12 @@ onMounted(() => {
 
 			<!-- 用户名 -->
 			<el-form-item :label="$t('adminUser_username')" prop="username">
-				<el-input v-model="userInfos.username" :placeholder="$t('adminUser_username')" autocomplete="off" type="text" />
+				<el-input v-model="userInfos.username" :placeholder="$t('adminUser_username')" autocomplete="off" disabled type="text" />
 			</el-form-item>
 
 			<!-- 昵称 -->
-			<el-form-item :label="$t('adminUser_nickName')" prop="nickName">
-				<el-input v-model="userInfos.nickName" :placeholder="$t('adminUser_nickName')" autocomplete="off" type="text" />
+			<el-form-item :label="$t('adminUser_nickname')" prop="nickname">
+				<el-input v-model="userInfos.nickname" :placeholder="$t('adminUser_nickname')" autocomplete="off" type="text" />
 			</el-form-item>
 
 			<!-- 邮箱 -->

@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<FormProps>(), {
 		// 用户名
 		username: undefined,
 		// 昵称
-		nickName: undefined,
+		nickname: undefined,
 		// 邮箱
 		email: undefined,
 		// 手机号
@@ -55,8 +55,8 @@ defineExpose({ formRef });
 
 			<!-- 昵称 -->
 			<re-col :sm="24" :value="12" :xs="24">
-				<el-form-item :label="$t('adminUser_nickName')" prop="nickName">
-					<el-input v-model="form.nickName" :placeholder="$t('adminUser_nickName')" autocomplete="off" type="text" />
+				<el-form-item :label="$t('adminUser_nickname')" prop="nickname">
+					<el-input v-model="form.nickname" :placeholder="$t('adminUser_nickname')" autocomplete="off" type="text" />
 				</el-form-item>
 			</re-col>
 

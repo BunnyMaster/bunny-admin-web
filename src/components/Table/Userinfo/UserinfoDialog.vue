@@ -57,7 +57,7 @@ onMounted(() => {
 					<el-image :src="userinfo.avatar" style="width: 100px; height: 100px" />
 				</el-descriptions-item>
 				<el-descriptions-item :label="$t('username')" :width="100">{{ userinfo.username }}</el-descriptions-item>
-				<el-descriptions-item :label="$t('nickName')" :width="100">{{ userinfo.nickName }}</el-descriptions-item>
+				<el-descriptions-item :label="$t('nickname')" :width="100">{{ userinfo.nickname }}</el-descriptions-item>
 
 				<el-descriptions-item :label="$t('email')"> {{ userinfo.email }}</el-descriptions-item>
 				<el-descriptions-item :label="$t('phone')">{{ userinfo.phone }}</el-descriptions-item>
@@ -100,7 +100,7 @@ onMounted(() => {
 				<el-descriptions-item :label="$t('username')" :width="100">
 					<el-skeleton :rows="1" animated />
 				</el-descriptions-item>
-				<el-descriptions-item :label="$t('nickName')" :width="100">
+				<el-descriptions-item :label="$t('nickname')" :width="100">
 					<el-skeleton :rows="1" animated />
 				</el-descriptions-item>
 

@@ -12,7 +12,6 @@ export const uploadAvatarSrc = ref();
 
 // 剪裁头像是否显示
 export const isShow = ref(false);
-
 const userStore = useUserStore();
 
 // 用户信息内容
@@ -23,7 +22,7 @@ export const userInfos = reactive({
 	email: '',
 	phone: '',
 	summary: '',
-	nickName: '',
+	nickname: '',
 	password: '',
 	sex: '',
 });
@@ -31,7 +30,15 @@ export const userInfos = reactive({
 /** 获取用户信息内容 */
 export const onSearchByUserinfo = async () => {
 	const data = await userStore.getUserinfo();
-	Object.assign(userInfos, data);
+	userInfos.summary = data.personDescription;
+	userInfos.avatar = data.avatar;
+	userInfos.username = data.username;
+	userInfos.nickname = data.nickname;
+	userInfos.email = data.email;
+	userInfos.phone = data.phone;
+	userInfos.nickname = data.nickname;
+	userInfos.password = data.password;
+	userInfos.sex = data.sex;
 };
 
 /** 修改头像 */
