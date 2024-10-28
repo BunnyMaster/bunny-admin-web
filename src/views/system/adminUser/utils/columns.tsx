@@ -1,5 +1,7 @@
 import { computed, reactive, ref } from 'vue';
 import { $t } from '@/plugins/i18n';
+import type { FormRules } from 'element-plus';
+import { REGEXP_PWD } from '@/views/login/utils/rule';
 
 // 是否是更新用户信息
 export const isAddUserinfo = ref(false);
@@ -36,15 +38,40 @@ export const columns: TableColumnList = [
 ];
 
 // 添加规则
-export const rules: any = reactive({
+export const rules: any = reactive<FormRules>({
 	// 用户名
 	username: [{ required: true, message: `${$t('input')}${$t('adminUser_username')}`, trigger: 'blur' }],
 	// 密码
-	password: [{ required: isAddUserinfo, message: `${$t('input')}${$t('adminUser_password')}`, trigger: 'blur' }],
+	password: [
+		{
+			required: isAddUserinfo.value,
+			message: `${$t('input')}${$t('adminUser_password')}`,
+			trigger: 'blur',
+		},
+		{
+			type: 'pattern',
+			message: $t('login.purePassWordRuleReg'),
+			trigger: ['change', 'blur'],
+			pattern: REGEXP_PWD,
+		},
+	],
 	// 邮箱
 	email: [
-		{ required: true, message: `${$t('input')}${$t('adminUser_email')}`, trigger: 'blur' },
-		{ type: 'email', message: `${$t('input')}${$t('adminUser_email')}${$t('format_error')}` },
+		{ required: true, message: `${$t('input')}${$t('adminUser_email')}`, trigger: ['change', 'blur'] },
+		{
+			type: 'email',
+			message: `${$t('input')}${$t('adminUser_email')}${$t('format_error')}`,
+			trigger: ['change', 'blur'],
+		},
+	],
+	// 手机号
+	phone: [
+		{
+			type: 'pattern',
+			message: `${$t('input')}${$t('adminUser_phone')}${$t('format_error')}`,
+			trigger: ['change', 'blur'],
+			pattern: /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/,
+		},
 	],
 	// 状态
 	status: [{ required: true, message: `${$t('input')}${$t('adminUser_status')}`, trigger: 'blur' }],

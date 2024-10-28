@@ -11,7 +11,7 @@ import { message } from '@/utils/message';
 import { getTopMenu, initRouter } from '@/router/utils';
 import Motion from './utils/motion';
 import { ElMessage, FormInstance } from 'element-plus';
-import { onBack } from '@/views/login/utils/hooks';
+import { currentPage, onBack } from '@/views/login/utils/hooks';
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -25,6 +25,7 @@ const ruleForm = reactive({
 	username: '1319900154@qq.com',
 	password: 'admin123',
 	emailCode: '1',
+	type: currentPage.value,
 });
 
 /**

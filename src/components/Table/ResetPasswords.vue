@@ -3,6 +3,7 @@ import { onMounted, ref, watch } from 'vue';
 import { $t } from '@/plugins/i18n';
 import { zxcvbn } from '@zxcvbn-ts/core';
 import { isAllEmpty } from '@pureadmin/utils';
+import { REGEXP_PWD } from '@/views/login/utils/rule';
 
 const props = defineProps({
 	form: {
@@ -11,7 +12,15 @@ const props = defineProps({
 });
 
 const rules = {
-	password: [{ required: true, message: '请输入新密码', trigger: 'blur' }],
+	password: [
+		{ required: true, message: '请输入新密码', trigger: 'blur' },
+		{
+			type: 'pattern',
+			message: $t('login.purePassWordRuleReg'),
+			trigger: ['change', 'blur'],
+			pattern: REGEXP_PWD,
+		},
+	],
 };
 const pwdProgress = [
 	{ color: '#e74242', text: '非常弱' },

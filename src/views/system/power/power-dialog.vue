@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
 import { powerCascadeProps, rules } from '@/views/system/power/utils/columns';
 import { FormProps } from '@/views/system/power/utils/types';
@@ -23,7 +23,6 @@ const props = withDefaults(defineProps<FormProps>(), {
 const formRef = ref<FormInstance>();
 const form = ref(props.formInline);
 const powerStore = usePowerStore();
-const datalist = computed(() => handleTree(powerStore.allPowerList));
 
 onMounted(() => {
 	powerStore.getAllPowers();
@@ -38,13 +37,13 @@ defineExpose({ formRef });
 			<el-cascader v-model="form.parentId" :options="handleTree(powerStore.allPowerList)" :props="powerCascadeProps" class="w-full" clearable filterable show-all-levels />
 		</el-form-item>
 		<el-form-item :label="$t('power_powerCode')" prop="powerCode">
-			<el-input v-model="form.powerCode" autocomplete="off" type="text" />
+			<el-input v-model="form.powerCode" :placeholder="$t('power_powerCode')" autocomplete="off" type="text" />
 		</el-form-item>
 		<el-form-item :label="$t('power_powerName')" prop="powerName">
-			<el-input v-model="form.powerName" autocomplete="off" type="text" />
+			<el-input v-model="form.powerName" :placeholder="$t('power_powerName')" autocomplete="off" type="text" />
 		</el-form-item>
 		<el-form-item :label="$t('power_requestUrl')" prop="requestUrl">
-			<el-input v-model="form.requestUrl" autocomplete="off" type="text" />
+			<el-input v-model="form.requestUrl" :placeholder="$t('inputRequestUrlTip')" autocomplete="off" type="text" />
 		</el-form-item>
 	</el-form>
 </template>

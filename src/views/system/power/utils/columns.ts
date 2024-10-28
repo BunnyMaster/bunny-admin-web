@@ -1,5 +1,6 @@
 import { reactive } from 'vue';
 import { $t } from '@/plugins/i18n';
+import type { FormRules } from 'element-plus';
 
 // 表格列
 export const columns: TableColumnList = [
@@ -19,11 +20,13 @@ export const columns: TableColumnList = [
 ];
 
 // 添加规则
-export const rules = reactive({
+export const rules = reactive<FormRules>({
 	// 权限编码
 	powerCode: [{ required: true, message: `${$t('input')}${$t('power_powerCode')}`, trigger: 'blur' }],
 	// 权限名称
 	powerName: [{ required: true, message: `${$t('input')}${$t('power_powerName')}`, trigger: 'blur' }],
+	// 请求地址
+	requestUrl: [{ type: 'pattern', message: $t('inputRequestUrlTip'), pattern: /^\/.*/, trigger: 'change' }],
 });
 
 // 权限树形结构props

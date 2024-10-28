@@ -2,11 +2,12 @@ import { addDialog } from '@/components/BaseDialog/index';
 import RoleDialog from '@/views/system/role/role-dialog.vue';
 import { useRoleStore } from '@/store/system/role';
 import { h, ref } from 'vue';
-import { messageBox } from '@/utils/message';
+import { message, messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/role/utils/types';
 import { $t } from '@/plugins/i18n';
 import { fetchGetPowerListByRoleId } from '@/api/v1/power';
 import { isAllEmpty } from '@pureadmin/utils';
+import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 
 // 表格ref
 export const tableRef = ref();
@@ -33,9 +34,7 @@ export async function onSearch() {
 	roleStore.loading = false;
 }
 
-/**
- * * 添加角色
- */
+/** 添加角色 */
 export function onAdd() {
 	addDialog({
 		title: `${$t('addNew')}${$t('role')}`,
@@ -86,9 +85,7 @@ export function onUpdate(row: any) {
 	});
 }
 
-/**
- * * 删除角色
- */
+/** 删除角色 */
 export const onDelete = async (row: any) => {
 	const id = row.id;
 
@@ -106,24 +103,33 @@ export const onDelete = async (row: any) => {
 	await onSearch();
 };
 
-/**
- * 批量删除
- */
+/** 批量删除 */
 export const onDeleteBatch = async () => {
 	const ids = deleteIds.value;
+	const formDeletedBatchRef = ref();
+	addDialog({
+		title: $t('deleteBatchTip'),
+		width: '30%',
+		props: { formInline: { confirmText: '' } },
+		draggable: true,
+		fullscreenIcon: true,
+		closeOnClickModal: false,
+		contentRenderer: () => h(DeleteBatchDialog, { ref: formDeletedBatchRef }),
+		beforeSure: (done, { options }) => {
+			formDeletedBatchRef.value.formDeletedBatchRef.validate(async (valid: any) => {
+				if (!valid) return;
 
-	// 是否确认删除
-	const result = await messageBox({
-		title: $t('confirmDelete'),
-		showMessage: false,
-		confirmMessage: undefined,
-		cancelMessage: $t('confirmDelete'),
+				const text = options.props.formInline.confirmText.toLowerCase();
+				if (text === 'yes' || text === 'y') {
+					// 删除数据
+					await roleStore.deleteRole(ids);
+					await onSearch();
+
+					done();
+				} else message($t('deleteBatchTip'), { type: 'warning' });
+			});
+		},
 	});
-	if (!result) return;
-
-	// 删除数据
-	await roleStore.deleteRole(ids);
-	await onSearch();
 };
 
 /**

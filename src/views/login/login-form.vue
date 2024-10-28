@@ -22,6 +22,7 @@ const { t } = useI18n();
 const ruleForm = reactive({
 	username: 'bunny',
 	password: 'admin123',
+	type: currentPage.value,
 });
 
 /**
@@ -93,7 +94,7 @@ onBeforeUnmount(() => {
 		<!-- 邮箱登录 -->
 		<Motion :delay="300">
 			<el-form-item>
-				<el-button class="w-full" size="default" @click="currentPage = 1"> 邮箱登录</el-button>
+				<el-button class="w-full" size="default" @click="currentPage = 'email'"> 邮箱登录</el-button>
 			</el-form-item>
 		</Motion>
 	</el-form>

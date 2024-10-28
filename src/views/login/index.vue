@@ -71,8 +71,8 @@ onMounted(() => {
 					</Motion>
 
 					<!-- 登录表单 -->
-					<login-form v-if="currentPage === 0" />
-					<login-email v-if="currentPage === 1" />
+					<login-form v-if="currentPage === 'default'" />
+					<login-email v-if="currentPage === 'email'" />
 				</div>
 			</div>
 		</div>
