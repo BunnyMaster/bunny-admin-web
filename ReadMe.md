@@ -15,7 +15,15 @@ Gitee地址
 
 整个项目都采用响应式设计，可以兼容移动设备，除了表格显示在移动端可能不够友好外，其他方面表现良好。由于表格本身具有一定的复杂性，手机上查看效果可能不理想，目前无法对其进行修改。
 
-![image-20241026032407486](images/image-20241026032407486.png)
+![image-20241026032407486](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026032407486.png)
+
+## 登录内容
+
+登录可以选择用户名和密码登录或者是邮箱方式登录
+
+![image-20241028090631003](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241028090631003.png)
+
+![image-20241028090646664](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241028090646664.png)
 
 ## 1. 首页定制
 
@@ -31,11 +39,11 @@ Gitee地址
 
 系统菜单图标支持动态图标。
 
-![image-20241026025901761](images/image-20241026025901761.png)
+![image-20241026025901761](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026025901761.png)
 
 在添加外链时，路由名称即为外链地址。
 
-![image-20241026025825052](images/image-20241026025825052.png)
+![image-20241026025825052](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026025825052.png)
 
 ### 用户管理
 
@@ -43,29 +51,29 @@ Gitee地址
 
 其中系统中有一个默认用户是不会在前台用户进行展示的`Administrator`这个用户是系统预留，以防出错或维护使用
 
-![image-20241026030000099](images/image-20241026030000099.png)
+![image-20241026030000099](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026030000099.png)
 
 ### 角色权限管理
 
 权限管理中的权限添加支持树型结构。
 
-![image-20241026030034998](images/image-20241026030034998.png)
+![image-20241026030034998](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026030034998.png)
 
-![image-20241026030057212](images/image-20241026030057212.png)
+![image-20241026030057212](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026030057212.png)
 
 在新增权限时，请求地址可以是正则表达式或者Java中的antpath，两者皆可兼容。
 
-![image-20241026030247782](images/image-20241026030247782.png)
+![image-20241026030247782](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026030247782.png)
 
 部门管理同样采用树型结构。
 
-![image-20241026030105402](images/image-20241026030105402.png)
+![image-20241026030105402](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026030105402.png)
 
 ## 3. 系统配置
 
 ### 菜单图标
 
-![image-20241026030355125](images/image-20241026030355125.png)
+![image-20241026030355125](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026030355125.png)
 
 ### 邮件用户配置
 
@@ -75,19 +83,19 @@ Gitee地址
 
 其中默认选项无论有多少用户最终默认的只会有一个
 
-![image-20241026030534421](images/image-20241026030534421.png)
+![image-20241026030534421](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026030534421.png)
 
 ### 邮件模板
 
 第一个是发送验证码邮件模板
 
-![image-20241026030557224](images/image-20241026030557224.png)
+![image-20241026030557224](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026030557224.png)
 
 ### 前端页面配置
 
 因为这个模板作者将配置选项放在了前端文件中的`public`文件夹下， 配置选项现已变为动态，交给后端管理
 
-![image-20241026030621707](images/image-20241026030621707.png)
+![image-20241026030621707](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026030621707.png)
 
 ## 4. 系统监控
 
@@ -95,43 +103,43 @@ Gitee地址
 
 查看当前服务的CPU占用情况，使用SpringBoot中的`actuator`端点。图表每2秒请求一次，页面兼容移动设备。
 
-![image-20241026031050902](images/image-20241026031050902.png)
+![image-20241026031050902](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026031050902.png)
 
 ### 后台文件管理
 
-![image-20241026031117116](images/image-20241026031117116.png)
+![image-20241026031117116](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026031117116.png)
 
 ### 用户登录日志
 
-![image-20241026031206836](images/image-20241026031206836.png)
+![image-20241026031206836](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026031206836.png)
 
 ### 任务执行日志
 
 使用任务调度时执行状态都会记录在这个里面
 
-![image-20241026031240109](images/image-20241026031240109.png)
+![image-20241026031240109](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026031240109.png)
 
 ### 系统缓存
 
 项目中使用了SpringCache，如果请求的内容可以缓存在SpringCache中
 
-![image-20241026031252429](images/image-20241026031252429.png)
+![image-20241026031252429](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026031252429.png)
 
 ## 5. 定时任务
 
-![image-20241026031339987](images/image-20241026031339987.png)
+![image-20241026031339987](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026031339987.png)
 
-![image-20241026031346612](images/image-20241026031346612.png)
+![image-20241026031346612](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026031346612.png)
 
 ## 6. 多语言
 
-![image-20241026031403524](images/image-20241026031403524.png)
+![image-20241026031403524](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026031403524.png)
 
-![image-20241026031411689](images/image-20241026031411689.png)
+![image-20241026031411689](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026031411689.png)
 
 ## 外部页面
 
-![image-20241026031448707](images/image-20241026031448707.png)
+![image-20241026031448707](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026031448707.png)
 
 # 环境部署
 
@@ -222,25 +230,25 @@ server {
 
 若无法下载，请先使用pnpm下载。若不需使用pnpm，请删除或修改相应内容。
 
-![image-20241026025057129](images/image-20241026025057129.png)
+![image-20241026025057129](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026025057129.png)
 
 ### docker配置
 
-![image-20241026024116090](images/image-20241026024116090.png)
+![image-20241026024116090](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026024116090.png)
 
 ### 配置环境
 
 设置启动端口号和项目地址机器后端请求地址
 
-![image-20241026024813858](images/image-20241026024813858.png)
+![image-20241026024813858](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026024813858.png)
 
 #### 配置线上环境
 
 设置项目启动端口号，线上环境默认请求路径为`/admin`，需在NGINX中将访问请求前缀更改为`/admin`。
 
-![image-20241026024940747](images/image-20241026024940747.png)
+![image-20241026024940747](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026024940747.png)
 
-![image-20241026024243785](images/image-20241026024243785.png)
+![image-20241026024243785](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026024243785.png)
 
 #### 配置开发环境
 
@@ -248,11 +256,11 @@ server {
 
 前端设置的请求前缀为`/api`，但后端接受的前缀为`/admin`，因此需在服务中修改此内容。
 
-![image-20241026024318644](images/image-20241026024318644.png)
+![image-20241026024318644](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026024318644.png)
 
 **修改请求路径**
 
-![image-20241026031651591](images/image-20241026031651591.png)
+![image-20241026031651591](https://auth-1303941925.cos.ap-nanjing.myqcloud.com/undefinedimage-20241026031651591.png)
 
 ### 部署命令
 
@@ -263,3 +271,4 @@ docker build -f Dockerfile -t bunny_auth_web:1.0.0 . && docker run -p 80:80 --na
 # 展望未来
 
 1. 计划将文件上传服务改为本地的OSS，Minio可能会被移除。
+1. 消息服务，管理员相关的消息公告内容
