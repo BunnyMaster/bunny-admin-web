@@ -271,4 +271,4 @@ docker build -f Dockerfile -t bunny_auth_web:1.0.0 . && docker run -p 80:80 --na
 # 展望未来
 
 1. 计划将文件上传服务改为本地的OSS，Minio可能会被移除。
-1. 消息服务，管理员相关的消息公告内容
+2. 消息服务，管理员相关的消息公告内容
