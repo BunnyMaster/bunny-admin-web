@@ -77,6 +77,10 @@ onMounted(() => {
 			</div>
 		</div>
 	</div>
+
+	<footer>
+		<a href="https://beian.miit.gov.cn/" target="_blank">&nbsp;&nbsp;苏ICP备2023044078号-1</a>
+	</footer>
 </template>
 
 <style scoped>
@@ -84,6 +88,13 @@ onMounted(() => {
 </style>
 
 <style lang="scss" scoped>
+footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+}
+
 :deep(.el-input-group__append, .el-input-group__prepend) {
 	padding: 0;
 }
