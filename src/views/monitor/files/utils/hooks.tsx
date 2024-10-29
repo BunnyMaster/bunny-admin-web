@@ -15,14 +15,14 @@ export const selectRows = ref([]);
 export const formRef = ref();
 const filesStore = useFilesStore();
 
-/** 搜索初始化系统文件表 */
+/** 搜索初始化系统文件 */
 export async function onSearch() {
 	filesStore.loading = true;
 	await filesStore.getFilesList();
 	filesStore.loading = false;
 }
 
-/** 添加系统文件表 */
+/** 添加系统文件 */
 export function onAdd() {
 	addDialog({
 		title: `${$t('addNew')}${$t('files')}`,

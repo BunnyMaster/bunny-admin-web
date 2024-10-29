@@ -22,7 +22,6 @@ export const userInfos = reactive({
 	email: '',
 	phone: '',
 	summary: '',
-	nickname: '',
 	password: '',
 	sex: '',
 });
