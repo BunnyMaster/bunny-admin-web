@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddMessageType, fetchDeleteMessageType, fetchGetMessageTypeList, fetchUpdateMessageType } from '@/api/v1/messageType';
+import { fetchAddMessageType, fetchDeleteMessageType, fetchGetAllMessageTypes, fetchGetMessageTypeList, fetchUpdateMessageType } from '@/api/v1/messageType';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -12,6 +12,8 @@ export const useMessageTypeStore = defineStore('messageTypeStore', {
 		return {
 			// 系统消息类型列表
 			datalist: [],
+			// 所有消息类型
+			allMessageTypeList: [],
 			// 查询表单
 			form: {
 				// 1:启用 0:禁用
@@ -50,6 +52,12 @@ export const useMessageTypeStore = defineStore('messageTypeStore', {
 			// 公共页面函数hook
 			const pagination = storePagination.bind(this);
 			return pagination(result);
+		},
+
+		/** 所有系统类型 */
+		async getAllMessageTypeList() {
+			const baseResult = await fetchGetAllMessageTypes();
+			this.allMessageTypeList = baseResult.data;
 		},
 
 		/** 添加系统消息类型 */
