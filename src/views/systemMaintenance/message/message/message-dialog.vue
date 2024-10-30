@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { editorTypeList, rules } from '@/views/message/message/utils/columns';
-import { FormProps } from '@/views/message/message/utils/types';
+import { editorTypeList, rules } from '@/views/systemMaintenance/message/message/utils/columns';
+import { FormProps } from '@/views/systemMaintenance/message/message/utils/types';
 import { $t } from '@/plugins/i18n';
 import { usePublicHooks } from '@/views/hooks';
 import { useMessageTypeStore } from '@/store/message/messageType';
 import LoadingSvg from '@/assets/svg/loading.svg';
-import { loading, onSearchUserinfo, userDataList } from '@/views/message/message/utils/hooks';
+import { loading, onSearchUserinfo, userDataList } from '@/views/systemMaintenance/message/message/utils/hooks';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({

@@ -1,9 +1,9 @@
 import { addDialog } from '@/components/BaseDialog/index';
-import MessageDialog from '@/views/message/message/message-dialog.vue';
+import MessageDialog from '@/views/systemMaintenance/message/message/message-dialog.vue';
 import { useMessageStore } from '@/store/message/message';
 import { h, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';
-import type { FormItemProps } from '@/views/message/message/utils/types';
+import type { FormItemProps } from '@/views/systemMaintenance/message/message/utils/types';
 import { $t } from '@/plugins/i18n';
 import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 import { useAdminUserStore } from '@/store/system/adminUser';

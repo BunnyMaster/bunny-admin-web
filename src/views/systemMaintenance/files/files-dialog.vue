@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { FormInstance, genFileId, UploadProps, UploadRawFile } from 'element-plus';
-import { addRules, uploadRules } from '@/views/monitor/files/utils/columns';
-import { FormProps } from '@/views/monitor/files/utils/types';
+import { addRules, uploadRules } from '@/views/systemMaintenance/files/utils/columns';
+import { FormProps } from '@/views/systemMaintenance/files/utils/types';
 import { $t } from '@/plugins/i18n';
 import { useFilesStore } from '@/store/monitor/files';
 import { UploadFilled } from '@element-plus/icons-vue';

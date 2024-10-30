@@ -1,9 +1,9 @@
 import { addDialog } from '@/components/BaseDialog/index';
-import FilesDialog from '@/views/monitor/files/files-dialog.vue';
+import FilesDialog from '@/views/systemMaintenance/files/files-dialog.vue';
 import { useFilesStore } from '@/store/monitor/files';
 import { h, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';
-import type { FormItemProps } from '@/views/monitor/files/utils/types';
+import type { FormItemProps } from '@/views/systemMaintenance/files/utils/types';
 import { $t } from '@/plugins/i18n';
 import { downloadFilesByFileId, downloadFilesByFilepath } from '@/api/v1/files';
 import { download } from '@/utils/sso';
