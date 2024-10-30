@@ -20,6 +20,8 @@ export const useMessageTypeStore = defineStore('messageTypeStore', {
 				status: undefined,
 				// 消息名称
 				messageName: undefined,
+				// 发送人昵称
+				sendUserNickname: undefined,
 				// 消息类型
 				messageType: undefined,
 				// 消息备注

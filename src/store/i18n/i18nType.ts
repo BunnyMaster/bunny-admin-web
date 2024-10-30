@@ -32,7 +32,7 @@ export const userI18nTypeStore = defineStore('i18nTypeStore', {
 		 * * 获取多语言类型
 		 */
 		async getI18nTypeList() {
-			const result = await fetchGetI18nTypeList();
+			const result = await fetchGetI18nTypeList(this.form);
 			if (result.code === 200) {
 				this.datalist = result.data;
 				return true;

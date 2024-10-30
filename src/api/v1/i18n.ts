@@ -27,8 +27,8 @@ export const fetchDeleteI18n = (data: any) => {
 };
 
 /** 多语言类型管理---获取多语言类型列表 */
-export const fetchGetI18nTypeList = () => {
-	return http.request<BaseResult<ResultTable>>('get', 'i18nType/noAuth/getI18nTypeList');
+export const fetchGetI18nTypeList = (data: any) => {
+	return http.request<BaseResult<ResultTable>>('get', 'i18nType/noAuth/getI18nTypeList', { params: data });
 };
 
 /** 多语言类型管理---添加多语言类型 */

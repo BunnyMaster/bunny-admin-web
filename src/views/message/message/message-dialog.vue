@@ -7,7 +7,7 @@ import { $t } from '@/plugins/i18n';
 import { usePublicHooks } from '@/views/hooks';
 import { useMessageTypeStore } from '@/store/message/messageType';
 import LoadingSvg from '@/assets/svg/loading.svg';
-import { useAdminUserStore } from '@/store/system/adminUser';
+import { loading, onSearchUserinfo, userDataList } from '@/views/message/message/utils/hooks';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
@@ -33,25 +33,7 @@ const props = withDefaults(defineProps<FormProps>(), {
 const { switchStyle } = usePublicHooks();
 const formRef = ref<FormInstance>();
 const form = ref(props.formInline);
-const adminUserStore = useAdminUserStore();
 const messageTypeStore = useMessageTypeStore();
-// 搜索用户加载
-const loading = ref(false);
-// 用户信息列表
-const userDataList = ref();
-
-/** 搜索 */
-const onSearchUserinfo = async (keyword: string) => {
-	loading.value = true;
-	userDataList.value = await adminUserStore.queryUser({ keyword });
-	loading.value = false;
-};
-
-/** 当选择发送用户 */
-const onSelectSendUser = (va: any) => {
-	const user = userDataList.value.filter((user: any) => user.id === va)[0];
-	form.value.sendNickName = user.nickname;
-};
 
 onMounted(() => {
 	messageTypeStore.getAllMessageTypeList();
@@ -67,23 +49,20 @@ defineExpose({ formRef });
 		</el-form-item>
 
 		<!-- 接收人用户ID -->
-		<el-form-item :label="$t('receivedUserId')" prop="receivedUserId">
-			<el-input v-model="form.receivedUserId" :placeholder="$t('receivedUserIdTip')" autocomplete="off" type="text" />
+		<el-form-item :label="$t('receivedUserIds')" prop="receivedUserIds">
+			<el-select v-model="form.receivedUserIds" :loading="loading" :placeholder="$t('receivedUserIdTip')" :remote-method="onSearchUserinfo" clearable filterable multiple remote remote-show-suffix>
+				<el-option v-for="item in userDataList" :key="item.id" :label="item.username" :value="item.id" />
+				<template #loading>
+					<el-icon class="is-loading">
+						<LoadingSvg />
+					</el-icon>
+				</template>
+			</el-select>
 		</el-form-item>
 
 		<!-- 发送人用户ID -->
 		<el-form-item :label="$t('sendUserId')" prop="sendUserId">
-			<el-select
-				v-model="form.sendUserId"
-				:loading="loading"
-				:placeholder="$t('select') + $t('sendUserId')"
-				:remote-method="onSearchUserinfo"
-				clearable
-				filterable
-				remote
-				remote-show-suffix
-				@change="onSelectSendUser"
-			>
+			<el-select v-model="form.sendUserId" :loading="loading" :placeholder="$t('select') + $t('sendUserId')" :remote-method="onSearchUserinfo" clearable filterable remote remote-show-suffix>
 				<el-option v-for="item in userDataList" :key="item.id" :label="item.username" :value="item.id" />
 				<template #loading>
 					<el-icon class="is-loading">

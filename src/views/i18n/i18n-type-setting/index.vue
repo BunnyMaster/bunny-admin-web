@@ -32,10 +32,10 @@ onMounted(() => {
 <template>
 	<div class="main">
 		<el-form ref="formRef" :inline="true" :model="i18nTypeStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-			<el-form-item :label="$t('i18n_typeName')" prop="title">
+			<el-form-item :label="$t('i18n_typeName')" prop="typeName">
 				<el-input v-model="i18nTypeStore.form.typeName" :placeholder="`${$t('input')}${$t('i18n_typeName')}`" class="!w-[180px]" clearable />
 			</el-form-item>
-			<el-form-item :label="$t('i18n_summary')" prop="title">
+			<el-form-item :label="$t('i18n_summary')" prop="summary">
 				<el-input v-model="i18nTypeStore.form.summary" :placeholder="`${$t('input')}${$t('i18n_summary')}`" class="!w-[180px]" clearable />
 			</el-form-item>
 			<el-form-item>

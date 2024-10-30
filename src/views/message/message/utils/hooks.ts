@@ -6,11 +6,17 @@ import { message, messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/message/message/utils/types';
 import { $t } from '@/plugins/i18n';
 import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
+import { useAdminUserStore } from '@/store/system/adminUser';
 
 export const formRef = ref();
 // 删除ids
 export const deleteIds = ref([]);
+// 用户信息列表
+export const userDataList = ref();
+// 搜索用户加载
+export const loading = ref(false);
 const messageStore = useMessageStore();
+const adminUserStore = useAdminUserStore();
 
 /** 搜索初始化系统消息 */
 export async function onSearch() {
@@ -27,7 +33,7 @@ export function onAdd() {
 		props: {
 			formInline: {
 				title: undefined,
-				receivedUserId: undefined,
+				receivedUserIds: undefined,
 				sendUserId: undefined,
 				sendNickName: undefined,
 				messageType: undefined,
@@ -58,14 +64,16 @@ export function onAdd() {
  * * 更新系统消息
  * @param row
  */
-export function onUpdate(row: any) {
+export async function onUpdate(row: any) {
+	await onSearchUserinfo();
+
 	addDialog({
 		title: `${$t('modify')}${$t('message')}`,
 		width: '30%',
 		props: {
 			formInline: {
 				title: row.title,
-				receivedUserId: row.receivedUserId,
+				receivedUserIds: row.receivedUserIds ? row.receivedUserIds.split(',') : row.receivedUserIds,
 				sendUserId: row.sendUserId,
 				sendNickName: row.sendNickName,
 				messageType: row.messageType,
@@ -138,4 +146,11 @@ export const onDeleteBatch = async () => {
 			});
 		},
 	});
+};
+
+/** 搜索 */
+export const onSearchUserinfo = async (keyword: string) => {
+	loading.value = true;
+	userDataList.value = await adminUserStore.queryUser({ keyword });
+	loading.value = false;
 };

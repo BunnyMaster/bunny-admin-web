@@ -65,8 +65,8 @@ onMounted(() => {
 			</el-form-item>
 
 			<!-- 发送人昵称 -->
-			<el-form-item :label="$t('sendNickName')" prop="sendNickName">
-				<el-input v-model="messageStore.form.sendNickName" :placeholder="`${$t('input')}${$t('sendNickName')}`" class="!w-[180px]" clearable />
+			<el-form-item :label="$t('sendNickname')" prop="sendNickname">
+				<el-input v-model="messageStore.form.sendNickname" :placeholder="`${$t('input')}${$t('sendNickname')}`" class="!w-[180px]" clearable />
 			</el-form-item>
 
 			<!-- 消息类型 -->
@@ -81,16 +81,16 @@ onMounted(() => {
 
 			<!-- 编辑器类型 -->
 			<el-form-item :label="$t('editorType')" prop="editorType">
-				<el-select v-model="messageStore.form.editorType" :placeholder="`${$t('select')}${$t('editorType')}`" clearable filterable>
+				<el-select v-model="messageStore.form.editorType" :placeholder="`${$t('select')}${$t('editorType')}`" class="!w-[180px]" clearable filterable>
 					<el-option v-for="(item, index) in editorTypeList" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
 				</el-select>
-				<!--<el-input v-model="messageStore.form.editorType" :placeholder="`${$t('input')}${$t('editorType')}`" class="!w-[180px]" clearable />-->
 			</el-form-item>
 
 			<!-- 0:未读 1:已读 -->
 			<el-form-item :label="$t('status')" prop="status">
 				<el-input v-model="messageStore.form.status" :placeholder="`${$t('input')}${$t('status')}`" class="!w-[180px]" clearable />
 			</el-form-item>
+
 			<el-form-item>
 				<el-button :icon="useRenderIcon('ri:search-line')" :loading="messageStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
 				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
@@ -129,11 +129,15 @@ onMounted(() => {
 					@page-current-change="onCurrentPageChange"
 				>
 					<template #createUser="{ row }">
-						<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>
+						<el-button v-show="row.createUser" link type="primary" @click="selectUserinfo(row.createUser)">
+							{{ row.createUsername }}
+						</el-button>
 					</template>
 
 					<template #updateUser="{ row }">
-						<el-button link type="primary" @click="selectUserinfo(row.updateUser)">{{ $t('table.updateUser') }} </el-button>
+						<el-button v-show="row.updateUser" link type="primary" @click="selectUserinfo(row.updateUser)">
+							{{ row.updateUsername }}
+						</el-button>
 					</template>
 
 					<template #operation="{ row }">

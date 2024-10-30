@@ -68,6 +68,11 @@ onMounted(() => {
 				<el-input v-model="messageTypeStore.form.messageName" :placeholder="`${$t('input')}${$t('messageName')}`" class="!w-[180px]" clearable />
 			</el-form-item>
 
+			<!-- 发送人昵称 -->
+			<el-form-item :label="$t('sendUserNickname')" prop="sendUserNickname">
+				<el-input v-model="messageTypeStore.form.sendUserNickname" :placeholder="`${$t('input')}${$t('sendUserNickname')}`" class="!w-[180px]" clearable />
+			</el-form-item>
+
 			<!-- 消息类型 -->
 			<el-form-item :label="$t('messageType')" prop="messageType">
 				<el-input v-model="messageTypeStore.form.messageType" :placeholder="`${$t('input')}${$t('messageType')}`" class="!w-[180px]" clearable />
@@ -127,11 +132,15 @@ onMounted(() => {
 					</template>
 
 					<template #createUser="{ row }">
-						<el-button link type="primary" @click="selectUserinfo(row.createUser)">{{ $t('table.createUser') }} </el-button>
+						<el-button v-show="row.createUser" link type="primary" @click="selectUserinfo(row.createUser)">
+							{{ row.createUsername }}
+						</el-button>
 					</template>
 
 					<template #updateUser="{ row }">
-						<el-button link type="primary" @click="selectUserinfo(row.updateUser)">{{ $t('table.updateUser') }} </el-button>
+						<el-button v-show="row.updateUser" link type="primary" @click="selectUserinfo(row.updateUser)">
+							{{ row.updateUsername }}
+						</el-button>
 					</template>
 
 					<template #operation="{ row }">

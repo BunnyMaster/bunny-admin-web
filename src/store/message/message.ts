@@ -17,11 +17,11 @@ export const useMessageStore = defineStore('messageStore', {
 				// 消息标题
 				title: undefined,
 				// 接收人用户ID
-				receivedUserId: undefined,
+				receivedUserIds: undefined,
 				// 发送人用户ID
 				sendUserId: undefined,
 				// 发送人昵称
-				sendNickName: undefined,
+				sendNickname: undefined,
 				// 消息类型
 				messageType: undefined,
 				// 消息内容

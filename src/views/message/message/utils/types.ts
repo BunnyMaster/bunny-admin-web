@@ -3,11 +3,9 @@ export interface FormItemProps {
 	// 消息标题
 	title: string;
 	// 接收人用户ID
-	receivedUserId: number;
+	receivedUserIds: string[];
 	// 发送人用户ID
-	sendUserId: number;
-	// 发送人昵称
-	sendNickName: string;
+	sendUserId: string;
 	// 消息类型
 	messageType: string;
 	// 消息内容
