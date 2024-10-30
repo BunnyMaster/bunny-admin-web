@@ -10,8 +10,8 @@ export const columns: TableColumnList = [
 	{ label: $t('isDefault'), prop: 'isDefault', slot: 'isDefault' },
 	{ label: $t('table.updateTime'), prop: 'updateTime' },
 	{ label: $t('table.createTime'), prop: 'createTime' },
-	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 90 },
-	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 90 },
+	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 130 },
+	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 130 },
 	{ label: $t('table.operation'), fixed: 'right', width: 210, slot: 'operation' },
 ];
 
