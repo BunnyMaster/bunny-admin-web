@@ -15,6 +15,8 @@ const myChart = ref<any>();
 // 初始化ECharts
 const seriesData = ref([]);
 const xSeriesData = ref([]);
+// 数据显示长度
+const dateDisplayLength = ref(20);
 
 const option = reactive<UtilsEChartsOption>({
 	tooltip: {
@@ -45,9 +47,11 @@ const option = reactive<UtilsEChartsOption>({
 			type: 'line',
 			areaStyle: {},
 			animationDelay: function (idx) {
-				return idx * 10; // 设置动画延迟时间
+				// 设置动画延迟时间
+				return idx * 10;
 			},
-			animationDuration: 1000, // 设置动画持续时间
+			// 设置动画持续时间
+			animationDuration: 1000,
 		},
 	],
 	animationDuration: 666,
@@ -59,9 +63,9 @@ const option = reactive<UtilsEChartsOption>({
 /** 初始化数据 */
 const onSearch = async () => {
 	// 保留数组中的最新10条数据
-	if (seriesData.value.length > 5) {
-		seriesData.value = seriesData.value.slice(-5);
-		xSeriesData.value = xSeriesData.value.slice(-5);
+	if (seriesData.value.length > dateDisplayLength.value) {
+		seriesData.value = seriesData.value.slice(-dateDisplayLength.value);
+		xSeriesData.value = xSeriesData.value.slice(-dateDisplayLength.value);
 	}
 
 	// 获取数据

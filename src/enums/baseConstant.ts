@@ -8,28 +8,28 @@ export const isDefaultOptions = [
 	{ value: false, label: '否' },
 ];
 
-/**
- * * 是否显示
- */
+/** 是否显示 */
 export const isDefaultVisibleOptions = [
 	{ value: true, label: '显示' },
 	{ value: false, label: '不显示' },
 ];
 
-/**
- * * 性别
- */
+/** 性别 */
 export const sexConstant = [
 	{ value: 1, label: '男' },
 	{ value: 0, label: '女' },
 ];
 
-/**
- * * 默认状态
- */
+/** 默认状态 */
 export const userStatus = [
 	{ value: 0, label: '启用' },
 	{ value: 1, label: '禁用' },
+];
+
+/** 是否启用状态 */
+export const enabledOrNotStatus = [
+	{ value: true, label: '启用' },
+	{ value: false, label: '禁用' },
 ];
 
 /**
