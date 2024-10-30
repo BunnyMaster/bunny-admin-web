@@ -68,11 +68,6 @@ onMounted(() => {
 				<el-input v-model="messageTypeStore.form.messageName" :placeholder="`${$t('input')}${$t('messageName')}`" class="!w-[180px]" clearable />
 			</el-form-item>
 
-			<!-- 发送人昵称 -->
-			<el-form-item :label="$t('sendUserNickname')" prop="sendUserNickname">
-				<el-input v-model="messageTypeStore.form.sendUserNickname" :placeholder="`${$t('input')}${$t('sendUserNickname')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-
 			<!-- 消息类型 -->
 			<el-form-item :label="$t('messageType')" prop="messageType">
 				<el-input v-model="messageTypeStore.form.messageType" :placeholder="`${$t('input')}${$t('messageType')}`" class="!w-[180px]" clearable />

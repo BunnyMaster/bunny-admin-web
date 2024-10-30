@@ -70,8 +70,8 @@ export const columns: TableColumnList = [
 	{ label: '隐藏', prop: 'visible', slot: 'visible', width: 100 },
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true },
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true },
-	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 90 },
-	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 90 },
+	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 130 },
+	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 130 },
 	{ label: $t('table.operation'), fixed: 'right', width: 230, slot: 'operation' },
 ];
 

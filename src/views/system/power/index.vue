@@ -54,12 +54,7 @@ const resetForm = async (formEl: FormInstance) => {
 	formEl.resetFields();
 	await onSearch();
 };
-
-/**
- * * 按钮类
- */
-const buttonClass = computed(() => ['!h-[20px]', 'reset-margin', '!text-gray-500', 'dark:!text-white', 'dark:hover:!text-primary']);
-
+computed(() => ['!h-[20px]', 'reset-margin', '!text-gray-500', 'dark:!text-white', 'dark:hover:!text-primary']);
 onMounted(() => {
 	onSearch();
 });
@@ -123,16 +118,15 @@ onMounted(() => {
 				>
 					<template #createUser="{ row }">
 						<el-button v-show="row.createUser" link type="primary" @click="selectUserinfo(row.createUser)">
-							{{ $t('table.createUser') }}
+							{{ row.createUsername }}
 						</el-button>
 					</template>
 
 					<template #updateUser="{ row }">
 						<el-button v-show="row.updateUser" link type="primary" @click="selectUserinfo(row.updateUser)">
-							{{ $t('table.updateUser') }}
+							{{ row.updateUsername }}
 						</el-button>
 					</template>
-
 					<template #operation="{ row }">
 						<!-- 修改 -->
 						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
