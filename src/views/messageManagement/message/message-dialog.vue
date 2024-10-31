@@ -1,20 +1,20 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { editorTypeList, rules } from '@/views/systemMaintenance/message/message/utils/columns';
-import { FormProps } from '@/views/systemMaintenance/message/message/utils/types';
+import { editorTypeList, rules } from '@/views/messageManagement/message/utils/columns';
+import { FormProps } from '@/views/messageManagement/message/utils/types';
 import { $t } from '@/plugins/i18n';
 import { usePublicHooks } from '@/views/hooks';
 import { useMessageTypeStore } from '@/store/message/messageType';
 import LoadingSvg from '@/assets/svg/loading.svg';
-import { loading, onSearchUserinfo, userDataList } from '@/views/systemMaintenance/message/message/utils/hooks';
+import { loading, onSearchUserinfo, userDataList } from '@/views/messageManagement/message/utils/hooks';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
 		// 消息标题
 		title: undefined,
 		// 接收人用户ID
-		receivedUserId: undefined,
+		receivedUserIds: undefined,
 		// 发送人用户ID
 		sendUserId: undefined,
 		// 发送人昵称
@@ -38,6 +38,7 @@ const messageTypeStore = useMessageTypeStore();
 onMounted(() => {
 	messageTypeStore.getAllMessageTypeList();
 });
+
 defineExpose({ formRef });
 </script>
 

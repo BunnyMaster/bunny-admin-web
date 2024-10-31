@@ -1,81 +1,62 @@
 import { addDialog } from '@/components/BaseDialog/index';
-import MessageTypeDialog from '@/views/systemMaintenance/message/messageType/message-type-dialog.vue';
-import { useMessageTypeStore } from '@/store/message/messageType';
+import MessageDialog from '@/views/messageManagement/message/message-dialog.vue';
+import { useMessageStore } from '@/store/message/message';
 import { h, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';
-import type { FormItemProps } from '@/views/systemMaintenance/message/messageType/utils/types';
+import type { FormItemProps } from '@/views/messageManagement/message/utils/types';
 import { $t } from '@/plugins/i18n';
 import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
+import { useAdminUserStore } from '@/store/system/adminUser';
 
 export const formRef = ref();
 // 删除ids
 export const deleteIds = ref([]);
-const messageTypeStore = useMessageTypeStore();
+// 用户信息列表
+export const userDataList = ref();
+// 搜索用户加载
+export const loading = ref(false);
+const messageStore = useMessageStore();
+const adminUserStore = useAdminUserStore();
 
-/** 搜索初始化系统消息类型 */
+/** 搜索初始化系统消息 */
 export async function onSearch() {
-	messageTypeStore.loading = true;
-	await messageTypeStore.getMessageTypeList();
-	messageTypeStore.loading = false;
-}
-
-/** 添加系统消息类型 */
-export function onAdd() {
-	addDialog({
-		title: `${$t('addNew')}${$t('messageType')}`,
-		width: '30%',
-		props: {
-			formInline: {
-				status: true,
-				messageName: undefined,
-				messageType: undefined,
-				summary: undefined,
-			},
-		},
-		draggable: true,
-		fullscreenIcon: true,
-		closeOnClickModal: false,
-		contentRenderer: () => h(MessageTypeDialog, { ref: formRef }),
-		beforeSure: (done, { options }) => {
-			const form = options.props.formInline as FormItemProps;
-			formRef.value.formRef.validate(async (valid: any) => {
-				if (!valid) return;
-
-				const result = await messageTypeStore.addMessageType(form);
-				if (!result) return;
-				done();
-				await onSearch();
-			});
-		},
-	});
+	messageStore.loading = true;
+	await messageStore.getMessageList();
+	messageStore.loading = false;
 }
 
 /**
- * * 更新系统消息类型
+ * * 更新系统消息
  * @param row
  */
-export function onUpdate(row: any) {
+export async function onUpdate(row: any) {
+	await onSearchUserinfo('');
+
 	addDialog({
-		title: `${$t('modify')}${$t('messageType')}`,
+		title: `${$t('modify')}${$t('message')}`,
 		width: '30%',
 		props: {
 			formInline: {
-				status: row.status,
-				messageName: row.messageName,
+				title: row.title,
+				receivedUserIds: row.receivedUserIds ? row.receivedUserIds.split(',') : row.receivedUserIds,
+				sendUserId: row.sendUserId,
+				sendNickName: row.sendNickName,
 				messageType: row.messageType,
-				summary: row.summary,
+				content: row.content,
+				editorType: row.editorType,
+				status: row.status,
 			},
 		},
 		draggable: true,
 		fullscreenIcon: true,
 		closeOnClickModal: false,
-		contentRenderer: () => h(MessageTypeDialog, { ref: formRef }),
+		contentRenderer: () => h(MessageDialog, { ref: formRef }),
 		beforeSure: (done, { options }) => {
 			const form = options.props.formInline as FormItemProps;
 			formRef.value.formRef.validate(async (valid: any) => {
 				if (!valid) return;
 
-				const result = await messageTypeStore.updateMessageType({ ...form, id: row.id });
+				const result = await messageStore.updateMessage({ ...form, id: row.id });
 				if (!result) return;
 				done();
 				await onSearch();
@@ -84,7 +65,7 @@ export function onUpdate(row: any) {
 	});
 }
 
-/** 删除系统消息类型 */
+/** 删除系统消息 */
 export const onDelete = async (row: any) => {
 	const id = row.id;
 
@@ -98,7 +79,7 @@ export const onDelete = async (row: any) => {
 	if (!result) return;
 
 	// 删除数据
-	await messageTypeStore.deleteMessageType([id]);
+	await messageStore.deleteMessage([id]);
 	await onSearch();
 };
 
@@ -122,7 +103,7 @@ export const onDeleteBatch = async () => {
 				const text = options.props.formInline.confirmText.toLowerCase();
 				if (text === 'yes' || text === 'y') {
 					// 删除数据
-					await messageTypeStore.deleteMessageType(ids);
+					await messageStore.deleteMessage(ids);
 					await onSearch();
 
 					done();
@@ -130,4 +111,11 @@ export const onDeleteBatch = async () => {
 			});
 		},
 	});
+};
+
+/** 搜索 */
+export const onSearchUserinfo = async (keyword: string) => {
+	loading.value = true;
+	userDataList.value = await adminUserStore.queryUser({ keyword });
+	loading.value = false;
 };

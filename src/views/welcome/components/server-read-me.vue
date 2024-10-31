@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import MarkdownPreview from '@/components/Markdown/MarkdownPreview.vue';
+import MarkdownPreview from '@/components/Editor/MarkdownPreview.vue';
 import { onMounted, ref } from 'vue';
 import { decode } from 'js-base64';
 

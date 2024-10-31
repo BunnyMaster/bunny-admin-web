@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { rules } from '@/views/systemMaintenance/message/messageType/utils/columns';
-import { FormProps } from '@/views/systemMaintenance/message/messageType/utils/types';
+import { rules } from '@/views/messageManagement/messageType/utils/columns';
+import { FormProps } from '@/views/messageManagement/messageType/utils/types';
 import { $t } from '@/plugins/i18n';
 import { usePublicHooks } from '@/views/hooks';
 

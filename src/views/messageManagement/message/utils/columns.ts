@@ -36,7 +36,7 @@ export const columns: TableColumnList = [
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 130 },
 	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 130 },
-	{ label: $t('table.operation'), fixed: 'right', width: 210, slot: 'operation' },
+	{ label: $t('table.operation'), fixed: 'right', width: 150, slot: 'operation' },
 ];
 
 // 添加规则
@@ -56,5 +56,5 @@ export const rules = reactive<FormRules>({
 /** 编辑器类型 */
 export const editorTypeList = [
 	{ label: $t('markdown'), value: 'markdown' },
-	{ label: $t('richText'), value: 'richText' },
+	{ label: $t('richText'), value: 'rich' },
 ];
