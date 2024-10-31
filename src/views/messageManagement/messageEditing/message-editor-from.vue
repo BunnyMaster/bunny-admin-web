@@ -1,35 +1,23 @@
 <script lang="ts" setup>
-import { formState } from '@/views/messageManagement/messageEditing/utils/hooks';
+import { beforeUpload, coverUrl, formState, loading, onSearchUserinfo, onUpload, userDataList } from '@/views/messageManagement/messageEditing/utils/hooks';
 import { onMounted, ref, toRaw } from 'vue';
 import { $t } from '@/plugins/i18n';
 import { rules } from '@/views/messageManagement/messageEditing/utils/columns';
 import { FormInstance } from 'element-plus';
 import { editorTypeList } from '@/views/messageManagement/message/utils/columns';
 import LoadingSvg from '@/assets/svg/loading.svg';
-import { useAdminUserStore } from '@/store/system/adminUser';
 import { useMessageTypeStore } from '@/store/message/messageType';
 import { encode } from 'js-base64';
 import { message } from '@/utils/message';
 import { useMessageStore } from '@/store/message/message';
 import { usePublicHooks } from '@/views/hooks';
+import { Plus } from '@element-plus/icons-vue';
 
 const formRef = ref();
-// 用户信息列表
-const userDataList = ref();
-// 搜索用户加载
-const loading = ref(false);
 // 用户是否停用样式
 const { switchStyle } = usePublicHooks();
-const adminUserStore = useAdminUserStore();
 const messageTypeStore = useMessageTypeStore();
 const messageStore = useMessageStore();
-
-/** 搜索 */
-const onSearchUserinfo = async (keyword: string) => {
-	loading.value = true;
-	userDataList.value = await adminUserStore.queryUser({ keyword });
-	loading.value = false;
-};
 
 /** 提交消息 */
 const submitForm = (formEl: FormInstance | undefined) => {
@@ -60,9 +48,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
 /** 重置消息 */
 const resetForm = (formEl: FormInstance | undefined) => {
 	if (!formEl) return;
-	const data = toRaw(formState);
 	formEl.resetFields();
 	formState.content = '';
+	coverUrl.value = '';
 };
 
 onMounted(() => {
@@ -109,6 +97,21 @@ onMounted(() => {
 			<el-switch v-model="formState.status" :active-text="$t('readAlready')" :active-value="true" :inactive-text="$t('unread')" :inactive-value="false" :style="switchStyle" inline-prompt />
 		</el-form-item>
 
+		<!-- 封面内容 -->
+		<el-form-item :label="$t('cover')" prop="cover">
+			<el-upload :auto-upload="true" :before-upload="beforeUpload" :http-request="onUpload" :show-file-list="false" accept="image/*" drag>
+				<el-image v-if="coverUrl" :src="coverUrl" fit="cover" lazy>
+					<template #placeholder>
+						<img alt="" src="@/assets/images/tip/loading.gif" />
+					</template>
+				</el-image>
+				<el-icon v-else size="36">
+					<Plus />
+				</el-icon>
+			</el-upload>
+			<el-button v-show="coverUrl" link type="primary" @click="coverUrl = ''"> 删除图片</el-button>
+		</el-form-item>
+
 		<!-- 简介 -->
 		<el-form-item :label="$t('summary')" prop="summary">
 			<el-input v-model="formState.summary" :autosize="{ minRows: 3, maxRows: 6 }" maxlength="200" minlength="10" show-word-limit type="textarea" />
@@ -121,3 +124,13 @@ onMounted(() => {
 		</el-form-item>
 	</el-form>
 </template>
+
+<style lang="scss" scoped>
+:deep(.el-upload-dragger) {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 90px;
+	height: 90px;
+}
+</style>

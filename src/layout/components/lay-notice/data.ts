@@ -34,10 +34,12 @@ export const getAllMessageList = async () => {
 		.filter(message => message.messageType === 'notifications')
 		.map(message => ({
 			cover: message.cover,
-			description: message.summary,
 			title: message.title,
 			datetime: message.createTime,
+			description: message.summary,
 			type: '1',
+			status: message.statusType,
+			extra: message.extra,
 		})) as ListItem[];
 
 	// 消息
@@ -49,6 +51,8 @@ export const getAllMessageList = async () => {
 			title: message.title,
 			datetime: message.createTime,
 			type: '2',
+			status: message.statusType,
+			extra: message.extra,
 		})) as ListItem[];
 
 	// 系统消息
@@ -60,6 +64,8 @@ export const getAllMessageList = async () => {
 			title: message.title,
 			datetime: message.createTime,
 			type: '3',
+			status: message.statusType,
+			extra: message.extra,
 		})) as ListItem[];
 
 	noticesData.value = [
