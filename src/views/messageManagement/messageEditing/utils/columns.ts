@@ -9,4 +9,6 @@ export const rules = {
 	content: [{ required: true, message: `${$t('input')}${$t('content')}`, trigger: 'blur' }],
 	// 编辑器类型
 	editorType: [{ required: true, message: `${$t('input')}${$t('editorType')}`, trigger: 'blur' }],
+	// 消息简介
+	summary: [{ required: true, message: `${$t('input')}${$t('summary')}`, trigger: 'blur' }],
 };

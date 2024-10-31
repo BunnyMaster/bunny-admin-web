@@ -107,7 +107,11 @@ onMounted(() => {
 		<!-- 是否已读 -->
 		<el-form-item :label="$t('isRead')" prop="status">
 			<el-switch v-model="formState.status" :active-text="$t('readAlready')" :active-value="true" :inactive-text="$t('unread')" :inactive-value="false" :style="switchStyle" inline-prompt />
-			<!--<el-switch v-model="formState.status" />-->
+		</el-form-item>
+
+		<!-- 简介 -->
+		<el-form-item :label="$t('summary')" prop="summary">
+			<el-input v-model="formState.summary" :autosize="{ minRows: 3, maxRows: 6 }" maxlength="200" minlength="10" show-word-limit type="textarea" />
 		</el-form-item>
 
 		<!-- 提交 -->

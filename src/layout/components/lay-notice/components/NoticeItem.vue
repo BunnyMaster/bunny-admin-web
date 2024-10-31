@@ -43,7 +43,7 @@ function hoverDescription(event, description) {
 
 <template>
 	<div class="notice-container border-b-[1px] border-solid border-[#f0f0f0] dark:border-[#303030]">
-		<el-avatar v-if="noticeItem.avatar" :size="30" :src="noticeItem.avatar" class="notice-container-avatar" />
+		<el-avatar v-if="noticeItem.cover" :size="30" :src="noticeItem.cover" class="notice-container-avatar" />
 		<div class="notice-container-text">
 			<div class="notice-text-title text-[#000000d9] dark:text-white">
 				<el-tooltip :content="noticeItem.title" :disabled="!titleTooltip" :effect="tooltipEffect" :enterable="!isMobile" placement="top-start" popper-class="notice-title-popper">

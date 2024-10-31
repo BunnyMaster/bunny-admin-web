@@ -8,4 +8,6 @@ export const formState = reactive({
 	content: '',
 	editorType: 'markdown',
 	status: false,
+	summary: '',
+	cover: '',
 });

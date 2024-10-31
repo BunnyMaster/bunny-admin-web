@@ -1,18 +1,27 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
-import { computed, ref } from 'vue';
-import { noticesData } from './data';
+import { computed, onMounted, ref } from 'vue';
+import { getAllMessageList, noticesData } from './data';
 import NoticeList from './components/NoticeList.vue';
 import BellIcon from '@iconify-icons/ep/bell';
 
 const { t } = useI18n();
 const noticesNum = ref(0);
+// 通知消息数据
 const notices = ref(noticesData);
-const activeKey = ref(noticesData[0]?.key);
-
-notices.value.map(v => (noticesNum.value += v.list.length));
+// 选择的消息栏目
+const activeKey = ref(noticesData.value[0]?.key);
 
 const getLabel = computed(() => item => item.name + (item.list.length > 0 ? `(${item.list.length})` : ''));
+
+onMounted(async () => {
+	// 获取所有的消息
+	await getAllMessageList();
+	// 整合消息一共多少条
+	notices.value.map(v => (noticesNum.value += v.list.length));
+	// 默认选中的消息类别
+	activeKey.value = noticesData.value[0]?.key;
+});
 </script>
 
 <template>

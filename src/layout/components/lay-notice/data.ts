@@ -1,7 +1,9 @@
 import { $t } from '@/plugins/i18n';
+import { ref } from 'vue';
+import { fetchGetMessageList } from '@/api/v1/message';
 
 export interface ListItem {
-	avatar: string;
+	cover: string;
 	title: string;
 	datetime: string;
 	type: string;
@@ -17,30 +19,52 @@ export interface TabItem {
 	emptyText: string;
 }
 
-// {
-//   avatar: 'https://xiaoxian521.github.io/hyperlink/svg/smile1.svg',
-//     title: '小铭 评论了你',
-//   description: '诚在于心，信在于行，诚信在于心行合一。',
-//   datetime: '今天',
-//   type: '2',
-// },
-export const noticesData: TabItem[] = [
-	{
-		key: '1',
-		name: $t('status.pureNotify'),
-		list: [],
-		emptyText: $t('status.pureNoNotify'),
-	},
-	{
-		key: '2',
-		name: $t('status.pureMessage'),
-		list: [],
-		emptyText: $t('status.pureNoMessage'),
-	},
-	{
-		key: '3',
-		name: $t('status.pureTodo'),
-		list: [],
-		emptyText: $t('status.pureNoTodo'),
-	},
-];
+// 请求参数
+const form = { status: false, currentPage: 1, pageSize: 100 };
+// 响应内容
+export const noticesData = ref<TabItem[]>([]);
+
+/** 获取所有消息 */
+export const getAllMessageList = async () => {
+	const baseResult = await fetchGetMessageList(form);
+	const datalist = baseResult.data.list;
+
+	// 通知消息
+	const notifications = datalist
+		.filter(message => message.messageType === 'notifications')
+		.map(message => ({
+			cover: message.cover,
+			description: message.summary,
+			title: message.title,
+			datetime: message.createTime,
+			type: '1',
+		})) as ListItem[];
+
+	// 消息
+	const notify = datalist
+		.filter(message => message.messageType !== 'notifications' && message.messageType !== 'sys')
+		.map(message => ({
+			cover: message.cover,
+			description: message.summary,
+			title: message.title,
+			datetime: message.createTime,
+			type: '2',
+		})) as ListItem[];
+
+	// 系统消息
+	const system = datalist
+		.filter(message => message.messageType === 'sys')
+		.map(message => ({
+			cover: message.cover,
+			description: message.summary,
+			title: message.title,
+			datetime: message.createTime,
+			type: '3',
+		})) as ListItem[];
+
+	noticesData.value = [
+		{ key: '1', name: $t('status.pureNotify'), list: notifications, emptyText: $t('status.pureNoNotify') },
+		{ key: '2', name: $t('status.pureMessage'), list: notify, emptyText: $t('status.pureNoMessage') },
+		{ key: '3', name: $t('status.systemMessage'), list: system, emptyText: $t('status.systemMessage') },
+	];
+};
