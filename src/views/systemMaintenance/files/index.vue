@@ -61,7 +61,7 @@ onMounted(() => {
 				<el-input v-model="filesStore.form.fileType" :placeholder="`${$t('input')}${$t('files_fileType')}`" class="!w-[180px]" clearable />
 			</el-form-item>
 			<el-form-item :label="$t('files_downloadCount')" prop="downloadCount">
-				<el-input v-model="filesStore.form.downloadCount" :placeholder="`${$t('input')}${$t('files_downloadCount')}`" class="!w-[180px]" clearable />
+				<el-input v-model="filesStore.form.downloadCount" :placeholder="`${$t('input')}${$t('files_downloadCount')}`" class="!w-[180px]" clearable min="0" type="number" />
 			</el-form-item>
 			<el-form-item>
 				<el-button :icon="useRenderIcon('ri:search-line')" :loading="filesStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>

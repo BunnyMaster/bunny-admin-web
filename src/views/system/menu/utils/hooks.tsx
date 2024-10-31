@@ -209,7 +209,7 @@ export const onChangeMenuRank = async (row: any) => {
  */
 export const assignRolesToRouter = (row: any) => {
 	addDialog({
-		title: `为 【${$t(row.name)}】 分配角色`,
+		title: `为 【${$t(row.title)}】 分配角色`,
 		width: '45%',
 		draggable: true,
 		closeOnClickModal: false,

@@ -25,8 +25,6 @@ import { columns } from '@/views/system/menu/utils/columns';
 import { userMenuStore } from '@/store/system/menu';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
-import More from '@iconify-icons/ep/more-filled';
-import { tableSelectButtonClass } from '@/enums/baseConstant';
 import Upload from '@iconify-icons/ri/upload-line';
 import { FormInstance } from 'element-plus';
 import { usePublicHooks } from '@/views/hooks';
@@ -145,17 +143,11 @@ onMounted(() => {
 								</el-button>
 							</template>
 						</el-popconfirm>
-						<!-- 更多操作 -->
-						<el-dropdown>
-							<el-button :icon="useRenderIcon(More)" :size="size" class="ml-3 mt-[2px]" link type="primary" />
-							<template #dropdown>
-								<el-dropdown-menu>
-									<el-dropdown-item>
-										<el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Upload)" :size="size" link type="primary" @click="assignRolesToRouter(row)"> {{ $t('assign_roles') }} </el-button>
-									</el-dropdown-item>
-								</el-dropdown-menu>
-							</template>
-						</el-dropdown>
+
+						<!-- 分配角色 -->
+						<el-button v-show="row.menuType !== 3" :icon="useRenderIcon(Upload)" :size="size" class="reset-margin" link type="primary" @click="assignRolesToRouter(row)">
+							{{ $t('assign_roles') }}
+						</el-button>
 					</template>
 				</pure-table>
 			</template>

@@ -60,7 +60,7 @@ export function onUpdate(row: any) {
 		props: {
 			formInline: {
 				parentId: row.parentId,
-				manager: row.manager,
+				manager: row.manager ? row.manager.split(',') : row.manager,
 				deptName: row.deptName,
 				summary: row.summary,
 			},

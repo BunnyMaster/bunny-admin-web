@@ -14,18 +14,14 @@ export const switchLoadMap = ref({});
 export const deleteIds = ref([]);
 const emailUsersStore = useEmailUsersStore();
 
-/**
- * * 搜索初始化邮箱用户发送配置
- */
+/** 搜索初始化邮箱用户发送配置 */
 export async function onSearch() {
 	emailUsersStore.loading = true;
 	await emailUsersStore.getEmailUsersList();
 	emailUsersStore.loading = false;
 }
 
-/**
- * * 添加邮箱用户发送配置
- */
+/** 添加邮箱用户发送配置 */
 export function onAdd() {
 	addDialog({
 		title: `${$t('addNew')}${$t('emailUsers')}`,
@@ -94,9 +90,7 @@ export function onUpdate(row: any) {
 	});
 }
 
-/**
- * * 删除邮箱用户发送配置
- */
+/** 删除邮箱用户发送配置 */
 export const onDelete = async (row: any) => {
 	const id = row.id;
 

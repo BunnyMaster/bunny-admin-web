@@ -12,18 +12,14 @@ export const selectRows = ref([]);
 export const formRef = ref();
 const emailTemplateStore = useEmailTemplateStore();
 
-/**
- * * 搜索初始化邮件模板表
- */
+/** 搜索初始化邮件模板表 */
 export async function onSearch() {
 	emailTemplateStore.loading = true;
 	await emailTemplateStore.getEmailTemplateList();
 	emailTemplateStore.loading = false;
 }
 
-/**
- * * 添加邮件模板表
- */
+/** 添加邮件模板表 */
 export function onAdd() {
 	addDialog({
 		title: `${$t('addNew')}${$t('emailTemplate')}`,

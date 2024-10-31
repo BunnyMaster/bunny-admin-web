@@ -64,18 +64,26 @@ onMounted(() => {
 <template>
 	<div class="main">
 		<el-form ref="formRef" :inline="true" :model="emailUsersStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+			<!-- 邮箱-->
 			<el-form-item :label="$t('emailUsers_email')" prop="email">
 				<el-input v-model="emailUsersStore.form.email" :placeholder="`${$t('input')}${$t('emailUsers_email')}`" class="!w-[180px]" clearable />
 			</el-form-item>
+
+			<!-- host地址-->
 			<el-form-item :label="$t('emailUsers_host')" prop="host">
 				<el-input v-model="emailUsersStore.form.host" :placeholder="`${$t('input')}${$t('emailUsers_host')}`" class="!w-[180px]" clearable />
 			</el-form-item>
+
+			<!-- 端口号-->
 			<el-form-item :label="$t('emailUsers_port')" prop="port">
-				<el-input v-model="emailUsersStore.form.port" :placeholder="`${$t('input')}${$t('emailUsers_port')}`" class="!w-[180px]" clearable />
+				<el-input v-model="emailUsersStore.form.port" :placeholder="`${$t('input')}${$t('emailUsers_port')}`" class="!w-[180px]" clearable max="99999" min="0" type="number" />
 			</el-form-item>
+
+			<!-- 协议 -->
 			<el-form-item :label="$t('emailUsers_smtpAgreement')" prop="smtpAgreement">
 				<el-input v-model="emailUsersStore.form.smtpAgreement" :placeholder="`${$t('input')}${$t('emailUsers_smtpAgreement')}`" class="!w-[180px]" clearable />
 			</el-form-item>
+
 			<el-form-item>
 				<el-button :icon="useRenderIcon('ri:search-line')" :loading="emailUsersStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
 				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>

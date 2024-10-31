@@ -12,7 +12,7 @@ import { Tree } from '@/views/system/adminUser/utils/types';
 import { buttonClass, defaultProps } from '@/views/system/adminUser/utils/columns';
 import { useAdminUserStore } from '@/store/system/adminUser';
 import { onSearch } from '@/views/system/adminUser/utils/hooks';
-import { $t } from '../../../plugins/i18n';
+import { $t } from '@/plugins/i18n';
 
 defineProps({
 	treeLoading: Boolean,
