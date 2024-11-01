@@ -6,6 +6,21 @@ export const fetchGetMessageList = (data: any) => {
 	return http.request<BaseResult<ResultTable>>('get', `message/getMessageList/${data.currentPage}/${data.pageSize}`, { params: data });
 };
 
+/** 系统消息---获取系统消息列表 */
+export const fetchGetUserMessageList = (data: any) => {
+	return http.request<BaseResult<ResultTable>>('get', `message/noManage/getUserMessageList/${data.currentPage}/${data.pageSize}`, { params: data });
+};
+
+/** 系统消息---根据消息id获取接收人信息 */
+export const fetchGetReceivedUserinfoByMessageId = (data: any) => {
+	return http.request<BaseResult<any>>('get', `messageReceived/noManage/getReceivedUserinfoByMessageId`, { params: data });
+};
+
+/** 系统消息---根据消息id查询消息详情 */
+export const fetchGetMessageDetailById = (data: any) => {
+	return http.request<BaseResult<any>>('get', `message/noManage/getMessageDetailById`, { params: data });
+};
+
 /** 系统消息---添加系统消息 */
 export const fetchAddMessage = (data: any) => {
 	return http.request<BaseResult<object>>('post', 'message/addMessage', { data });

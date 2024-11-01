@@ -10,6 +10,10 @@ export interface FormItemProps {
 	messageType: string;
 	// 消息内容
 	content: string;
+	// 消息等级
+	level: string;
+	// 消息等级类型
+	extra: string;
 	// 编辑器类型
 	editorType: string;
 	// 0:未读 1:已读

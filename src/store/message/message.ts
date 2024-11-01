@@ -28,6 +28,10 @@ export const useMessageStore = defineStore('messageStore', {
 				content: undefined,
 				// 编辑器类型
 				editorType: undefined,
+				// 消息等级
+				level: undefined,
+				// 消息等级详情
+				extra: undefined,
 				// 0:未读 1:已读
 				status: undefined,
 			},

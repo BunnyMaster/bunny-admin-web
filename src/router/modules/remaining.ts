@@ -34,7 +34,27 @@ export default [
 		meta: {
 			title: 'buttons.accountSettings',
 			showLink: false,
-			rank: 104,
+			rank: 103,
 		},
+	},
+	{
+		path: '/message-detail',
+		name: 'MessageDetail',
+		component: () => import('@/views/message-management/message-detail/index.vue'),
+		meta: { title: 'message', showLink: false, rank: 104 },
+		children: [
+			{
+				path: '/message-detail/:messageType',
+				name: 'MessageDetailByMessageType',
+				component: () => import('@/views/message-management/message-detail/detail-type.vue'),
+				meta: { title: 'message', showLink: false },
+			},
+			{
+				path: '/message-detail/:messageType/:messageId',
+				name: 'MessageDetailByMessageId',
+				component: () => import('@/views/message-management/message-detail/detail-message-id.vue'),
+				meta: { title: 'message', showLink: false },
+			},
+		],
 	},
 ] satisfies Array<RouteConfigsTable>;

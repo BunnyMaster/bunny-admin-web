@@ -1,6 +1,7 @@
 import { reactive } from 'vue';
 import { $t } from '@/plugins/i18n';
 import type { FormRules } from 'element-plus';
+import { ElTag } from 'element-plus';
 
 // 表格列
 export const columns: TableColumnList = [
@@ -8,28 +9,28 @@ export const columns: TableColumnList = [
 	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
 	// 消息标题
 	{ label: $t('title'), prop: 'title' },
-	// 接收人用户ID
-	{
-		label: $t('receivedUserIds'),
-		prop: 'receivedUserIds',
-		formatter({ receivedUserIds }) {
-			return !receivedUserIds ? $t('all') : $t('portion');
-		},
-	},
 	// 发送人昵称
 	{ label: $t('sendNickname'), prop: 'sendNickname' },
 	// 消息类型
 	{ label: $t('messageType'), prop: 'messageType' },
-	// 消息内容
-	{ label: $t('content'), prop: 'content' },
 	// 编辑器类型
 	{ label: $t('editorType'), prop: 'editorType' },
+	// 编辑器类型
+	{
+		label: $t('level'),
+		prop: 'level',
+		formatter({ level }) {
+			return <ElTag type={level}>{$t(level)}</ElTag>;
+		},
+	},
+	// 编辑器类型
+	{ label: $t('extra'), prop: 'extra' },
 	// 0:未读 1:已读
 	{
 		label: $t('status'),
 		prop: 'status',
 		formatter({ status }) {
-			return status ? $t('readAlready') : $t('unread');
+			return status ? <ElTag type={'info'}>{$t('readAlready')}</ElTag> : <ElTag type={'primary'}>{$t('unread')}</ElTag>;
 		},
 	},
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },

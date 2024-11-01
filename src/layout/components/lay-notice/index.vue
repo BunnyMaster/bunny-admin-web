@@ -1,42 +1,20 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
-import { computed, onMounted, ref } from 'vue';
-import { getAllMessageList, noticesData } from './data';
+import { onMounted } from 'vue';
+import { activeKey, computedNoticesNum, getLabel, notices, noticesNum } from './data';
 import NoticeList from './components/NoticeList.vue';
 import BellIcon from '@iconify-icons/ep/bell';
-import { useIntervalFn } from '@vueuse/core';
 
 const { t } = useI18n();
-// 通知消息数据
-const noticesNum = ref(0);
-const notices = ref(noticesData);
-// 选择的消息栏目
-const activeKey = ref(noticesData.value[0]?.key);
-const getLabel = computed(() => item => item.name + (item.list.length > 0 ? `(${item.list.length})` : ''));
-
-/** 计算消息数量 */
-const computedNoticesNum = async () => {
-	// 获取所有的消息
-	await getAllMessageList();
-	// 请求成功后将原本条数置为0
-	noticesNum.value = 0;
-	// 整合消息一共多少条
-	notices.value.map(v => (noticesNum.value += v.list.length));
-	// 默认选中的消息类别
-	activeKey.value = noticesData.value[0]?.key;
-	// 定时刷新
-};
 
 onMounted(() => {
 	computedNoticesNum();
-	// 定时刷新消息内容
-	useIntervalFn(() => computedNoticesNum(), 1000 * 30);
 });
 </script>
 
 <template>
 	<el-dropdown placement="bottom-end" trigger="click">
-		<span :class="['dropdown-badge', 'navbar-bg-hover', 'select-none', Number(noticesNum) !== 0 && 'mr-[10px]']">
+		<span :class="['dropdown-badge', 'navbar-bg-hover', 'select-none', Number(noticesNum) !== 0 && 'mr-[10px]']" @click="computedNoticesNum">
 			<el-badge :max="99" :value="Number(noticesNum) === 0 ? '' : noticesNum">
 				<span class="header-notice-icon">
 					<IconifyIconOffline :icon="BellIcon" />

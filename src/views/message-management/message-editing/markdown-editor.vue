@@ -2,7 +2,7 @@
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import { fetchUploadFile } from '@/api/v1/system';
-import { formState } from '@/views/messageManagement/messageEditing/utils/hooks';
+import { formState } from '@/views/message-management/message-editing/utils/hooks';
 
 /**
  * * 上传图片

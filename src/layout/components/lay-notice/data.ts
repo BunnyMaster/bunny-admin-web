@@ -1,13 +1,16 @@
 import { $t } from '@/plugins/i18n';
-import { ref } from 'vue';
-import { fetchGetMessageList } from '@/api/v1/message';
+import { computed, ref } from 'vue';
+import { fetchGetUserMessageList } from '@/api/v1/message';
+import { throttle } from '@pureadmin/utils';
 
 export interface ListItem {
+	messageId: string;
 	cover: string;
 	title: string;
 	datetime: string;
 	type: string;
 	description: string;
+	messageType: string;
 	status?: 'primary' | 'success' | 'warning' | 'info' | 'danger';
 	extra?: string;
 }
@@ -26,19 +29,21 @@ export const noticesData = ref<TabItem[]>([]);
 
 /** 获取所有消息 */
 export const getAllMessageList = async () => {
-	const baseResult = await fetchGetMessageList(form);
-	const datalist = baseResult.data.list;
+	const baseResult = await fetchGetUserMessageList(form);
+	const datalist = baseResult?.data?.list;
 
 	// 通知消息
 	const notifications = datalist
 		.filter(message => message.messageType === 'notifications')
 		.map(message => ({
+			messageId: message.id,
 			cover: message.cover,
 			title: message.title,
 			datetime: message.createTime,
 			description: message.summary,
+			messageType: message.messageType,
 			type: '1',
-			status: message.statusType,
+			status: message.level,
 			extra: message.extra,
 		})) as ListItem[];
 
@@ -46,12 +51,14 @@ export const getAllMessageList = async () => {
 	const notify = datalist
 		.filter(message => message.messageType !== 'notifications' && message.messageType !== 'sys')
 		.map(message => ({
+			messageId: message.id,
 			cover: message.cover,
 			description: message.summary,
+			messageType: message.messageType,
 			title: message.title,
 			datetime: message.createTime,
 			type: '2',
-			status: message.statusType,
+			status: message.level,
 			extra: message.extra,
 		})) as ListItem[];
 
@@ -59,12 +66,14 @@ export const getAllMessageList = async () => {
 	const system = datalist
 		.filter(message => message.messageType === 'sys')
 		.map(message => ({
+			messageId: message.id,
 			cover: message.cover,
 			description: message.summary,
+			messageType: message.messageType,
 			title: message.title,
 			datetime: message.createTime,
 			type: '3',
-			status: message.statusType,
+			status: message.level,
 			extra: message.extra,
 		})) as ListItem[];
 
@@ -74,3 +83,23 @@ export const getAllMessageList = async () => {
 		{ key: '3', name: $t('status.systemMessage'), list: system, emptyText: $t('status.systemMessage') },
 	];
 };
+
+// 通知消息数据
+export const noticesNum = ref(0);
+export const notices = ref(noticesData);
+// 选择的消息栏目
+export const activeKey = ref(noticesData.value[0]?.key);
+export const getLabel = computed(() => item => item.name + (item.list.length > 0 ? `(${item.list.length})` : ''));
+
+/** 计算消息数量 */
+export const computedNoticesNum = throttle(async () => {
+	// 获取所有的消息
+	await getAllMessageList();
+	// 请求成功后将原本条数置为0
+	noticesNum.value = 0;
+	// 整合消息一共多少条
+	notices.value.map(v => (noticesNum.value += v.list.length));
+	// 默认选中的消息类别
+	activeKey.value = noticesData.value[0]?.key;
+	// 定时刷新
+}, 666);

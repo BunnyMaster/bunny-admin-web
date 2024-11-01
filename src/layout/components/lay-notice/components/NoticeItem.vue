@@ -3,6 +3,7 @@ import { ListItem } from '../data';
 import { nextTick, PropType, ref } from 'vue';
 import { useNav } from '@/layout/hooks/useNav';
 import { deviceDetection } from '@pureadmin/utils';
+import { useRouter } from 'vue-router';
 
 defineProps({
 	noticeItem: {
@@ -17,6 +18,7 @@ const descriptionRef = ref(null);
 const descriptionTooltip = ref(false);
 const { tooltipEffect } = useNav();
 const isMobile = deviceDetection();
+const router = useRouter();
 
 function hoverTitle() {
 	nextTick(() => {
@@ -39,10 +41,14 @@ function hoverDescription(event, description) {
 	// 当文本宽度大于容器宽度两倍时，代表文本显示超过两行
 	currentWidth > 2 * cellWidth ? (descriptionTooltip.value = true) : (descriptionTooltip.value = false);
 }
+
+function goMessageDetail(message: ListItem) {
+	router.push({ path: `/message-detail/${message.messageType}/${message.messageId}` });
+}
 </script>
 
 <template>
-	<div class="notice-container border-b-[1px] border-solid border-[#f0f0f0] dark:border-[#303030]">
+	<div class="notice-container border-b-[1px] border-solid border-[#f0f0f0] dark:border-[#303030]" @click="goMessageDetail(noticeItem)">
 		<el-avatar v-if="noticeItem.cover" :size="30" :src="noticeItem.cover" class="notice-container-avatar" />
 		<div class="notice-container-text">
 			<div class="notice-text-title text-[#000000d9] dark:text-white">

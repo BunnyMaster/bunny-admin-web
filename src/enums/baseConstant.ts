@@ -1,4 +1,5 @@
 import { computed } from 'vue';
+import { $t } from '@/plugins/i18n';
 
 /**
  * * 是否默认
@@ -30,6 +31,12 @@ export const userStatus = [
 export const enabledOrNotStatus = [
 	{ value: true, label: '启用' },
 	{ value: false, label: '禁用' },
+];
+
+/** 是否已读 */
+export const isReadStatus = [
+	{ value: true, label: $t('readAlready') },
+	{ value: false, label: $t('unread') },
 ];
 
 /**

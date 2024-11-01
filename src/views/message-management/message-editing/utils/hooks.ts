@@ -20,6 +20,8 @@ export const formState = reactive({
 	editorType: 'markdown',
 	status: false,
 	summary: '',
+	level: '',
+	extra: '',
 	cover: '',
 });
 const adminUserStore = useAdminUserStore();

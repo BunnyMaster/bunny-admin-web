@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { beforeUpload, coverUrl, formState, loading, onSearchUserinfo, onUpload, userDataList } from '@/views/messageManagement/messageEditing/utils/hooks';
+import { beforeUpload, coverUrl, formState, loading, onSearchUserinfo, onUpload, userDataList } from '@/views/message-management/message-editing/utils/hooks';
 import { onMounted, ref, toRaw } from 'vue';
 import { $t } from '@/plugins/i18n';
-import { rules } from '@/views/messageManagement/messageEditing/utils/columns';
+import { messageLevel, rules } from '@/views/message-management/message-editing/utils/columns';
 import { FormInstance } from 'element-plus';
-import { editorTypeList } from '@/views/messageManagement/message/utils/columns';
+import { editorTypeList } from '@/views/message-management/message/utils/columns';
 import LoadingSvg from '@/assets/svg/loading.svg';
 import { useMessageTypeStore } from '@/store/message/messageType';
 import { encode } from 'js-base64';
@@ -57,6 +57,7 @@ onMounted(() => {
 	messageTypeStore.getAllMessageTypeList();
 });
 </script>
+
 <template>
 	<el-form ref="formRef" :model="formState" :rules="rules" class="w-[100%] p-5" label-width="auto">
 		<!-- 标题 -->
@@ -115,6 +116,18 @@ onMounted(() => {
 		<!-- 简介 -->
 		<el-form-item :label="$t('summary')" prop="summary">
 			<el-input v-model="formState.summary" :autosize="{ minRows: 3, maxRows: 6 }" maxlength="200" minlength="10" show-word-limit type="textarea" />
+		</el-form-item>
+
+		<!-- 消息等级 -->
+		<el-form-item :label="$t('level')" prop="level">
+			<el-select v-model="formState.level" :placeholder="$t('level')" clearable filterable remote remote-show-suffix>
+				<el-option v-for="item in messageLevel" :key="item" :label="$t(item)" :value="item" />
+			</el-select>
+		</el-form-item>
+
+		<!-- 消息等级简介 -->
+		<el-form-item :label="$t('extra')" prop="extra">
+			<el-input v-model="formState.extra" maxlength="20" minlength="10" show-word-limit type="text" />
 		</el-form-item>
 
 		<!-- 提交 -->
