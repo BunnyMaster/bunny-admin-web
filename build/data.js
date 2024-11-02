@@ -3,7 +3,7 @@
  */
 (async function requestPath() {
 	// 获取基础paths对象
-	const response = await fetch('http://localhost:7070/v3/api-docs/admin%E7%AE%A1%E7%90%86%E5%91%98%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82', { method: 'GET' });
+	const response = await fetch('http://localhost:7070/v3/api-docs/%E9%BB%98%E8%AE%A4%E8%AF%B7%E6%B1%82%E6%8E%A5%E5%8F%A3', { method: 'GET' });
 	const json = await response.json();
 	const paths = json.paths;
 
@@ -15,7 +15,7 @@
 
 	// 获取所有键
 	Object.keys(paths)
-		.filter(item => !item.includes('noAuth'))
+		.filter(item => !item.includes('noAuth') && !item.includes('noManage'))
 		.forEach(key => {
 			const pathKey = paths[key];
 			const { tags, description } = pathKey[Object.keys(pathKey)[0]];
@@ -76,7 +76,7 @@ async function add(data) {
 		headers: {
 			'Content-Type': 'application/json',
 			token:
-				'eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAA_yWLywrCMBAA_2XPjeSxZEtP4s2L_7DpbqBCorUGLMV_N-BtGGYO2FqCCS6t1h0G0M8TJkfBhtFbHwdom76u0t0fb1y05yxlqed1Pc2P0q_7e-lS3JwUkQxhDgZzFMPZkUmWhTX6EYnh-wMBQi1DcgAAAA.II3lcc1R1pX8G6eaEVkCxxDXkscN4c6p89zn7FzFhaU',
+				'eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAA_yWLywqFIBQA_-WsE9Sjt2xXuz7jmAYGWfiAIu6_X-HuhmHmhVwtjDDXGB_owN8XjKJH3iMayTuo2afFNffHSIdv-eSOEEMuicqZ2raX0Kx22g4ciRkUyBRpw6yxgq1S0SBXubnPBt8fEjhnWnMAAAA.YwSm-NO_6Kg1k1GRwucIt50Y70FbPHoldsdTPVHK_Y4',
 		},
 		body: JSON.stringify(data),
 	});

@@ -4,17 +4,24 @@ import { onMounted } from 'vue';
 import { activeKey, computedNoticesNum, getLabel, notices, noticesNum } from './data';
 import NoticeList from './components/NoticeList.vue';
 import BellIcon from '@iconify-icons/ep/bell';
+import { useMessageTypeStore } from '@/store/message/messageType';
 
 const { t } = useI18n();
+const messageTypeStore = useMessageTypeStore();
 
 onMounted(() => {
+	messageTypeStore.getAllMessageTypeList();
 	computedNoticesNum();
 });
 </script>
 
 <template>
 	<el-dropdown placement="bottom-end" trigger="click">
-		<span :class="['dropdown-badge', 'navbar-bg-hover', 'select-none', Number(noticesNum) !== 0 && 'mr-[10px]']" @click="computedNoticesNum">
+		<span
+			:class="['dropdown-badge', 'navbar-bg-hover', 'select-none', Number(noticesNum) !== 0 && 'mr-[10px]']"
+			@click="computedNoticesNum"
+			@dblclick="$router.push(`/message-detail/${messageTypeStore?.allMessageTypeList[0]?.messageType}`)"
+		>
 			<el-badge :max="99" :value="Number(noticesNum) === 0 ? '' : noticesNum">
 				<span class="header-notice-icon">
 					<IconifyIconOffline :icon="BellIcon" />

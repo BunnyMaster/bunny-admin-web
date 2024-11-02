@@ -35,8 +35,9 @@ export const enabledOrNotStatus = [
 
 /** 是否已读 */
 export const isReadStatus = [
-	{ value: true, label: $t('readAlready') },
-	{ value: false, label: $t('unread') },
+	{ value: '', label: $t('all') },
+	{ value: 'true', label: $t('readAlready') },
+	{ value: 'false', label: $t('unread') },
 ];
 
 /**

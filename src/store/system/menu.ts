@@ -3,6 +3,7 @@ import { storeMessage } from '@/utils/message';
 import { handleTree } from '@/utils/tree';
 import {
 	fetchAddMenu,
+	fetchAssignAddBatchRolesToRouter,
 	fetchAssignRolesToRouter,
 	fetchClearAllRolesSelect,
 	fetchDeletedMenuByIds,
@@ -73,6 +74,12 @@ export const userMenuStore = defineStore('menuStore', {
 		/** 为路由分配角色 */
 		async assignRolesToRouter(data: any) {
 			const result = await fetchAssignRolesToRouter(data);
+			return storeMessage(result);
+		},
+
+		/** 批量为菜单添加角色 */
+		async assignAddBatchRolesToRouter(data: any) {
+			const result = await fetchAssignAddBatchRolesToRouter(data);
 			return storeMessage(result);
 		},
 

@@ -2,6 +2,7 @@ import { $t } from '@/plugins/i18n';
 import { computed, ref } from 'vue';
 import { fetchGetUserMessageList } from '@/api/v1/message';
 import { throttle } from '@pureadmin/utils';
+import { useWebNotification } from '@vueuse/core';
 
 export interface ListItem {
 	messageId: string;
@@ -26,6 +27,13 @@ export interface TabItem {
 const form = { status: false, currentPage: 1, pageSize: 100 };
 // 响应内容
 export const noticesData = ref<TabItem[]>([]);
+
+// 通知消息数据
+export const noticesNum = ref(0);
+export const notices = ref(noticesData);
+// 选择的消息栏目
+export const activeKey = ref(noticesData.value[0]?.key);
+export const getLabel = computed(() => item => item.name + (item.list.length > 0 ? `(${item.list.length})` : ''));
 
 /** 获取所有消息 */
 export const getAllMessageList = async () => {
@@ -82,14 +90,21 @@ export const getAllMessageList = async () => {
 		{ key: '2', name: $t('status.pureMessage'), list: notify, emptyText: $t('status.pureNoMessage') },
 		{ key: '3', name: $t('status.systemMessage'), list: system, emptyText: $t('status.systemMessage') },
 	];
-};
 
-// 通知消息数据
-export const noticesNum = ref(0);
-export const notices = ref(noticesData);
-// 选择的消息栏目
-export const activeKey = ref(noticesData.value[0]?.key);
-export const getLabel = computed(() => item => item.name + (item.list.length > 0 ? `(${item.list.length})` : ''));
+	// 调用浏览器系统通知
+	const { isSupported, show, close } = useWebNotification({
+		title: system[0]?.title,
+		dir: 'auto',
+		lang: 'zh',
+		renotify: true,
+		tag: system[0]?.extra,
+	});
+	if (system.length <= 0 || !isSupported.value) {
+		close();
+		return;
+	}
+	await show();
+};
 
 /** 计算消息数量 */
 export const computedNoticesNum = throttle(async () => {

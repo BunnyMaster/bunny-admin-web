@@ -235,7 +235,7 @@ export const assignBatchRolesToRouter = () => {
 		draggable: true,
 		closeOnClickModal: false,
 		fullscreenIcon: true,
-		props: { warning: $t('assignBatchRolesToRouterTip') },
+		// props: { warning: $t('assignBatchRolesToRouterTip') },
 		contentRenderer: () => <AssignRouterToRole ref={assignRouterToRolesRef} />,
 		beforeSure: async (done: any) => {
 			// 表格功能
@@ -243,7 +243,7 @@ export const assignBatchRolesToRouter = () => {
 
 			// 分配用户角色
 			const data = { routerIds: selectIds.value, roleIds: assignRouterToRolesRef.value.assignRoles };
-			const result = await menuStore.assignRolesToRouter(data);
+			const result = await menuStore.assignAddBatchRolesToRouter(data);
 
 			// 更新成功关闭弹窗
 			if (!result) return;

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/monitor/files/utils/columns';
+import { columns } from '@/views/system/files/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onDelete, onDeleteBatch, onDownload, onDownloadBatch, onSearch, onUpdate, selectRows } from '@/views/monitor/files/utils/hooks';
+import { onAdd, onDelete, onDeleteBatch, onDownload, onDownloadBatch, onSearch, onUpdate, selectRows } from '@/views/system/files/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import Download from '@iconify-icons/ep/download';
 import EditPen from '@iconify-icons/ep/edit-pen';
