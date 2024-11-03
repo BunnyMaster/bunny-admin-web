@@ -80,11 +80,6 @@ defineExpose({ formRef });
 							</el-radio-group>
 						</el-form-item>
 
-						<!-- 是否已读 -->
-						<el-form-item :label="$t('isRead')" prop="status">
-							<el-switch v-model="updateMessage.status" :active-text="$t('readAlready')" :active-value="true" :inactive-text="$t('unread')" :inactive-value="false" :style="switchStyle" inline-prompt />
-						</el-form-item>
-
 						<!-- 封面内容 -->
 						<el-form-item :label="$t('cover')" prop="cover">
 							<el-upload :auto-upload="true" :before-upload="beforeUpload" :http-request="onUpload" :show-file-list="false" accept="image/*" drag>

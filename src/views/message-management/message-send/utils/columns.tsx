@@ -11,7 +11,7 @@ export const columns: TableColumnList = [
 	// 消息简介
 	{ label: $t('summary'), prop: 'summary' },
 	// 发送人昵称
-	{ label: $t('sendNickname'), prop: 'sendNickname' },
+	{ label: $t('sendNickname'), prop: 'sendNickname', slot: 'sendNickname' },
 	// 接受人昵称
 	{ label: $t('receivedUserNickname'), prop: 'receivedUserNickname' },
 	// 消息类型
@@ -35,23 +35,6 @@ export const columns: TableColumnList = [
 	},
 	// 消息等级详情
 	{ label: $t('extra'), prop: 'extra', slot: 'extra' },
-	// 0:未读 1:已读
-	{
-		label: $t('status'),
-		prop: 'status',
-		formatter({ status }) {
-			return status ? (
-				<ElTag type={'info'} effect={'plain'}>
-					{$t('readAlready')}
-				</ElTag>
-			) : (
-				<ElTag type={'danger'} effect={'plain'}>
-					{$t('unread')}
-				</ElTag>
-			);
-		},
-		width: 80,
-	},
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 130 },

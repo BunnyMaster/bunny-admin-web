@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 import 'plus-pro-components/es/components/check-card-group/style/css';
 import MarkdownPreview from '@/components/Editor/MarkdownPreview.vue';
-import { fetchGetMessageDetailById } from '@/api/v1/message/messageReceived';
-import { decode } from 'js-base64';
+import { useMessageUserStore } from '@/store/message/messageUser';
 
 const route = useRoute();
-const messageDetail = ref<any>({});
+const messageUserStore = useMessageUserStore();
 
 /** 获取消息详情 */
 const getMessageDetail = async () => {
@@ -15,14 +14,7 @@ const getMessageDetail = async () => {
 	const messageId = route.params.messageId;
 
 	// 获取消息详情
-	const result = await fetchGetMessageDetailById({ id: messageId });
-	if (result.code !== 200) return;
-
-	// 将消息详情赋值
-	messageDetail.value = result.data;
-
-	// 解码消息内容
-	messageDetail.value.content = decode(messageDetail.value.content);
+	await messageUserStore.getMessageDetailById(messageId);
 };
 
 onMounted(() => {
@@ -33,21 +25,21 @@ onMounted(() => {
 <template>
 	<div class="flex flex-col">
 		<header class="flex items-center h-[80px]">
-			<el-avatar :src="messageDetail.cover" size="large" />
+			<el-avatar :src="messageUserStore.messageDetail?.cover" size="large" />
 			<div class="content ms-3">
-				<h3>{{ messageDetail.title }}</h3>
+				<h3>{{ messageUserStore.messageDetail?.title }}</h3>
 
-				<p>{{ messageDetail.summary }}</p>
+				<p>{{ messageUserStore.messageDetail?.summary }}</p>
 			</div>
 		</header>
 
 		<main>
 			<span>
-				<el-text>{{ messageDetail.updateTime }}</el-text>
-				<el-text type="primary">&nbsp;&nbsp; By：{{ messageDetail.sendNickname }}</el-text>
+				<el-text>{{ messageUserStore.messageDetail?.updateTime }}</el-text>
+				<el-text type="primary">&nbsp;&nbsp; By：{{ messageUserStore.messageDetail?.sendNickname }}</el-text>
 			</span>
-			<markdown-preview v-if="messageDetail.editorType === 'markdown'" id="message-detail-markdown" :text="messageDetail.content" />
-			<div v-else v-html="messageDetail.content" />
+			<markdown-preview v-if="messageUserStore.messageDetail?.editorType === 'markdown'" id="message-detail-markdown" :text="messageUserStore.messageDetail?.content" />
+			<div v-else v-html="messageUserStore.messageDetail?.content" />
 		</main>
 	</div>
 </template>

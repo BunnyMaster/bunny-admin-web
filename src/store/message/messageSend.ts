@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { pageSizes } from '@/enums/baseConstant';
-import { fetchAddMessage, fetchDeleteMessage, fetchGetMessageList, fetchUpdateMessage } from '@/api/v1/message/messageSend';
+import { fetchAddMessage, fetchDeleteMessage, fetchGetMessageList, fetchGetReceivedUserinfoByMessageId, fetchUpdateMessage } from '@/api/v1/message/messageSend';
 import { storePagination } from '@/store/useStorePagination';
 import { storeMessage } from '@/utils/message';
 
@@ -9,20 +9,16 @@ export const useMessageSendStore = defineStore('messageSendStore', {
 		return {
 			// 系统消息列表
 			datalist: [],
+			// 消息接受用戶信息列表
+			receivedUserinfoList: [],
 			// 查询表单
 			form: {
 				// 消息标题
 				title: undefined,
-				// 接收人用户ID
-				receivedUserIds: undefined,
-				// 发送人用户ID
-				sendUserId: undefined,
 				// 发送人昵称
 				sendNickname: undefined,
 				// 消息类型
 				messageType: undefined,
-				// 消息内容
-				content: undefined,
 				// 编辑器类型
 				editorType: undefined,
 				// 消息等级
@@ -59,6 +55,14 @@ export const useMessageSendStore = defineStore('messageSendStore', {
 			// 公共页面函数hook
 			const pagination = storePagination.bind(this);
 			return pagination(result);
+		},
+
+		/** 根据消息id获取接收人信息 */
+		async getReceivedUserinfoByMessageId(data: any) {
+			const result = await fetchGetReceivedUserinfoByMessageId(data);
+			if (result.code === 200) {
+				this.receivedUserinfoList = result.data;
+			}
 		},
 
 		/** 添加系统消息 */

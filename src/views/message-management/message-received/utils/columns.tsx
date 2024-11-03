@@ -10,9 +10,9 @@ export const columns: TableColumnList = [
 	// 消息简介
 	{ label: $t('summary'), prop: 'summary' },
 	// 发送人昵称
-	{ label: $t('sendNickname'), prop: 'sendNickname' },
+	{ label: $t('sendNickname'), prop: 'sendNickname', slot: 'sendNickname' },
 	// 接受人昵称
-	{ label: $t('receivedUserNickname'), prop: 'receivedUserNickname' },
+	{ label: $t('receivedUserNickname'), prop: 'receivedUserNickname', slot: 'receivedUserNickname' },
 	// 消息类型
 	{ label: $t('messageType'), prop: 'messageType', slot: 'messageType' },
 	// 编辑器类型

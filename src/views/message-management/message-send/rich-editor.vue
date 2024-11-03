@@ -25,10 +25,6 @@ editorConfig.MENU_CONF['uploadImage'] = {
 	customInsert(res: any, insertFn) {
 		// res.data.url是后端返回的图片地址，根据实际业务改写
 		if (res.data.url) {
-			// const form = new FormData();
-			// form.append('file', file);
-			// form.append('type', 'message');
-			// await fetchUploadFile(form)
 			setTimeout(() => {
 				// insertFn插入图片进编辑器
 				insertFn(res.data.url);

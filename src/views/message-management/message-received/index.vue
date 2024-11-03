@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 import { columns } from '@/views/message-management/message-received/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
-import { markMessageReceivedAsRead, onDeleteBatch, onSearch, selectIds } from '@/views/message-management/message-received/utils/hooks';
+import { onDeleteBatch, onSearch, selectIds, updateMarkMessageReceived } from '@/views/message-management/message-received/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
@@ -13,10 +13,13 @@ import { FormInstance } from 'element-plus';
 import { messageLevel } from '@/views/message-management/message-editing/utils/columns';
 import { isReadStatus } from '@/enums/baseConstant';
 import { useMessageReceivedStore } from '@/store/message/messageReceived';
+import { useMessageTypeStore } from '@/store/message/messageType';
+import { Message } from '@element-plus/icons-vue';
 
 const tableRef = ref();
 const formRef = ref();
 const messageReceivedStore = useMessageReceivedStore();
+const messageTypeStore = useMessageTypeStore();
 
 /** 当前页改变时 */
 const onCurrentPageChange = async (value: number) => {
@@ -64,9 +67,23 @@ onMounted(() => {
 				<el-input v-model="messageReceivedStore.form.title" :placeholder="`${$t('input')}${$t('title')}`" class="!w-[180px]" clearable />
 			</el-form-item>
 
+			<!-- 发送人昵称 -->
+			<el-form-item :label="$t('sendNickname')" prop="sendNickname">
+				<el-input v-model="messageReceivedStore.form.sendNickname" :placeholder="`${$t('input')}${$t('sendNickname')}`" class="!w-[180px]" clearable />
+			</el-form-item>
+
 			<!-- 消息类型 -->
 			<el-form-item :label="$t('messageType')" prop="messageType">
-				<el-input v-model="messageReceivedStore.form.messageType" :placeholder="`${$t('input')}${$t('messageType')}`" class="!w-[180px]" clearable />
+				<el-select v-model="messageReceivedStore.form.messageType" :placeholder="`${$t('select')}${$t('messageType')}`" class="!w-[180px]" clearable filterable>
+					<el-option v-for="(item, index) in messageTypeStore.allMessageTypeList" :key="index" :label="item.messageName" :navigationBar="false" :value="item.messageType" />
+				</el-select>
+			</el-form-item>
+
+			<!-- 编辑器类型 -->
+			<el-form-item :label="$t('editorType')" prop="editorType">
+				<el-select v-model="messageReceivedStore.form.editorType" :placeholder="`${$t('select')}${$t('editorType')}`" class="!w-[180px]" clearable filterable>
+					<el-option v-for="(item, index) in ['rich', 'markdown']" :key="index" :label="item" :navigationBar="false" :value="item" />
+				</el-select>
 			</el-form-item>
 
 			<!-- 消息等级 -->
@@ -97,8 +114,13 @@ onMounted(() => {
 		<PureTableBar :columns="columns" title="系统消息" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<!-- 标为已读 -->
-				<el-button :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('octicon:read-24')" type="primary" @click="markMessageReceivedAsRead">
+				<el-button :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('octicon:read-24')" type="primary" @click="updateMarkMessageReceived(true)">
 					{{ $t('markAsRead') }}
+				</el-button>
+
+				<!-- 标为未读 -->
+				<el-button :disabled="!(selectIds.length > 0)" :icon="Message" type="primary" @click="updateMarkMessageReceived(false)">
+					{{ $t('markAsUnread') }}
 				</el-button>
 
 				<!-- 批量删除按钮 -->
@@ -128,6 +150,18 @@ onMounted(() => {
 					@selection-change="onSelectionChange"
 					@page-current-change="onCurrentPageChange"
 				>
+					<template #sendNickname="{ row }">
+						<el-button link type="primary" @click="selectUserinfo(row.sendUserId)">
+							{{ row.sendNickname }}
+						</el-button>
+					</template>
+
+					<template #receivedUserNickname="{ row }">
+						<el-button link type="primary" @click="selectUserinfo(row.receivedUserId)">
+							{{ row.receivedUserNickname }}
+						</el-button>
+					</template>
+
 					<template #cover="{ row }">
 						<el-image :initial-index="0" :preview-src-list="[row.cover]" :src="row.cover" class="w-[50px] h-[50px]" fit="cover" loading="lazy" preview-teleported />
 					</template>

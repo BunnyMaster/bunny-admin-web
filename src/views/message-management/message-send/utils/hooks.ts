@@ -24,6 +24,8 @@ export const updateMessage = reactive({
 	title: undefined,
 	// 封面
 	cover: undefined,
+	// 消息接受人ids
+	receivedUserIds: undefined,
 	// 发送人用户ID
 	sendUserId: undefined,
 	// 发送人昵称
@@ -74,13 +76,13 @@ export async function onUpdate(row: any) {
 	updateMessage.content = decode(updateMessage.content);
 
 	// 获取当前消息内容和接收者信息
-	const result = messageSendStore.updateMessage({ messageId: row.id });
-	userDataList.value = result.data.map((item: any) => ({
+	await messageSendStore.getReceivedUserinfoByMessageId({ messageId: row.id });
+	userDataList.value = messageSendStore.receivedUserinfoList.map((item: any) => ({
 		id: item.receivedUserId,
 		nickname: item.nickname,
 		username: item.username,
 	}));
-	updateMessage.receivedUserIds = result.data.map((item: any) => item.receivedUserId);
+	updateMessage.receivedUserIds = messageSendStore.receivedUserinfoList.map((item: any) => item.receivedUserId);
 
 	// 设置封面图片
 	coverUrl.value = row.cover;

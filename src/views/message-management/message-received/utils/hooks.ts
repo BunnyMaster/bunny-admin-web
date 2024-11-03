@@ -17,17 +17,17 @@ export async function onSearch() {
 }
 
 /** 管理员操作用户消息---将用户消息标为已读 */
-export const markMessageReceivedAsRead = async () => {
+export const updateMarkMessageReceived = async (status: boolean) => {
 	// 是否确认标为已读
 	let result = await messageBox({
-		title: $t('markAsRead'),
+		title: $t('confirm_update_status'),
 		showMessage: false,
 		confirmMessage: undefined,
 		cancelMessage: $t('cancel'),
 	});
 	if (!result) return;
 
-	result = await messageReceivedStore.markMessageReceivedAsRead(selectIds.value);
+	result = await messageReceivedStore.updateMarkMessageReceived({ ids: selectIds.value, status });
 	if (!result) return;
 	await onSearch();
 };

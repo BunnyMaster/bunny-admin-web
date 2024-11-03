@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 import { columns } from '@/views/message-management/message-detail/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
-import { markAsAllRead, markAsRead, onDelete, onSearch, selectids } from '@/views/message-management/message-detail/utils/hooks';
+import { markAsAllRead, markAsRead, onDelete, onSearch, selectIds } from '@/views/message-management/message-detail/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import { $t } from '@/plugins/i18n';
 import { Message } from '@element-plus/icons-vue';
@@ -40,7 +40,7 @@ const onPageSizeChange = (value: number) => {
  * @param rows
  */
 const onSelectionChange = (rows: Array<any>) => {
-	selectids.value = rows.map((row: any) => row.messageReceivedId);
+	selectIds.value = rows.map((row: any) => row.messageReceivedId);
 };
 
 onMounted(() => {
@@ -57,12 +57,12 @@ onMounted(() => {
 
 			<template #buttons>
 				<!-- 删除按钮 -->
-				<el-button :disabled="!(selectids.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDelete">
+				<el-button :disabled="!(selectIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDelete">
 					{{ $t('delete') }}
 				</el-button>
 
 				<!-- 标为已读 -->
-				<el-button :disabled="!(selectids.length > 0)" :icon="useRenderIcon('octicon:read-24')" type="primary" @click="markAsRead">
+				<el-button :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('octicon:read-24')" type="primary" @click="markAsRead">
 					{{ $t('markAsRead') }}
 				</el-button>
 

@@ -7,8 +7,8 @@ export const fetchGetMessageReceivedList = (data: any) => {
 };
 
 /** 管理员操作用户消息---将用户消息标为已读 */
-export const fetchMarkMessageReceivedAsRead = (data: any) => {
-	return http.request<BaseResult<object>>('put', 'messageReceived/markMessageReceivedAsRead', { data });
+export const fetchUpdateMarkMessageReceived = (data: any) => {
+	return http.request<BaseResult<object>>('put', 'messageReceived/updateMarkMessageReceived', { data });
 };
 
 /** 管理员操作用户消息---管理删除用户消息 */
