@@ -74,10 +74,10 @@ onMounted(() => {
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()"> {{ $t('addNew') }}</el-button>
 
 				<!-- 批量分配角色 -->
-				<el-button v-show="selectIds.length > 0" :icon="useRenderIcon('iwwa:assign')" type="warning" @click="assignBatchRolesToRouter()"> {{ $t('assignBatchRolesToRouter') }} </el-button>
+				<el-button :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('iwwa:assign')" type="warning" @click="assignBatchRolesToRouter()"> {{ $t('assignBatchRolesToRouter') }} </el-button>
 
 				<!-- 清除选中所以角色 -->
-				<el-button v-show="selectIds.length > 0" :icon="useRenderIcon('ic:baseline-clear')" type="danger" @click="clearAllRolesSelect()"> {{ $t('clearAllRolesSelect') }} </el-button>
+				<el-button :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('ic:baseline-clear')" type="danger" @click="clearAllRolesSelect()"> {{ $t('clearAllRolesSelect') }} </el-button>
 			</template>
 
 			<template v-slot="{ size, dynamicColumns }">

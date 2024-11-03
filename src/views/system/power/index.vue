@@ -84,13 +84,13 @@ onMounted(() => {
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()"> {{ $t('addNew') }}</el-button>
 
 				<!-- 批量更新父级id -->
-				<el-button v-show="powerIds.length > 0" :icon="useRenderIcon(EditPen)" type="primary" @click="onUpdateBatchParent">
+				<el-button :disabled="!(powerIds.length > 0)" :icon="useRenderIcon(EditPen)" type="primary" @click="onUpdateBatchParent">
 					{{ $t('update_batches_parent') }}
 				</el-button>
 
 				<!-- 批量删除按钮 -->
-				<el-button v-show="powerIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
-					{{ $t('delete_batches') }}
+				<el-button :disabled="!(powerIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+					{{ $t('deleteBatches') }}
 				</el-button>
 			</template>
 

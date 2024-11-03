@@ -86,8 +86,8 @@ onMounted(() => {
 		<PureTableBar :columns="columns" :title="$t('quartzExecuteLog')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<!-- 批量删除按钮 -->
-				<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
-					{{ $t('delete_batches') }}
+				<el-button :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+					{{ $t('deleteBatches') }}
 				</el-button>
 			</template>
 

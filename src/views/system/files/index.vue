@@ -74,13 +74,13 @@ onMounted(() => {
 				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('addNew') }}</el-button>
 
 				<!-- 批量下载 -->
-				<el-button v-show="selectRows.length > 0" :icon="useRenderIcon(Download)" type="success" @click="onDownloadBatch">
+				<el-button :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Download)" type="success" @click="onDownloadBatch">
 					{{ $t('download_batch') }}
 				</el-button>
 
 				<!-- 批量删除按钮 -->
-				<el-button v-show="selectRows.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
-					{{ $t('delete_batches') }}
+				<el-button :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+					{{ $t('deleteBatches') }}
 				</el-button>
 			</template>
 
