@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import { fetchUploadFile } from '@/api/v1/system';
-import { updateMessage } from '@/views/message-management/message/utils/hooks';
+import { fetchUploadFile } from '@/api/v1/system/system';
+import { updateMessage } from '@/views/message-management/message-send/utils/hooks';
 
 /**
  * * 上传图片

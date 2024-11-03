@@ -11,7 +11,7 @@ import {
 	fetchGetRoleListByRouterId,
 	fetchUpdateMenu,
 	fetchUpdateMenuByIdWithRank,
-} from '@/api/v1/menu';
+} from '@/api/v1/menu/menu';
 import { isAllEmpty } from '@pureadmin/utils';
 import { $t } from '@/plugins/i18n';
 

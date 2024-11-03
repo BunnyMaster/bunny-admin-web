@@ -5,7 +5,7 @@ import { h, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/role/utils/types';
 import { $t } from '@/plugins/i18n';
-import { fetchGetPowerListByRoleId } from '@/api/v1/power';
+import { fetchGetPowerListByRoleId } from '@/api/v1/system/power';
 import { isAllEmpty } from '@pureadmin/utils';
 import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 

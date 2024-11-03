@@ -12,7 +12,7 @@ import {
 	fetchUpdateUserPasswordByAdmin,
 	fetchUpdateUserPasswordByLocalUser,
 	fetchUpdateUserStatusByAdmin,
-} from '@/api/v1/adminUser';
+} from '@/api/v1/system/adminUser';
 
 /**
  * 用户信息 Store

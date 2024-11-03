@@ -1,27 +1,27 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/message-management/message/utils/columns';
+import { columns } from '@/views/message-management/message-send/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
-import { deleteIds, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/message-management/message/utils/hooks';
+import { deleteIds, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/message-management/message-send/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { useMessageStore } from '@/store/message/message';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { FormInstance } from 'element-plus';
 import { messageLevel } from '@/views/message-management/message-editing/utils/columns';
 import { isReadStatus } from '@/enums/baseConstant';
+import { useMessageSendStore } from '@/store/message/messageSend';
 
 const tableRef = ref();
 const formRef = ref();
-const messageStore = useMessageStore();
+const messageSendStore = useMessageSendStore();
 
 /** 当前页改变时 */
 const onCurrentPageChange = async (value: number) => {
-	messageStore.pagination.currentPage = value;
+	messageSendStore.pagination.currentPage = value;
 	await onSearch();
 };
 
@@ -30,7 +30,7 @@ const onCurrentPageChange = async (value: number) => {
  * @param value
  */
 const onPageSizeChange = async (value: number) => {
-	messageStore.pagination.pageSize = value;
+	messageSendStore.pagination.pageSize = value;
 	await onSearch();
 };
 

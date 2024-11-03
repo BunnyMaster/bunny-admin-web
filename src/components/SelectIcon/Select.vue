@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from 'vue';
-import { fetchGetMenuIconList } from '@/api/v1/menuIcon';
+import { fetchGetMenuIconList } from '@/api/v1/menu/menuIcon';
 import { FormProps } from '@/components/SelectIcon/types';
 import { $t } from '@/plugins/i18n';
 

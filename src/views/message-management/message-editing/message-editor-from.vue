@@ -4,21 +4,20 @@ import { onMounted, ref, toRaw } from 'vue';
 import { $t } from '@/plugins/i18n';
 import { messageLevel, rules } from '@/views/message-management/message-editing/utils/columns';
 import { FormInstance } from 'element-plus';
-import { editorTypeList } from '@/views/message-management/message/utils/columns';
+import { editorTypeList } from '@/views/message-management/message-send/utils/columns';
 import LoadingSvg from '@/assets/svg/loading.svg';
 import { useMessageTypeStore } from '@/store/message/messageType';
 import { encode } from 'js-base64';
 import { message } from '@/utils/message';
-import { useMessageStore } from '@/store/message/message';
+import { useMessageSendStore } from '@/store/message/messageSend';
 import { usePublicHooks } from '@/views/hooks';
 import { Plus } from '@element-plus/icons-vue';
-import { graphlib } from 'dagre';
 
 const formRef = ref();
 // 用户是否停用样式
 const { switchStyle } = usePublicHooks();
 const messageTypeStore = useMessageTypeStore();
-const messageStore = useMessageStore();
+const messageSendStore = useMessageSendStore();
 
 /** 提交消息 */
 const submitForm = (formEl: FormInstance | undefined) => {
@@ -36,13 +35,12 @@ const submitForm = (formEl: FormInstance | undefined) => {
 			const data = toRaw(formState);
 			data.content = encode(formState.content);
 
-			console.log(data);
-			// // 添加消息
-			// const result = await messageStore.addMessage(data);
-			// if (!result) return;
-			//
-			// // 清除数据
-			// resetForm(formEl);
+			// 添加消息
+			const result = await messageSendStore.addMessage(data);
+			if (!result) return;
+
+			// 清除数据
+			resetForm(formEl);
 		}
 	});
 };

@@ -1,18 +1,18 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { editorTypeList, rules } from '@/views/message-management/message/utils/columns';
+import { editorTypeList, rules } from '@/views/message-management/message-send/utils/columns';
 import { $t } from '@/plugins/i18n';
 import { usePublicHooks } from '@/views/hooks';
 import { useMessageTypeStore } from '@/store/message/messageType';
 import LoadingSvg from '@/assets/svg/loading.svg';
-import { coverUrl, loading, onSearchUserinfo, onUpload, updateMessage, userDataList } from '@/views/message-management/message/utils/hooks';
+import { coverUrl, loading, onSearchUserinfo, onUpload, updateMessage, userDataList } from '@/views/message-management/message-send/utils/hooks';
 import { messageLevel, settingLR } from '@/views/message-management/message-editing/utils/columns';
 import { Plus } from '@element-plus/icons-vue';
 import { beforeUpload } from '@/views/message-management/message-editing/utils/hooks';
 import SplitPane from '@/components/SplitPane';
-import RichEditor from '@/views/message-management/message/rich-editor.vue';
-import MarkdownEditor from '@/views/message-management/message/markdown-editor.vue';
+import RichEditor from '@/views/message-management/message-send/rich-editor.vue';
+import MarkdownEditor from '@/views/message-management/message-send/markdown-editor.vue';
 
 // 用户是否停用样式
 const { switchStyle } = usePublicHooks();
@@ -90,7 +90,7 @@ defineExpose({ formRef });
 							<el-upload :auto-upload="true" :before-upload="beforeUpload" :http-request="onUpload" :show-file-list="false" accept="image/*" drag>
 								<el-image v-if="coverUrl" :src="coverUrl" fit="cover" lazy>
 									<template #placeholder>
-										<img alt="" src="@/assets/images/tip/loading.gif" />
+										<img alt="" src="../../../assets/images/tip/loading.gif" />
 									</template>
 								</el-image>
 								<el-icon v-else size="36">

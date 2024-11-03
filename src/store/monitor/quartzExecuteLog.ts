@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchDeleteQuartzExecuteLog, fetchGetQuartzExecuteLogList } from '@/api/v1/quartzExecuteLog';
+import { fetchDeleteQuartzExecuteLog, fetchGetQuartzExecuteLogList } from '@/api/v1/log/quartzExecuteLog';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';

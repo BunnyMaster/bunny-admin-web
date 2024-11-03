@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddRole, fetchAssignPowersToRole, fetchDeleteRole, fetchGetAllRoles, fetchGetRoleList, fetchUpdateRole } from '@/api/v1/role';
+import { fetchAddRole, fetchAssignPowersToRole, fetchDeleteRole, fetchGetAllRoles, fetchGetRoleList, fetchUpdateRole } from '@/api/v1/system/role';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';

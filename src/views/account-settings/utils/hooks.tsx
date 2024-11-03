@@ -1,7 +1,7 @@
 import { useUserStore } from '@/store/system/user';
 import { reactive, ref } from 'vue';
 import { createFormData } from '@pureadmin/utils';
-import { fetchUploadFile } from '@/api/v1/system';
+import { fetchUploadFile } from '@/api/v1/system/system';
 import { message } from '@/utils/message';
 import { $t } from '@/plugins/i18n';
 

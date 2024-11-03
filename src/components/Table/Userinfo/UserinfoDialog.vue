@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { fetchGetUserinfoById } from '@/api/v1/adminUser';
+import { fetchGetUserinfoById } from '@/api/v1/system/adminUser';
 import userAvatarIcon from '@/assets/svg/user_avatar.svg?component';
 import { $t } from '@/plugins/i18n';
 

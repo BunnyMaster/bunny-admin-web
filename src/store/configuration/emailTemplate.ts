@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
-import { fetchAddEmailTemplate, fetchDeleteEmailTemplate, fetchGetEmailTemplateList, fetchGetEmailTypes, fetchUpdateEmailTemplate } from '@/api/v1/emailTemplate';
+import { fetchAddEmailTemplate, fetchDeleteEmailTemplate, fetchGetEmailTemplateList, fetchGetEmailTypes, fetchUpdateEmailTemplate } from '@/api/v1/email/emailTemplate';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
-import { fetchGetAllMailboxConfigurationUsers } from '@/api/v1/emailUsers';
+import { fetchGetAllMailboxConfigurationUsers } from '@/api/v1/email/emailUsers';
 
 /**
  * 邮件模板表 Store

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { $t } from '@/plugins/i18n';
 import { ref } from 'vue';
-import { fetchGetIconNameList } from '@/api/v1/menuIcon';
 import LoadingSvg from '@/assets/svg/loading.svg';
 import { FormProps } from '@/views/configuration/menuIcon/utils/types';
+import { useMenuIconStore } from '@/store/configuration/menuIcon';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
@@ -13,20 +13,17 @@ const props = withDefaults(defineProps<FormProps>(), {
 });
 
 const loading = ref(false);
-const iconNameList = ref();
 const form = ref(props.formInline);
+const menuIconStore = useMenuIconStore();
 
-/**
- * * 搜索
- */
+/** 搜索 */
 const onRequestIconName = async (iconName: string) => {
 	const data = { currentPage: 1, pageSize: 20, iconName };
 	loading.value = true;
 
 	if (iconName) {
-		const result = await fetchGetIconNameList(data);
-		if (result.code === 200) iconNameList.value = result.data;
-	} else iconNameList.value = [];
+		await menuIconStore.getIconNameList(data);
+	} else menuIconStore.iconNameList = [];
 
 	loading.value = false;
 };
@@ -44,7 +41,7 @@ const onRequestIconName = async (iconName: string) => {
 		remote
 		remote-show-suffix
 	>
-		<el-option v-for="menuIcon in iconNameList" :key="menuIcon.id" :label="menuIcon.iconName" :value="menuIcon.iconName" />
+		<el-option v-for="menuIcon in menuIconStore.iconNameList" :key="menuIcon.id" :label="menuIcon.iconName" :value="menuIcon.iconName" />
 		<template #loading>
 			<el-icon class="is-loading">
 				<LoadingSvg />

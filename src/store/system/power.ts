@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddPower, fetchDeletePower, fetchGetAllPowers, fetchGetPowerList, fetchUpdateBatchByPowerWithParentId, fetchUpdatePower } from '@/api/v1/power';
+import { fetchAddPower, fetchDeletePower, fetchGetAllPowers, fetchGetPowerList, fetchUpdateBatchByPowerWithParentId, fetchUpdatePower } from '@/api/v1/system/power';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';

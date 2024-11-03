@@ -1,15 +1,14 @@
 import { addDialog } from '@/components/BaseDialog/index';
-import MessageDialog from '@/views/message-management/message/message-dialog.vue';
-import { useMessageStore } from '@/store/message/message';
+import MessageDialog from '@/views/message-management/message-send/message-dialog.vue';
 import { h, reactive, ref, toRaw } from 'vue';
 import { message, messageBox } from '@/utils/message';
 import { $t } from '@/plugins/i18n';
 import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 import { useAdminUserStore } from '@/store/system/adminUser';
-import { fetchGetReceivedUserinfoByMessageId } from '@/api/v1/message';
 import { decode, encode } from 'js-base64';
 import type { UploadRequestOptions } from 'element-plus';
-import { fetchUploadFile } from '@/api/v1/system';
+import { fetchUploadFile } from '@/api/v1/system/system';
+import { useMessageSendStore } from '@/store/message/messageSend';
 
 export const formRef = ref();
 // 删除ids
@@ -46,14 +45,14 @@ export const updateMessage = reactive({
 	// 0:未读 1:已读
 	status: undefined,
 });
-const messageStore = useMessageStore();
+const messageSendStore = useMessageSendStore();
 const adminUserStore = useAdminUserStore();
 
 /** 搜索初始化系统消息 */
 export async function onSearch() {
-	messageStore.loading = true;
-	await messageStore.getMessageList();
-	messageStore.loading = false;
+	messageSendStore.loading = true;
+	await messageSendStore.getMessageList();
+	messageSendStore.loading = false;
 }
 
 /** 搜索 */
@@ -75,7 +74,7 @@ export async function onUpdate(row: any) {
 	updateMessage.content = decode(updateMessage.content);
 
 	// 获取当前消息内容和接收者信息
-	const result = await fetchGetReceivedUserinfoByMessageId({ messageId: row.id });
+	const result = messageSendStore.updateMessage({ messageId: row.id });
 	userDataList.value = result.data.map((item: any) => ({
 		id: item.receivedUserId,
 		nickname: item.nickname,
@@ -102,7 +101,7 @@ export async function onUpdate(row: any) {
 				data.content = encode(data.content);
 
 				// 更新消息内容
-				const result = await messageStore.updateMessage({ ...data, id: row.id });
+				const result = await messageSendStore.updateMessage({ ...data, id: row.id });
 				if (!result) return;
 				Object.assign(updateMessage, {});
 				done();
@@ -126,7 +125,7 @@ export const onDelete = async (row: any) => {
 	if (!result) return;
 
 	// 删除数据
-	await messageStore.deleteMessage([id]);
+	await messageSendStore.deleteMessage([id]);
 	await onSearch();
 };
 
@@ -150,7 +149,7 @@ export const onDeleteBatch = async () => {
 				const text = options.props.formInline.confirmText.toLowerCase();
 				if (text === 'yes' || text === 'y') {
 					// 删除数据
-					await messageStore.deleteMessage(ids);
+					await messageSendStore.deleteMessage(ids);
 					await onSearch();
 
 					done();

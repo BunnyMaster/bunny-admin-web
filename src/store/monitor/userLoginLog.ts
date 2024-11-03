@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchDeleteUserLoginLog, fetchGetUserLoginLogList, fetchGetUserLoginLogListByLocalUser } from '@/api/v1/userLoginLog';
+import { fetchDeleteUserLoginLog, fetchGetUserLoginLogList, fetchGetUserLoginLogListByLocalUser } from '@/api/v1/log/userLoginLog';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';

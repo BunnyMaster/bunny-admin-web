@@ -21,7 +21,7 @@ export const fetchDeleteMenuIcon = (data: any) => {
 	return http.request<BaseResult<object>>('delete', 'menuIcon/deleteMenuIcon', { data });
 };
 
-/** 系统菜单图标---根据iconName搜索menuIc */
+/** 系统菜单图标---根据iconName搜索menuIcon */
 export const fetchGetIconNameList = (data: any) => {
 	return http.request<BaseResult<object>>('get', 'menuIcon/noManage/getIconNameList', { params: data });
 };

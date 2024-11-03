@@ -2,7 +2,7 @@ import { reactive, ref } from 'vue';
 import type { UploadRawFile, UploadRequestOptions } from 'element-plus';
 import { SystemEnum } from '@/enums/upload';
 import { message } from '@/utils/message';
-import { fetchUploadFile } from '@/api/v1/system';
+import { fetchUploadFile } from '@/api/v1/system/system';
 import { useAdminUserStore } from '@/store/system/adminUser';
 
 // 用户信息列表

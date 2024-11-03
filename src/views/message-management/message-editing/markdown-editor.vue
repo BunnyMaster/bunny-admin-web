@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import { fetchUploadFile } from '@/api/v1/system';
+import { fetchUploadFile } from '@/api/v1/system/system';
 import { formState } from '@/views/message-management/message-editing/utils/hooks';
 
 /**

@@ -1,6 +1,6 @@
 import { $t } from '@/plugins/i18n';
 import { computed, ref } from 'vue';
-import { fetchGetUserMessageList } from '@/api/v1/message';
+import { fetchGetUserMessageList } from '@/api/v1/message/messageUser';
 import { throttle } from '@pureadmin/utils';
 import { useWebNotification } from '@vueuse/core';
 

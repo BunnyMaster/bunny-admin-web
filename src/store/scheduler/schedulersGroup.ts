@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddSchedulersGroup, fetchDeleteSchedulersGroup, fetchGetAllSchedulersGroup, fetchGetSchedulersGroupList, fetchUpdateSchedulersGroup } from '@/api/v1/schedulersGroup';
+import { fetchAddSchedulersGroup, fetchDeleteSchedulersGroup, fetchGetAllSchedulersGroup, fetchGetSchedulersGroupList, fetchUpdateSchedulersGroup } from '@/api/v1/schedulers/schedulersGroup';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';

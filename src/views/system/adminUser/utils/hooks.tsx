@@ -11,7 +11,7 @@ import { deviceDetection, handleTree } from '@pureadmin/utils';
 import CropperPreview from '@/components/CropperPreview';
 import AssignUserToRole from '@/views/system/adminUser/assign-roles-to-user.vue';
 import userAvatar from '@/assets/user.jpg';
-import { fetchForcedOffline, fetchUploadAvatarByAdmin } from '@/api/v1/adminUser';
+import { fetchForcedOffline, fetchUploadAvatarByAdmin } from '@/api/v1/system/adminUser';
 import { useUserStore } from '@/store/system/user';
 import { useDeptStore } from '@/store/system/dept';
 import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';

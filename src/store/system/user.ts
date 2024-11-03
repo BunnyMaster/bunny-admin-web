@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import { resetRouter, router, routerArrays, storageLocal, store, type userType } from '../utils';
-import { fetchAssignRolesToUsers, fetchGetUserinfo, fetchLogin, fetchLogout, fetchPostEmailCode, refreshTokenApi } from '@/api/v1/adminUser';
+import { fetchAssignRolesToUsers, fetchGetUserinfo, fetchLogin, fetchLogout, fetchPostEmailCode, refreshTokenApi } from '@/api/v1/system/adminUser';
 import { useMultiTagsStoreHook } from '../multiTags';
 import { type DataInfo, removeToken, setToken, userKey } from '@/utils/auth';
 import { message, storeMessage } from '@/utils/message';
-import { fetchGetRoleListByUserId } from '@/api/v1/role';
+import { fetchGetRoleListByUserId } from '@/api/v1/system/role';
 
 export const useUserStore = defineStore({
 	id: 'system-user',

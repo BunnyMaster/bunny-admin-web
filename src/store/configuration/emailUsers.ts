@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddEmailUsers, fetchDeleteEmailUsers, fetchGetEmailUsersList, fetchUpdateEmailUsers, fetchUpdateEmailUserStatus } from '@/api/v1/emailUsers';
+import { fetchAddEmailUsers, fetchDeleteEmailUsers, fetchGetEmailUsersList, fetchUpdateEmailUsers, fetchUpdateEmailUserStatus } from '@/api/v1/email/emailUsers';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';

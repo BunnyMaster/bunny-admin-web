@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import 'plus-pro-components/es/components/check-card-group/style/css';
 import MarkdownPreview from '@/components/Editor/MarkdownPreview.vue';
-import { fetchGetMessageDetailById } from '@/api/v1/message';
+import { fetchGetMessageDetailById } from '@/api/v1/message/messageReceived';
 import { decode } from 'js-base64';
 
 const route = useRoute();

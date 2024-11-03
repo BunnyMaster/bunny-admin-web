@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddDept, fetchDeleteDept, fetchGetAllDeptList, fetchGetDeptList, fetchUpdateDept } from '@/api/v1/dept';
+import { fetchAddDept, fetchDeleteDept, fetchGetAllDeptList, fetchGetDeptList, fetchUpdateDept } from '@/api/v1/system/dept';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';

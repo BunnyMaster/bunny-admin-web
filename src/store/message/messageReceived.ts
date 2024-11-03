@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddMessage, fetchDeleteMessage, fetchGetMessageList, fetchUpdateMessage } from '@/api/v1/message';
+import { fetchDeleteMessageReceivedByIds, fetchGetMessageReceivedList, fetchMarkMessageReceivedAsRead } from '@/api/v1/message/messageReceived';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -7,7 +7,7 @@ import { storePagination } from '@/store/useStorePagination';
 /**
  * 系统消息 Store
  */
-export const useMessageStore = defineStore('messageStore', {
+export const useMessageReceivedStore = defineStore('messageReceivedStore', {
 	state() {
 		return {
 			// 系统消息列表
@@ -48,8 +48,8 @@ export const useMessageStore = defineStore('messageStore', {
 	},
 	getters: {},
 	actions: {
-		/** 获取系统消息 */
-		async getMessageList() {
+		/** 管理员操作用户消息---获取系统管理消息列表 */
+		async getMessageReceivedList() {
 			// 整理请求参数
 			const data = { ...this.pagination, ...this.form };
 			delete data.pageSizes;
@@ -57,28 +57,22 @@ export const useMessageStore = defineStore('messageStore', {
 			delete data.background;
 
 			// 获取系统消息列表
-			const result = await fetchGetMessageList(data);
+			const result = await fetchGetMessageReceivedList(data);
 
 			// 公共页面函数hook
 			const pagination = storePagination.bind(this);
 			return pagination(result);
 		},
 
-		/** 添加系统消息 */
-		async addMessage(data: any) {
-			const result = await fetchAddMessage(data);
-			return storeMessage(result);
-		},
-
-		/** 修改系统消息 */
-		async updateMessage(data: any) {
-			const result = await fetchUpdateMessage(data);
+		/** 管理员操作用户消息---将用户消息标为已读 */
+		async markMessageReceivedAsRead(data: any) {
+			const result = await fetchMarkMessageReceivedAsRead(data);
 			return storeMessage(result);
 		},
 
 		/** 删除系统消息 */
-		async deleteMessage(data: any) {
-			const result = await fetchDeleteMessage(data);
+		async deleteMessageReceivedByIds(data: any) {
+			const result = await fetchDeleteMessageReceivedByIds(data);
 			return storeMessage(result);
 		},
 	},

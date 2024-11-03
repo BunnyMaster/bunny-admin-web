@@ -10,7 +10,7 @@ import { type menuType, routerArrays } from '@/layout/types';
 import { useMultiTagsStoreHook } from '@/store/multiTags';
 import { usePermissionStoreHook } from '@/store/permission';
 // 动态路由
-import { getRouterAsync } from '@/api/v1/system';
+import { getRouterAsync } from '@/api/v1/system/system';
 // import { getAsyncRoutes } from '@/api/routes';
 
 const IFrame = () => import('@/layout/frame.vue');

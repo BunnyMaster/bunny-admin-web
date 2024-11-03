@@ -1,13 +1,10 @@
 import { defineStore } from 'pinia';
-import { fetchDeleteUserMessageByIds, fetchGetUserMessageList, fetchUpdateUserMarkAsRead } from '@/api/v1/message/messageUser';
 import { pageSizes } from '@/enums/baseConstant';
+import { fetchAddMessage, fetchDeleteMessage, fetchGetMessageList, fetchUpdateMessage } from '@/api/v1/message/messageSend';
 import { storePagination } from '@/store/useStorePagination';
 import { storeMessage } from '@/utils/message';
 
-/**
- * 系统消息 Store
- */
-export const useMessageUserStore = defineStore('messageUserStore', {
+export const useMessageSendStore = defineStore('messageSendStore', {
 	state() {
 		return {
 			// 系统消息列表
@@ -16,10 +13,24 @@ export const useMessageUserStore = defineStore('messageUserStore', {
 			form: {
 				// 消息标题
 				title: undefined,
-				// 0:未读 1:已读
-				status: '',
+				// 接收人用户ID
+				receivedUserIds: undefined,
+				// 发送人用户ID
+				sendUserId: undefined,
+				// 发送人昵称
+				sendNickname: undefined,
 				// 消息类型
 				messageType: undefined,
+				// 消息内容
+				content: undefined,
+				// 编辑器类型
+				editorType: undefined,
+				// 消息等级
+				level: undefined,
+				// 消息等级详情
+				extra: undefined,
+				// 0:未读 1:已读
+				status: undefined,
 			},
 			// 分页查询结果
 			pagination: {
@@ -43,22 +54,28 @@ export const useMessageUserStore = defineStore('messageUserStore', {
 			delete data.background;
 
 			// 获取系统消息列表
-			const result = await fetchGetUserMessageList(data);
+			const result = await fetchGetMessageList(data);
 
 			// 公共页面函数hook
 			const pagination = storePagination.bind(this);
 			return pagination(result);
 		},
 
-		/** 用户将消息标为已读 */
-		async updateUserMarkAsRead(data: any) {
-			const result = await fetchUpdateUserMarkAsRead(data);
+		/** 添加系统消息 */
+		async addMessage(data: any) {
+			const result = await fetchAddMessage(data);
 			return storeMessage(result);
 		},
 
-		/** 用户删除系统消息 */
-		async deleteUserMessageByIds(data: any) {
-			const result = await fetchDeleteUserMessageByIds(data);
+		/** 修改系统消息 */
+		async updateMessage(data: any) {
+			const result = await fetchUpdateMessage(data);
+			return storeMessage(result);
+		},
+
+		/** 删除系统消息 */
+		async deleteMessage(data: any) {
+			const result = await fetchDeleteMessage(data);
 			return storeMessage(result);
 		},
 	},
