@@ -49,6 +49,18 @@ defineExpose({ formRef });
 							</el-select>
 						</el-form-item>
 
+						<!-- 发送人 -->
+						<el-form-item :label="$t('sendUserId')" prop="sendUserId">
+							<el-select v-model="updateMessage.sendUserId" :loading="loading" :placeholder="$t('receivedUserIdTip')" :remote-method="onSearchUserinfo" clearable filterable remote remote-show-suffix>
+								<el-option v-for="item in userDataList" :key="item.id" :label="item.username" :value="item.id" />
+								<template #loading>
+									<el-icon class="is-loading">
+										<LoadingSvg />
+									</el-icon>
+								</template>
+							</el-select>
+						</el-form-item>
+
 						<!-- 接收人ID -->
 						<el-form-item :label="$t('receivedUserIds')" prop="receivedUserIds">
 							<el-select
