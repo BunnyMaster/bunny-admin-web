@@ -28,5 +28,5 @@ const onUploadImg = async (files: any, callback: any) => {
 </script>
 
 <template>
-	<MdEditor v-model="updateMessage.content" :showToolbarName="true" style="height: calc(100vh - 120px)" @onUploadImg="onUploadImg" />
+	<MdEditor v-model="updateMessage.content" :showToolbarName="true" style="height: calc(100vh - 130px)" @onUploadImg="onUploadImg" />
 </template>

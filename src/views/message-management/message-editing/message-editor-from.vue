@@ -12,6 +12,7 @@ import { message } from '@/utils/message';
 import { useMessageStore } from '@/store/message/message';
 import { usePublicHooks } from '@/views/hooks';
 import { Plus } from '@element-plus/icons-vue';
+import { graphlib } from 'dagre';
 
 const formRef = ref();
 // 用户是否停用样式
@@ -35,12 +36,13 @@ const submitForm = (formEl: FormInstance | undefined) => {
 			const data = toRaw(formState);
 			data.content = encode(formState.content);
 
-			// 添加消息
-			const result = await messageStore.addMessage(data);
-			if (!result) return;
-
-			// 清除数据
-			resetForm(formEl);
+			console.log(data);
+			// // 添加消息
+			// const result = await messageStore.addMessage(data);
+			// if (!result) return;
+			//
+			// // 清除数据
+			// resetForm(formEl);
 		}
 	});
 };
@@ -66,9 +68,9 @@ onMounted(() => {
 		</el-form-item>
 
 		<!-- 消息类型 -->
-		<el-form-item :label="$t('messageType')" prop="messageType">
-			<el-select v-model="formState.messageType" :placeholder="`${$t('select')}${$t('messageType')}`" clearable filterable>
-				<el-option v-for="(item, index) in messageTypeStore.allMessageTypeList" :key="index" :label="item.messageName" :navigationBar="false" :value="item.messageType" />
+		<el-form-item :label="$t('messageType')" prop="messageTypeId">
+			<el-select v-model="formState.messageTypeId" :placeholder="`${$t('select')}${$t('messageType')}`" clearable filterable>
+				<el-option v-for="(item, index) in messageTypeStore.allMessageTypeList" :key="index" :label="item.messageName" :navigationBar="false" :value="item.id" />
 			</el-select>
 		</el-form-item>
 
@@ -132,8 +134,10 @@ onMounted(() => {
 
 		<!-- 提交 -->
 		<el-form-item>
-			<el-button type="primary" @click="submitForm(formRef)">{{ $t('submit') }}</el-button>
-			<el-button @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
+			<div class="grid grid-cols-2 w-[100%]">
+				<el-button bg class="w-[100%]" text type="primary" @click="submitForm(formRef)">{{ $t('submit') }}</el-button>
+				<el-button bg class="w-[100%]" text @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
+			</div>
 		</el-form-item>
 	</el-form>
 </template>

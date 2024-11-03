@@ -13,12 +13,12 @@ export const fetchGetReceivedUserinfoByMessageId = (data: any) => {
 
 /** 系统消息---添加系统消息 */
 export const fetchAddMessage = (data: any) => {
-	return http.request<BaseResult<object>>('post', 'message/addMessage', { data });
+	return http.request<BaseResult<object>>('post', 'messageReceived/addMessage', { data });
 };
 
 /** 系统消息---更新系统消息 */
 export const fetchUpdateMessage = (data: any) => {
-	return http.request<BaseResult<object>>('put', 'message/updateMessage', { data });
+	return http.request<BaseResult<object>>('put', 'messageReceived/updateMessage', { data });
 };
 
 /** 系统消息---删除系统消息 */
@@ -38,7 +38,7 @@ export const fetchGetUserMessageList = (data: any) => {
 
 /** 系统消息---用户将消息标为已读 */
 export const fetchUpdateUserMarkAsRead = (data: any) => {
-	return http.request<BaseResult<object>>('put', 'message/noManage/updateUserMarkAsRead', { data });
+	return http.request<BaseResult<object>>('put', 'messageReceived/noManage/updateUserMarkAsRead', { data });
 };
 
 /** 系统消息---用户删除系统消息 */

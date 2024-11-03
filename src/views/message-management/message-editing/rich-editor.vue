@@ -53,6 +53,6 @@ onBeforeUnmount(() => {
 <template>
 	<div class="wangeditor">
 		<Toolbar :defaultConfig="toolbarConfig" :editor="editorRef" :mode="mode" style="border-bottom: 1px solid #ccc" />
-		<Editor v-model="formState.content" :defaultConfig="editorConfig" :mode="mode" style="height: 500px; overflow-y: hidden" @onCreated="handleCreated" />
+		<Editor v-model="formState.content" :defaultConfig="editorConfig" :mode="mode" style="height: calc(100vh - 172px); overflow-y: hidden" @onCreated="handleCreated" />
 	</div>
 </template>

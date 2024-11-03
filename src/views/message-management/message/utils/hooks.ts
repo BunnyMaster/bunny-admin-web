@@ -25,14 +25,14 @@ export const updateMessage = reactive({
 	title: undefined,
 	// 封面
 	cover: undefined,
-	// 接收人用户ID
-	receivedUserIds: undefined,
 	// 发送人用户ID
 	sendUserId: undefined,
 	// 发送人昵称
 	sendNickName: undefined,
 	// 消息类型
-	messageType: undefined,
+	messageTypeId: undefined,
+	// 消息用户表id
+	messageReceivedId: undefined,
 	// 消息内容
 	content: undefined,
 	// 简介
@@ -72,7 +72,7 @@ export async function onUpdate(row: any) {
 	Object.assign(updateMessage, row);
 
 	// 解码内容
-	updateMessage.content = decode(row.content);
+	updateMessage.content = decode(updateMessage.content);
 
 	// 获取当前消息内容和接收者信息
 	const result = await fetchGetReceivedUserinfoByMessageId({ messageId: row.id });

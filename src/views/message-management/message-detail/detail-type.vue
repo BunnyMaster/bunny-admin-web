@@ -6,7 +6,7 @@ import PureTable from '@pureadmin/table';
 import { markAsAllRead, markAsRead, onDelete, onSearch, selectids } from '@/views/message-management/message-detail/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import { $t } from '@/plugins/i18n';
-import { Message, MessageBox } from '@element-plus/icons-vue';
+import { Message } from '@element-plus/icons-vue';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { isReadStatus } from '@/enums/baseConstant';
 import { useMessageUserStore } from '@/store/message/messageUser';
@@ -40,7 +40,7 @@ const onPageSizeChange = (value: number) => {
  * @param rows
  */
 const onSelectionChange = (rows: Array<any>) => {
-	selectids.value = rows.map((row: any) => row.id);
+	selectids.value = rows.map((row: any) => row.messageReceivedId);
 };
 
 onMounted(() => {
@@ -95,9 +95,10 @@ onMounted(() => {
 					@page-current-change="onCurrentPageChange"
 				>
 					<template #title="{ row }">
-						<el-link v-if="row.status" :icon="MessageBox" :underline="false" type="info" @click="router.push(`/message-detail/${messageTypeStore?.form?.messageType}/${row.id}`)">
+						<el-link v-if="row.status" :icon="useRenderIcon('octicon:read-24')" :underline="false" type="info" @click="router.push(`/message-detail/${messageTypeStore?.form?.messageType}/${row.id}`)">
 							{{ row.title }}
 						</el-link>
+
 						<el-link v-else :icon="Message" :underline="false" type="primary" @click="router.push(`/message-detail/${messageTypeStore?.form?.messageType}/${row.id}`)">
 							{{ row.title }}
 						</el-link>

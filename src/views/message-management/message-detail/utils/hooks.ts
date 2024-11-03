@@ -55,7 +55,7 @@ export const markAsRead = async () => {
 
 /** 全部标为已读 */
 export const markAsAllRead = async () => {
-	const ids = messageUserStore.datalist.map(message => message.id);
+	const ids = messageUserStore.datalist.map(message => message.messageReceivedId);
 
 	// 是否确认标为已读
 	const result = await messageBox({

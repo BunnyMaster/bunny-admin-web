@@ -27,6 +27,6 @@ import { settingLR } from '@/views/message-management/message-editing/utils/colu
 <style lang="scss" scoped>
 .split-pane {
 	width: 100%;
-	height: calc(100vh - 120px);
+	height: calc(100vh - 150px);
 }
 </style>

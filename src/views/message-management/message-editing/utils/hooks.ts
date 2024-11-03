@@ -15,7 +15,7 @@ export const coverUrl = ref('');
 export const formState = reactive({
 	title: '',
 	receivedUserIds: undefined,
-	messageType: undefined,
+	messageTypeId: undefined,
 	content: '',
 	editorType: 'markdown',
 	status: false,

@@ -43,9 +43,9 @@ defineExpose({ formRef });
 						</el-form-item>
 
 						<!-- 消息类型 -->
-						<el-form-item :label="$t('messageType')" prop="messageType">
-							<el-select v-model="updateMessage.messageType" :placeholder="`${$t('select')}${$t('messageType')}`" clearable filterable>
-								<el-option v-for="(item, index) in messageTypeStore.allMessageTypeList" :key="index" :label="item.messageName" :navigationBar="false" :value="item.messageType" />
+						<el-form-item :label="$t('messageType')" prop="messageTypeId">
+							<el-select v-model="updateMessage.messageTypeId" :placeholder="`${$t('select')}${$t('messageType')}`" clearable filterable>
+								<el-option v-for="(item, index) in messageTypeStore.allMessageTypeList" :key="index" :label="item.messageName" :navigationBar="false" :value="item.id" />
 							</el-select>
 						</el-form-item>
 

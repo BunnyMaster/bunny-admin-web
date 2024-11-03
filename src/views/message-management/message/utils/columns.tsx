@@ -1,7 +1,6 @@
 import { reactive } from 'vue';
 import { $t } from '@/plugins/i18n';
-import type { FormRules } from 'element-plus';
-import { ElTag } from 'element-plus';
+import { ElTag, type FormRules } from 'element-plus';
 
 // 表格列
 export const columns: TableColumnList = [
@@ -9,29 +8,49 @@ export const columns: TableColumnList = [
 	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
 	// 消息标题
 	{ label: $t('title'), prop: 'title' },
+	// 消息简介
+	{ label: $t('summary'), prop: 'summary' },
 	// 发送人昵称
 	{ label: $t('sendNickname'), prop: 'sendNickname' },
+	// 接受人昵称
+	{ label: $t('receivedUserNickname'), prop: 'receivedUserNickname' },
 	// 消息类型
-	{ label: $t('messageType'), prop: 'messageType' },
+	{ label: $t('messageType'), prop: 'messageType', slot: 'messageType' },
 	// 编辑器类型
 	{ label: $t('editorType'), prop: 'editorType' },
-	// 编辑器类型
+	// 封面
+	{ label: $t('cover'), prop: 'cover', slot: 'cover', width: 80 },
+	// 消息等级
 	{
 		label: $t('level'),
 		prop: 'level',
 		formatter({ level }) {
-			return <ElTag type={level}>{$t(level)}</ElTag>;
+			return (
+				<ElTag type={level} effect={'plain'} round>
+					{$t(level)}
+				</ElTag>
+			);
 		},
+		width: 100,
 	},
-	// 编辑器类型
-	{ label: $t('extra'), prop: 'extra' },
+	// 消息等级详情
+	{ label: $t('extra'), prop: 'extra', slot: 'extra' },
 	// 0:未读 1:已读
 	{
 		label: $t('status'),
 		prop: 'status',
 		formatter({ status }) {
-			return status ? <ElTag type={'info'}>{$t('readAlready')}</ElTag> : <ElTag type={'primary'}>{$t('unread')}</ElTag>;
+			return status ? (
+				<ElTag type={'info'} effect={'plain'}>
+					{$t('readAlready')}
+				</ElTag>
+			) : (
+				<ElTag type={'danger'} effect={'plain'}>
+					{$t('unread')}
+				</ElTag>
+			);
 		},
+		width: 80,
 	},
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
@@ -47,7 +66,7 @@ export const rules = reactive<FormRules>({
 	// 发送人用户ID
 	sendUserId: [{ required: true, message: `${$t('input')}${$t('sendUserId')}`, trigger: 'blur' }],
 	// 消息类型
-	messageType: [{ required: true, message: `${$t('input')}${$t('messageType')}`, trigger: 'blur' }],
+	messageTypeId: [{ required: true, message: `${$t('input')}${$t('messageType')}`, trigger: 'blur' }],
 	// 消息内容
 	content: [{ required: true, message: `${$t('input')}${$t('content')}`, trigger: 'blur' }],
 	// 编辑器类型

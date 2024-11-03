@@ -124,6 +124,18 @@ onMounted(() => {
 					@selection-change="onSelectionChange"
 					@page-current-change="onCurrentPageChange"
 				>
+					<template #cover="{ row }">
+						<el-image :initial-index="0" :preview-src-list="[row.cover]" :src="row.cover" class="w-[50px] h-[50px]" fit="cover" loading="lazy" preview-teleported />
+					</template>
+
+					<template #extra="{ row }">
+						<el-text type="danger">{{ row.extra }}</el-text>
+					</template>
+
+					<template #messageType="{ row }">
+						<el-tag effect="plain" round>{{ row.messageType }}</el-tag>
+					</template>
+
 					<template #createUser="{ row }">
 						<el-button v-show="row.createUser" link type="primary" @click="selectUserinfo(row.createUser)">
 							{{ row.createUsername }}
