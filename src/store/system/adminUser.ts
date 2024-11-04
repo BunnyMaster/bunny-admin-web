@@ -5,6 +5,7 @@ import { storePagination } from '@/store/useStorePagination';
 import {
 	fetchAddAdminUser,
 	fetchDeleteAdminUser,
+	fetchForcedOffline,
 	fetchGetAdminUserList,
 	fetchQueryUser,
 	fetchUpdateAdminUser,
@@ -116,6 +117,12 @@ export const useAdminUserStore = defineStore('adminUserStore', {
 		/** 修改用户状态 */
 		async updateUserStatusByAdmin(data: any) {
 			const result = await fetchUpdateUserStatusByAdmin(data);
+			return storeMessage(result);
+		},
+
+		/** 强制用户下线 */
+		async forcedOffline(data: any) {
+			const result = await fetchForcedOffline(data);
 			return storeMessage(result);
 		},
 	},

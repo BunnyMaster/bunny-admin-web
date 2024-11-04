@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import MarkdownPreview from '@/components/Editor/MarkdownPreview.vue';
 import { onMounted, ref } from 'vue';
 import { decode } from 'js-base64';
+import { MdPreview } from 'md-editor-v3';
+import 'md-editor-v3/lib/preview.css';
 
 const content = ref();
 
@@ -18,5 +19,5 @@ onMounted(() => {
 </script>
 
 <template>
-	<MarkdownPreview id="server-read-me" :text="content" />
+	<MdPreview id="server-read-me" :modelValue="content" />
 </template>

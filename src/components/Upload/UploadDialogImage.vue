@@ -2,7 +2,7 @@
 	<el-upload :auto-upload="true" :before-upload="beforeUpload" :http-request="onUpload" :show-file-list="false" accept="image/*" drag>
 		<el-image v-if="imageSrc" :src="imageSrc" fit="cover" lazy>
 			<template #placeholder>
-				<img alt="" src="@/assets/images/tip/loading.gif" />
+				<ImageLoading />
 			</template>
 		</el-image>
 		<el-icon v-else size="36">
@@ -18,6 +18,7 @@ import { ElMessage, UploadRawFile, UploadRequestOptions } from 'element-plus';
 import { onMounted, ref } from 'vue';
 import { SystemEnum } from '@/enums/upload';
 import { fetchUploadFile } from '@/api/v1/system/system';
+import ImageLoading from '@/components/Upload/ImageLoading.vue';
 
 const props = defineProps({
 	imageUrl: String,

@@ -2,7 +2,6 @@ import { storeToRefs } from 'pinia';
 import { getConfig } from '@/config';
 import { useRouter } from 'vue-router';
 import { emitter } from '@/utils/mitt';
-import Avatar from '@/assets/user.jpg';
 import { getTopMenu } from '@/router/utils';
 import { useFullscreen } from '@vueuse/core';
 import type { routeMetaType } from '../types';
@@ -16,6 +15,7 @@ import { usePermissionStoreHook } from '@/store/permission';
 import ExitFullscreen from '@iconify-icons/ri/fullscreen-exit-fill';
 import Fullscreen from '@iconify-icons/ri/fullscreen-fill';
 import { $t } from '@/plugins/i18n';
+import { UserAvatar } from '@/enums/baseConstant';
 
 const errorInfo = 'The current routing configuration is incorrect, please check the configuration';
 
@@ -39,7 +39,7 @@ export function useNav() {
 
 	/** 头像（如果头像为空则使用 src/assets/user.jpg ） */
 	const userAvatar = computed(() => {
-		return isAllEmpty(useUserStoreHook()?.avatar) ? Avatar : useUserStoreHook()?.avatar;
+		return isAllEmpty(useUserStoreHook()?.avatar) ? UserAvatar : useUserStoreHook()?.avatar;
 	});
 
 	/** 昵称（如果昵称为空则显示用户名） */

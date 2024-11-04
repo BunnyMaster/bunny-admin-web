@@ -26,13 +26,12 @@ import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
-import userAvatar from '@/assets/user.jpg';
 import Upload from '@iconify-icons/ri/upload-line';
 import Role from '@iconify-icons/ri/admin-line';
 import Password from '@iconify-icons/ri/lock-password-line';
 import More from '@iconify-icons/ep/more-filled';
 import { useAdminUserStore } from '@/store/system/adminUser';
-import { sexConstant, tableSelectButtonClass, userStatus } from '@/enums/baseConstant';
+import { sexConstant, tableSelectButtonClass, UserAvatar, userStatus } from '@/enums/baseConstant';
 import { deviceDetection } from '@pureadmin/utils';
 import Tree from '@/views/system/adminUser/tree.vue';
 import Airplane from '@/assets/svg/airplane.svg';
@@ -168,10 +167,10 @@ onMounted(() => {
 					>
 						<!-- 显示头像 -->
 						<template #avatar="{ row }">
-							<el-image :preview-src-list="Array.of(row.avatar || userAvatar)" :src="row.avatar || userAvatar" class="w-[24px] h-[24px] rounded-full align-middle" fit="cover" preview-teleported>
+							<el-image :preview-src-list="Array.of(row.avatar || UserAvatar)" :src="row.avatar || UserAvatar" class="w-[24px] h-[24px] rounded-full align-middle" fit="cover" preview-teleported>
 								<template #error>
 									<div class="image-slot">
-										<img :src="userAvatar" alt="" />
+										<img :src="UserAvatar" alt="" />
 									</div>
 								</template>
 							</el-image>

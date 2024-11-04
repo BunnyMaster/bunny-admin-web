@@ -2,7 +2,8 @@
 import { useRoute } from 'vue-router';
 import { onMounted } from 'vue';
 import 'plus-pro-components/es/components/check-card-group/style/css';
-import MarkdownPreview from '@/components/Editor/MarkdownPreview.vue';
+import { MdPreview } from 'md-editor-v3';
+import 'md-editor-v3/lib/preview.css';
 import { useMessageUserStore } from '@/store/message/messageUser';
 
 const route = useRoute();
@@ -38,7 +39,7 @@ onMounted(() => {
 				<el-text>{{ messageUserStore.messageDetail?.updateTime }}</el-text>
 				<el-text type="primary">&nbsp;&nbsp; By：{{ messageUserStore.messageDetail?.sendNickname }}</el-text>
 			</span>
-			<markdown-preview v-if="messageUserStore.messageDetail?.editorType === 'markdown'" id="message-detail-markdown" :text="messageUserStore.messageDetail?.content" />
+			<MdPreview v-if="messageUserStore.messageDetail?.editorType === 'markdown'" id="message-detail-markdown" :model-value="messageUserStore.messageDetail?.content" />
 			<div v-else v-html="messageUserStore.messageDetail?.content" />
 		</main>
 	</div>

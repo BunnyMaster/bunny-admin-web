@@ -13,6 +13,8 @@ import { beforeUpload } from '@/views/message-management/message-editing/utils/h
 import SplitPane from '@/components/SplitPane';
 import RichEditor from '@/views/message-management/message-send/rich-editor.vue';
 import MarkdownEditor from '@/views/message-management/message-send/markdown-editor.vue';
+import { imageLoading } from '@/enums/baseConstant';
+import ImageLoading from '@/components/Upload/ImageLoading.vue';
 
 // 用户是否停用样式
 const { switchStyle } = usePublicHooks();
@@ -97,7 +99,7 @@ defineExpose({ formRef });
 							<el-upload :auto-upload="true" :before-upload="beforeUpload" :http-request="onUpload" :show-file-list="false" accept="image/*" drag>
 								<el-image v-if="coverUrl" :src="coverUrl" fit="cover" lazy>
 									<template #placeholder>
-										<img alt="" src="../../../assets/images/tip/loading.gif" />
+										<ImageLoading />
 									</template>
 								</el-image>
 								<el-icon v-else size="36">

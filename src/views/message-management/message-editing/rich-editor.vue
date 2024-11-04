@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onBeforeUnmount, ref, shallowRef } from 'vue';
-import '@wangeditor/editor/dist/css/style.css';
+// import '@wangeditor/editor/dist/css/style.css';
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 import { formState } from '@/views/message-management/message-editing/utils/hooks';
 import { getToken } from '@/utils/auth';
@@ -14,7 +14,7 @@ const token = ref(getToken().token);
 
 editorConfig.MENU_CONF['uploadImage'] = {
 	// 服务端上传地址，根据实际业务改写
-	server: '/api/files/upload',
+	server: '/admin/files/upload',
 	// form-data 的 fieldName，根据实际业务改写
 	fieldName: 'file',
 	// 选择文件时的类型限制，根据实际业务改写
@@ -25,10 +25,6 @@ editorConfig.MENU_CONF['uploadImage'] = {
 	customInsert(res: any, insertFn) {
 		// res.data.url是后端返回的图片地址，根据实际业务改写
 		if (res.data.url) {
-			// const form = new FormData();
-			// form.append('file', file);
-			// form.append('type', 'message');
-			// await fetchUploadFile(form)
 			setTimeout(() => {
 				// insertFn插入图片进编辑器
 				insertFn(res.data.url);

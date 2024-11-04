@@ -12,6 +12,7 @@ import { message } from '@/utils/message';
 import { useMessageSendStore } from '@/store/message/messageSend';
 import { usePublicHooks } from '@/views/hooks';
 import { Plus } from '@element-plus/icons-vue';
+import ImageLoading from '@/components/Upload/ImageLoading.vue';
 
 const formRef = ref();
 // 用户是否停用样式
@@ -103,7 +104,7 @@ onMounted(() => {
 			<el-upload :auto-upload="true" :before-upload="beforeUpload" :http-request="onUpload" :show-file-list="false" accept="image/*" drag>
 				<el-image v-if="coverUrl" :src="coverUrl" fit="cover" lazy>
 					<template #placeholder>
-						<img alt="" src="@/assets/images/tip/loading.gif" />
+						<ImageLoading />
 					</template>
 				</el-image>
 				<el-icon v-else size="36">

@@ -10,11 +10,11 @@ import ResetPasswordDialog from '@/components/Table/ResetPasswords.vue';
 import { deviceDetection, handleTree } from '@pureadmin/utils';
 import CropperPreview from '@/components/CropperPreview';
 import AssignUserToRole from '@/views/system/adminUser/assign-roles-to-user.vue';
-import userAvatar from '@/assets/user.jpg';
-import { fetchForcedOffline, fetchUploadAvatarByAdmin } from '@/api/v1/system/adminUser';
+import { fetchUploadAvatarByAdmin } from '@/api/v1/system/adminUser';
 import { useUserStore } from '@/store/system/user';
 import { useDeptStore } from '@/store/system/dept';
 import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
+import { UserAvatar } from '@/enums/baseConstant';
 
 const adminUserStore = useAdminUserStore();
 const userStore = useUserStore();
@@ -233,7 +233,7 @@ export const onUploadAvatar = (row: any) => {
 		contentRenderer: () =>
 			h(CropperPreview, {
 				ref: cropRef,
-				imgSrc: row.avatar || userAvatar,
+				imgSrc: row.avatar || UserAvatar,
 				onCropper: info => (avatarInfo.value = info),
 			}),
 		beforeSure: async done => {
@@ -319,7 +319,7 @@ export const onForcedOffline = async (row: any) => {
 	});
 	if (!confirm) return;
 
-	const result = await fetchForcedOffline(id);
+	const result = adminUserStore.forcedOffline(id);
 	if (result.code !== 200) return;
 	message(result.message, { type: 'success' });
 };
