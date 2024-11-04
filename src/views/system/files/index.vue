@@ -14,6 +14,8 @@ import { $t } from '@/plugins/i18n';
 import { useFilesStore } from '@/store/monitor/files';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { FormInstance } from 'element-plus';
+import { auth } from '@/views/system/files/utils/auth';
+import { hasAuth } from '@/router/utils';
 
 const tableRef = ref();
 const formRef = ref();
@@ -50,36 +52,40 @@ onMounted(() => {
 
 <template>
 	<div class="main">
-		<el-form ref="formRef" :inline="true" :model="filesStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-			<el-form-item :label="$t('files_filename')" prop="filename">
-				<el-input v-model="filesStore.form.filename" :placeholder="`${$t('input')}${$t('files_filename')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-			<el-form-item :label="$t('files_filepath')" prop="filepath">
-				<el-input v-model="filesStore.form.filepath" :placeholder="`${$t('input')}${$t('files_filepath')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-			<el-form-item :label="$t('files_fileType')" prop="fileType">
-				<el-input v-model="filesStore.form.fileType" :placeholder="`${$t('input')}${$t('files_fileType')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-			<el-form-item :label="$t('files_downloadCount')" prop="downloadCount">
-				<el-input v-model="filesStore.form.downloadCount" :placeholder="`${$t('input')}${$t('files_downloadCount')}`" class="!w-[180px]" clearable min="0" type="number" />
-			</el-form-item>
-			<el-form-item>
-				<el-button :icon="useRenderIcon('ri:search-line')" :loading="filesStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
-				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
-			</el-form-item>
-		</el-form>
+		<Auth :value="auth.search">
+			<el-form ref="formRef" :inline="true" :model="filesStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+				<el-form-item :label="$t('files_filename')" prop="filename">
+					<el-input v-model="filesStore.form.filename" :placeholder="`${$t('input')}${$t('files_filename')}`" class="!w-[180px]" clearable />
+				</el-form-item>
+				<el-form-item :label="$t('files_filepath')" prop="filepath">
+					<el-input v-model="filesStore.form.filepath" :placeholder="`${$t('input')}${$t('files_filepath')}`" class="!w-[180px]" clearable />
+				</el-form-item>
+				<el-form-item :label="$t('files_fileType')" prop="fileType">
+					<el-input v-model="filesStore.form.fileType" :placeholder="`${$t('input')}${$t('files_fileType')}`" class="!w-[180px]" clearable />
+				</el-form-item>
+				<el-form-item :label="$t('files_downloadCount')" prop="downloadCount">
+					<el-input v-model="filesStore.form.downloadCount" :placeholder="`${$t('input')}${$t('files_downloadCount')}`" class="!w-[180px]" clearable min="0" type="number" />
+				</el-form-item>
+				<el-form-item>
+					<el-button :icon="useRenderIcon('ri:search-line')" :loading="filesStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
+					<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
+				</el-form-item>
+			</el-form>
+		</Auth>
 
 		<PureTableBar :columns="columns" :title="$t('system_file')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('addNew') }}</el-button>
+				<el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
+					{{ $t('addNew') }}
+				</el-button>
 
 				<!-- 批量下载 -->
-				<el-button :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Download)" type="success" @click="onDownloadBatch">
+				<el-button v-if="hasAuth(auth.downloadFilesByFileId)" :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Download)" type="success" @click="onDownloadBatch">
 					{{ $t('download_batch') }}
 				</el-button>
 
 				<!-- 批量删除按钮 -->
-				<el-button :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+				<el-button v-if="hasAuth(auth.deleted)" :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
 					{{ $t('deleteBatches') }}
 				</el-button>
 			</template>
@@ -118,9 +124,11 @@ onMounted(() => {
 					</template>
 
 					<template #operation="{ row }">
-						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
-						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onDownload(row)"> {{ $t('download') }} </el-button>
-						<el-popconfirm :title="`${$t('delete')} ${row.filename}?`" @confirm="onDelete(row)">
+						<el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
+						<el-button v-if="hasAuth(auth.downloadFilesByFileId)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onDownload(row)">
+							{{ $t('download') }}
+						</el-button>
+						<el-popconfirm v-if="hasAuth(auth.deleted)" :title="`${$t('delete')} ${row.filename}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}

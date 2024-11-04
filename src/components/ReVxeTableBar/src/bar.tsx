@@ -1,9 +1,8 @@
 import Sortable from 'sortablejs';
-import { $t } from '@/plugins/i18n';
-import { useEpThemeStoreHook } from '@/store/epTheme';
+import { transformI18n } from '@/plugins/i18n';
+import { useEpThemeStoreHook } from '@/store/modules/epTheme';
+import { cloneDeep, delay, getKeyList } from '@pureadmin/utils';
 import { computed, defineComponent, getCurrentInstance, nextTick, type PropType, ref, unref } from 'vue';
-import { cloneDeep, delay, getKeyList, isBoolean, isFunction } from '@pureadmin/utils';
-
 import Fullscreen from '@iconify-icons/ri/fullscreen-fill';
 import ExitFullscreen from '@iconify-icons/ri/fullscreen-exit-fill';
 import DragIcon from '@/assets/table-bar/drag.svg?component';
@@ -18,14 +17,18 @@ const props = {
 		type: String,
 		default: '列表',
 	},
-	/** 对于树形表格，如果想启用展开和折叠功能，传入当前表格的ref即可 */
-	tableRef: {
+	vxeTableRef: {
 		type: Object as PropType<any>,
 	},
 	/** 需要展示的列 */
 	columns: {
-		type: Array as PropType<TableColumnList>,
+		type: Array as PropType<any>,
 		default: () => [],
+	},
+	/** 是否为树列表 */
+	tree: {
+		type: Boolean,
+		default: false,
 	},
 	isExpandAll: {
 		type: Boolean,
@@ -38,20 +41,19 @@ const props = {
 };
 
 export default defineComponent({
-	name: 'PureTableBar',
+	name: 'VxeTableBar',
 	props,
 	emits: ['refresh', 'fullscreen'],
 	setup(props, { emit, slots, attrs }) {
-		const size = ref('default');
+		const size = ref('small');
 		const loading = ref(false);
 		const checkAll = ref(true);
 		const isFullscreen = ref(false);
 		const isIndeterminate = ref(false);
 		const instance = getCurrentInstance()!;
 		const isExpandAll = ref(props.isExpandAll);
-		const filterColumns = cloneDeep(props?.columns).filter(column => (isBoolean(column?.hide) ? !column.hide : !(isFunction(column?.hide) && column?.hide())));
-		let checkColumnList = getKeyList(cloneDeep(props?.columns), 'label');
-		const checkedColumns = ref(getKeyList(cloneDeep(filterColumns), 'label'));
+		let checkColumnList = getKeyList(cloneDeep(props?.columns), 'title');
+		const checkedColumns = ref(getKeyList(cloneDeep(props?.columns), 'title'));
 		const dynamicColumns = ref(cloneDeep(props?.columns));
 
 		const getDropdownItemStyle = computed(() => {
@@ -79,7 +81,8 @@ export default defineComponent({
 
 		function onExpand() {
 			isExpandAll.value = !isExpandAll.value;
-			toggleRowExpansionAll(props.tableRef.data, isExpandAll.value);
+			isExpandAll.value ? props.vxeTableRef.setAllTreeExpand(true) : props.vxeTableRef.clearTreeExpand();
+			props.vxeTableRef.refreshColumn();
 		}
 
 		function onFullscreen() {
@@ -87,19 +90,15 @@ export default defineComponent({
 			emit('fullscreen', isFullscreen.value);
 		}
 
-		function toggleRowExpansionAll(data, isExpansion) {
-			data.forEach(item => {
-				props.tableRef.toggleRowExpansion(item, isExpansion);
-				if (item.children !== undefined && item.children !== null) {
-					toggleRowExpansionAll(item.children, isExpansion);
-				}
-			});
+		function reloadColumn() {
+			const curCheckedColumns = cloneDeep(dynamicColumns.value).filter(item => checkedColumns.value.includes(item.title));
+			props.vxeTableRef.reloadColumn(curCheckedColumns);
 		}
 
 		function handleCheckAllChange(val: boolean) {
 			checkedColumns.value = val ? checkColumnList : [];
 			isIndeterminate.value = false;
-			dynamicColumns.value.map(column => (val ? (column.hide = false) : (column.hide = true)));
+			reloadColumn();
 		}
 
 		function handleCheckedColumnsChange(value: string[]) {
@@ -109,29 +108,31 @@ export default defineComponent({
 			isIndeterminate.value = checkedCount > 0 && checkedCount < checkColumnList.length;
 		}
 
-		function handleCheckColumnListChange(val: boolean, label: string) {
-			dynamicColumns.value.filter(item => item.label === label)[0].hide = !val;
-		}
-
-		function onReset() {
+		async function onReset() {
 			checkAll.value = true;
 			isIndeterminate.value = false;
 			dynamicColumns.value = cloneDeep(props?.columns);
 			checkColumnList = [];
-			checkColumnList = getKeyList(cloneDeep(props?.columns), 'label');
-			checkedColumns.value = getKeyList(cloneDeep(filterColumns), 'label');
+			checkColumnList = getKeyList(cloneDeep(props?.columns), 'title');
+			checkedColumns.value = getKeyList(cloneDeep(props?.columns), 'title');
+			props.vxeTableRef.refreshColumn();
+		}
+
+		function changeSize(curSize: string) {
+			size.value = curSize;
+			props.vxeTableRef.refreshColumn();
 		}
 
 		const dropdown = {
 			dropdown: () => (
 				<el-dropdown-menu class='translation'>
-					<el-dropdown-item style={getDropdownItemStyle.value('large')} onClick={() => (size.value = 'large')}>
+					<el-dropdown-item style={getDropdownItemStyle.value('medium')} onClick={() => changeSize('medium')}>
 						宽松
 					</el-dropdown-item>
-					<el-dropdown-item style={getDropdownItemStyle.value('default')} onClick={() => (size.value = 'default')}>
+					<el-dropdown-item style={getDropdownItemStyle.value('small')} onClick={() => changeSize('small')}>
 						默认
 					</el-dropdown-item>
-					<el-dropdown-item style={getDropdownItemStyle.value('small')} onClick={() => (size.value = 'small')}>
+					<el-dropdown-item style={getDropdownItemStyle.value('mini')} onClick={() => changeSize('mini')}>
 						紧凑
 					</el-dropdown-item>
 				</el-dropdown-menu>
@@ -142,7 +143,7 @@ export default defineComponent({
 		const rowDrop = (event: { preventDefault: () => void }) => {
 			event.preventDefault();
 			nextTick(() => {
-				const wrapper: HTMLElement = (instance?.proxy?.$refs[`GroupRef${unref(props.tableKey)}`] as any).$el.firstElementChild;
+				const wrapper: HTMLElement = (instance?.proxy?.$refs[`VxeGroupRef${unref(props.tableKey)}`] as any).$el.firstElementChild;
 				Sortable.create(wrapper, {
 					animation: 300,
 					handle: '.drag-btn',
@@ -163,22 +164,26 @@ export default defineComponent({
 						}
 						const currentRow = dynamicColumns.value.splice(oldIndex, 1)[0];
 						dynamicColumns.value.splice(newIndex, 0, currentRow);
+						reloadColumn();
 					},
 				});
 			});
 		};
 
-		const isFixedColumn = (label: string) => {
-			return dynamicColumns.value.filter(item => item.label === label)[0].fixed;
+		const isFixedColumn = (title: string) => {
+			return dynamicColumns.value.filter(item => transformI18n(item.title) === transformI18n(title))[0].fixed;
 		};
 
-		const rendTippyProps = (content: string) => ({
-			content,
-			offset: [0, 18],
-			duration: [300, 0],
-			followCursor: true,
-			hideOnClick: 'toggle',
-		});
+		const rendTippyProps = (content: string) => {
+			// https://vue-tippy.netlify.app/props
+			return {
+				content,
+				offset: [0, 18],
+				duration: [300, 0],
+				followCursor: true,
+				hideOnClick: 'toggle',
+			};
+		};
 
 		const reference = {
 			reference: () => <SettingIcon class={['w-[16px]', iconClass.value]} v-tippy={rendTippyProps('列设置')} />,
@@ -187,15 +192,17 @@ export default defineComponent({
 		return () => (
 			<>
 				<div {...attrs} class={['w-[99/100]', 'px-2', 'pb-2', 'bg-bg_color', isFullscreen.value ? ['!w-full', '!h-full', 'z-[2002]', 'fixed', 'inset-0'] : 'mt-2']}>
-					<div class='flex justify-between w-full h-[50px] p-3'>
+					<div class='flex justify-between w-full h-[60px] p-4'>
 						{slots?.title ? slots.title() : <p class='font-bold truncate'>{props.title}</p>}
 						<div class='flex items-center justify-around'>
 							{slots?.buttons ? <div class='flex mr-4'>{slots.buttons()}</div> : null}
-							{props.tableRef?.size ? (
+							{props.tree ? (
 								<>
 									<ExpandIcon
 										class={['w-[16px]', iconClass.value]}
-										style={{ transform: isExpandAll.value ? 'none' : 'rotate(-90deg)' }}
+										style={{
+											transform: isExpandAll.value ? 'none' : 'rotate(-90deg)',
+										}}
 										v-tippy={rendTippyProps(isExpandAll.value ? '折叠' : '展开')}
 										onClick={() => onExpand()}
 									/>
@@ -213,21 +220,21 @@ export default defineComponent({
 								<div class={[topClass.value]}>
 									<el-checkbox class='!-mr-1' label='列展示' v-model={checkAll.value} indeterminate={isIndeterminate.value} onChange={value => handleCheckAllChange(value)} />
 									<el-button type='primary' link onClick={() => onReset()}>
-										{$t('buttons.reset')}
+										重置
 									</el-button>
 								</div>
 
 								<div class='pt-[6px] pl-[11px]'>
 									<el-scrollbar max-height='36vh'>
-										<el-checkbox-group ref={`GroupRef${unref(props.tableKey)}`} modelValue={checkedColumns.value} onChange={value => handleCheckedColumnsChange(value)}>
+										<el-checkbox-group ref={`VxeGroupRef${unref(props.tableKey)}`} modelValue={checkedColumns.value} onChange={value => handleCheckedColumnsChange(value)}>
 											<el-space direction='vertical' alignment='flex-start' size={0}>
 												{checkColumnList.map((item, index) => {
 													return (
 														<div class='flex items-center'>
 															<DragIcon class={['drag-btn w-[16px] mr-2', isFixedColumn(item) ? '!cursor-no-drop' : '!cursor-grab']} onMouseenter={(event: { preventDefault: () => void }) => rowDrop(event)} />
-															<el-checkbox key={index} label={item} value={item} onChange={value => handleCheckColumnListChange(value, item)}>
-																<span title={item} class='inline-block w-[120px] truncate hover:text-text_color_primary'>
-																	{item}
+															<el-checkbox key={index} label={item} value={item} onChange={reloadColumn}>
+																<span title={transformI18n(item)} class='inline-block w-[120px] truncate hover:text-text_color_primary'>
+																	{transformI18n(item)}
 																</span>
 															</el-checkbox>
 														</div>
@@ -240,7 +247,12 @@ export default defineComponent({
 							</el-popover>
 							<el-divider direction='vertical' />
 
-							<iconifyIconOffline class={['w-[16px]', iconClass.value]} icon={isFullscreen.value ? ExitFullscreen : Fullscreen} v-tippy={isFullscreen.value ? '退出全屏' : '全屏'} onClick={onFullscreen} />
+							<iconifyIconOffline
+								class={['w-[16px]', iconClass.value]}
+								icon={isFullscreen.value ? ExitFullscreen : Fullscreen}
+								v-tippy={isFullscreen.value ? '退出全屏' : '全屏'}
+								onClick={() => onFullscreen()}
+							/>
 						</div>
 					</div>
 					{slots.default({

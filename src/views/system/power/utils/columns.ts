@@ -5,7 +5,7 @@ import type { FormRules } from 'element-plus';
 // 表格列
 export const columns: TableColumnList = [
 	{ type: 'selection', align: 'left' },
-	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
+	{ type: 'index', index: (index: number) => index + 1, label: $t('index'), width: 60 },
 	// 权限编码
 	{ label: $t('power_powerCode'), prop: 'powerCode' },
 	// 权限名称

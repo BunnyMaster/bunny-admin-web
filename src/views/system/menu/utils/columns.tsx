@@ -13,11 +13,11 @@ import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 const getMenuType = (type: number, text: boolean = false): any => {
 	switch (type) {
 		case 0:
-			return text ? '菜单' : 'primary';
+			return text ? $t('menu') : 'primary';
 		case 1:
 			return text ? 'iframe' : 'warning';
 		case 2:
-			return text ? '外链' : 'danger';
+			return text ? $t('externalLink') : 'danger';
 	}
 };
 
@@ -36,7 +36,7 @@ export const formatHigherMenuOptions = (treeList: any) => {
 export const columns: TableColumnList = [
 	{ type: 'selection', align: 'left' },
 	{
-		label: '菜单名称',
+		label: $t('menuName'),
 		prop: 'title',
 		align: 'left',
 		cellRenderer: ({ row }) => (
@@ -51,7 +51,7 @@ export const columns: TableColumnList = [
 		),
 	},
 	{
-		label: '菜单类型',
+		label: $t('menuType'),
 		prop: 'menuType',
 		width: 100,
 		cellRenderer: ({ row, props }) => (
@@ -60,14 +60,14 @@ export const columns: TableColumnList = [
 			</ElTag>
 		),
 	},
-	{ label: '路由路径', prop: 'path' },
+	{ label: $t('routerPath'), prop: 'path' },
 	{
-		label: '组件路径',
+		label: $t('componentPath'),
 		prop: 'component',
 		formatter: ({ path, component }) => (isAllEmpty(component) ? path : component),
 	},
-	{ label: '排序', prop: 'rank', width: 80, slot: 'rank' },
-	{ label: '隐藏', prop: 'visible', slot: 'visible', width: 100 },
+	{ label: $t('sort'), prop: 'rank', width: 80, slot: 'rank' },
+	{ label: $t('visible'), prop: 'visible', slot: 'visible', width: 100 },
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true },
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 130 },
@@ -77,8 +77,7 @@ export const columns: TableColumnList = [
 
 /** 自定义表单规则校验 */
 export const formRules = reactive<FormRules>({
-	title: [{ required: true, message: '菜单名称为必填项', trigger: 'blur' }],
-	name: [{ required: true, message: '路由名称为必填项', trigger: 'blur' }],
-	path: [{ required: true, message: '路由路径为必填项且为"/"开头', trigger: ['blur', 'change'], pattern: /^\/.*/ }],
-	auths: [{ required: true, message: '权限标识为必填项', trigger: 'blur' }],
+	title: [{ required: true, message: $t('menuNameTip'), trigger: 'blur' }],
+	name: [{ required: true, message: $t('routerNameTip'), trigger: 'blur' }],
+	path: [{ required: true, message: $t('routerPathTip'), trigger: ['blur', 'change'], pattern: /^\/.*/ }],
 });

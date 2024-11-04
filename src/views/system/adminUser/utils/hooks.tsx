@@ -256,7 +256,7 @@ export const onUploadAvatar = (row: any) => {
  */
 export const onResetPassword = (row: any) => {
 	addDialog({
-		title: `重置 ${row.username} 用户的密码`,
+		title: `${$t('buttons.reset')} ${row.username} ${$t('userPassword')}`,
 		width: '30%',
 		draggable: true,
 		closeOnClickModal: false,
@@ -287,7 +287,7 @@ export const onResetPassword = (row: any) => {
  */
 export const onAssignRolesToUser = (row: any) => {
 	addDialog({
-		title: `为 ${row.username} 分配角色`,
+		title: `${$t('for')} ${row.username} ${$t('assign_roles')}`,
 		width: '45%',
 		draggable: true,
 		closeOnClickModal: false,

@@ -30,7 +30,7 @@ export const onSearch = async () => {
 /** 添加菜单 */
 export function onAdd(parentId: any = 0) {
 	addDialog({
-		title: `新增菜单`,
+		title: $t('addNew') + $t('menu'),
 		props: {
 			formInline: {
 				menuType: 0,
@@ -75,7 +75,7 @@ export function onAdd(parentId: any = 0) {
  */
 export const onUpdate = (row?: FormItemProps) => {
 	addDialog({
-		title: `更新菜单`,
+		title: $t('update') + $t('menu'),
 		props: {
 			formInline: {
 				menuType: row?.menuType,
@@ -209,7 +209,7 @@ export const onChangeMenuRank = async (row: any) => {
  */
 export const assignRolesToRouter = (row: any) => {
 	addDialog({
-		title: `为 【${$t(row.title)}】 分配角色`,
+		title: `${$t('for')} 【${$t(row.title)}】 ${$t('assign_roles')}`,
 		width: '45%',
 		draggable: true,
 		closeOnClickModal: false,

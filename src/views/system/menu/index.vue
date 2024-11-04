@@ -28,6 +28,8 @@ import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import Upload from '@iconify-icons/ri/upload-line';
 import { FormInstance } from 'element-plus';
 import { usePublicHooks } from '@/views/hooks';
+import { auth } from '@/views/system/menu/utils/auth';
+import { hasAuth } from '@/router/utils';
 
 const formRef = ref();
 const routerStore = userMenuStore();
@@ -59,25 +61,34 @@ onMounted(() => {
 
 <template>
 	<div class="main">
-		<el-form ref="formRef" :inline="true" :model="routerStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-			<el-form-item label="菜单名称" prop="title">
-				<el-input v-model="routerStore.form.title" class="!w-[180px]" clearable placeholder="输入菜单名称" />
-			</el-form-item>
-			<el-form-item>
-				<el-button :icon="useRenderIcon('ri:search-line')" :loading="routerStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
-				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
-			</el-form-item>
-		</el-form>
+		<Auth :value="auth.search">
+			<el-form ref="formRef" :inline="true" :model="routerStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+				<el-form-item label="菜单名称" prop="title">
+					<el-input v-model="routerStore.form.title" :placeholder="$t('input')" class="!w-[180px]" clearable />
+				</el-form-item>
+				<el-form-item>
+					<el-button :icon="useRenderIcon('ri:search-line')" :loading="routerStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
+					<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
+				</el-form-item>
+			</el-form>
+		</Auth>
+
 		<PureTableBar :columns="columns" :isExpandAll="false" :tableRef="tableRef?.getTableRef()" title="菜单管理" @fullscreen="tableRef?.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<!-- 添加菜单 -->
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()"> {{ $t('addNew') }}</el-button>
+				<el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()">
+					{{ $t('addNew') }}
+				</el-button>
 
-				<!-- 批量分配角色 -->
-				<el-button :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('iwwa:assign')" type="warning" @click="assignBatchRolesToRouter()"> {{ $t('assignBatchRolesToRouter') }} </el-button>
+				<!-- 批量为菜单添加角色 -->
+				<el-button v-if="hasAuth(auth.assignAddBatchRolesToRouter)" :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('iwwa:assign')" type="warning" @click="assignBatchRolesToRouter()">
+					{{ $t('assignBatchRolesToRouter') }}
+				</el-button>
 
 				<!-- 清除选中所以角色 -->
-				<el-button :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('ic:baseline-clear')" type="danger" @click="clearAllRolesSelect()"> {{ $t('clearAllRolesSelect') }} </el-button>
+				<el-button v-if="hasAuth(auth.clearAllRolesSelect)" :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('ic:baseline-clear')" type="danger" @click="clearAllRolesSelect()">
+					{{ $t('clearAllRolesSelect') }}
+				</el-button>
 			</template>
 
 			<template v-slot="{ size, dynamicColumns }">
@@ -130,13 +141,15 @@ onMounted(() => {
 
 					<template #operation="{ row }">
 						<!-- 修改 -->
-						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
+						<el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
 
 						<!-- 新增 -->
-						<el-button v-show="row.menuType !== 3" :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)"> {{ $t('addNew') }} </el-button>
+						<Auth :value="auth.add">
+							<el-button v-show="row.menuType !== 3" :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)"> {{ $t('addNew') }} </el-button>
+						</Auth>
 
 						<!-- 删除操作 -->
-						<el-popconfirm :title="`${$t('delete')} ${$t(row.title)}?`" @confirm="onDelete(row)">
+						<el-popconfirm v-if="hasAuth(auth.deleted)" :title="`${$t('delete')} ${$t(row.title)}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}
@@ -145,9 +158,11 @@ onMounted(() => {
 						</el-popconfirm>
 
 						<!-- 分配角色 -->
-						<el-button v-show="row.menuType !== 3" :icon="useRenderIcon(Upload)" :size="size" class="reset-margin" link type="primary" @click="assignRolesToRouter(row)">
-							{{ $t('assign_roles') }}
-						</el-button>
+						<Auth :value="auth.assignRolesToRouter">
+							<el-button v-show="row.menuType !== 3" :icon="useRenderIcon(Upload)" :size="size" class="reset-margin" link type="primary" @click="assignRolesToRouter(row)">
+								{{ $t('assign_roles') }}
+							</el-button>
+						</Auth>
 					</template>
 				</pure-table>
 			</template>

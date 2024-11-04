@@ -5,7 +5,7 @@ import { h, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/files/utils/types';
 import { $t } from '@/plugins/i18n';
-import { downloadFilesByFileId, downloadFilesByFilepath } from '@/api/v1/files';
+import { downloadFilesByFileId } from '@/api/v1/files';
 import { download } from '@/utils/sso';
 import type { UploadFiles } from 'element-plus';
 import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
@@ -154,7 +154,7 @@ export const onDeleteBatch = async () => {
  * @param row
  */
 export const onDownload = async (row: any) => {
-	const blob = await downloadFilesByFilepath({ filepath: row.filepath });
+	const blob = await downloadFilesByFileId({ id: row.id });
 
 	download(blob, row.filename);
 };

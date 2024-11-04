@@ -15,6 +15,8 @@ import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { deviceDetection } from '@pureadmin/utils';
 import Menu from '@iconify-icons/ep/menu';
 import AssignPowersToRole from '@/views/system/role/assign-powers-to-role.vue';
+import { auth } from '@/views/system/role/utils/auth';
+import { hasAuth } from '@/router/utils';
 
 const roleStore = useRoleStore();
 
@@ -60,18 +62,20 @@ onMounted(() => {
 
 <template>
 	<div class="main">
-		<el-form ref="formRef" :inline="true" :model="roleStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-			<el-form-item :label="$t('role_roleCode')" prop="roleCode">
-				<el-input v-model="roleStore.form.roleCode" :placeholder="`${$t('input')}${$t('role_roleCode')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-			<el-form-item :label="$t('role_description')" prop="description">
-				<el-input v-model="roleStore.form.description" :placeholder="`${$t('input')}${$t('role_description')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-			<el-form-item>
-				<el-button :icon="useRenderIcon('ri:search-line')" :loading="roleStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
-				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
-			</el-form-item>
-		</el-form>
+		<Auth :value="auth.search">
+			<el-form ref="formRef" :inline="true" :model="roleStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+				<el-form-item :label="$t('role_roleCode')" prop="roleCode">
+					<el-input v-model="roleStore.form.roleCode" :placeholder="`${$t('input')}${$t('role_roleCode')}`" class="!w-[180px]" clearable />
+				</el-form-item>
+				<el-form-item :label="$t('role_description')" prop="description">
+					<el-input v-model="roleStore.form.description" :placeholder="`${$t('input')}${$t('role_description')}`" class="!w-[180px]" clearable />
+				</el-form-item>
+				<el-form-item>
+					<el-button :icon="useRenderIcon('ri:search-line')" :loading="roleStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
+					<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
+				</el-form-item>
+			</el-form>
+		</Auth>
 
 		<div ref="contentRef" :class="['flex', deviceDetection() ? 'flex-wrap' : '']">
 			<PureTableBar
@@ -83,10 +87,12 @@ onMounted(() => {
 				@refresh="onSearch"
 			>
 				<template #buttons>
-					<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('addNew') }}</el-button>
+					<el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
+						{{ $t('addNew') }}
+					</el-button>
 
 					<!-- 批量删除按钮 -->
-					<el-button v-show="deleteIds.length > 0" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+					<el-button v-if="hasAuth(auth.deleted)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
 						{{ $t('delete_batches') }}
 					</el-button>
 				</template>
@@ -125,10 +131,10 @@ onMounted(() => {
 						</template>
 						<template #operation="{ row }">
 							<!-- 修改 -->
-							<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
+							<el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
 
 							<!-- 删除 -->
-							<el-popconfirm :title="`${$t('delete')}${row.roleCode}?`" @confirm="onDelete(row)">
+							<el-popconfirm v-if="hasAuth(auth.deleted)" :title="`${$t('delete')}${row.roleCode}?`" @confirm="onDelete(row)">
 								<template #reference>
 									<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 										{{ $t('delete') }}
@@ -136,7 +142,9 @@ onMounted(() => {
 								</template>
 							</el-popconfirm>
 
-							<el-button :icon="useRenderIcon(Menu)" :size="size" class="reset-margin" link type="primary" @click="onMenuPowerClick(row)"> {{ $t('power_setting') }} </el-button>
+							<el-button v-if="hasAuth(auth.assignPowersToRole)" :icon="useRenderIcon(Menu)" :size="size" class="reset-margin" link type="primary" @click="onMenuPowerClick(row)">
+								{{ $t('power_setting') }}
+							</el-button>
 						</template>
 					</pure-table>
 				</template>

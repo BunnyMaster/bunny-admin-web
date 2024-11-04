@@ -1,6 +1,7 @@
 // 多组件库的国际化和本地项目国际化兼容
 import { createI18n } from 'vue-i18n';
-import type { App } from 'vue';
+import type { App, WritableComputedRef } from 'vue';
+import { isObject } from '@pureadmin/utils';
 
 // ? 从本地存储中获取数据
 const languageData = localStorage.getItem('i18nStore');
@@ -17,7 +18,7 @@ export const i18n = createI18n({
 	messages: languageData ? JSON.parse(languageData).i18n : {},
 });
 
-/*const siphonI18n = (function () {
+const siphonI18n = (function () {
 	// 仅初始化一次国际化配置
 	let cache = Object.fromEntries(
 		Object.entries(import.meta.glob('../../locales/!*.y(a)?ml', { eager: true })).map(([key, value]: any) => {
@@ -30,7 +31,7 @@ export const i18n = createI18n({
 	};
 })();
 
-/!** 获取对象中所有嵌套对象的key键，并将它们用点号分割组成字符串 *!/
+/** 获取对象中所有嵌套对象的key键，并将它们用点号分割组成字符串 */
 function getObjectKeys(obj) {
 	const stack = [];
 	const keys: Set<string> = new Set();
@@ -54,7 +55,7 @@ function getObjectKeys(obj) {
 	return keys;
 }
 
-/!** 将展开的key缓存 *!/
+/** 将展开的key缓存 */
 const keysCache: Map<string, Set<string>> = new Map();
 const flatI18n = (prefix = 'zh') => {
 	let cache = keysCache.get(prefix);
@@ -65,11 +66,11 @@ const flatI18n = (prefix = 'zh') => {
 	return cache;
 };
 
-/!**
+/**
  * 国际化转换工具函数（自动读取根目录locales文件夹下文件进行国际化匹配）
  * @param message message
  * @returns 转化后的message
- *!/
+ */
 export function transformI18n(message: any = '') {
 	if (!message) {
 		return '';
@@ -91,7 +92,7 @@ export function transformI18n(message: any = '') {
 	} else {
 		return message;
 	}
-}*/
+}
 
 export const $t: any = (i18n.global as any).t as any;
 

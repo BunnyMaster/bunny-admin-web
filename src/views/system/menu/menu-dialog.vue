@@ -6,6 +6,7 @@ import IconSelect from '@/components/SelectIcon/Select.vue';
 import Segmented from '@/components/Segmented';
 import { menuTypeOptions } from '@/enums';
 import { FormProps } from '@/views/system/menu/utils/types';
+import { $t } from '@/plugins/i18n';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({}),
@@ -20,13 +21,13 @@ defineExpose({ menuFormRef: ruleFormRef });
 	<el-form ref="ruleFormRef" :model="newFormInline" :rules="formRules" label-width="82px">
 		<el-row :gutter="30">
 			<re-col>
-				<el-form-item label="菜单类型">
+				<el-form-item :label="$t('menuType')">
 					<Segmented v-model="newFormInline.menuType" :options="menuTypeOptions" />
 				</el-form-item>
 			</re-col>
 
 			<re-col>
-				<el-form-item label="上级菜单">
+				<el-form-item :label="$t('previousMenu')">
 					<el-cascader
 						v-model="newFormInline.parentId"
 						:options="newFormInline.higherMenuOptions"
@@ -45,29 +46,29 @@ defineExpose({ menuFormRef: ruleFormRef });
 			</re-col>
 
 			<re-col :sm="24" :value="12" :xs="24">
-				<el-form-item label="菜单名称" prop="title">
+				<el-form-item :label="$t('menuName')" prop="title">
 					<el-input v-model="newFormInline.title" clearable placeholder="请输入菜单名称" />
 				</el-form-item>
 			</re-col>
 			<re-col :sm="24" :value="12" :xs="24">
-				<el-form-item label="路由名称" prop="name">
+				<el-form-item :label="$t('routerName')" prop="name">
 					<el-input v-model="newFormInline.name" clearable placeholder="请输入路由名称" />
 				</el-form-item>
 			</re-col>
 
 			<re-col :sm="24" :value="12" :xs="24">
-				<el-form-item label="路由路径" prop="path">
+				<el-form-item :label="$t('routerPath')" prop="path">
 					<el-input v-model="newFormInline.path" clearable placeholder="请输入路由路径" />
 				</el-form-item>
 			</re-col>
 			<re-col v-show="newFormInline.menuType === 0" :sm="24" :value="12" :xs="24">
-				<el-form-item label="组件路径">
+				<el-form-item :label="$t('componentPath')">
 					<el-input v-model="newFormInline.component" clearable placeholder="请输入组件路径" />
 				</el-form-item>
 			</re-col>
 
 			<re-col :sm="24" :value="12" :xs="24">
-				<el-form-item v-model="newFormInline.rank" label="菜单排序" prop="rank">
+				<el-form-item v-model="newFormInline.rank" :label="$t('sort')" prop="rank">
 					<el-input-number v-model="newFormInline.rank" :max="9999" :min="1" class="!w-full" controls-position="right" />
 				</el-form-item>
 			</re-col>
@@ -86,7 +87,9 @@ defineExpose({ menuFormRef: ruleFormRef });
 
 			<re-col :sm="24" :value="12" :xs="24">
 				<el-form-item label="是否显示">
-					<el-switch v-model="newFormInline.visible" active-text="开启" inactive-text="隐藏" inline-prompt style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
+					<el-switch v-model="newFormInline.visible" :inactive-text="$t('visible')" active-text="开启" inline-prompt style="
+
+--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
 				</el-form-item>
 			</re-col>
 		</el-row>

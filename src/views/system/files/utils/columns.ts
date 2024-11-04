@@ -4,7 +4,7 @@ import { $t } from '@/plugins/i18n';
 // 表格列
 export const columns: TableColumnList = [
 	{ type: 'selection', align: 'left' },
-	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
+	{ type: 'index', index: (index: number) => index + 1, label: $t('index'), width: 60 },
 	// 文件的名称
 	{ label: $t('files_filename'), prop: 'filename', width: 400 },
 	// 文件在服务器上的存储路径
