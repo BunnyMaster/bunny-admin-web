@@ -13,40 +13,31 @@ import { $t } from '@/plugins/i18n';
 import { useSchedulersGroupStore } from '@/store/scheduler/schedulersGroup';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { FormInstance } from 'element-plus';
+import { auth } from '@/views/scheduler/schedulersGroup/utils/auth';
+import { hasAuth } from '@/router/utils';
 
 const tableRef = ref();
 const formRef = ref();
 const schedulersGroupStore = useSchedulersGroupStore();
 
-/**
- * * 当前页改变时
- */
+/** 当前页改变时 */
 const onCurrentPageChange = async (value: number) => {
 	schedulersGroupStore.pagination.currentPage = value;
 	await onSearch();
 };
 
-/**
- * * 当分页发生变化
- * @param value
- */
+/** 当分页发生变化 */
 const onPageSizeChange = async (value: number) => {
 	schedulersGroupStore.pagination.pageSize = value;
 	await onSearch();
 };
 
-/**
- * * 选择多行
- * @param rows
- */
+/** 选择多行 */
 const onSelectionChange = (rows: Array<any>) => {
 	deleteIds.value = rows.map((row: any) => row.id);
 };
 
-/**
- * 重置表单
- * @param formEl
- */
+/** 重置表单 */
 const resetForm = async (formEl: FormInstance | undefined) => {
 	if (!formEl) return;
 	formEl.resetFields();
@@ -60,25 +51,29 @@ onMounted(() => {
 
 <template>
 	<div class="main">
-		<el-form ref="formRef" :inline="true" :model="schedulersGroupStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-			<el-form-item :label="$t('schedulersGroup_groupName')" prop="groupName">
-				<el-input v-model="schedulersGroupStore.form.groupName" :placeholder="`${$t('input')}${$t('schedulersGroup_groupName')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-			<el-form-item :label="$t('schedulersGroup_description')" prop="description">
-				<el-input v-model="schedulersGroupStore.form.description" :placeholder="`${$t('input')}${$t('schedulersGroup_description')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-			<el-form-item>
-				<el-button :icon="useRenderIcon('ri:search-line')" :loading="schedulersGroupStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
-				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
-			</el-form-item>
-		</el-form>
+		<Auth :value="auth.search">
+			<el-form ref="formRef" :inline="true" :model="schedulersGroupStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+				<el-form-item :label="$t('schedulersGroup_groupName')" prop="groupName">
+					<el-input v-model="schedulersGroupStore.form.groupName" :placeholder="`${$t('input')}${$t('schedulersGroup_groupName')}`" class="!w-[180px]" clearable />
+				</el-form-item>
+				<el-form-item :label="$t('schedulersGroup_description')" prop="description">
+					<el-input v-model="schedulersGroupStore.form.description" :placeholder="`${$t('input')}${$t('schedulersGroup_description')}`" class="!w-[180px]" clearable />
+				</el-form-item>
+				<el-form-item>
+					<el-button :icon="useRenderIcon('ri:search-line')" :loading="schedulersGroupStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
+					<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
+				</el-form-item>
+			</el-form>
+		</Auth>
 
 		<PureTableBar :columns="columns" :title="$t('schedulersGroup')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('addNew') }}</el-button>
+				<el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
+					{{ $t('addNew') }}
+				</el-button>
 
 				<!-- 批量删除按钮 -->
-				<el-button :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+				<el-button v-if="hasAuth(auth.deleted)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
 					{{ $t('deleteBatches') }}
 				</el-button>
 			</template>
@@ -117,9 +112,8 @@ onMounted(() => {
 					</template>
 
 					<template #operation="{ row }">
-						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
-						<el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd"> {{ $t('addNew') }} </el-button>
-						<el-popconfirm :title="`${$t('delete')}${row.groupName}?`" @confirm="onDelete(row)">
+						<el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
+						<el-popconfirm v-if="hasAuth(auth.deleted)" :title="`${$t('delete')}${row.groupName}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}

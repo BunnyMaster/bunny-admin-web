@@ -12,40 +12,31 @@ import { $t } from '@/plugins/i18n';
 import { useUserLoginLogStore } from '@/store/monitor/userLoginLog';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { FormInstance } from 'element-plus';
+import { auth } from '@/views/monitor/userLoginLog/utils/auth';
+import { hasAuth } from '@/router/utils';
 
 const tableRef = ref();
 const formRef = ref();
 const userLoginLogStore = useUserLoginLogStore();
 
-/**
- * * 当前页改变时
- */
+/** 当前页改变时 */
 const onCurrentPageChange = async (value: number) => {
 	userLoginLogStore.pagination.currentPage = value;
 	await onSearch();
 };
 
-/**
- * * 当分页发生变化
- * @param value
- */
+/** 当分页发生变化 */
 const onPageSizeChange = async (value: number) => {
 	userLoginLogStore.pagination.pageSize = value;
 	await onSearch();
 };
 
-/**
- * * 选择多行
- * @param rows
- */
+/** 选择多行 */
 const onSelectionChange = (rows: Array<any>) => {
 	deleteIds.value = rows.map((row: any) => row.id);
 };
 
-/**
- * 重置表单
- * @param formEl
- */
+/** 重置表单 */
 const resetForm = async (formEl: FormInstance | undefined) => {
 	if (!formEl) return;
 	formEl.resetFields();
@@ -90,11 +81,12 @@ onMounted(() => {
 				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
 			</el-form-item>
 		</el-form>
+		<Auth :value="auth.search" />
 
 		<PureTableBar :columns="columns" :title="$t('userLoginLog')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<!-- 批量删除按钮 -->
-				<el-button :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+				<el-button v-if="hasAuth(auth.deleted)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
 					{{ $t('deleteBatches') }}
 				</el-button>
 			</template>
@@ -133,8 +125,8 @@ onMounted(() => {
 					</template>
 
 					<template #operation="{ row }">
-						<el-button :icon="useRenderIcon(View)" :size="size" class="reset-margin" link type="primary" @click="onView(row)"> {{ $t('view') }} </el-button>
-						<el-popconfirm :title="`${$t('delete')}${row.username}?`" @confirm="onDelete(row)">
+						<el-button v-if="hasAuth(auth.search)" :icon="useRenderIcon(View)" :size="size" class="reset-margin" link type="primary" @click="onView(row)"> {{ $t('view') }} </el-button>
+						<el-popconfirm v-if="hasAuth(auth.deleted)" :title="`${$t('delete')}${row.username}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}
