@@ -7,8 +7,6 @@ export const auth = {
 	search: ['files::getFilesList'],
 	// 删除操作
 	deleted: ['files::deleteFiles'],
-	// 上传
-	upload: ['files::upload'],
 	// 下载文件
 	downloadFilesByFileId: ['files::downloadFilesByFileId'],
 };

@@ -12,32 +12,26 @@ import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useEmailTemplateStore } from '@/store/configuration/emailTemplate.ts';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { auth } from '@/views/configuration/emailTemplate/utils/auth';
+import { hasAuth } from '@/router/utils';
 
 const tableRef = ref();
 const formRef = ref();
 const emailTemplateStore = useEmailTemplateStore();
 
-/**
- * * 当前页改变时
- */
+/** 当前页改变时 */
 const onCurrentPageChange = async (value: number) => {
 	emailTemplateStore.pagination.currentPage = value;
 	await onSearch();
 };
 
-/**
- * * 当分页发生变化
- * @param value
- */
+/** 当分页发生变化 */
 const onPageSizeChange = async (value: number) => {
 	emailTemplateStore.pagination.pageSize = value;
 	await onSearch();
 };
 
-/**
- * 重置表单
- * @param formEl
- */
+/** 重置表单 */
 const resetForm = async formEl => {
 	if (!formEl) return;
 	formEl.resetFields();
@@ -57,31 +51,35 @@ onMounted(() => {
 
 <template>
 	<div class="main">
-		<el-form ref="formRef" :inline="true" :model="emailTemplateStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-			<el-form-item :label="$t('emailTemplate_templateName')" prop="templateName">
-				<el-input v-model="emailTemplateStore.form.templateName" :placeholder="`${$t('input')}${$t('emailTemplate_templateName')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-			<el-form-item :label="$t('emailTemplate_subject')" prop="subject">
-				<el-input v-model="emailTemplateStore.form.subject" :placeholder="`${$t('input')}${$t('emailTemplate_subject')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-			<el-form-item :label="$t('emailTemplate_body')" prop="body">
-				<el-input v-model="emailTemplateStore.form.body" :placeholder="`${$t('input')}${$t('emailTemplate_body')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-			<el-form-item :label="$t('emailTemplate_type')" prop="type">
-				<el-input v-model="emailTemplateStore.form.type" :placeholder="`${$t('input')}${$t('emailTemplate_type')}`" class="!w-[180px]" clearable />
-			</el-form-item>
-			<el-form-item>
-				<el-button :icon="useRenderIcon('ri:search-line')" :loading="emailTemplateStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
-				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
-			</el-form-item>
-		</el-form>
+		<Auth :value="auth.search">
+			<el-form ref="formRef" :inline="true" :model="emailTemplateStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+				<el-form-item :label="$t('emailTemplate_templateName')" prop="templateName">
+					<el-input v-model="emailTemplateStore.form.templateName" :placeholder="`${$t('input')}${$t('emailTemplate_templateName')}`" class="!w-[180px]" clearable />
+				</el-form-item>
+				<el-form-item :label="$t('emailTemplate_subject')" prop="subject">
+					<el-input v-model="emailTemplateStore.form.subject" :placeholder="`${$t('input')}${$t('emailTemplate_subject')}`" class="!w-[180px]" clearable />
+				</el-form-item>
+				<el-form-item :label="$t('emailTemplate_body')" prop="body">
+					<el-input v-model="emailTemplateStore.form.body" :placeholder="`${$t('input')}${$t('emailTemplate_body')}`" class="!w-[180px]" clearable />
+				</el-form-item>
+				<el-form-item :label="$t('emailTemplate_type')" prop="type">
+					<el-input v-model="emailTemplateStore.form.type" :placeholder="`${$t('input')}${$t('emailTemplate_type')}`" class="!w-[180px]" clearable />
+				</el-form-item>
+				<el-form-item>
+					<el-button :icon="useRenderIcon('ri:search-line')" :loading="emailTemplateStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
+					<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
+				</el-form-item>
+			</el-form>
+		</Auth>
 
 		<PureTableBar :columns="columns" :title="$t('emailTemplate')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('addNew') }}</el-button>
+				<el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
+					{{ $t('addNew') }}
+				</el-button>
 
 				<!-- 批量删除按钮 -->
-				<el-button :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+				<el-button v-if="hasAuth(auth.deleted)" :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
 					{{ $t('deleteBatches') }}
 				</el-button>
 			</template>
@@ -124,8 +122,8 @@ onMounted(() => {
 					</template>
 
 					<template #operation="{ row }">
-						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
-						<el-popconfirm :title="`${$t('delete')} ${row.templateName}?`" @confirm="onDelete(row)">
+						<el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
+						<el-popconfirm v-if="hasAuth(auth.deleted)" :title="`${$t('delete')} ${row.templateName}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}

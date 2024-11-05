@@ -7,6 +7,8 @@ import { form, onSearch, submitForm } from '@/views/configuration/webConifg/util
 import { rules } from '@/views/configuration/webConifg/utils/columns';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
 import { usePublicHooks } from '@/views/hooks';
+import { auth } from '@/views/configuration/webConifg/utils/auth';
+import { hasAuth } from '@/router/utils';
 
 const ruleFormRef = ref<FormInstance>();
 const i18nTypeStore = userI18nTypeStore();
@@ -216,7 +218,7 @@ onMounted(() => {
 			</re-col>
 
 			<!-- 提交内容 -->
-			<re-col :sm="24" :value="12" :xs="24">
+			<re-col v-if="hasAuth(auth.update)" :sm="24" :value="12" :xs="24">
 				<el-form-item>
 					<el-button type="primary" @click="submitForm(ruleFormRef)"> {{ $t('modifyingConfiguration') }}</el-button>
 				</el-form-item>
@@ -224,5 +226,3 @@ onMounted(() => {
 		</el-row>
 	</el-form>
 </template>
-
-<style lang="scss" scoped></style>

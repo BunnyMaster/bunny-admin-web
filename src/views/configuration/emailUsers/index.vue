@@ -14,6 +14,8 @@ import { useEmailUsersStore } from '@/store/configuration/emailUsers';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { usePublicHooks } from '@/views/hooks';
 import { FormInstance } from 'element-plus';
+import { auth } from '@/views/configuration/emailUsers/utils/auth';
+import { hasAuth } from '@/router/utils';
 
 const tableRef = ref();
 const formRef = ref();
@@ -21,37 +23,26 @@ const emailUsersStore = useEmailUsersStore();
 // 用户是否停用样式
 const { switchStyle } = usePublicHooks();
 
-/**
- * * 当前页改变时
- */
+/** 当前页改变时 */
 const onCurrentPageChange = async (value: number) => {
 	emailUsersStore.pagination.currentPage = value;
 	await onSearch();
 };
 
-/**
- * * 当分页发生变化
- * @param value
- */
+/** 当分页发生变化 */
 const onPageSizeChange = async (value: number) => {
 	emailUsersStore.pagination.pageSize = value;
 	await onSearch();
 };
 
-/**
- * 重置表单
- * @param formEl
- */
+/** 重置表单 */
 const resetForm = async (formEl: FormInstance | undefined) => {
 	if (!formEl) return;
 	formEl.resetFields();
 	await onSearch();
 };
 
-/**
- * * 选择多行
- * @param rows
- */
+/** 选择多行 */
 const onSelectionChange = (rows: Array<any>) => {
 	deleteIds.value = rows.map((row: any) => row.id);
 };
@@ -63,39 +54,43 @@ onMounted(() => {
 
 <template>
 	<div class="main">
-		<el-form ref="formRef" :inline="true" :model="emailUsersStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-			<!-- 邮箱-->
-			<el-form-item :label="$t('emailUsers_email')" prop="email">
-				<el-input v-model="emailUsersStore.form.email" :placeholder="`${$t('input')}${$t('emailUsers_email')}`" class="!w-[180px]" clearable />
-			</el-form-item>
+		<Auth :value="auth.search">
+			<el-form ref="formRef" :inline="true" :model="emailUsersStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+				<!-- 邮箱-->
+				<el-form-item :label="$t('emailUsers_email')" prop="email">
+					<el-input v-model="emailUsersStore.form.email" :placeholder="`${$t('input')}${$t('emailUsers_email')}`" class="!w-[180px]" clearable />
+				</el-form-item>
 
-			<!-- host地址-->
-			<el-form-item :label="$t('emailUsers_host')" prop="host">
-				<el-input v-model="emailUsersStore.form.host" :placeholder="`${$t('input')}${$t('emailUsers_host')}`" class="!w-[180px]" clearable />
-			</el-form-item>
+				<!-- host地址-->
+				<el-form-item :label="$t('emailUsers_host')" prop="host">
+					<el-input v-model="emailUsersStore.form.host" :placeholder="`${$t('input')}${$t('emailUsers_host')}`" class="!w-[180px]" clearable />
+				</el-form-item>
 
-			<!-- 端口号-->
-			<el-form-item :label="$t('emailUsers_port')" prop="port">
-				<el-input v-model="emailUsersStore.form.port" :placeholder="`${$t('input')}${$t('emailUsers_port')}`" class="!w-[180px]" clearable max="99999" min="0" type="number" />
-			</el-form-item>
+				<!-- 端口号-->
+				<el-form-item :label="$t('emailUsers_port')" prop="port">
+					<el-input v-model="emailUsersStore.form.port" :placeholder="`${$t('input')}${$t('emailUsers_port')}`" class="!w-[180px]" clearable max="99999" min="0" type="number" />
+				</el-form-item>
 
-			<!-- 协议 -->
-			<el-form-item :label="$t('emailUsers_smtpAgreement')" prop="smtpAgreement">
-				<el-input v-model="emailUsersStore.form.smtpAgreement" :placeholder="`${$t('input')}${$t('emailUsers_smtpAgreement')}`" class="!w-[180px]" clearable />
-			</el-form-item>
+				<!-- 协议 -->
+				<el-form-item :label="$t('emailUsers_smtpAgreement')" prop="smtpAgreement">
+					<el-input v-model="emailUsersStore.form.smtpAgreement" :placeholder="`${$t('input')}${$t('emailUsers_smtpAgreement')}`" class="!w-[180px]" clearable />
+				</el-form-item>
 
-			<el-form-item>
-				<el-button :icon="useRenderIcon('ri:search-line')" :loading="emailUsersStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
-				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
-			</el-form-item>
-		</el-form>
+				<el-form-item>
+					<el-button :icon="useRenderIcon('ri:search-line')" :loading="emailUsersStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
+					<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
+				</el-form-item>
+			</el-form>
+		</Auth>
 
 		<PureTableBar :columns="columns" :title="$t('email_user_send_config')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('addNew') }}</el-button>
+				<el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
+					{{ $t('addNew') }}
+				</el-button>
 
 				<!-- 批量删除按钮 -->
-				<el-button :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+				<el-button v-if="hasAuth(auth.deleted)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
 					{{ $t('deleteBatches') }}
 				</el-button>
 			</template>
@@ -148,8 +143,8 @@ onMounted(() => {
 					</template>
 
 					<template #operation="{ row }">
-						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
-						<el-popconfirm :title="`${$t('delete')}${row.email}?`" @confirm="onDelete(row)">
+						<el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
+						<el-popconfirm v-if="hasAuth(auth.deleted)" :title="`${$t('delete')}${row.email}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}
