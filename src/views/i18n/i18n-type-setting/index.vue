@@ -13,6 +13,8 @@ import TableIsDefaultTag from '@/components/Table/TableIsDefaultTag.vue';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
+import { auth } from '@/views/i18n/i18n-type-setting/utils/auth';
+import { hasAuth } from '@/router/utils';
 
 const tableRef = ref();
 const formRef = ref();
@@ -46,7 +48,9 @@ onMounted(() => {
 
 		<PureTableBar :columns="columns" :title="$t('i18n_type')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd"> {{ $t('addNew') }}</el-button>
+				<el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
+					{{ $t('addNew') }}
+				</el-button>
 			</template>
 
 			<template v-slot="{ size, dynamicColumns }">
@@ -83,8 +87,8 @@ onMounted(() => {
 					</template>
 
 					<template #operation="{ row }">
-						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
-						<el-popconfirm :title="`${$t('delete')} ${row.typeName}?`" @confirm="onDelete(row)">
+						<el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
+						<el-popconfirm v-if="hasAuth(auth.deleted)" :title="`${$t('delete')} ${row.typeName}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
 									{{ $t('delete') }}
