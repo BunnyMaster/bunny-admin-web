@@ -19,9 +19,7 @@ const innerForm = reactive({
 });
 const form = ref(props.formInline);
 
-/**
- * * 搜索和初始化
- */
+/** 搜索和初始化 */
 const onSearch = async () => {
 	innerForm.loading = true;
 	const { currentPage, pageSize } = innerForm;
@@ -47,15 +45,10 @@ const onChangeIcon = (value: any) => {
 	form.value.icon = value.iconCode;
 };
 
-/**
- * * 清除图标
- */
+/** 清除图标 */
 const onClear = () => (form.value.icon = '');
 
-/**
- * * 修改当前页
- * @param value
- */
+/** 修改当前页 */
 const onCurrentChange = async (value: number) => {
 	innerForm.currentPage = value;
 	await onSearch();
