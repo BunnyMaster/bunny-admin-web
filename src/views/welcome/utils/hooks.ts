@@ -8,7 +8,7 @@ export const serverCommitList = ref([]);
 
 /** 获取web代码提交记录 */
 export const getWebCommitList = async () => {
-	const response = await fetch('http://129.211.31.58:3000/api/v1/repos/auth/auth-web/commits?page=1&limit=20');
+	const response = await fetch('/api/v1/repos/auth/auth-web/commits?page=1&limit=20');
 	const json = await response.json();
 	webCommitList.value = json.map(item => ({
 		date: dayjs(item?.commit?.committer?.date).format('YYYY-MM-DD HH:mm:ss'),
@@ -21,7 +21,7 @@ export const getWebCommitList = async () => {
 };
 /** 获取后端代码提交记录 */
 export const getServerCommitList = async () => {
-	const response = await fetch('http://129.211.31.58:3000/api/v1/repos/auth/auth-server-java/commits?page=1&limit=20');
+	const response = await fetch('/api/v1/repos/auth/auth-server-java/commits?page=1&limit=20');
 	const json = await response.json();
 	serverCommitList.value = json.map(item => ({
 		date: dayjs(item?.commit?.committer?.date).format('YYYY-MM-DD HH:mm:ss'),
