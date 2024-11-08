@@ -7,6 +7,11 @@ dist-ssr
 report.html
 vite.config.*.timestamp*
 
+bunny-web.site.csr
+bunny-web.site.key
+bunny-web.site_bundle.crt
+bunny-web.site_bundle.pem
+
 yarn.lock
 npm-debug.log*
 .pnpm-error.log*
@@ -20,3 +25,4 @@ tests/**/coverage/
 *.njsproj
 *.sln
 tsconfig.tsbuildinfo
+

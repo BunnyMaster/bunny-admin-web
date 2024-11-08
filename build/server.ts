@@ -10,6 +10,10 @@ export const serverOptions = (mode: string) => {
 		open: true,
 		cors: true,
 		proxy: {
+			'/api/v1/': {
+				target: 'http://129.211.31.58:3000',
+				changeOrigin: true,
+			},
 			'/api': {
 				target: VITE_APP_URL,
 				changeOrigin: true,
