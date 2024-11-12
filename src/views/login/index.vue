@@ -3,7 +3,6 @@ import Motion from './utils/motion';
 import { useNav } from '@/layout/hooks/useNav';
 import { useLayout } from '@/layout/hooks/useLayout';
 import bg from '@/assets/login/bg.png';
-import avatar from '@/assets/login/avatar.svg?component';
 import illustration from '@/assets/login/illustration.svg?component';
 import { onMounted, toRaw } from 'vue';
 import { useTranslationLang } from '@/layout/hooks/useTranslationLang';
@@ -65,7 +64,7 @@ onMounted(() => {
 			</div>
 			<div class="login-box">
 				<div class="login-form">
-					<avatar class="avatar" />
+					<img alt="logo" class="avatar" src="/logo.png" />
 					<Motion>
 						<h2 class="outline-none">{{ title }}</h2>
 					</Motion>
@@ -77,10 +76,6 @@ onMounted(() => {
 			</div>
 		</div>
 	</div>
-
-	<footer>
-		<a href="https://beian.miit.gov.cn/" target="_blank">&nbsp;&nbsp;苏ICP备2023044078号-1</a>
-	</footer>
 </template>
 
 <style scoped>
@@ -88,13 +83,6 @@ onMounted(() => {
 </style>
 
 <style lang="scss" scoped>
-footer {
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	text-align: center;
-}
-
 :deep(.el-input-group__append, .el-input-group__prepend) {
 	padding: 0;
 }

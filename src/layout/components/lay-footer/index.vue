@@ -9,7 +9,6 @@ const Copyright = getConfig('Copyright');
 	<footer class="layout-footer text-[rgba(0,0,0,0.6)] dark:text-[rgba(220,220,242,0.8)]">
 		{{ Copyright }}
 		<a class="hover:text-primary" href="https://github.com/pure-admin" target="_blank"> &nbsp;{{ TITLE }} </a>
-		<a href="https://beian.miit.gov.cn/" target="_blank">&nbsp;&nbsp;苏ICP备2023044078号-1</a>
 	</footer>
 </template>
 

@@ -15,9 +15,9 @@ onMounted(() => {
 </script>
 
 <template>
-	<el-descriptions :column="4" border direction="vertical" title="系统已缓存内容">
-		<el-descriptions-item v-for="cache in caches" :key="cache.key" :label="cache.key">{{ cache.value }} </el-descriptions-item>
+	<el-descriptions :column="2" border direction="vertical" title="系统已缓存内容">
+		<el-descriptions-item v-for="cache in caches" :key="cache.key" :label="cache.key" style="overflow: auto">
+			{{ cache.value }}
+		</el-descriptions-item>
 	</el-descriptions>
 </template>
-
-<style lang="scss" scoped></style>

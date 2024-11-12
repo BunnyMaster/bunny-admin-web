@@ -8,8 +8,6 @@ Pure-admin文档：https://pure-admin.github.io/pure-admin-doc
 
 # 项目预览
 
-不知道为什么，图床用的使自己的，Gitee就是不显示其它GitHub和Gitea都能显示就Gitee显示不出来，如果想用Gitee就把ReadMe文件下载下来也行；或者把项目clone下来看也可以
-
 **线上地址**
 
 - 正式线上预览地址：http://bunny-web.site/#/welcome
@@ -18,6 +16,10 @@ Pure-admin文档：https://pure-admin.github.io/pure-admin-doc
 
 - 测试预览地址：http://106.15.251.123/#/welcome
   - 服务器到期时间：12月30日
+
+**打包视频**
+
+https://www.bilibili.com/video/BV1AYm8YSEKY/
 
 **Github地址**
 
