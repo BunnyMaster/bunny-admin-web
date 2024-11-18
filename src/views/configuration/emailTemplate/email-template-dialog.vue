@@ -5,6 +5,9 @@ import { rules } from '@/views/configuration/emailTemplate/utils/columns';
 import { FormProps } from '@/views/configuration/emailTemplate/utils/types';
 import { $t } from '@/plugins/i18n';
 import { useEmailTemplateStore } from '@/store/configuration/emailTemplate';
+import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import View from '@iconify-icons/ep/view';
+import { viewTemplate } from '@/views/configuration/emailTemplate/utils/hooks';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
@@ -54,6 +57,9 @@ defineExpose({ formRef });
 		<!-- 配置邮件发送体 -->
 		<el-form-item :label="$t('emailTemplate_body')" prop="body">
 			<el-input v-model="form.body" :autosize="{ minRows: 2, maxRows: 26 }" autocomplete="off" type="textarea" />
+			<el-button :icon="useRenderIcon(View)" class="reset-margin" link type="primary" @click="viewTemplate(form.body)">
+				{{ $t('viewTemplate') }}
+			</el-button>
 		</el-form-item>
 
 		<!--配置邮件类型-->

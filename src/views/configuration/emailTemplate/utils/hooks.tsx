@@ -133,3 +133,14 @@ export const onDeleteBatch = async () => {
 		},
 	});
 };
+
+/** 查看模板 */
+export const viewTemplate = (template: string) => {
+	addDialog({
+		title: $t('viewTemplate'),
+		draggable: true,
+		fullscreenIcon: true,
+		closeOnClickModal: false,
+		contentRenderer: () => <div v-html={template} />,
+	});
+};

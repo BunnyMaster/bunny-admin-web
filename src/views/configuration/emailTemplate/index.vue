@@ -4,9 +4,10 @@ import { columns } from '@/views/configuration/emailTemplate/utils/columns';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onDelete, onDeleteBatch, onSearch, onUpdate, selectRows } from '@/views/configuration/emailTemplate/utils/hooks';
+import { onAdd, onDelete, onDeleteBatch, onSearch, onUpdate, selectRows, viewTemplate } from '@/views/configuration/emailTemplate/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
+import View from '@iconify-icons/ep/view';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
@@ -122,6 +123,7 @@ onMounted(() => {
 					</template>
 
 					<template #operation="{ row }">
+						<el-button :icon="useRenderIcon(View)" :size="size" class="reset-margin" link type="primary" @click="viewTemplate(row.body)"> {{ $t('viewTemplate') }} </el-button>
 						<el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
 						<el-popconfirm v-if="hasAuth(auth.deleted)" :title="`${$t('delete')} ${row.templateName}?`" @confirm="onDelete(row)">
 							<template #reference>

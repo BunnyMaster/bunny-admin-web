@@ -201,6 +201,7 @@ export const onChangeMenuRank = async (row: any) => {
 	if (!confirm) return;
 
 	await routerStore.updateMenuByIdWithRank(data);
+	await onSearch();
 };
 
 /**

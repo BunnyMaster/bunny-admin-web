@@ -124,7 +124,7 @@ onMounted(() => {
 					</template>
 
 					<template #rank="{ row }">
-						<el-input v-model="row.rank" :max="9999" :min="1" type="number" @change="onChangeMenuRank(row)" />
+						<el-input v-model="row.rank" :max="9999" :min="1" type="number" @blur="onChangeMenuRank(row)" />
 					</template>
 
 					<template #createUser="{ row }">

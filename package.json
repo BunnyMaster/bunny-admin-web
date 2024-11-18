@@ -1,11 +1,9 @@
 {
-	"name": "bunny-admin-element",
-	"version": "1.0.0",
+	"name": "bunny-admin-web",
+	"version": "2.0.1",
 	"private": true,
 	"type": "module",
 	"keywords": [
-		"bunny-admin-element",
-		"bunny-cli",
 		"element-plus",
 		"tailwindcss",
 		"typescript",
@@ -14,19 +12,19 @@
 		"vite",
 		"esm"
 	],
-	"homepage": "https://gitee.com/BunnyBoss/bunny-admin-element.git",
+	"homepage": "https://github.com/BunnyMaster/bunny-admin-web",
 	"repository": {
 		"type": "git",
-		"url": "https://gitee.com/BunnyBoss/bunny-admin-element.git"
+		"url": "https://github.com/BunnyMaster/bunny-admin-web"
 	},
 	"bugs": {
-		"url": "https://gitee.com/BunnyBoss/bunny-admin-element.git/issues"
+		"url": "https://github.com/BunnyMaster/bunny-admin-web/issues"
 	},
 	"license": "MIT",
 	"author": {
 		"name": "Bunny0212",
 		"email": "1319900154@qq.com",
-		"url": "https://github.com/xiaoxian521"
+		"url": "https://github.com/BunnyMaster"
 	},
 	"scripts": {
 		"dev": "NODE_OPTIONS=--max-old-space-size=4096 vite",

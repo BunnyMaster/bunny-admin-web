@@ -16,6 +16,7 @@ import { usePublicHooks } from '@/views/hooks';
 import { FormInstance } from 'element-plus';
 import { auth } from '@/views/configuration/emailUsers/utils/auth';
 import { hasAuth } from '@/router/utils';
+import { enabledOrNotStatus } from '@/enums/baseConstant';
 
 const tableRef = ref();
 const formRef = ref();
@@ -76,6 +77,13 @@ onMounted(() => {
 					<el-input v-model="emailUsersStore.form.smtpAgreement" :placeholder="`${$t('input')}${$t('emailUsers_smtpAgreement')}`" class="!w-[180px]" clearable />
 				</el-form-item>
 
+				<!-- 是否启用SSL -->
+				<el-form-item label="SSL" prop="openSSL">
+					<el-select v-model="emailUsersStore.form.openSSL" class="!w-[180px]" clearable filterable placeholder="SSL">
+						<el-option v-for="(item, index) in enabledOrNotStatus" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
+					</el-select>
+				</el-form-item>
+
 				<el-form-item>
 					<el-button :icon="useRenderIcon('ri:search-line')" :loading="emailUsersStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
 					<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
@@ -116,6 +124,11 @@ onMounted(() => {
 					@page-size-change="onPageSizeChange"
 					@page-current-change="onCurrentPageChange"
 				>
+					<template #openSSL="{ row }">
+						<el-tag v-show="row.openSSL" effect="plain" type="success">{{ $t('enable') }}</el-tag>
+						<el-tag v-show="!row.openSSL" effect="plain" type="danger">{{ $t('disable') }}</el-tag>
+					</template>
+
 					<template #isDefault="{ row, index }">
 						<el-switch
 							v-model="row.isDefault"

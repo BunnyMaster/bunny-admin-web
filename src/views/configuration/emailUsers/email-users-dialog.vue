@@ -59,6 +59,11 @@ defineExpose({ formRef });
 			<el-input v-model="form.smtpAgreement" autocomplete="off" maxlength="10" show-word-limit type="text" />
 		</el-form-item>
 
+		<!-- 是否启用SSL -->
+		<el-form-item label="ssl" prop="openSSL">
+			<el-switch v-model="form.openSSL" :active-text="$t('enable')" :active-value="true" :inactive-text="$t('disable')" :inactive-value="false" :style="switchStyle" inline-prompt />
+		</el-form-item>
+
 		<!-- 是否为默认 -->
 		<el-form-item :label="$t('emailUsers_isDefault')" prop="isDefault">
 			<el-switch v-model="form.isDefault" :active-text="$t('default')" :active-value="true" :inactive-text="$t('no_default')" :inactive-value="false" :style="switchStyle" inline-prompt />

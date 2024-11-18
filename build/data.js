@@ -76,7 +76,7 @@ async function add(data) {
 		headers: {
 			'Content-Type': 'application/json',
 			token:
-				'eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAA_yWLywqFIBQA_-WsE9Sjt2xXuz7jmAYGWfiAIu6_X-HuhmHmhVwtjDDXGB_owN8XjKJH3iMayTuo2afFNffHSIdv-eSOEEMuicqZ2raX0Kx22g4ciRkUyBRpw6yxgq1S0SBXubnPBt8fEjhnWnMAAAA.YwSm-NO_6Kg1k1GRwucIt50Y70FbPHoldsdTPVHK_Y4',
+				'eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAA_yWLywqFIBQA_-WsE_RknWxXuz5DU8EgCx9QXO6_X-HuhmHmA7kamGGtMb7QgXtumAX1KEekQXVQs0ubbe6PUZ-u5Ys9Qwy5JF2u1LajhGaNFoZGLxlKS0xavjPjkbPBKS8Uql3TBN8fHTtSk3MAAAA.u-rDR1a46DoV0X-iQEz0Y9lfUGPm0Nsr2MuD4fvtVMg',
 		},
 		body: JSON.stringify(data),
 	});

@@ -83,7 +83,7 @@ export const storeMessage = (result: BaseResult<any>) => {
 	if (result.code !== 200) {
 		return false;
 	}
-	message(result.message, { type: 'success' });
+	message(result.message, { type: 'success', duration: 3666 });
 	return true;
 };
 

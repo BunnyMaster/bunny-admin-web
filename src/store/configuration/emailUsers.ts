@@ -22,6 +22,8 @@ export const useEmailUsersStore = defineStore('emailUsersStore', {
 				port: undefined,
 				// 邮箱协议
 				smtpAgreement: undefined,
+				// 是否启用SSL
+				openSSL: undefined,
 			},
 			// 分页查询结果
 			pagination: {

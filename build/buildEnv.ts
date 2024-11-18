@@ -43,6 +43,7 @@ export const buildEnvironment = () => {
 					// 如果是包含在包中则打包成 vendor
 					if (id.includes('node_modules')) {
 						return `vendor`;
+						// return id.toString().split('node_modules/')[1].split('/')[1].toString();
 					}
 				},
 			},

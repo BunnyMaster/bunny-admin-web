@@ -10,6 +10,8 @@ export interface FormItemProps {
 	port: number;
 	// 邮箱协议
 	smtpAgreement: string;
+	// 是否启用SSL
+	openSSL: boolean;
 	// 是否为默认邮件
 	isDefault: boolean;
 }
