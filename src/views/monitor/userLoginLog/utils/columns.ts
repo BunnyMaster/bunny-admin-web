@@ -12,7 +12,7 @@ export const columns: TableColumnList = [
 	// 登录Ip归属地
 	{ label: $t('userLoginLog_ipRegion'), prop: 'ipRegion', width: 160 },
 	// 登录时代理
-	{ label: $t('userLoginLog_userAgent'), prop: 'userAgent' },
+	{ label: $t('userLoginLog_userAgent'), prop: 'userAgent', width: 130 },
 	// 操作类型
 	{ label: $t('userLoginLog_type'), prop: 'type', width: 130 },
 	// 标识客户端是否是通过Ajax发送请求的

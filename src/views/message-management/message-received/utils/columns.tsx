@@ -1,5 +1,5 @@
 import { $t } from '@/plugins/i18n';
-import { ElTag } from 'element-plus';
+import { ElTag, ElText } from 'element-plus';
 
 // 表格列
 export const columns: TableColumnList = [
@@ -10,13 +10,20 @@ export const columns: TableColumnList = [
 	// 消息简介
 	{ label: $t('summary'), prop: 'summary' },
 	// 发送人昵称
-	{ label: $t('sendNickname'), prop: 'sendNickname', slot: 'sendNickname' },
+	{ label: $t('sendNickname'), prop: 'sendNickname', slot: 'sendNickname', width: 130 },
 	// 接受人昵称
-	{ label: $t('receivedUserNickname'), prop: 'receivedUserNickname', slot: 'receivedUserNickname' },
+	{ label: $t('receivedUserNickname'), prop: 'receivedUserNickname', slot: 'receivedUserNickname', width: 130 },
 	// 消息类型
-	{ label: $t('messageType'), prop: 'messageType', slot: 'messageType' },
+	{ label: $t('messageType'), prop: 'messageType', slot: 'messageType', width: 130 },
 	// 编辑器类型
-	{ label: $t('editorType'), prop: 'editorType' },
+	{
+		label: $t('editorType'),
+		prop: 'editorType',
+		width: 130,
+		formatter({ editorType }) {
+			return editorType === 'rich' ? <ElText type={'info'}>{editorType}</ElText> : <ElText type={'warning'}>{editorType}</ElText>;
+		},
+	},
 	// 封面
 	{ label: $t('cover'), prop: 'cover', slot: 'cover', width: 80 },
 	// 消息等级
@@ -33,7 +40,7 @@ export const columns: TableColumnList = [
 		width: 100,
 	},
 	// 消息等级详情
-	{ label: $t('extra'), prop: 'extra', slot: 'extra' },
+	{ label: $t('extra'), prop: 'extra', slot: 'extra', width: 130 },
 	// 0:未读 1:已读
 	{
 		label: $t('status'),

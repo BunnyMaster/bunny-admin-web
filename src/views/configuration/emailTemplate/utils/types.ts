@@ -6,6 +6,8 @@ export interface FormItemProps {
 	emailUser: string;
 	// 主题
 	subject: string;
+	// 是否默认
+	isDefault: boolean;
 	// 邮件内容
 	body: string;
 	// 邮件类型

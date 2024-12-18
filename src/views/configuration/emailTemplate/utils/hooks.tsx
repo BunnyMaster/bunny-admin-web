@@ -29,6 +29,7 @@ export function onAdd() {
 				templateName: undefined,
 				emailUser: undefined,
 				subject: undefined,
+				isDefault: undefined,
 				body: undefined,
 				type: undefined,
 			},
@@ -64,6 +65,7 @@ export function onUpdate(row: any) {
 				templateName: row.templateName,
 				emailUser: row.emailUser,
 				subject: row.subject,
+				isDefault: row.isDefault,
 				body: row.body,
 				type: row.type,
 			},
@@ -137,7 +139,7 @@ export const onDeleteBatch = async () => {
 /** 查看模板 */
 export const viewTemplate = (template: string) => {
 	addDialog({
-		title: $t('viewTemplate'),
+		title: $t('view'),
 		draggable: true,
 		fullscreenIcon: true,
 		closeOnClickModal: false,

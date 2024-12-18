@@ -5,9 +5,7 @@ import { rules } from '@/views/configuration/emailTemplate/utils/columns';
 import { FormProps } from '@/views/configuration/emailTemplate/utils/types';
 import { $t } from '@/plugins/i18n';
 import { useEmailTemplateStore } from '@/store/configuration/emailTemplate';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
-import View from '@iconify-icons/ep/view';
-import { viewTemplate } from '@/views/configuration/emailTemplate/utils/hooks';
+import { usePublicHooks } from '@/views/hooks';
 
 const props = withDefaults(defineProps<FormProps>(), {
 	formInline: () => ({
@@ -17,6 +15,8 @@ const props = withDefaults(defineProps<FormProps>(), {
 		emailUser: undefined,
 		// 主题
 		subject: undefined,
+		// 是否默认
+		isDefault: false,
 		// 邮件内容
 		body: undefined,
 		// 邮件类型
@@ -24,6 +24,8 @@ const props = withDefaults(defineProps<FormProps>(), {
 	}),
 });
 
+// 用户是否停用样式
+const { switchStyle } = usePublicHooks();
 const formRef = ref<FormInstance>();
 const form = ref(props.formInline);
 const emailTemplateStore = useEmailTemplateStore();
@@ -54,12 +56,14 @@ defineExpose({ formRef });
 			<el-input v-model="form.subject" autocomplete="off" type="text" />
 		</el-form-item>
 
+		<!-- 用户状态 -->
+		<el-form-item :label="$t('isDefault')" prop="isDefault">
+			<el-switch v-model="form.isDefault" :active-text="$t('enable')" :active-value="true" :inactive-text="$t('disable')" :inactive-value="false" :style="switchStyle" inline-prompt />
+		</el-form-item>
+
 		<!-- 配置邮件发送体 -->
 		<el-form-item :label="$t('emailTemplate_body')" prop="body">
 			<el-input v-model="form.body" :autosize="{ minRows: 2, maxRows: 26 }" autocomplete="off" type="textarea" />
-			<el-button :icon="useRenderIcon(View)" class="reset-margin" link type="primary" @click="viewTemplate(form.body)">
-				{{ $t('viewTemplate') }}
-			</el-button>
 		</el-form-item>
 
 		<!--配置邮件类型-->

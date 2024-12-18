@@ -7,7 +7,6 @@ import PureTable from '@pureadmin/table';
 import { onAdd, onDelete, onDeleteBatch, onSearch, onUpdate, selectRows, viewTemplate } from '@/views/configuration/emailTemplate/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
-import View from '@iconify-icons/ep/view';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
@@ -15,6 +14,7 @@ import { useEmailTemplateStore } from '@/store/configuration/emailTemplate.ts';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { auth } from '@/views/configuration/emailTemplate/utils/auth';
 import { hasAuth } from '@/router/utils';
+import View from '@iconify-icons/ep/view';
 
 const tableRef = ref();
 const formRef = ref();
@@ -67,7 +67,9 @@ onMounted(() => {
 					<el-input v-model="emailTemplateStore.form.type" :placeholder="`${$t('input')}${$t('emailTemplate_type')}`" class="!w-[180px]" clearable />
 				</el-form-item>
 				<el-form-item>
-					<el-button :icon="useRenderIcon('ri:search-line')" :loading="emailTemplateStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
+					<el-button :icon="useRenderIcon('ri:search-line')" :loading="emailTemplateStore.loading" type="primary" @click="onSearch">
+						{{ $t('search') }}
+					</el-button>
 					<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
 				</el-form-item>
 			</el-form>
@@ -123,8 +125,12 @@ onMounted(() => {
 					</template>
 
 					<template #operation="{ row }">
-						<el-button :icon="useRenderIcon(View)" :size="size" class="reset-margin" link type="primary" @click="viewTemplate(row.body)"> {{ $t('viewTemplate') }} </el-button>
-						<el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
+						<el-button :icon="useRenderIcon(View)" :size="size" class="reset-margin" link type="primary" @click="viewTemplate(row.body)">
+							{{ $t('view') }}
+						</el-button>
+						<el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
+							{{ $t('modify') }}
+						</el-button>
 						<el-popconfirm v-if="hasAuth(auth.deleted)" :title="`${$t('delete')} ${row.templateName}?`" @confirm="onDelete(row)">
 							<template #reference>
 								<el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">

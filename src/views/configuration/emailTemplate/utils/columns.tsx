@@ -1,5 +1,6 @@
 import { reactive } from 'vue';
 import { $t } from '@/plugins/i18n';
+import { ElTag } from 'element-plus';
 
 // 表格列
 export const columns: TableColumnList = [
@@ -14,12 +15,26 @@ export const columns: TableColumnList = [
 	// 邮件内容
 	{ label: $t('emailTemplate_body'), prop: 'body' },
 	// 邮件类型
-	{ label: $t('emailTemplate_type'), prop: 'type' },
+	{ label: $t('emailTemplate_type'), prop: 'summary' },
+	// 是否默认
+	{
+		label: $t('isDefault'),
+		prop: 'isDefault',
+		formatter({ isDefault }) {
+			return isDefault ? (
+				<ElTag type={'success'}>{$t('default')}</ElTag>
+			) : (
+				<ElTag size={'large'} type={'danger'}>
+					{$t('no_default')}
+				</ElTag>
+			);
+		},
+	},
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 130 },
 	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 130 },
-	{ label: $t('table.operation'), fixed: 'right', width: 230, slot: 'operation' },
+	{ label: $t('table.operation'), fixed: 'right', width: 210, slot: 'operation' },
 ];
 
 // 添加规则

@@ -6,19 +6,19 @@ export const columns: TableColumnList = [
 	{ type: 'selection', align: 'left' },
 	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
 	// 任务名称
-	{ label: $t('quartzExecuteLog_jobName'), prop: 'jobName' },
+	{ label: $t('quartzExecuteLog_jobName'), prop: 'jobName', width: 100 },
 	// 任务分组
-	{ label: $t('quartzExecuteLog_jobGroup'), prop: 'jobGroup' },
+	{ label: $t('quartzExecuteLog_jobGroup'), prop: 'jobGroup', width: 100 },
 	// 执行任务类名
-	{ label: $t('quartzExecuteLog_jobClassName'), prop: 'jobClassName' },
+	{ label: $t('quartzExecuteLog_jobClassName'), prop: 'jobClassName', width: 100 },
 	// 执行任务core表达式
-	{ label: $t('quartzExecuteLog_cronExpression'), prop: 'cronExpression' },
+	{ label: $t('quartzExecuteLog_cronExpression'), prop: 'cronExpression', width: 100 },
 	// 触发器名称
-	{ label: $t('quartzExecuteLog_triggerName'), prop: 'triggerName' },
+	{ label: $t('quartzExecuteLog_triggerName'), prop: 'triggerName', width: 100 },
 	// 执行结果
 	{ label: $t('quartzExecuteLog_executeResult'), prop: 'executeResult', width: 410, slot: 'executeResult' },
 	// 执行时间
-	{ label: $t('quartzExecuteLog_duration'), prop: 'duration' },
+	{ label: $t('quartzExecuteLog_duration'), prop: 'duration', width: 100 },
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
 	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
 	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 130 },
