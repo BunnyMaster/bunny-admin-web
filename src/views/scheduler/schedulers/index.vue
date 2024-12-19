@@ -67,7 +67,9 @@ onMounted(() => {
 					<el-input v-model="schedulersStore.form.triggerState" :placeholder="`${$t('input')}${$t('schedulers_triggerState')}`" class="!w-[180px]" clearable />
 				</el-form-item>
 				<el-form-item>
-					<el-button :icon="useRenderIcon('ri:search-line')" :loading="schedulersStore.loading" type="primary" @click="onSearch"> {{ $t('search') }} </el-button>
+					<el-button :icon="useRenderIcon('ri:search-line')" :loading="schedulersStore.loading" type="primary" @click="onSearch">
+						{{ $t('search') }}
+					</el-button>
 					<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> {{ $t('buttons.reset') }}</el-button>
 				</el-form-item>
 			</el-form>
@@ -113,11 +115,13 @@ onMounted(() => {
 					</template>
 
 					<template #operation="{ row }">
-						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)"> {{ $t('modify') }} </el-button>
+						<el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
+							{{ $t('modify') }}
+						</el-button>
 
 						<!-- 暂停-->
 						<Auth :value="auth.pause">
-							<el-button v-if="row.triggerState === 'ACQUIRED'" :icon="useRenderIcon('line-md:pause')" :size="size" class="reset-margin" link type="primary" @click="onPause(row)">
+							<el-button v-if="row.triggerState !== 'PAUSED'" :icon="useRenderIcon('line-md:pause')" :size="size" class="reset-margin" link type="primary" @click="onPause(row)">
 								{{ $t('pause') }}
 							</el-button>
 						</Auth>

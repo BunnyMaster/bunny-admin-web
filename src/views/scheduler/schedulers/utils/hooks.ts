@@ -63,6 +63,7 @@ export function onUpdate(row: any) {
 				description: row.description,
 				jobClassName: row.jobClassName,
 				cronExpression: row.cronExpression,
+				isUpdate: true,
 			},
 		},
 		draggable: true,

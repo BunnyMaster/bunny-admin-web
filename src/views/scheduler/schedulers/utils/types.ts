@@ -10,6 +10,8 @@ export interface FormItemProps {
 	jobClassName: string;
 	// corn表达式
 	cronExpression: string;
+	// 是否是更新
+	isUpdate: boolean;
 }
 
 // 添加或修改表单Props

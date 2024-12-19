@@ -21,6 +21,8 @@ const props = withDefaults(defineProps<FormProps>(), {
 		cronExpression: undefined,
 		// 执行方法
 		jobMethodName: undefined,
+		// 是否是更新
+		isUpdate: false,
 	}),
 });
 
@@ -44,19 +46,19 @@ defineExpose({ formRef });
 	<el-form ref="formRef" :model="form" :rules="rules" label-width="auto">
 		<!-- 任务名称 -->
 		<el-form-item :label="$t('schedulers_jobName')" prop="jobName">
-			<el-input v-model="form.jobName" :placeholder="$t('input') + $t('schedulers_jobName')" autocomplete="off" type="text" />
+			<el-input v-model="form.jobName" :disabled="form.isUpdate" :placeholder="$t('input') + $t('schedulers_jobName')" autocomplete="off" type="text" />
 		</el-form-item>
 
 		<!-- 任务分组 -->
 		<el-form-item :label="$t('schedulers_jobGroup')" prop="jobGroup">
-			<el-select v-model="form.jobGroup" :placeholder="$t('select') + $t('schedulers_jobGroup')" clearable filterable>
+			<el-select v-model="form.jobGroup" :disabled="form.isUpdate" :placeholder="$t('select') + $t('schedulers_jobGroup')" clearable filterable>
 				<el-option v-for="(item, index) in schedulersGroupStore.allSchedulersGroup" :key="index" :label="item.groupName" :navigationBar="false" :value="item.groupName" />
 			</el-select>
 		</el-form-item>
 
 		<!-- 需要执行的任务类名 -->
 		<el-form-item :label="$t('schedulers_jobClassName')" prop="jobClassName">
-			<el-select v-model="form.jobClassName" :placeholder="$t('select') + $t('schedulers_jobClassName')" clearable filterable>
+			<el-select v-model="form.jobClassName" :disabled="form.isUpdate" :placeholder="$t('select') + $t('schedulers_jobClassName')" clearable filterable>
 				<el-option v-for="(item, index) in schedulersStore.allScheduleJobList" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
 			</el-select>
 		</el-form-item>
@@ -68,7 +70,7 @@ defineExpose({ formRef });
 
 		<!-- 任务详情 -->
 		<el-form-item :label="$t('schedulers_description')" prop="description">
-			<el-input v-model="form.description" :placeholder="$t('input') + $t('schedulers_description')" autocomplete="off" type="text" />
+			<el-input v-model="form.description" :disabled="form.isUpdate" :placeholder="$t('input') + $t('schedulers_description')" autocomplete="off" type="text" />
 		</el-form-item>
 	</el-form>
 </template>
