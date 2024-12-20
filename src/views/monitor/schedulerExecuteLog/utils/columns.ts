@@ -10,13 +10,13 @@ export const columns: TableColumnList = [
 	// 任务分组
 	{ label: $t('quartzExecuteLog_jobGroup'), prop: 'jobGroup', width: 100 },
 	// 执行任务类名
-	{ label: $t('quartzExecuteLog_jobClassName'), prop: 'jobClassName', width: 100 },
+	{ label: $t('quartzExecuteLog_jobClassName'), prop: 'jobClassName', width: 300 },
 	// 执行任务core表达式
-	{ label: $t('quartzExecuteLog_cronExpression'), prop: 'cronExpression', width: 100 },
+	{ label: $t('quartzExecuteLog_cronExpression'), prop: 'cronExpression', width: 120 },
 	// 触发器名称
 	{ label: $t('quartzExecuteLog_triggerName'), prop: 'triggerName', width: 100 },
 	// 执行结果
-	{ label: $t('quartzExecuteLog_executeResult'), prop: 'executeResult', width: 410, slot: 'executeResult' },
+	{ label: $t('quartzExecuteLog_executeResult'), prop: 'executeResult', minWidth: 410, slot: 'executeResult' },
 	// 执行时间
 	{ label: $t('quartzExecuteLog_duration'), prop: 'duration', width: 100 },
 	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
