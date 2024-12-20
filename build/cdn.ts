@@ -57,5 +57,16 @@ export const cdn = importToCDN({
 			var: 'echarts',
 			path: 'dist/echarts.min.js',
 		},
+		{
+			name: 'md-editor-v3',
+			var: 'MdEditorV3',
+			path: 'lib/umd/index.js',
+			css: 'lib/style.css',
+		},
+		{
+			name: 'pinyin-pro',
+			var: 'pinyinPro',
+			path: 'dist/index.mjs',
+		},
 	],
 });
