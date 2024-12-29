@@ -11,8 +11,8 @@ const userLoginLogs = reactive({
 	loading: false,
 	datalist: [],
 	currentPage: 1,
-	pageSize: 150,
-	total: 100,
+	pageSize: 15,
+	total: 0,
 	background: true,
 	layout: 'prev, pager, next',
 });
@@ -23,8 +23,17 @@ const onSearchByLoginLog = async () => {
 
 	const data = await userLoginLogStore.getUserLoginLogListByLocalUser(userLoginLogs);
 	userLoginLogs.datalist = data.list;
+	userLoginLogs.currentPage = data.pageNo;
+	userLoginLogs.pageSize = data.pageSize;
+	userLoginLogs.total = data.total;
 
 	userLoginLogs.loading = false;
+};
+
+/** 当前页改变时 */
+const onCurrentPageChange = async (value: number) => {
+	userLoginLogs.currentPage = value;
+	await onSearchByLoginLog();
 };
 
 onMounted(() => {
@@ -35,6 +44,14 @@ onMounted(() => {
 <template>
 	<div :class="['min-w-[280px]', deviceDetection() ? 'max-w-[100%]' : 'max-w-[70%]']">
 		<h3 class="my-8">{{ $t('security_log') }}</h3>
-		<pure-table :columns="columns" :data="userLoginLogs.datalist" :loading="userLoginLogs.loading" :pagination="userLoginLogs" row-key="id" table-layout="auto" />
+		<pure-table
+			:columns="columns"
+			:data="userLoginLogs.datalist"
+			:loading="userLoginLogs.loading"
+			:pagination="userLoginLogs"
+			row-key="id"
+			table-layout="auto"
+			@page-current-change="onCurrentPageChange"
+		/>
 	</div>
 </template>
