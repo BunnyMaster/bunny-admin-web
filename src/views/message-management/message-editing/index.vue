@@ -5,6 +5,20 @@ import RichEditor from '@/views/message-management/message-editing/rich-editor.v
 import { formState } from '@/views/message-management/message-editing/utils/hooks';
 import MarkdownEditor from '@/views/message-management/message-editing/markdown-editor.vue';
 import { settingLR } from '@/views/message-management/message-editing/utils/columns';
+import { onMounted } from 'vue';
+
+/** 退出提醒 */
+const exitAlter = () => {
+	window.addEventListener('beforeunload', function (e) {
+		e.preventDefault();
+		// 为了兼容旧版浏览器
+		e.returnValue = '';
+	});
+};
+
+onMounted(() => {
+	exitAlter();
+});
 </script>
 
 <template>

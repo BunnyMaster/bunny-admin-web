@@ -49,7 +49,8 @@ function goMessageDetail(message: ListItem) {
 
 <template>
 	<div class="notice-container border-b-[1px] border-solid border-[#f0f0f0] dark:border-[#303030]" @click="goMessageDetail(noticeItem)">
-		<el-avatar v-if="noticeItem.cover" :size="30" :src="noticeItem.cover" class="notice-container-avatar" />
+		<!--<el-avatar v-if="noticeItem.cover" :size="30" :src="noticeItem.cover" class="notice-container-avatar" />-->
+		<img v-if="noticeItem.cover" :src="noticeItem.cover" alt="" class="notice-container-avatar" />
 		<div class="notice-container-text">
 			<div class="notice-text-title text-[#000000d9] dark:text-white">
 				<el-tooltip :content="noticeItem.title" :disabled="!titleTooltip" :effect="tooltipEffect" :enterable="!isMobile" placement="top-start" popper-class="notice-title-popper">
@@ -89,7 +90,9 @@ function goMessageDetail(message: ListItem) {
 	// border-bottom: 1px solid #f0f0f0;
 
 	.notice-container-avatar {
-		margin-right: 16px;
+		width: 30px;
+		margin-right: 8px;
+		object-fit: cover;
 		background: #fff;
 	}
 

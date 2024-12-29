@@ -49,30 +49,32 @@ export const columns: TableColumnList = [
 				<span>{$t(row.title)}</span>
 			</>
 		),
+		minWidth: 170,
 	},
 	{
 		label: $t('menuType'),
 		prop: 'menuType',
-		width: 100,
+		minWidth: 130,
 		cellRenderer: ({ row, props }) => (
 			<ElTag size={props.size} type={getMenuType(row.menuType)} effect='plain'>
 				{getMenuType(row.menuType, true)}
 			</ElTag>
 		),
 	},
-	{ label: $t('routerPath'), prop: 'path' },
+	{ label: $t('routerPath'), prop: 'path', minWidth: 230 },
 	{
 		label: $t('componentPath'),
 		prop: 'component',
 		formatter: ({ path, component }) => (isAllEmpty(component) ? path : component),
+		minWidth: 200,
 	},
-	{ label: $t('sort'), prop: 'rank', width: 80, slot: 'rank' },
-	{ label: $t('visible'), prop: 'visible', slot: 'visible', width: 100 },
-	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true },
-	{ label: $t('table.createTime'), prop: 'createTime', sortable: true },
-	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 130 },
-	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 130 },
-	{ label: $t('table.operation'), fixed: 'right', width: 310, slot: 'operation' },
+	{ label: $t('sort'), prop: 'rank', minWidth: 80, slot: 'rank' },
+	{ label: $t('visible'), prop: 'visible', slot: 'visible', minWidth: 100 },
+	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, minWidth: 160 },
+	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, minWidth: 160 },
+	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', minWidth: 130 },
+	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', minWidth: 130 },
+	{ label: $t('table.operation'), fixed: 'right', minWidth: 310, slot: 'operation' },
 ];
 
 /** 自定义表单规则校验 */

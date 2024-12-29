@@ -2,7 +2,7 @@ import { $t } from '@/plugins/i18n';
 import { computed, ref } from 'vue';
 import { fetchGetUserMessageList } from '@/api/v1/message/messageUser';
 import { throttle } from '@pureadmin/utils';
-import { useWebNotification } from '@vueuse/core';
+import { ElNotification, ElTag } from 'element-plus';
 
 export interface ListItem {
 	messageId: string;
@@ -92,18 +92,7 @@ export const getAllMessageList = async () => {
 	];
 
 	// 调用浏览器系统通知
-	const { isSupported, show, close } = useWebNotification({
-		title: system[0]?.title,
-		dir: 'auto',
-		lang: 'zh',
-		renotify: true,
-		tag: system[0]?.extra,
-	});
-	if (system.length <= 0 || !isSupported.value) {
-		close();
-		return;
-	}
-	await show();
+	showNotification([...system, ...notify, ...notifications]);
 };
 
 /** 计算消息数量 */
@@ -118,3 +107,24 @@ export const computedNoticesNum = throttle(async () => {
 	activeKey.value = noticesData.value[0]?.key;
 	// 定时刷新
 }, 666);
+
+/** 显示通知消息 */
+const showNotification = NotificationList => {
+	if (NotificationList.length > 0) {
+		NotificationList.forEach(message => {
+			ElNotification({
+				title: message?.title,
+				message: (
+					<div class='flex '>
+						<img src={message.cover} alt='' style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
+						<div class='flex justify-between mt-3 mx-2'>
+							<span class='mr-2'>{message.description}</span>
+							{message.status && <ElTag type={message.status}>{message?.extra}</ElTag>}
+						</div>
+					</div>
+				),
+				position: 'bottom-right',
+			});
+		});
+	}
+};

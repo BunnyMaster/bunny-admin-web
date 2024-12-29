@@ -162,7 +162,7 @@ onMounted(() => {
 			<!-- 主题颜色 -->
 			<re-col :sm="24" :value="12" :xs="24">
 				<el-form-item :label="$t('epThemeColor')" prop="epThemeColor">
-					<el-color-picker v-model="form.epThemeColor" show-alpha />
+					<el-color-picker v-model="form.epThemeColor" />
 				</el-form-item>
 			</re-col>
 

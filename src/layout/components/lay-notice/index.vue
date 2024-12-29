@@ -19,7 +19,6 @@ onMounted(() => {
 	<el-dropdown placement="bottom-end" trigger="click">
 		<span
 			:class="['dropdown-badge', 'navbar-bg-hover', 'select-none', Number(noticesNum) !== 0 && 'mr-[10px]']"
-			@click="computedNoticesNum"
 			@dblclick="$router.push(`/message-detail/${messageTypeStore?.allMessageTypeList[0]?.messageType}`)"
 		>
 			<el-badge :max="99" :value="Number(noticesNum) === 0 ? '' : noticesNum">

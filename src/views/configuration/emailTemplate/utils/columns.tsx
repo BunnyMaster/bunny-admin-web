@@ -5,17 +5,17 @@ import { ElTag } from 'element-plus';
 // 表格列
 export const columns: TableColumnList = [
 	{ type: 'selection', align: 'left' },
-	{ type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
+	{ type: 'index', index: (index: number) => index + 1, label: '序号', minWidth: 60 },
 	// 模板名称
-	{ label: $t('emailTemplate_templateName'), prop: 'templateName' },
+	{ label: $t('emailTemplate_templateName'), prop: 'templateName', minWidth: 150 },
 	// 模板名称
-	{ label: $t('emailTemplate_emailUser'), prop: 'emailUser', slot: 'emailUser' },
+	{ label: $t('emailTemplate_emailUser'), prop: 'emailUser', slot: 'emailUser', minWidth: 180 },
 	// 主题
-	{ label: $t('emailTemplate_subject'), prop: 'subject' },
+	{ label: $t('emailTemplate_subject'), prop: 'subject', minWidth: 200 },
 	// 邮件内容
-	{ label: $t('emailTemplate_body'), prop: 'body' },
+	{ label: $t('emailTemplate_body'), prop: 'body', minWidth: 150 },
 	// 邮件类型
-	{ label: $t('emailTemplate_type'), prop: 'summary' },
+	{ label: $t('emailTemplate_type'), prop: 'summary', minWidth: 150 },
 	// 是否默认
 	{
 		label: $t('isDefault'),
@@ -29,12 +29,13 @@ export const columns: TableColumnList = [
 				</ElTag>
 			);
 		},
+		minWidth: 100,
 	},
-	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
-	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
-	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 130 },
-	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 130 },
-	{ label: $t('table.operation'), fixed: 'right', width: 210, slot: 'operation' },
+	{ label: $t('table.updateTime'), prop: 'updateTime', sortable: true, minWidth: 160 },
+	{ label: $t('table.createTime'), prop: 'createTime', sortable: true, minWidth: 160 },
+	{ label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', minWidth: 130 },
+	{ label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', minWidth: 130 },
+	{ label: $t('table.operation'), fixed: 'right', minWidth: 210, slot: 'operation' },
 ];
 
 // 添加规则
