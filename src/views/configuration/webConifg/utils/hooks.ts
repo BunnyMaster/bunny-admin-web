@@ -37,7 +37,34 @@ export const form = ref({
 export const onSearch = async () => {
 	const result = await fetchGetWebConfig();
 	if (result.code !== 200) return;
-	form.value = result.data;
+	const data = result.data;
+
+	form.value.version = data.Version;
+	form.value.title = data.Title;
+	form.value.copyright = data.Copyright;
+	form.value.fixedHeader = data.FixedHeader;
+	form.value.hiddenSideBar = data.HiddenSideBar;
+	form.value.multiTagsCache = data.MultiTagsCache;
+	form.value.keepAlive = data.KeepAlive;
+	form.value.locale = data.Locale;
+	form.value.layout = data.Layout;
+	form.value.theme = data.Theme;
+	form.value.darkMode = data.DarkMode;
+	form.value.overallStyle = data.OverallStyle;
+	form.value.grey = data.Grey;
+	form.value.weak = data.Weak;
+	form.value.hideTabs = data.HideTabs;
+	form.value.hideFooter = data.HideFooter;
+	form.value.stretch = data.Stretch;
+	form.value.sidebarStatus = data.SidebarStatus;
+	form.value.epThemeColor = data.EpThemeColor;
+	form.value.showLogo = data.ShowLogo;
+	form.value.showModel = data.ShowModel;
+	form.value.menuArrowIconNoTransition = data.MenuArrowIconNoTransition;
+	form.value.cachingAsyncRoutes = data.CachingAsyncRoutes;
+	form.value.tooltipEffect = data.TooltipEffect;
+	form.value.responsiveStorageNameSpace = data.ResponsiveStorageNameSpace;
+	form.value.menuSearchHistory = data.MenuSearchHistory;
 };
 
 /** 提交表单 */
