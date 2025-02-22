@@ -32,7 +32,7 @@
 			};
 
 			// 整理子级内容信息
-			const powerCode = key.replace('/admin/', '').replace(/\/\{.*?\}/g, '');
+			const powerCode = key.replace('/api/', '').replace(/\/\{.*?\}/g, '');
 			const item = {
 				parentId: info.id,
 				powerCode: powerCode.replaceAll('/', '::'),
