@@ -4,6 +4,7 @@ import { onBeforeUnmount, ref, shallowRef } from 'vue';
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 import { formState } from '@/views/message-management/message-editing/utils/hooks';
 import { getToken } from '@/utils/auth';
+import { defaultConfig } from '@/api/service/config';
 
 const mode = 'default';
 // 编辑器实例，必须用 shallowRef
@@ -14,7 +15,7 @@ const token = ref(getToken().token);
 
 editorConfig.MENU_CONF['uploadImage'] = {
 	// 服务端上传地址，根据实际业务改写
-	server: '/admin/files/upload',
+	server: `${defaultConfig.baseURL}/files/upload`,
 	// form-data 的 fieldName，根据实际业务改写
 	fieldName: 'file',
 	// 选择文件时的类型限制，根据实际业务改写

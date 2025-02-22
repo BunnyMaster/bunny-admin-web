@@ -60,11 +60,10 @@ export const useUserStore = defineStore({
 				useMultiTagsStoreHook().handleTags('equal', [...routerArrays]);
 				resetRouter();
 				message(result.message, { type: 'success' });
-				await router.push('/login');
-				return true;
 			}
 
-			message(result.message, { type: 'error' });
+			await router.push('/login');
+			return true;
 		},
 
 		/** 刷新`token` */
