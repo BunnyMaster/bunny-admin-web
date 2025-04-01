@@ -10,7 +10,7 @@ import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { useEmailTemplateStore } from '@/store/configuration/emailTemplate.ts';
+import { useEmailTemplateStore } from '@/store/configuration/emailTemplate';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { auth } from '@/views/configuration/emailTemplate/utils/auth';
 import { hasAuth } from '@/router/utils';

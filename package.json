@@ -1,31 +1,9 @@
 {
 	"name": "bunny-admin-web",
-	"version": "2.9.4",
+	"version": "3.0.0",
 	"private": true,
 	"type": "module",
-	"keywords": [
-		"element-plus",
-		"tailwindcss",
-		"typescript",
-		"pinia",
-		"vue3",
-		"vite",
-		"esm"
-	],
-	"homepage": "https://github.com/BunnyMaster/bunny-admin-web",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/BunnyMaster/bunny-admin-web"
-	},
-	"bugs": {
-		"url": "https://github.com/BunnyMaster/bunny-admin-web/issues"
-	},
 	"license": "MIT",
-	"author": {
-		"name": "Bunny0212",
-		"email": "1319900154@qq.com",
-		"url": "https://github.com/BunnyMaster"
-	},
 	"scripts": {
 		"dev": "NODE_OPTIONS=--max-old-space-size=4096 vite",
 		"serve": "pnpm vite",
@@ -59,7 +37,7 @@
 		"@wangeditor/editor-for-vue": "^5.1.12",
 		"@zxcvbn-ts/core": "^3.0.4",
 		"animate.css": "^4.1.1",
-		"axios": "^1.7.5",
+		"axios": "1.8.2",
 		"china-area-data": "^5.0.1",
 		"cropperjs": "^1.6.2",
 		"dayjs": "^1.11.13",
@@ -93,7 +71,7 @@
 		"version-rocket": "^1.7.2",
 		"vite-plugin-vue-inspector": "^5.1.3",
 		"vue": "^3.4.38",
-		"vue-i18n": "^9.14.0",
+		"vue-i18n": "11.1.2",
 		"vue-json-pretty": "^2.4.0",
 		"vue-pdf-embed": "^2.1.0",
 		"vue-router": "^4.4.3",

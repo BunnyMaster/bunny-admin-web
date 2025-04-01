@@ -1,0 +1,6 @@
+{
+    "i18n-ally.localesPaths": [
+        "src/store/i18n",
+        "src/views/i18n"
+    ]
+}

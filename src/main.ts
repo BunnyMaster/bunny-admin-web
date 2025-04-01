@@ -4,7 +4,6 @@ import { MotionPlugin } from '@vueuse/motion';
 import App from './App.vue';
 import { getPlatformConfig } from './config';
 import router from './router';
-// import { useEcharts } from "@/plugins/echarts";
 import { useElementPlus } from '@/plugins/elementPlus';
 import { injectResponsiveStorage } from '@/utils/responsive';
 import { createApp, type Directive } from 'vue';

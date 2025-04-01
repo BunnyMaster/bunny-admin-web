@@ -39,12 +39,12 @@ onBeforeMount(() => {
 			class="pure-account-settings overflow-hidden px-2 dark:!bg-[var(--el-bg-color)] border-r-[1px] border-[var(--pure-border-color)]"
 		>
 			<el-menu :default-active="messageTypeStore.form.messageType" class="pure-account-settings-menu">
-				<el-menu-item class="!h-[50px]" @click="$router.go(-1)">
+				<el-menu-item class="!h-[50px]" @click="router.go(-1)">
 					<div class="flex items-center hover:!transition-all hover:!duration-200 hover:!text-base">
 						<IconifyIconOffline :icon="leftLine" />
 						<span>{{ $t('back') }}</span>
 					</div>
-					<el-button class="ml-2" link type="primary" @click="$router.push('/')">{{ $t('returnToHomepage') }} </el-button>
+					<el-button class="ml-2" link type="primary" @click="router.push('/')">{{ $t('returnToHomepage') }}</el-button>
 				</el-menu-item>
 				<el-menu-item
 					v-for="item in messageTypeStore.allMessageTypeList"

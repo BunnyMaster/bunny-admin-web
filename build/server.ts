@@ -17,7 +17,7 @@ export const serverOptions = (mode: string) => {
 			'/api': {
 				target: VITE_APP_URL,
 				changeOrigin: true,
-				rewrite: (path: string) => path.replace(/^\/admin/, '/api'),
+				rewrite: (path: string) => path.replace(/^\/api/, '/api'),
 			},
 			'/mock': {
 				target: VITE_APP_URL,
