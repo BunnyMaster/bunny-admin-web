@@ -1,19 +1,17 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/i18n/i18n-type-setting/utils/columns';
+import { auth, columns, onAdd, onDelete, onSearch, onUpdate } from '@/views/i18n/i18n-type-setting/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
-import { onAdd, onDelete, onSearch, onUpdate } from '@/views/i18n/i18n-type-setting/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import TableIsDefaultTag from '@/components/Table/TableIsDefaultTag.vue';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { auth } from '@/views/i18n/i18n-type-setting/utils/auth';
 import { hasAuth } from '@/router/utils';
 
 const tableRef = ref();

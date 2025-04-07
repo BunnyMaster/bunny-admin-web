@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { rules, state } from '@/views/monitor/schedulerExecuteLog/utils/columns';
-import { FormProps } from '@/views/monitor/schedulerExecuteLog/utils/types';
+import { FormProps, rules, state } from '@/views/monitor/schedulerExecuteLog/utils';
 import { $t } from '@/plugins/i18n';
 import VueJsonPretty from 'vue-json-pretty';
 

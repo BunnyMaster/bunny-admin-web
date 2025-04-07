@@ -6,7 +6,7 @@ import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange';
 import leftLine from '@iconify-icons/ri/arrow-left-s-line';
 import { $t } from '@/plugins/i18n';
 import { useMessageTypeStore } from '@/store/message/messageType';
-import { onSearch } from '@/views/message-management/message-detail/utils/hooks';
+import { onSearch } from '@/views/message-management/message-detail/utils';
 
 const isOpen = ref(!deviceDetection());
 const { $storage } = useGlobal<GlobalPropertiesApi>();

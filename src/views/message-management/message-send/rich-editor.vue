@@ -3,7 +3,7 @@ import { onBeforeUnmount, ref, shallowRef } from 'vue';
 import '@wangeditor/editor/dist/css/style.css';
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 import { getToken } from '@/utils/auth';
-import { updateMessage } from '@/views/message-management/message-send/utils/hooks';
+import { updateMessage } from '@/views/message-management/message-send/utils';
 
 const mode = 'default';
 // 编辑器实例，必须用 shallowRef

@@ -2,7 +2,7 @@
 import { onBeforeUnmount, ref, shallowRef } from 'vue';
 // import '@wangeditor/editor/dist/css/style.css';
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
-import { formState } from '@/views/message-management/message-editing/utils/hooks';
+import { formState } from '@/views/message-management/message-editing/utils';
 import { getToken } from '@/utils/auth';
 import { defaultConfig } from '@/api/service/config';
 

@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { rules } from '@/views/scheduler/schedulers/utils/columns';
-import { FormProps } from '@/views/scheduler/schedulers/utils/types';
+import { FormProps, rules } from '@/views/scheduler/schedulers/utils';
 import { $t } from '@/plugins/i18n';
 import { useSchedulersGroupStore } from '@/store/scheduler/schedulersGroup';
 import { useSchedulersStore } from '@/store/scheduler/schedulers';

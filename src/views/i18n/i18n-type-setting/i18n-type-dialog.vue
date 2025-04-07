@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { rules } from '@/views/i18n/i18n-type-setting/utils/columns';
-import { FormProps } from '@/views/i18n/i18n-type-setting/utils/types';
+import { FormProps, rules } from '@/views/i18n/i18n-type-setting/utils';
 import { frameSureOptions } from '@/enums';
 import Segmented from '@/components/Segmented';
 import { $t } from '@/plugins/i18n';

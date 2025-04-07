@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { powerCascadeProps, rules } from '@/views/system/power/utils/columns';
-import { FormProps } from '@/views/system/power/utils/types';
+import { FormProps, powerCascadeProps, rules } from '@/views/system/power/utils';
 import { $t } from '@/plugins/i18n';
 import { handleTree } from '@pureadmin/utils';
 import { usePowerStore } from '@/store/system/power';

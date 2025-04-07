@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import { iconClass } from '@/views/system/role/utils/columns';
+import { contentRef, currentRow, iconClass, onMenuPowerClick, powerTreeIsShow, powerTreeRef, tableRef } from '@/views/system/role/utils';
 import Close from '@iconify-icons/ep/close';
 import Check from '@iconify-icons/ep/check';
 import { computed, nextTick, onMounted, ref, watch } from 'vue';
 import { delay, getKeyList, handleTree, subBefore, useResizeObserver } from '@pureadmin/utils';
-import { contentRef, currentRow, onMenuPowerClick, powerTreeIsShow, powerTreeRef, tableRef } from '@/views/system/role/utils/hooks';
 import { usePowerStore } from '@/store/system/power';
-import { powerCascadeProps } from '@/views/system/power/utils/columns';
+import { powerCascadeProps } from '@/views/system/power/utils';
 import { useRoleStore } from '@/store/system/role';
 
 const powerStore = usePowerStore();

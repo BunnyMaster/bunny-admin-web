@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref } from 'vue';
-import { columns } from '@/views/system/power/utils/columns';
+import { auth, columns, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate, onUpdateBatchParent, powerIds } from '@/views/system/power/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { onAdd, onDelete, onDeleteBatch, onSearch, onUpdate, onUpdateBatchParent, powerIds } from '@/views/system/power/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -14,7 +13,6 @@ import { usePowerStore } from '@/store/system/power';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { handleTree } from '@pureadmin/utils';
 import { FormInstance } from 'element-plus';
-import { auth } from '@/views/system/power/utils/auth';
 import { hasAuth } from '@/router/utils';
 
 const tableRef = ref();

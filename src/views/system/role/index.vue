@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import { columns } from '@/views/system/role/utils/columns';
+import { auth, columns, contentRef, deleteIds, formRef, onAdd, onDelete, onDeleteBatch, onMenuPowerClick, onSearch, onUpdate, powerTreeIsShow, tableRef } from '@/views/system/role/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { contentRef, deleteIds, formRef, onAdd, onDelete, onDeleteBatch, onMenuPowerClick, onSearch, onUpdate, powerTreeIsShow, tableRef } from '@/views/system/role/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -15,7 +14,6 @@ import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { deviceDetection } from '@pureadmin/utils';
 import Menu from '@iconify-icons/ep/menu';
 import AssignPowersToRole from '@/views/system/role/assign-powers-to-role.vue';
-import { auth } from '@/views/system/role/utils/auth';
 import { hasAuth } from '@/router/utils';
 
 const roleStore = useRoleStore();

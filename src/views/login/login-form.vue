@@ -8,10 +8,9 @@ import { useI18n } from 'vue-i18n';
 import { useUserStore } from '@/store/system/user';
 import { message } from '@/utils/message';
 import { getTopMenu, initRouter } from '@/router/utils';
-import Motion from './utils/motion';
+import Motion from './utils';
 import { ElMessage, FormInstance } from 'element-plus';
-import { currentPage } from '@/views/login/utils/hooks';
-import { formRules } from '@/views/login/utils/rule';
+import { currentPage, formRules } from '@/views/login/utils';
 
 const router = useRouter();
 const userStore = useUserStore();

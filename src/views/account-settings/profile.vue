@@ -1,15 +1,14 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import { message } from '@/utils/message';
-import type { FormInstance } from 'element-plus';
 import ReCropperPreview from '@/components/CropperPreview';
-import { deviceDetection } from '@pureadmin/utils';
-import uploadLine from '@iconify-icons/ri/upload-line';
-import { rules } from '@/views/account-settings/utils/columns';
-import { cropperBlob, handleSubmitImage, isShow, onSearchByUserinfo, uploadAvatarSrc, userInfos } from '@/views/account-settings/utils/hooks';
-import { $t } from '@/plugins/i18n';
 import { sexConstant } from '@/enums/baseConstant';
+import { $t } from '@/plugins/i18n';
 import { useAdminUserStore } from '@/store/system/adminUser';
+import { message } from '@/utils/message';
+import { cropperBlob, handleSubmitImage, isShow, onSearchByUserinfo, rules, uploadAvatarSrc, userInfos } from '@/views/account-settings/utils';
+import uploadLine from '@iconify-icons/ri/upload-line';
+import { deviceDetection } from '@pureadmin/utils';
+import type { FormInstance } from 'element-plus';
+import { onMounted, ref } from 'vue';
 
 const userInfoFormRef = ref<FormInstance>();
 const uploadRef = ref();

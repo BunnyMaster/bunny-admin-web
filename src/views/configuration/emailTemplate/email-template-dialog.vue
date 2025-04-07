@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { rules } from '@/views/configuration/emailTemplate/utils/columns';
-import { FormProps } from '@/views/configuration/emailTemplate/utils/types';
+import { FormProps, rules } from '@/views/configuration/emailTemplate/utils';
 import { $t } from '@/plugins/i18n';
 import { useEmailTemplateStore } from '@/store/configuration/emailTemplate';
 import { usePublicHooks } from '@/views/hooks';

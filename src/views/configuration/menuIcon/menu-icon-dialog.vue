@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { rules } from '@/views/configuration/menuIcon/utils/columns';
-import { FormProps } from '@/views/configuration/menuIcon/utils/types';
+import { FormProps, rules } from '@/views/configuration/menuIcon/utils';
 import { $t } from '@/plugins/i18n';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import MenuIconSelectIconName from '@/views/configuration/menuIcon/menu-icon-select-icon-name.vue';

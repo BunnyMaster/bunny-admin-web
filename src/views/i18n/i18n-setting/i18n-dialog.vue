@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { rules } from '@/views/i18n/i18n-setting/utils/columns';
-import { FormProps } from '@/views/i18n/i18n-setting/utils/types';
+import { FormProps, rules } from '@/views/i18n/i18n-setting/utils';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
 import { $t } from '@/plugins/i18n';
 

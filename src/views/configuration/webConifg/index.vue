@@ -3,11 +3,9 @@ import { $t } from '@/plugins/i18n';
 import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
 import ReCol from '@/components/MyCol';
-import { form, onSearch, submitForm } from '@/views/configuration/webConifg/utils/hooks';
-import { rules } from '@/views/configuration/webConifg/utils/columns';
+import { auth, form, onSearch, rules, submitForm } from '@/views/configuration/webConifg/utils';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
 import { usePublicHooks } from '@/views/hooks';
-import { auth } from '@/views/configuration/webConifg/utils/auth';
 import { hasAuth } from '@/router/utils';
 
 const ruleFormRef = ref<FormInstance>();

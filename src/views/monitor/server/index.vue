@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import SystemInfo from '@/views/monitor/server/component/system-info.vue';
-import { svg } from '@/views/monitor/server/utils/columns';
-import { info, loading } from '@/views/monitor/server/utils/hooks';
+import { info, loading, svg } from '@/views/monitor/server/utils';
 import SystemServer from '@/views/monitor/server/component/system-server.vue';
 import SystemCpu from '@/views/monitor/server/component/system-cpu.vue';
 import SystemJvmCpu from '@/views/monitor/server/component/system-jvm-cpu.vue';

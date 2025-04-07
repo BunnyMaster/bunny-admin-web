@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { rules } from '@/views/scheduler/schedulersGroup/utils/columns';
-import { FormProps } from '@/views/scheduler/schedulersGroup/utils/types';
+import { FormProps, rules } from '@/views/scheduler/schedulersGroup/utils';
 import { $t } from '@/plugins/i18n';
 
 const props = withDefaults(defineProps<FormProps>(), {

@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/configuration/emailUsers/utils/columns';
+import { auth, columns, deleteIds, onAdd, onChangeDefault, onDelete, onDeleteBatch, onSearch, onUpdate, switchLoadMap } from '@/views/configuration/emailUsers/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { deleteIds, onAdd, onChangeDefault, onDelete, onDeleteBatch, onSearch, onUpdate, switchLoadMap } from '@/views/configuration/emailUsers/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -14,7 +13,6 @@ import { useEmailUsersStore } from '@/store/configuration/emailUsers';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { usePublicHooks } from '@/views/hooks';
 import { FormInstance } from 'element-plus';
-import { auth } from '@/views/configuration/emailUsers/utils/auth';
 import { hasAuth } from '@/router/utils';
 import { enabledOrNotStatus } from '@/enums/baseConstant';
 

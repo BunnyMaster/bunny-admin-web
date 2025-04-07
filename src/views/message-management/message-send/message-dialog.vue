@@ -1,19 +1,16 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { editorTypeList, rules } from '@/views/message-management/message-send/utils/columns';
+import { coverUrl, editorTypeList, loading, onSearchUserinfo, onUpload, rules, updateMessage, userDataList } from '@/views/message-management/message-send/utils';
 import { $t } from '@/plugins/i18n';
 import { usePublicHooks } from '@/views/hooks';
 import { useMessageTypeStore } from '@/store/message/messageType';
 import LoadingSvg from '@/assets/svg/loading.svg';
-import { coverUrl, loading, onSearchUserinfo, onUpload, updateMessage, userDataList } from '@/views/message-management/message-send/utils/hooks';
-import { messageLevel, settingLR } from '@/views/message-management/message-editing/utils/columns';
+import { beforeUpload, messageLevel, settingLR } from '@/views/message-management/message-editing/utils';
 import { Plus } from '@element-plus/icons-vue';
-import { beforeUpload } from '@/views/message-management/message-editing/utils/hooks';
 import SplitPane from '@/components/SplitPane';
 import RichEditor from '@/views/message-management/message-send/rich-editor.vue';
 import MarkdownEditor from '@/views/message-management/message-send/markdown-editor.vue';
-import { imageLoading } from '@/enums/baseConstant';
 import ImageLoading from '@/components/Upload/ImageLoading.vue';
 
 // 用户是否停用样式

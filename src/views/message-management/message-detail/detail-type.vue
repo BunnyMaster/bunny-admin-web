@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/message-management/message-detail/utils/columns';
+import { columns, markAsAllRead, markAsRead, onDelete, onSearch, selectIds } from '@/views/message-management/message-detail/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
-import { markAsAllRead, markAsRead, onDelete, onSearch, selectIds } from '@/views/message-management/message-detail/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import { $t } from '@/plugins/i18n';
 import { Message } from '@element-plus/icons-vue';

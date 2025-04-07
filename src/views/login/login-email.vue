@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { emailRules } from '@/views/login/utils/rule';
+import { currentPage, emailRules, onBack } from '@/views/login/utils';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import User from '@iconify-icons/ri/user-3-fill';
 import Lock from '@iconify-icons/ri/lock-fill';
@@ -9,9 +9,8 @@ import { useI18n } from 'vue-i18n';
 import { useUserStore } from '@/store/system/user';
 import { message } from '@/utils/message';
 import { getTopMenu, initRouter } from '@/router/utils';
-import Motion from './utils/motion';
+import Motion from './utils';
 import { ElMessage, FormInstance } from 'element-plus';
-import { currentPage, onBack } from '@/views/login/utils/hooks';
 
 const router = useRouter();
 const userStore = useUserStore();

@@ -1,10 +1,9 @@
 <script lang="ts" setup>
-import { beforeUpload, coverUrl, formState, loading, onSearchUserinfo, onUpload, userDataList } from '@/views/message-management/message-editing/utils/hooks';
+import { auth, beforeUpload, coverUrl, formState, loading, messageLevel, onSearchUserinfo, onUpload, rules, userDataList } from '@/views/message-management/message-editing/utils';
 import { onMounted, ref, toRaw } from 'vue';
 import { $t } from '@/plugins/i18n';
-import { messageLevel, rules } from '@/views/message-management/message-editing/utils/columns';
 import { FormInstance } from 'element-plus';
-import { editorTypeList } from '@/views/message-management/message-send/utils/columns';
+import { editorTypeList } from '@/views/message-management/message-send/utils';
 import LoadingSvg from '@/assets/svg/loading.svg';
 import { useMessageTypeStore } from '@/store/message/messageType';
 import { encode } from 'js-base64';
@@ -14,7 +13,6 @@ import { usePublicHooks } from '@/views/hooks';
 import { Plus } from '@element-plus/icons-vue';
 import ImageLoading from '@/components/Upload/ImageLoading.vue';
 import { hasAuth } from '@/router/utils';
-import { auth } from '@/views/message-management/message-editing/utils/auth';
 
 const formRef = ref();
 // 用户是否停用样式

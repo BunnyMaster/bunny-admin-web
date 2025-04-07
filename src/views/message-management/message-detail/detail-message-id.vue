@@ -12,7 +12,7 @@ const messageUserStore = useMessageUserStore();
 /** 获取消息详情 */
 const getMessageDetail = async () => {
 	// 从路由中获取地址栏信息
-	const messageId = route.params.messageId;
+	const messageId = route.params.messageId.toString();
 
 	// 获取消息详情
 	await messageUserStore.getMessageDetailById(messageId);

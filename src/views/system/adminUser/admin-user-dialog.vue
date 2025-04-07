@@ -1,13 +1,11 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { isAddUserinfo, rules } from '@/views/system/adminUser/utils/columns';
-import { FormProps } from '@/views/system/adminUser/utils/types';
+import { deptList, FormProps, isAddUserinfo, rules } from '@/views/system/adminUser/utils';
 import { $t } from '@/plugins/i18n';
 import ReCol from '@/components/MyCol';
 import { sexConstant } from '@/enums/baseConstant';
-import { deptSelector } from '@/views/system/dept/utils/columns';
-import { deptList } from '@/views/system/adminUser/utils/hooks';
+import { deptSelector } from '@/views/system/dept/utils';
 import { usePublicHooks } from '@/views/hooks';
 
 const props = withDefaults(defineProps<FormProps>(), {

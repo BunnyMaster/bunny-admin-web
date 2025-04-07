@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/system/adminUser/utils/columns';
-import PureTableBar from '@/components/TableBar/src/bar';
-import AddFill from '@iconify-icons/ri/add-circle-line';
-import PureTable from '@pureadmin/table';
 import {
+	auth,
+	columns,
 	deleteIds,
 	deptList,
 	onAdd,
@@ -19,7 +17,10 @@ import {
 	onUploadAvatar,
 	switchLoadMap,
 	updateUserStatus,
-} from '@/views/system/adminUser/utils/hooks';
+} from '@/views/system/adminUser/utils';
+import PureTableBar from '@/components/TableBar/src/bar';
+import AddFill from '@iconify-icons/ri/add-circle-line';
+import PureTable from '@pureadmin/table';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -38,7 +39,6 @@ import Airplane from '@/assets/svg/airplane.svg';
 import { useDeptStore } from '@/store/system/dept';
 import { FormInstance } from 'element-plus';
 import { usePublicHooks } from '@/views/hooks';
-import { auth } from '@/views/system/adminUser/utils/auth';
 import { hasAuth } from '@/router/utils';
 
 const adminUserStore = useAdminUserStore();

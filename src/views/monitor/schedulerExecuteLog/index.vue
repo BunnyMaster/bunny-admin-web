@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns, state } from '@/views/monitor/schedulerExecuteLog/utils/columns';
+import { auth, columns, deleteIds, onDelete, onDeleteBatch, onSearch, onView, state } from '@/views/monitor/schedulerExecuteLog/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
-import { deleteIds, onDelete, onDeleteBatch, onSearch, onView } from '@/views/monitor/schedulerExecuteLog/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
@@ -14,7 +13,6 @@ import { FormInstance } from 'element-plus';
 import View from '@iconify-icons/ep/view';
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
-import { auth } from '@/views/monitor/schedulerExecuteLog/utils/auth';
 import { hasAuth } from '@/router/utils';
 
 const tableRef = ref();

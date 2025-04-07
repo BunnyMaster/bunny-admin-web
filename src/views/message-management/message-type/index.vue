@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/message-management/message-type/utils/columns';
+import { auth, columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/message-management/message-type/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/message-management/message-type/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -15,7 +14,6 @@ import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { FormInstance } from 'element-plus';
 import { enabledOrNotStatus } from '@/enums/baseConstant';
 import { usePublicHooks } from '@/views/hooks';
-import { auth } from '@/views/message-management/message-type/utils/auth';
 import { hasAuth } from '@/router/utils';
 
 const tableRef = ref();

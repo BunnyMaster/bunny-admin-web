@@ -1,21 +1,19 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/message-management/message-received/utils/columns';
+import { auth, columns, onDeleteBatch, onSearch, selectIds, updateMarkMessageReceived } from '@/views/message-management/message-received/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
-import { onDeleteBatch, onSearch, selectIds, updateMarkMessageReceived } from '@/views/message-management/message-received/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { FormInstance } from 'element-plus';
-import { messageLevel } from '@/views/message-management/message-editing/utils/columns';
+import { messageLevel } from '@/views/message-management/message-editing/utils';
 import { isReadStatus } from '@/enums/baseConstant';
 import { useMessageReceivedStore } from '@/store/message/messageReceived';
 import { useMessageTypeStore } from '@/store/message/messageType';
 import { Message } from '@element-plus/icons-vue';
-import { auth } from '@/views/message-management/message-received/utils/auth';
 import { hasAuth } from '@/router/utils';
 
 const tableRef = ref();

@@ -1,12 +1,11 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import ReCol from '@/components/MyCol';
-import { useDark } from './utils/utils';
+import { chartData, useDark } from './utils';
 import { ReNormalCountTo } from '@/components/CountTo';
 import ChartLine from '@/views/welcome/components/ChartLine.vue';
 import ChartRound from '@/views/welcome/components/ChartRound.vue';
-import { chartData } from './utils/data';
-import { getServerCommitList, getWebCommitList, serverCommitList, webCommitList } from '@/views/welcome/utils/hooks';
+import { getServerCommitList, getWebCommitList, serverCommitList, webCommitList } from '@/views/welcome/utils';
 import WebReadMe from '@/views/welcome/components/web-read-me.vue';
 import { TabsPaneContext } from 'element-plus';
 import ServerReadMe from '@/views/welcome/components/server-read-me.vue';
@@ -18,7 +17,7 @@ const activeName = ref('web');
 
 // 修改tab名称
 const onTabClick = (tab: TabsPaneContext, _: Event) => {
-	activeName.value = tab.paneName;
+	activeName.value = tab.paneName.toString();
 };
 
 onMounted(() => {

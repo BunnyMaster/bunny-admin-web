@@ -9,7 +9,9 @@ import AddFill from '@iconify-icons/ri/add-circle-line';
 import {
 	assignBatchRolesToRouter,
 	assignRolesToRouter,
+	auth,
 	clearAllRolesSelect,
+	columns,
 	onAdd,
 	onChangeMenuRank,
 	onchangeVisible,
@@ -19,16 +21,14 @@ import {
 	selectIds,
 	switchLoadMap,
 	tableRef,
-} from '@/views/system/menu/utils/hooks';
+} from '@/views/system/menu/utils';
 import PureTable from '@pureadmin/table';
-import { columns } from '@/views/system/menu/utils/columns';
 import { userMenuStore } from '@/store/system/menu';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import Upload from '@iconify-icons/ri/upload-line';
 import { FormInstance } from 'element-plus';
 import { usePublicHooks } from '@/views/hooks';
-import { auth } from '@/views/system/menu/utils/auth';
 import { hasAuth } from '@/router/utils';
 
 const formRef = ref();

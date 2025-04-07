@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import { deptSelector, rules } from '@/views/system/dept/utils/columns';
-import { FormProps } from '@/views/system/dept/utils/types';
+import { deptSelector, FormProps, rules } from '@/views/system/dept/utils';
 import { $t } from '@/plugins/i18n';
 import { useDeptStore } from '@/store/system/dept';
 import { handleTree } from '@pureadmin/utils';

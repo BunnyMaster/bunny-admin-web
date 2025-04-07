@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import Motion from './utils/motion';
+import Motion from './utils';
 import { useNav } from '@/layout/hooks/useNav';
 import { useLayout } from '@/layout/hooks/useLayout';
 import bg from '@/assets/login/bg.png';
@@ -14,7 +14,7 @@ import Check from '@iconify-icons/ep/check';
 import LoginForm from '@/views/login/login-form.vue';
 import LoginEmail from '@/views/login/login-email.vue';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
-import { currentPage } from '@/views/login/utils/hooks';
+import { currentPage } from '@/views/login/utils';
 
 const { initStorage } = useLayout();
 initStorage();

@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/scheduler/schedulersGroup/utils/columns';
+import { auth, columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/scheduler/schedulersGroup/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import { deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/scheduler/schedulersGroup/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -13,7 +12,6 @@ import { $t } from '@/plugins/i18n';
 import { useSchedulersGroupStore } from '@/store/scheduler/schedulersGroup';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { FormInstance } from 'element-plus';
-import { auth } from '@/views/scheduler/schedulersGroup/utils/auth';
 import { hasAuth } from '@/router/utils';
 
 const tableRef = ref();

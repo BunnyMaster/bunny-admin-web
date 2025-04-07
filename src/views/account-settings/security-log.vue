@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { onMounted, reactive } from 'vue';
-import { deviceDetection } from '@pureadmin/utils';
-import { PureTable } from '@pureadmin/table';
-import { columns } from '@/views/account-settings/utils/columns';
 import { $t } from '@/plugins/i18n';
 import { useUserLoginLogStore } from '@/store/monitor/userLoginLog';
+import { columns } from '@/views/account-settings/utils';
+import { PureTable } from '@pureadmin/table';
+import { deviceDetection } from '@pureadmin/utils';
+import { onMounted, reactive } from 'vue';
 
 const userLoginLogStore = useUserLoginLogStore();
 const userLoginLogs = reactive({

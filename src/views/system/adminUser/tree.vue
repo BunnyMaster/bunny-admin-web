@@ -8,10 +8,8 @@ import ExpandIcon from '@/assets/svg/expand.svg?component';
 import UnExpandIcon from '@/assets/svg/unexpand.svg?component';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import Reset from '@iconify-icons/ri/restart-line';
-import { Tree } from '@/views/system/adminUser/utils/types';
-import { buttonClass, defaultProps } from '@/views/system/adminUser/utils/columns';
+import { buttonClass, defaultProps, onSearch, Tree } from '@/views/system/adminUser/utils';
 import { useAdminUserStore } from '@/store/system/adminUser';
-import { onSearch } from '@/views/system/adminUser/utils/hooks';
 import { $t } from '@/plugins/i18n';
 
 defineProps({

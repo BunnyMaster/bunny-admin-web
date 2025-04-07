@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/monitor/userLoginLog/utils/columns';
+import { auth, columns, deleteIds, onDelete, onDeleteBatch, onSearch, onView } from '@/views/monitor/userLoginLog/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
-import { deleteIds, onDelete, onDeleteBatch, onSearch, onView } from '@/views/monitor/userLoginLog/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import View from '@iconify-icons/ep/view';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -12,7 +11,6 @@ import { $t } from '@/plugins/i18n';
 import { useUserLoginLogStore } from '@/store/monitor/userLoginLog';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { FormInstance } from 'element-plus';
-import { auth } from '@/views/monitor/userLoginLog/utils/auth';
 import { hasAuth } from '@/router/utils';
 
 const tableRef = ref();

@@ -2,7 +2,7 @@
 import { $t } from '@/plugins/i18n';
 import { ref } from 'vue';
 import LoadingSvg from '@/assets/svg/loading.svg';
-import { FormProps } from '@/views/configuration/menuIcon/utils/types';
+import { FormProps } from '@/views/configuration/menuIcon/utils';
 import { useMenuIconStore } from '@/store/configuration/menuIcon';
 
 const props = withDefaults(defineProps<FormProps>(), {

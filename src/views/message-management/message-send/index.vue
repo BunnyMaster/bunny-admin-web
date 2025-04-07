@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { columns } from '@/views/message-management/message-send/utils/columns';
+import { auth, columns, deleteIds, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/message-management/message-send/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
-import { deleteIds, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/message-management/message-send/utils/hooks';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
@@ -11,11 +10,10 @@ import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import { FormInstance } from 'element-plus';
-import { messageLevel } from '@/views/message-management/message-editing/utils/columns';
+import { messageLevel } from '@/views/message-management/message-editing/utils';
 import { isReadStatus } from '@/enums/baseConstant';
 import { useMessageSendStore } from '@/store/message/messageSend';
 import { useMessageTypeStore } from '@/store/message/messageType';
-import { auth } from '@/views/message-management/message-send/utils/auth';
 import { hasAuth } from '@/router/utils';
 
 const tableRef = ref();

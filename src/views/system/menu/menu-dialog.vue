@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import ReCol from '@/components/MyCol';
-import { formRules } from '@/views/system/menu/utils/columns';
+import { FormProps, formRules } from '@/views/system/menu/utils';
 import IconSelect from '@/components/SelectIcon/Select.vue';
 import Segmented from '@/components/Segmented';
 import { menuTypeOptions } from '@/enums';
-import { FormProps } from '@/views/system/menu/utils/types';
 import { $t } from '@/plugins/i18n';
 
 const props = withDefaults(defineProps<FormProps>(), {

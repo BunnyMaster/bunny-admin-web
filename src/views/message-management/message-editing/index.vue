@@ -2,9 +2,8 @@
 import SplitPane from '@/components/SplitPane';
 import MessageEditorFrom from '@/views/message-management/message-editing/message-editor-from.vue';
 import RichEditor from '@/views/message-management/message-editing/rich-editor.vue';
-import { formState } from '@/views/message-management/message-editing/utils/hooks';
+import { formState, settingLR } from '@/views/message-management/message-editing/utils';
 import MarkdownEditor from '@/views/message-management/message-editing/markdown-editor.vue';
-import { settingLR } from '@/views/message-management/message-editing/utils/columns';
 import { onMounted } from 'vue';
 
 /** 退出提醒 */
