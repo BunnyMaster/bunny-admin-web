@@ -1,9 +1,9 @@
-import { defineStore } from 'pinia';
-import { fetchAddI18n, fetchDeleteI18n, fetchDownloadI18nSetting, fetchGetI18n, fetchGetI18nList, fetchUpdateI18n } from '@/api/v1/i18n';
+import { fetchAddI18n, fetchDeleteI18n, fetchDownloadI18nSetting, fetchGetI18n, fetchGetI18nList, fetchUpdateI18n, updateI18nByFile } from '@/api/v1/i18n';
 import { pageSizes } from '@/enums/baseConstant';
-import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
+import { storeMessage } from '@/utils/message';
 import { download } from '@/utils/sso';
+import { defineStore } from 'pinia';
 
 export const userI18nStore = defineStore('i18nStore', {
 	persist: true,
@@ -68,6 +68,12 @@ export const userI18nStore = defineStore('i18nStore', {
 		/** 添加多语言 */
 		async addI18n(data: any) {
 			const result = await fetchAddI18n(data);
+			return storeMessage(result);
+		},
+
+		/* 用文件更新多语言 */
+		async updateI18nByFile(data: any) {
+			const result = await updateI18nByFile(data);
 			return storeMessage(result);
 		},
 

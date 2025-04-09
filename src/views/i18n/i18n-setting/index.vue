@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { userI18nStore } from '@/store/i18n/i18n';
-import { auth, columns, deleteIds, downloadI18nSetting, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/i18n/i18n-setting/utils';
+import { auth, columns, deleteIds, downloadI18nSetting, onAdd, udateI18nSetting, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/i18n/i18n-setting/utils';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import EditPen from '@iconify-icons/ep/edit-pen';
@@ -74,6 +74,9 @@ onMounted(() => {
 			<template #buttons>
 				<!-- 下载多语言配置 -->
 				<el-button :icon="useRenderIcon(Download)" bg text type="primary" @click="downloadI18nSetting"> 下载配置 </el-button>
+
+				<!-- 下载多语言配置 -->
+				<el-button :icon="useRenderIcon(Download)" bg text type="primary" @click="udateI18nSetting"> 文件更新 </el-button>
 
 				<!-- 添加多语言 -->
 				<el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" bg text type="primary" @click="onAdd">

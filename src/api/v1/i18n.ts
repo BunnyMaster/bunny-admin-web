@@ -26,6 +26,11 @@ export const fetchUpdateI18n = (data: any) => {
 	return http.request<BaseResult<object>>('put', 'i18n/updateI18n', { data });
 };
 
+/** 多语言类型管理---用文件更新多语言 */
+export const updateI18nByFile = (data: any) => {
+	return http.request<BaseResult<object>>('put', 'i18n/updateI18nByFile', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
+};
+
 /** 多语言类型管理---删除多语言 */
 export const fetchDeleteI18n = (data: any) => {
 	return http.request<BaseResult<object>>('delete', 'i18n/deleteI18n', { data });
