@@ -66,12 +66,12 @@ onMounted(() => {
 
 		<PureTableBar :columns="columns" :title="$t('menuIcon')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
+				<el-button v-if="hasAuth(auth.add)" bg text :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
 					{{ $t('addNew') }}
 				</el-button>
 
 				<!-- 批量删除按钮 -->
-				<el-button v-if="hasAuth(auth.deleted)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+				<el-button v-if="hasAuth(auth.deleted)" bg text :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
 					{{ $t('deleteBatches') }}
 				</el-button>
 			</template>

@@ -107,17 +107,17 @@ onMounted(() => {
 		<PureTableBar :columns="columns" title="系统消息" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<!-- 标为已读 -->
-				<el-button v-if="hasAuth(auth.update)" :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('octicon:read-24')" type="primary" @click="updateMarkMessageReceived(true)">
+				<el-button v-if="hasAuth(auth.update)" bg text :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('octicon:read-24')" type="primary" @click="updateMarkMessageReceived(true)">
 					{{ $t('markAsRead') }}
 				</el-button>
 
 				<!-- 标为未读 -->
-				<el-button v-if="hasAuth(auth.update)" :disabled="!(selectIds.length > 0)" :icon="Message" type="primary" @click="updateMarkMessageReceived(false)">
+				<el-button v-if="hasAuth(auth.update)" bg text :disabled="!(selectIds.length > 0)" :icon="Message" type="primary" @click="updateMarkMessageReceived(false)">
 					{{ $t('markAsUnread') }}
 				</el-button>
 
 				<!-- 批量删除按钮 -->
-				<el-button v-if="hasAuth(auth.deleted)" :disabled="!(selectIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+				<el-button v-if="hasAuth(auth.deleted)" bg text :disabled="!(selectIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
 					{{ $t('delete_batches') }}
 				</el-button>
 			</template>

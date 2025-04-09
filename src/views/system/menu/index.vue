@@ -76,17 +76,17 @@ onMounted(() => {
 		<PureTableBar :columns="columns" :isExpandAll="false" :tableRef="tableRef?.getTableRef()" title="菜单管理" @fullscreen="tableRef?.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
 				<!-- 添加菜单 -->
-				<el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()">
+				<el-button v-if="hasAuth(auth.add)" bg text :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd()">
 					{{ $t('addNew') }}
 				</el-button>
 
 				<!-- 批量为菜单添加角色 -->
-				<el-button v-if="hasAuth(auth.assignAddBatchRolesToRouter)" :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('iwwa:assign')" type="warning" @click="assignBatchRolesToRouter()">
+				<el-button v-if="hasAuth(auth.assignAddBatchRolesToRouter)" bg text :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('iwwa:assign')" type="warning" @click="assignBatchRolesToRouter()">
 					{{ $t('assignBatchRolesToRouter') }}
 				</el-button>
 
 				<!-- 清除选中所以角色 -->
-				<el-button v-if="hasAuth(auth.clearAllRolesSelect)" :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('ic:baseline-clear')" type="danger" @click="clearAllRolesSelect()">
+				<el-button v-if="hasAuth(auth.clearAllRolesSelect)" bg text :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('ic:baseline-clear')" type="danger" @click="clearAllRolesSelect()">
 					{{ $t('clearAllRolesSelect') }}
 				</el-button>
 			</template>

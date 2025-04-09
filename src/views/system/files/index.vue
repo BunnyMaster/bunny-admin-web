@@ -73,17 +73,17 @@ onMounted(() => {
 
 		<PureTableBar :columns="columns" :title="$t('system_file')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
-				<el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
+				<el-button v-if="hasAuth(auth.add)" bg text :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
 					{{ $t('addNew') }}
 				</el-button>
 
 				<!-- 批量下载 -->
-				<el-button v-if="hasAuth(auth.downloadFilesByFileId)" :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Download)" type="success" @click="onDownloadBatch">
+				<el-button v-if="hasAuth(auth.downloadFilesByFileId)" bg text :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Download)" type="success" @click="onDownloadBatch">
 					{{ $t('download_batch') }}
 				</el-button>
 
 				<!-- 批量删除按钮 -->
-				<el-button v-if="hasAuth(auth.deleted)" :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+				<el-button v-if="hasAuth(auth.deleted)" bg text :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
 					{{ $t('deleteBatches') }}
 				</el-button>
 			</template>

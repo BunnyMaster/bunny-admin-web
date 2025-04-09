@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
-import { fetchAddI18n, fetchDeleteI18n, fetchGetI18n, fetchGetI18nList, fetchUpdateI18n } from '@/api/v1/i18n';
+import { fetchAddI18n, fetchDeleteI18n, fetchDownloadI18nSetting, fetchGetI18n, fetchGetI18nList, fetchUpdateI18n } from '@/api/v1/i18n';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
+import { download } from '@/utils/sso';
 
 export const userI18nStore = defineStore('i18nStore', {
 	persist: true,
@@ -43,6 +44,12 @@ export const userI18nStore = defineStore('i18nStore', {
 				// 赋值返回参数
 				this.i18n = data;
 			}
+		},
+
+		/* 下载多语言配置 */
+		async downloadI18nSetting() {
+			const blob = await fetchDownloadI18nSetting();
+			download(blob, 'i18n.zip');
 		},
 
 		/** 获取多语言列表 */

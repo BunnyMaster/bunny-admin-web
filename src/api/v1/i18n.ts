@@ -6,6 +6,11 @@ export const fetchGetI18n = () => {
 	return http.request<BaseResult<object>>('get', 'i18n/getI18n');
 };
 
+/** 多语言类型管理---下载多语言配置 */
+export const fetchDownloadI18nSetting = () => {
+	return http.request<any>('get', 'i18n/downloadI18n', { responseType: 'blob' });
+};
+
 /** 多语言类型管理---获取多语言列表 */
 export const fetchGetI18nList = (data: any) => {
 	return http.request<BaseResult<ResultTable>>('get', `i18n/getI18nList/${data.currentPage}/${data.pageSize}`, { params: data });

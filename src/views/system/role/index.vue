@@ -85,12 +85,12 @@ onMounted(() => {
 				@refresh="onSearch"
 			>
 				<template #buttons>
-					<el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
+					<el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" bg text type="primary" @click="onAdd">
 						{{ $t('addNew') }}
 					</el-button>
 
 					<!-- 批量删除按钮 -->
-					<el-button v-if="hasAuth(auth.deleted)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+					<el-button v-if="hasAuth(auth.deleted)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" bg text type="danger" @click="onDeleteBatch">
 						{{ $t('delete_batches') }}
 					</el-button>
 				</template>

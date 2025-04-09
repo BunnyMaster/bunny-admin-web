@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { userI18nStore } from '@/store/i18n/i18n';
-import { auth, columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/i18n/i18n-setting/utils';
+import { auth, columns, deleteIds, downloadI18nSetting, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/i18n/i18n-setting/utils';
 import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import EditPen from '@iconify-icons/ep/edit-pen';
@@ -12,6 +12,7 @@ import Refresh from '@iconify-icons/ep/refresh';
 import { $t } from '@/plugins/i18n';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { hasAuth } from '@/router/utils';
+import Download from '@iconify-icons/ep/download';
 
 const tableRef = ref();
 const pageFormRef = ref();
@@ -71,13 +72,16 @@ onMounted(() => {
 
 		<PureTableBar :columns="columns" :title="$t('multilingualManagement')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
 			<template #buttons>
+				<!-- 下载多语言配置 -->
+				<el-button :icon="useRenderIcon(Download)" bg text type="primary" @click="downloadI18nSetting"> 下载配置 </el-button>
+
 				<!-- 添加多语言 -->
-				<el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
+				<el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" bg text type="primary" @click="onAdd">
 					{{ $t('addNew') }}
 				</el-button>
 
 				<!-- 批量删除按钮 -->
-				<el-button v-if="hasAuth(auth.deleted)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDeleteBatch">
+				<el-button v-if="hasAuth(auth.deleted)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" bg text type="danger" @click="onDeleteBatch">
 					{{ $t('deleteBatches') }}
 				</el-button>
 			</template>

@@ -10,19 +10,19 @@ export const formRef = ref();
 const i18nStore = userI18nStore();
 export const deleteIds = ref([]);
 
-/**
- * * 查询内容
- */
+/* 查询内容 */
 export const onSearch = async () => {
 	i18nStore.loading = true;
 	await i18nStore.getI18nMangeList();
 	i18nStore.loading = false;
 };
 
-/**
- * * 行内容添加
- * 打开添加弹窗
- */
+/* 下载多语言配置 */
+export const downloadI18nSetting = () => {
+	i18nStore.downloadI18nSetting();
+};
+
+/* 行内容添加 打开添加弹窗 */
 export const onAdd = () => {
 	addDialog({
 		title: $t('addMultilingual'),
@@ -77,9 +77,7 @@ export const onAdd = () => {
 	});
 };
 
-/**
- * * 当表格修改时
- */
+/* 当表格修改时 */
 export const onUpdate = (row: any) => {
 	const id = row.id;
 
@@ -104,9 +102,8 @@ export const onUpdate = (row: any) => {
 		},
 	});
 };
-/**
- * * 批量彻底删除行
- */
+
+/* 批量彻底删除行 */
 export const onDelete = async (row: any) => {
 	const isConfirm = await messageBox({
 		message: $t('confirmDelete'),
@@ -122,9 +119,7 @@ export const onDelete = async (row: any) => {
 	}
 };
 
-/**
- * * 批量删除
- */
+/* 批量删除 */
 export const onDeleteBatch = async () => {
 	const isConfirm = await messageBox({
 		message: $t('confirmDelete'),
