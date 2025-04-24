@@ -1,33 +1,31 @@
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
-import MenuFold from "@iconify-icons/ri/menu-fold-fill";
-import MenuUnfold from "@iconify-icons/ri/menu-unfold-fill";
+import { useI18n } from 'vue-i18n';
+import MenuFold from '@iconify-icons/ri/menu-fold-fill';
+import MenuUnfold from '@iconify-icons/ri/menu-unfold-fill';
 
 interface Props {
   isActive: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
-  isActive: false
+  isActive: false,
 });
 
 const { t } = useI18n();
 
 const emit = defineEmits<{
-  (e: "toggleClick"): void;
+  (e: 'toggleClick'): void;
 }>();
 
 const toggleClick = () => {
-  emit("toggleClick");
+  emit('toggleClick');
 };
 </script>
 
 <template>
   <div
     class="px-3 mr-1 navbar-bg-hover"
-    :title="
-      isActive ? t('buttons.pureClickCollapse') : t('buttons.pureClickExpand')
-    "
+    :title="isActive ? t('buttons.pureClickCollapse') : t('buttons.pureClickExpand')"
     @click="toggleClick"
   >
     <IconifyIconOffline

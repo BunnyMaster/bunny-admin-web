@@ -1,11 +1,11 @@
 // 添加或者修改表单元素
 export interface FormItemProps {
-	keyName: string;
-	translation: string;
-	typeName: string;
+  keyName: string;
+  translation: string;
+  typeName: string;
 }
 
 // 添加或修改表单Props
 export interface FormProps {
-	formInline: FormItemProps;
+  formInline: FormItemProps;
 }

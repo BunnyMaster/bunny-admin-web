@@ -8,16 +8,16 @@ const content = ref();
 
 /** 获取文档信息 */
 const onSearch = async () => {
-	const response = await fetch('http://129.211.31.58:3000/api/v1/repos/auth/auth-server-java/contents/ReadMe.md');
-	const json = await response.json();
-	content.value = decode(json.content);
+  const response = await fetch('http://129.211.31.58:3000/api/v1/repos/auth/auth-server-java/contents/ReadMe.md');
+  const json = await response.json();
+  content.value = decode(json.content);
 };
 
 onMounted(() => {
-	onSearch();
+  onSearch();
 });
 </script>
 
 <template>
-	<MdPreview id="server-read-me" :modelValue="content" />
+  <MdPreview id="server-read-me" :modelValue="content" />
 </template>

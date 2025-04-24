@@ -16,12 +16,12 @@ import SearchIcon from '@iconify-icons/ri/search-line';
 import { $t } from '@/plugins/i18n';
 
 interface Props {
-	/** 弹窗显隐 */
-	value: boolean;
+  /** 弹窗显隐 */
+  value: boolean;
 }
 
 interface Emits {
-	(e: 'update:value', val: boolean): void;
+  (e: 'update:value', val: boolean): void;
 }
 
 const { device } = useNav();
@@ -50,203 +50,204 @@ const inputRef = ref<HTMLInputElement | null>(null);
 
 /** 菜单树形结构 */
 const menusData = computed(() => {
-	return cloneDeep(usePermissionStoreHook().wholeMenus);
+  return cloneDeep(usePermissionStoreHook().wholeMenus);
 });
 
 const show = computed({
-	get() {
-		return props.value;
-	},
-	set(val: boolean) {
-		emit('update:value', val);
-	},
+  get() {
+    return props.value;
+  },
+  set(val: boolean) {
+    emit('update:value', val);
+  },
 });
 
 watch(
-	() => props.value,
-	newValue => {
-		if (newValue) getHistory();
-	},
+  () => props.value,
+  (newValue) => {
+    if (newValue) getHistory();
+  }
 );
 
 const showSearchResult = computed(() => {
-	return keyword.value && resultOptions.value.length > 0;
+  return keyword.value && resultOptions.value.length > 0;
 });
 
 const showSearchHistory = computed(() => {
-	return !keyword.value && historyOptions.value.length > 0;
+  return !keyword.value && historyOptions.value.length > 0;
 });
 
 const showEmpty = computed(() => {
-	return (!keyword.value && historyOptions.value.length === 0) || (keyword.value && resultOptions.value.length === 0);
+  return (!keyword.value && historyOptions.value.length === 0) || (keyword.value && resultOptions.value.length === 0);
 });
 
 function getStorageItem(key) {
-	return storageLocal().getItem<optionsItem[]>(key) || [];
+  return storageLocal().getItem<optionsItem[]>(key) || [];
 }
 
 function setStorageItem(key, value) {
-	storageLocal().setItem(key, value);
+  storageLocal().setItem(key, value);
 }
 
 /** 将菜单树形结构扁平化为一维数组，用于菜单查询 */
 function flatTree(arr) {
-	const res = [];
+  const res = [];
 
-	function deep(arr) {
-		arr.forEach(item => {
-			res.push(item);
-			item.children && deep(item.children);
-		});
-	}
+  function deep(arr) {
+    arr.forEach((item) => {
+      res.push(item);
+      item.children && deep(item.children);
+    });
+  }
 
-	deep(arr);
-	return res;
+  deep(arr);
+  return res;
 }
 
 /** 查询 */
 function search() {
-	const flatMenusData = flatTree(menusData.value);
-	resultOptions.value = flatMenusData.filter(menu =>
-		keyword.value
-			? $t(menu.meta?.title).toLocaleLowerCase().includes(keyword.value.toLocaleLowerCase().trim()) ||
-				(locale.value === 'zh' && !isAllEmpty(match($t(menu.meta?.title).toLocaleLowerCase(), keyword.value.toLocaleLowerCase().trim())))
-			: false,
-	);
-	activePath.value = resultOptions.value?.length > 0 ? resultOptions.value[0].path : '';
+  const flatMenusData = flatTree(menusData.value);
+  resultOptions.value = flatMenusData.filter((menu) =>
+    keyword.value
+      ? $t(menu.meta?.title).toLocaleLowerCase().includes(keyword.value.toLocaleLowerCase().trim()) ||
+        (locale.value === 'zh' &&
+          !isAllEmpty(match($t(menu.meta?.title).toLocaleLowerCase(), keyword.value.toLocaleLowerCase().trim())))
+      : false
+  );
+  activePath.value = resultOptions.value?.length > 0 ? resultOptions.value[0].path : '';
 }
 
 function handleClose() {
-	show.value = false;
-	/** 延时处理防止用户看到某些操作 */
-	setTimeout(() => {
-		resultOptions.value = [];
-		historyPath.value = '';
-		keyword.value = '';
-	}, 200);
+  show.value = false;
+  /** 延时处理防止用户看到某些操作 */
+  setTimeout(() => {
+    resultOptions.value = [];
+    historyPath.value = '';
+    keyword.value = '';
+  }, 200);
 }
 
 function scrollTo(index) {
-	const ref = resultOptions.value.length ? resultRef.value : historyRef.value;
-	const scrollTop = ref.handleScroll(index);
-	scrollbarRef.value.setScrollTop(scrollTop);
+  const ref = resultOptions.value.length ? resultRef.value : historyRef.value;
+  const scrollTop = ref.handleScroll(index);
+  scrollbarRef.value.setScrollTop(scrollTop);
 }
 
 /** 获取当前选项和路径 */
 function getCurrentOptionsAndPath() {
-	const isResultOptions = resultOptions.value.length > 0;
-	const options = isResultOptions ? resultOptions.value : historyOptions.value;
-	const currentPath = isResultOptions ? activePath.value : historyPath.value;
-	return { options, currentPath, isResultOptions };
+  const isResultOptions = resultOptions.value.length > 0;
+  const options = isResultOptions ? resultOptions.value : historyOptions.value;
+  const currentPath = isResultOptions ? activePath.value : historyPath.value;
+  return { options, currentPath, isResultOptions };
 }
 
 /** 更新路径并滚动到指定项 */
 function updatePathAndScroll(newIndex, isResultOptions) {
-	if (isResultOptions) {
-		activePath.value = resultOptions.value[newIndex].path;
-	} else {
-		historyPath.value = historyOptions.value[newIndex].path;
-	}
-	scrollTo(newIndex);
+  if (isResultOptions) {
+    activePath.value = resultOptions.value[newIndex].path;
+  } else {
+    historyPath.value = historyOptions.value[newIndex].path;
+  }
+  scrollTo(newIndex);
 }
 
 /** key up */
 function handleUp() {
-	const { options, currentPath, isResultOptions } = getCurrentOptionsAndPath();
-	if (options.length === 0) return;
-	const index = options.findIndex(item => item.path === currentPath);
-	const prevIndex = (index - 1 + options.length) % options.length;
-	updatePathAndScroll(prevIndex, isResultOptions);
+  const { options, currentPath, isResultOptions } = getCurrentOptionsAndPath();
+  if (options.length === 0) return;
+  const index = options.findIndex((item) => item.path === currentPath);
+  const prevIndex = (index - 1 + options.length) % options.length;
+  updatePathAndScroll(prevIndex, isResultOptions);
 }
 
 /** key down */
 function handleDown() {
-	const { options, currentPath, isResultOptions } = getCurrentOptionsAndPath();
-	if (options.length === 0) return;
-	const index = options.findIndex(item => item.path === currentPath);
-	const nextIndex = (index + 1) % options.length;
-	updatePathAndScroll(nextIndex, isResultOptions);
+  const { options, currentPath, isResultOptions } = getCurrentOptionsAndPath();
+  if (options.length === 0) return;
+  const index = options.findIndex((item) => item.path === currentPath);
+  const nextIndex = (index + 1) % options.length;
+  updatePathAndScroll(nextIndex, isResultOptions);
 }
 
 /** key enter */
 function handleEnter() {
-	const { options, currentPath, isResultOptions } = getCurrentOptionsAndPath();
-	if (options.length === 0 || currentPath === '') return;
-	const index = options.findIndex(item => item.path === currentPath);
-	if (index === -1) return;
-	if (isResultOptions) {
-		saveHistory();
-	} else {
-		updateHistory();
-	}
-	router.push(options[index].path);
-	handleClose();
+  const { options, currentPath, isResultOptions } = getCurrentOptionsAndPath();
+  if (options.length === 0 || currentPath === '') return;
+  const index = options.findIndex((item) => item.path === currentPath);
+  if (index === -1) return;
+  if (isResultOptions) {
+    saveHistory();
+  } else {
+    updateHistory();
+  }
+  router.push(options[index].path);
+  handleClose();
 }
 
 /** 删除历史记录 */
 function handleDelete(item) {
-	const key = item.type === HISTORY_TYPE ? LOCALEHISTORYKEY : LOCALECOLLECTKEY;
-	let list = getStorageItem(key);
-	list = list.filter(listItem => listItem.path !== item.path);
-	setStorageItem(key, list);
-	getHistory();
+  const key = item.type === HISTORY_TYPE ? LOCALEHISTORYKEY : LOCALECOLLECTKEY;
+  let list = getStorageItem(key);
+  list = list.filter((listItem) => listItem.path !== item.path);
+  setStorageItem(key, list);
+  getHistory();
 }
 
 /** 收藏历史记录 */
 function handleCollect(item) {
-	let searchHistoryList = getStorageItem(LOCALEHISTORYKEY);
-	let searchCollectList = getStorageItem(LOCALECOLLECTKEY);
-	searchHistoryList = searchHistoryList.filter(historyItem => historyItem.path !== item.path);
-	setStorageItem(LOCALEHISTORYKEY, searchHistoryList);
-	if (!searchCollectList.some(collectItem => collectItem.path === item.path)) {
-		searchCollectList.unshift({ ...item, type: COLLECT_TYPE });
-		setStorageItem(LOCALECOLLECTKEY, searchCollectList);
-	}
-	getHistory();
+  let searchHistoryList = getStorageItem(LOCALEHISTORYKEY);
+  let searchCollectList = getStorageItem(LOCALECOLLECTKEY);
+  searchHistoryList = searchHistoryList.filter((historyItem) => historyItem.path !== item.path);
+  setStorageItem(LOCALEHISTORYKEY, searchHistoryList);
+  if (!searchCollectList.some((collectItem) => collectItem.path === item.path)) {
+    searchCollectList.unshift({ ...item, type: COLLECT_TYPE });
+    setStorageItem(LOCALECOLLECTKEY, searchCollectList);
+  }
+  getHistory();
 }
 
 /** 存储搜索记录 */
 function saveHistory() {
-	const { path, meta } = resultOptions.value.find(item => item.path === activePath.value);
-	const searchHistoryList = getStorageItem(LOCALEHISTORYKEY);
-	const searchCollectList = getStorageItem(LOCALECOLLECTKEY);
-	const isCollected = searchCollectList.some(item => item.path === path);
-	const existingIndex = searchHistoryList.findIndex(item => item.path === path);
-	if (!isCollected) {
-		if (existingIndex !== -1) searchHistoryList.splice(existingIndex, 1);
-		if (searchHistoryList.length >= historyNum) searchHistoryList.pop();
-		searchHistoryList.unshift({ path, meta, type: HISTORY_TYPE });
-		storageLocal().setItem(LOCALEHISTORYKEY, searchHistoryList);
-	}
+  const { path, meta } = resultOptions.value.find((item) => item.path === activePath.value);
+  const searchHistoryList = getStorageItem(LOCALEHISTORYKEY);
+  const searchCollectList = getStorageItem(LOCALECOLLECTKEY);
+  const isCollected = searchCollectList.some((item) => item.path === path);
+  const existingIndex = searchHistoryList.findIndex((item) => item.path === path);
+  if (!isCollected) {
+    if (existingIndex !== -1) searchHistoryList.splice(existingIndex, 1);
+    if (searchHistoryList.length >= historyNum) searchHistoryList.pop();
+    searchHistoryList.unshift({ path, meta, type: HISTORY_TYPE });
+    storageLocal().setItem(LOCALEHISTORYKEY, searchHistoryList);
+  }
 }
 
 /** 更新存储的搜索记录 */
 function updateHistory() {
-	let searchHistoryList = getStorageItem(LOCALEHISTORYKEY);
-	const historyIndex = searchHistoryList.findIndex(item => item.path === historyPath.value);
-	if (historyIndex !== -1) {
-		const [historyItem] = searchHistoryList.splice(historyIndex, 1);
-		searchHistoryList.unshift(historyItem);
-		setStorageItem(LOCALEHISTORYKEY, searchHistoryList);
-	}
+  let searchHistoryList = getStorageItem(LOCALEHISTORYKEY);
+  const historyIndex = searchHistoryList.findIndex((item) => item.path === historyPath.value);
+  if (historyIndex !== -1) {
+    const [historyItem] = searchHistoryList.splice(historyIndex, 1);
+    searchHistoryList.unshift(historyItem);
+    setStorageItem(LOCALEHISTORYKEY, searchHistoryList);
+  }
 }
 
 /** 获取本地历史记录 */
 function getHistory() {
-	const searchHistoryList = getStorageItem(LOCALEHISTORYKEY);
-	const searchCollectList = getStorageItem(LOCALECOLLECTKEY);
-	historyOptions.value = [...searchHistoryList, ...searchCollectList];
-	historyPath.value = historyOptions.value[0]?.path;
+  const searchHistoryList = getStorageItem(LOCALEHISTORYKEY);
+  const searchCollectList = getStorageItem(LOCALECOLLECTKEY);
+  historyOptions.value = [...searchHistoryList, ...searchCollectList];
+  historyPath.value = historyOptions.value[0]?.path;
 }
 
 /** 拖拽改变收藏顺序 */
 function handleDrag(item: dragItem) {
-	const searchCollectList = getStorageItem(LOCALECOLLECTKEY);
-	const [reorderedItem] = searchCollectList.splice(item.oldIndex, 1);
-	searchCollectList.splice(item.newIndex, 0, reorderedItem);
-	storageLocal().setItem(LOCALECOLLECTKEY, searchCollectList);
-	historyOptions.value = [...getStorageItem(LOCALEHISTORYKEY), ...getStorageItem(LOCALECOLLECTKEY)];
-	historyPath.value = reorderedItem.path;
+  const searchCollectList = getStorageItem(LOCALECOLLECTKEY);
+  const [reorderedItem] = searchCollectList.splice(item.oldIndex, 1);
+  searchCollectList.splice(item.newIndex, 0, reorderedItem);
+  storageLocal().setItem(LOCALECOLLECTKEY, searchCollectList);
+  historyOptions.value = [...getStorageItem(LOCALEHISTORYKEY), ...getStorageItem(LOCALECOLLECTKEY)];
+  historyPath.value = reorderedItem.path;
 }
 
 onKeyStroke('Enter', handleEnter);
@@ -255,49 +256,62 @@ onKeyStroke('ArrowDown', handleDown);
 </script>
 
 <template>
-	<el-dialog
-		v-model="show"
-		:before-close="handleClose"
-		:show-close="false"
-		:style="{
-			borderRadius: '6px',
-		}"
-		:width="device === 'mobile' ? '80vw' : '40vw'"
-		append-to-body
-		class="pure-search-dialog"
-		top="5vh"
-		@closed="inputRef.blur()"
-		@opened="inputRef.focus()"
-	>
-		<el-input ref="inputRef" v-model="keyword" :placeholder="t('search.purePlaceholder')" clearable size="large" @input="handleSearch">
-			<template #prefix>
-				<IconifyIconOffline :icon="SearchIcon" class="text-primary w-[24px] h-[24px]" />
-			</template>
-		</el-input>
-		<div class="search-content">
-			<el-scrollbar ref="scrollbarRef" max-height="calc(90vh - 140px)">
-				<el-empty v-if="showEmpty" :description="t('search.pureEmpty')" />
-				<SearchHistory
-					v-if="showSearchHistory"
-					ref="historyRef"
-					v-model:value="historyPath"
-					:options="historyOptions"
-					@click="handleEnter"
-					@collect="handleCollect"
-					@delete="handleDelete"
-					@drag="handleDrag"
-				/>
-				<SearchResult v-if="showSearchResult" ref="resultRef" v-model:value="activePath" :options="resultOptions" @click="handleEnter" />
-			</el-scrollbar>
-		</div>
-		<template #footer>
-			<SearchFooter :total="resultOptions.length" />
-		</template>
-	</el-dialog>
+  <el-dialog
+    v-model="show"
+    :before-close="handleClose"
+    :show-close="false"
+    :style="{
+      borderRadius: '6px',
+    }"
+    :width="device === 'mobile' ? '80vw' : '40vw'"
+    append-to-body
+    class="pure-search-dialog"
+    top="5vh"
+    @closed="inputRef.blur()"
+    @opened="inputRef.focus()"
+  >
+    <el-input
+      ref="inputRef"
+      v-model="keyword"
+      :placeholder="t('search.purePlaceholder')"
+      clearable
+      size="large"
+      @input="handleSearch"
+    >
+      <template #prefix>
+        <IconifyIconOffline :icon="SearchIcon" class="text-primary w-[24px] h-[24px]" />
+      </template>
+    </el-input>
+    <div class="search-content">
+      <el-scrollbar ref="scrollbarRef" max-height="calc(90vh - 140px)">
+        <el-empty v-if="showEmpty" :description="t('search.pureEmpty')" />
+        <SearchHistory
+          v-if="showSearchHistory"
+          ref="historyRef"
+          v-model:value="historyPath"
+          :options="historyOptions"
+          @click="handleEnter"
+          @collect="handleCollect"
+          @delete="handleDelete"
+          @drag="handleDrag"
+        />
+        <SearchResult
+          v-if="showSearchResult"
+          ref="resultRef"
+          v-model:value="activePath"
+          :options="resultOptions"
+          @click="handleEnter"
+        />
+      </el-scrollbar>
+    </div>
+    <template #footer>
+      <SearchFooter :total="resultOptions.length" />
+    </template>
+  </el-dialog>
 </template>
 
 <style lang="scss" scoped>
 .search-content {
-	margin-top: 12px;
+  margin-top: 12px;
 }
 </style>

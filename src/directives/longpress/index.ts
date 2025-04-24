@@ -1,6 +1,6 @@
-import { useEventListener } from "@vueuse/core";
-import type { Directive, DirectiveBinding } from "vue";
-import { subBefore, subAfter, isFunction } from "@pureadmin/utils";
+import { useEventListener } from '@vueuse/core';
+import type { Directive, DirectiveBinding } from 'vue';
+import { subBefore, subAfter, isFunction } from '@pureadmin/utils';
 
 export const longpress: Directive = {
   mounted(el: HTMLElement, binding: DirectiveBinding<Function>) {
@@ -10,11 +10,11 @@ export const longpress: Directive = {
       let interTimer = null;
       let num = 500;
       let interNum = null;
-      const isInter = binding?.arg?.includes(":") ?? false;
+      const isInter = binding?.arg?.includes(':') ?? false;
 
       if (isInter) {
-        num = Number(subBefore(binding.arg, ":"));
-        interNum = Number(subAfter(binding.arg, ":"));
+        num = Number(subBefore(binding.arg, ':'));
+        interNum = Number(subAfter(binding.arg, ':'));
       } else if (binding.arg) {
         num = Number(binding.arg);
       }
@@ -51,13 +51,13 @@ export const longpress: Directive = {
       };
 
       // Register using addEventListener on mounted, and removeEventListener automatically on unmounted
-      useEventListener(el, "pointerdown", onDown);
-      useEventListener(el, "pointerup", clear);
-      useEventListener(el, "pointerleave", clear);
+      useEventListener(el, 'pointerdown', onDown);
+      useEventListener(el, 'pointerup', clear);
+      useEventListener(el, 'pointerleave', clear);
     } else {
       throw new Error(
         '[Directive: longpress]: need callback and callback must be a function! Like v-longpress="callback"'
       );
     }
-  }
+  },
 };

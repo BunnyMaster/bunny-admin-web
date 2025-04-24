@@ -36,8 +36,8 @@ import { useEcharts } from '@/plugins/echarts';
 
 const app = createApp(App);
 
-Object.keys(directives).forEach(key => {
-	app.directive(key, (directives as { [key: string]: Directive })[key]);
+Object.keys(directives).forEach((key) => {
+  app.directive(key, (directives as { [key: string]: Directive })[key]);
 });
 
 app.component('IconifyIconOffline', IconifyIconOffline);
@@ -48,17 +48,17 @@ app.component('Perms', Perms);
 app.config.globalProperties.$echarts = echarts;
 app.use(VueTippy);
 
-getPlatformConfig(app).then(async config => {
-	setupStore(app);
-	app.use(router);
-	await router.isReady();
-	injectResponsiveStorage(app, config);
-	app
-		.use(MotionPlugin)
-		.use(useI18n)
-		.use(useElementPlus)
-		.use(Table)
-		// .use(PureDescriptions)
-		.use(useEcharts);
-	app.mount('#app');
+getPlatformConfig(app).then(async (config) => {
+  setupStore(app);
+  app.use(router);
+  await router.isReady();
+  injectResponsiveStorage(app, config);
+  app
+    .use(MotionPlugin)
+    .use(useI18n)
+    .use(useElementPlus)
+    .use(Table)
+    // .use(PureDescriptions)
+    .use(useEcharts);
+  app.mount('#app');
 });

@@ -6,9 +6,9 @@ import { addDialog } from '@/components/BaseDialog/index';
  * @param userId
  */
 export const selectUserinfo = async (userId: string) => {
-	addDialog({
-		title: '查看用户信息',
-		draggable: true,
-		contentRenderer: (): JSX.Element => <UserinfoDialog userId={userId} />,
-	});
+  addDialog({
+    title: '查看用户信息',
+    draggable: true,
+    contentRenderer: (): JSX.Element => <UserinfoDialog userId={userId} />,
+  });
 };

@@ -5,21 +5,26 @@ import { useNav } from '@/layout/hooks/useNav';
 const screenIcon = ref();
 const { toggle, isFullscreen, Fullscreen, ExitFullscreen } = useNav();
 
-isFullscreen.value = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+isFullscreen.value = !!(
+  document.fullscreenElement ||
+  document.webkitFullscreenElement ||
+  document.mozFullScreenElement ||
+  document.msFullscreenElement
+);
 
 watch(
-	isFullscreen,
-	full => {
-		screenIcon.value = full ? ExitFullscreen : Fullscreen;
-	},
-	{
-		immediate: true,
-	},
+  isFullscreen,
+  (full) => {
+    screenIcon.value = full ? ExitFullscreen : Fullscreen;
+  },
+  {
+    immediate: true,
+  }
 );
 </script>
 
 <template>
-	<span class="fullscreen-icon navbar-bg-hover" @click="toggle">
-		<IconifyIconOffline :icon="screenIcon" />
-	</span>
+  <span class="fullscreen-icon navbar-bg-hover" @click="toggle">
+    <IconifyIconOffline :icon="screenIcon" />
+  </span>
 </template>

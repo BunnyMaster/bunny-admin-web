@@ -20,6 +20,6 @@ export const useMultiFrame = () => {
     setMap,
     getMap,
     delMap,
-    MAP
+    MAP,
   };
 };

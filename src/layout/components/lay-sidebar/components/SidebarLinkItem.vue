@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { isUrl } from "@pureadmin/utils";
-import { menuType } from "@/layout/types";
+import { computed } from 'vue';
+import { isUrl } from '@pureadmin/utils';
+import { menuType } from '@/layout/types';
 
 const props = defineProps<{
   to: menuType;
@@ -12,21 +12,18 @@ const getLinkProps = (item: menuType) => {
   if (isExternalLink.value) {
     return {
       href: item.name,
-      target: "_blank",
-      rel: "noopener"
+      target: '_blank',
+      rel: 'noopener',
     };
   }
   return {
-    to: item
+    to: item,
   };
 };
 </script>
 
 <template>
-  <component
-    :is="isExternalLink ? 'a' : 'router-link'"
-    v-bind="getLinkProps(to)"
-  >
+  <component :is="isExternalLink ? 'a' : 'router-link'" v-bind="getLinkProps(to)">
     <slot />
   </component>
 </template>

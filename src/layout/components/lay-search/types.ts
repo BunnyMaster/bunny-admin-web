@@ -1,6 +1,6 @@
 interface optionsItem {
   path: string;
-  type: "history" | "collect";
+  type: 'history' | 'collect';
   meta: {
     icon?: string;
     title?: string;

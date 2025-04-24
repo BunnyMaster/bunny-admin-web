@@ -10,44 +10,44 @@ const router = useRouter();
 </script>
 
 <template>
-	<el-dropdown trigger="click">
-		<span class="el-dropdown-link navbar-bg-hover select-none">
-			<img :src="userAvatar" :style="avatarsStyle" alt="" />
-			<p v-if="username" class="dark:text-white">{{ username }}</p>
-		</span>
-		<template #dropdown>
-			<el-dropdown-item @click="router.push({ name: 'AccountSettings' })">
-				<IconifyIconOffline :icon="AccountSettingsIcon" style="margin: 5px" />
-				{{ $t('buttons.pureAccountSettings') }}
-			</el-dropdown-item>
-			<el-dropdown-menu class="logout">
-				<el-dropdown-item @click="logout">
-					<IconifyIconOffline :icon="LogoutCircleRLine" style="margin: 5px" />
-					{{ $t('buttons.pureLoginOut') }}
-				</el-dropdown-item>
-			</el-dropdown-menu>
-		</template>
-	</el-dropdown>
+  <el-dropdown trigger="click">
+    <span class="el-dropdown-link navbar-bg-hover select-none">
+      <img :src="userAvatar" :style="avatarsStyle" alt="" />
+      <p v-if="username" class="dark:text-white">{{ username }}</p>
+    </span>
+    <template #dropdown>
+      <el-dropdown-item @click="router.push({ name: 'AccountSettings' })">
+        <IconifyIconOffline :icon="AccountSettingsIcon" style="margin: 5px" />
+        {{ $t('buttons.pureAccountSettings') }}
+      </el-dropdown-item>
+      <el-dropdown-menu class="logout">
+        <el-dropdown-item @click="logout">
+          <IconifyIconOffline :icon="LogoutCircleRLine" style="margin: 5px" />
+          {{ $t('buttons.pureLoginOut') }}
+        </el-dropdown-item>
+      </el-dropdown-menu>
+    </template>
+  </el-dropdown>
 </template>
 
 <style lang="scss" scoped>
 .el-dropdown-link {
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-	height: 48px;
-	padding: 10px;
-	color: #000000d9;
-	cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 48px;
+  padding: 10px;
+  color: #000000d9;
+  cursor: pointer;
 
-	p {
-		font-size: 14px;
-	}
+  p {
+    font-size: 14px;
+  }
 
-	img {
-		width: 22px;
-		height: 22px;
-		border-radius: 50%;
-	}
+  img {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+  }
 }
 </style>

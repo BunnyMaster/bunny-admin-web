@@ -2,25 +2,35 @@ import type { App } from 'vue';
 import * as echarts from 'echarts/core';
 import { BarChart, LineChart, PieChart } from 'echarts/charts';
 import { CanvasRenderer, SVGRenderer } from 'echarts/renderers';
-import { DataZoomComponent, GraphicComponent, GridComponent, LegendComponent, PolarComponent, TitleComponent, ToolboxComponent, TooltipComponent, VisualMapComponent } from 'echarts/components';
+import {
+  DataZoomComponent,
+  GraphicComponent,
+  GridComponent,
+  LegendComponent,
+  PolarComponent,
+  TitleComponent,
+  ToolboxComponent,
+  TooltipComponent,
+  VisualMapComponent,
+} from 'echarts/components';
 
 const { use } = echarts;
 
 use([
-	PieChart,
-	BarChart,
-	LineChart,
-	CanvasRenderer,
-	SVGRenderer,
-	GridComponent,
-	TitleComponent,
-	PolarComponent,
-	LegendComponent,
-	GraphicComponent,
-	ToolboxComponent,
-	TooltipComponent,
-	DataZoomComponent,
-	VisualMapComponent,
+  PieChart,
+  BarChart,
+  LineChart,
+  CanvasRenderer,
+  SVGRenderer,
+  GridComponent,
+  TitleComponent,
+  PolarComponent,
+  LegendComponent,
+  GraphicComponent,
+  ToolboxComponent,
+  TooltipComponent,
+  DataZoomComponent,
+  VisualMapComponent,
 ]);
 
 /**
@@ -28,7 +38,7 @@ use([
  * @see 温馨提示：必须将 `$echarts` 添加到全局 `globalProperties` ，具体看 https://pure-admin-utils.netlify.app/hooks/useECharts/useECharts#%E4%BD%BF%E7%94%A8%E5%89%8D%E6%8F%90
  */
 export function useEcharts(app: App) {
-	app.config.globalProperties.$echarts = echarts;
+  app.config.globalProperties.$echarts = echarts;
 }
 
 export default echarts;

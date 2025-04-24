@@ -195,7 +195,7 @@
       inset: 0 8px;
       margin: 4px 0;
       clear: both;
-      content: "";
+      content: '';
       background: var(--el-color-primary) !important;
       border-radius: 3px;
     }
@@ -208,16 +208,14 @@
     }
 
     /* 有子集的激活菜单左侧小竖条 */
-    .el-menu--collapse
-      .is-active.outer-most.el-sub-menu
-      > .el-sub-menu__title::before {
+    .el-menu--collapse .is-active.outer-most.el-sub-menu > .el-sub-menu__title::before {
       position: absolute;
       top: 0;
       left: 0;
       width: 2px;
       height: 100%;
       clear: both;
-      content: "";
+      content: '';
       background-color: $menuActiveBefore;
       transition: all var(--pure-transition-duration) ease-in-out;
       transform: translateY(0);
@@ -229,7 +227,7 @@
       display: block;
       width: 3px;
       height: 0;
-      content: "";
+      content: '';
       transform: translateY(-50%);
     }
 
@@ -244,7 +242,7 @@
       inset: 0 8px;
       margin: 4px 0;
       clear: both;
-      content: "";
+      content: '';
       background: var(--el-color-primary) !important;
       border-radius: 3px;
     }
@@ -311,7 +309,7 @@
       position: absolute;
       inset: 0 8px;
       clear: both;
-      content: "";
+      content: '';
       background: var(--el-color-primary) !important;
       border-radius: 3px;
     }
@@ -403,7 +401,7 @@
       position: absolute;
       inset: 0 5px;
       clear: both;
-      content: "";
+      content: '';
       background: var(--el-color-primary) !important;
       border-radius: 3px;
     }
@@ -586,7 +584,7 @@
   }
 }
 
-body[layout="vertical"] {
+body[layout='vertical'] {
   $sideBarWidth: 210px;
 
   @include merge-style($sideBarWidth);
@@ -663,7 +661,7 @@ body[layout="vertical"] {
   }
 }
 
-body[layout="horizontal"] {
+body[layout='horizontal'] {
   $sideBarWidth: 0;
 
   @include merge-style($sideBarWidth);
@@ -678,7 +676,7 @@ body[layout="horizontal"] {
   }
 }
 
-body[layout="mix"] {
+body[layout='mix'] {
   $sideBarWidth: 210px;
 
   @include merge-style($sideBarWidth);

@@ -11,7 +11,7 @@ type ComponentRef<T extends HTMLElement = HTMLDivElement> = ComponentElRef<T> | 
 type ElRef<T extends HTMLElement = HTMLDivElement> = Nullable<T>;
 
 type ForDataType<T> = {
-	[P in T]?: ForDataType<T[P]>;
+  [P in T]?: ForDataType<T[P]>;
 };
 
 type AnyFunction<T> = (...args: any[]) => T;
@@ -19,7 +19,7 @@ type AnyFunction<T> = (...args: any[]) => T;
 type PropType<T> = VuePropType<T>;
 
 type Writable<T> = {
-	-readonly [P in keyof T]: T[P];
+  -readonly [P in keyof T]: T[P];
 };
 
 type Nullable<T> = T | null;
@@ -29,15 +29,15 @@ type NonNullable<T> = T extends null | undefined ? never : T;
 type Recordable<T = any> = Record<string, T>;
 
 type ReadonlyRecordable<T = any> = {
-	readonly [key: string]: T;
+  readonly [key: string]: T;
 };
 
 type Indexable<T = any> = {
-	[key: string]: T;
+  [key: string]: T;
 };
 
 type DeepPartial<T> = {
-	[P in keyof T]?: DeepPartial<T[P]>;
+  [P in keyof T]?: DeepPartial<T[P]>;
 };
 
 type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
@@ -51,27 +51,27 @@ type IntervalHandle = ReturnType<typeof setInterval>;
 type Effect = 'light' | 'dark';
 
 interface ChangeEvent extends Event {
-	target: HTMLInputElement;
+  target: HTMLInputElement;
 }
 
 interface WheelEvent {
-	path?: EventTarget[];
+  path?: EventTarget[];
 }
 
 interface ImportMetaEnv extends ViteEnv {
-	__: unknown;
+  __: unknown;
 }
 
 interface Fn<T = any, R = T> {
-	(...arg: T[]): R;
+  (...arg: T[]): R;
 }
 
 interface PromiseFn<T = any, R = T> {
-	(...arg: T[]): Promise<R>;
+  (...arg: T[]): Promise<R>;
 }
 
 interface ComponentElRef<T extends HTMLElement = HTMLDivElement> {
-	$el: T;
+  $el: T;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

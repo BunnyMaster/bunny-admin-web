@@ -19,87 +19,87 @@ const xSeriesData = ref([]);
 const dateDisplayLength = ref(20);
 
 const option = reactive<UtilsEChartsOption>({
-	tooltip: {
-		trigger: 'axis',
-		axisPointer: { type: 'cross' },
-		extraCssText: 'width: 170px',
-	},
-	legend: {
-		top: '0%',
-		left: 'center',
-	},
-	grid: {
-		top: '20px',
-		right: '20px',
-		bottom: '20px',
-	},
-	xAxis: {
-		type: 'category',
-		boundaryGap: false,
-		inverse: true,
-	},
-	yAxis: {
-		type: 'value',
-	},
-	series: [
-		{
-			data: seriesData.value,
-			type: 'line',
-			areaStyle: {},
-			animationDelay: function (idx) {
-				// 设置动画延迟时间
-				return idx * 10;
-			},
-			// 设置动画持续时间
-			animationDuration: 1000,
-		},
-	],
-	animationDuration: 666,
-	animationDurationUpdate: 200,
-	animationEasing: 'linear',
-	animationEasingUpdate: 'linear',
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: { type: 'cross' },
+    extraCssText: 'width: 170px',
+  },
+  legend: {
+    top: '0%',
+    left: 'center',
+  },
+  grid: {
+    top: '20px',
+    right: '20px',
+    bottom: '20px',
+  },
+  xAxis: {
+    type: 'category',
+    boundaryGap: false,
+    inverse: true,
+  },
+  yAxis: {
+    type: 'value',
+  },
+  series: [
+    {
+      data: seriesData.value,
+      type: 'line',
+      areaStyle: {},
+      animationDelay: function (idx) {
+        // 设置动画延迟时间
+        return idx * 10;
+      },
+      // 设置动画持续时间
+      animationDuration: 1000,
+    },
+  ],
+  animationDuration: 666,
+  animationDurationUpdate: 200,
+  animationEasing: 'linear',
+  animationEasingUpdate: 'linear',
 });
 
 /** 初始化数据 */
 const onSearch = async () => {
-	// 保留数组中的最新10条数据
-	if (seriesData.value.length > dateDisplayLength.value) {
-		seriesData.value = seriesData.value.slice(-dateDisplayLength.value);
-		xSeriesData.value = xSeriesData.value.slice(-dateDisplayLength.value);
-	}
+  // 保留数组中的最新10条数据
+  if (seriesData.value.length > dateDisplayLength.value) {
+    seriesData.value = seriesData.value.slice(-dateDisplayLength.value);
+    xSeriesData.value = xSeriesData.value.slice(-dateDisplayLength.value);
+  }
 
-	// 获取数据
-	const result = await fetchSystemProcessCPU();
-	const measurement = result.measurements[0];
-	if (measurement) {
-		const value = measurement.value;
-		seriesData.value.push(value * 100);
-		xSeriesData.value.push(dayjs().format('mm:ss'));
-	}
+  // 获取数据
+  const result = await fetchSystemProcessCPU();
+  const measurement = result.measurements[0];
+  if (measurement) {
+    const value = measurement.value;
+    seriesData.value.push(value * 100);
+    xSeriesData.value.push(dayjs().format('mm:ss'));
+  }
 
-	myChart.value.setOption({
-		xAxis: { data: xSeriesData.value },
-		series: [{ type: 'line', data: seriesData.value }],
-	});
+  myChart.value.setOption({
+    xAxis: { data: xSeriesData.value },
+    series: [{ type: 'line', data: seriesData.value }],
+  });
 };
 
 onMounted(() => {
-	// 初始化eacharts
-	myChart.value = echarts.init(jvmCPUECharts.value);
-	option && myChart.value.setOption(option);
+  // 初始化eacharts
+  myChart.value = echarts.init(jvmCPUECharts.value);
+  option && myChart.value.setOption(option);
 
-	onSearch();
+  onSearch();
 
-	// 定时刷新
-	useIntervalFn(() => onSearch(), 2000);
+  // 定时刷新
+  useIntervalFn(() => onSearch(), 2000);
 });
 </script>
 
 <template>
-	<SystemCardItem :md="24" :xl="12" title="JVM CPU使用率">
-		<template #icon>
-			<component :is="useRenderIcon('carbon:logo-vmware')" />
-		</template>
-		<div ref="jvmCPUECharts" style="width: 100%; height: 230px" />
-	</SystemCardItem>
+  <SystemCardItem :md="24" :xl="12" title="JVM CPU使用率">
+    <template #icon>
+      <component :is="useRenderIcon('carbon:logo-vmware')" />
+    </template>
+    <div ref="jvmCPUECharts" style="width: 100%; height: 230px" />
+  </SystemCardItem>
 </template>

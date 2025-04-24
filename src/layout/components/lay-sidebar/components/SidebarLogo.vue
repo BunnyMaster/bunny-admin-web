@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { getTopMenu } from "@/router/utils";
-import { useNav } from "@/layout/hooks/useNav";
+import { getTopMenu } from '@/router/utils';
+import { useNav } from '@/layout/hooks/useNav';
 
 defineProps({
-  collapse: Boolean
+  collapse: Boolean,
 });
 
 const { title, getLogo } = useNav();
@@ -22,13 +22,7 @@ const { title, getLogo } = useNav();
         <img :src="getLogo()" alt="logo" />
         <span class="sidebar-title">{{ title }}</span>
       </router-link>
-      <router-link
-        v-else
-        key="expand"
-        :title="title"
-        :to="getTopMenu()?.path ?? '/'"
-        class="sidebar-logo-link"
-      >
+      <router-link v-else key="expand" :title="title" :to="getTopMenu()?.path ?? '/'" class="sidebar-logo-link">
         <img :src="getLogo()" alt="logo" />
         <span class="sidebar-title">{{ title }}</span>
       </router-link>

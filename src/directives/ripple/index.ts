@@ -1,6 +1,6 @@
-import "./index.scss";
-import { isObject } from "@pureadmin/utils";
-import type { Directive, DirectiveBinding } from "vue";
+import './index.scss';
+import { isObject } from '@pureadmin/utils';
+import type { Directive, DirectiveBinding } from 'vue';
 
 export interface RippleOptions {
   /** 自定义`ripple`颜色，支持`tailwindcss` */
@@ -10,8 +10,7 @@ export interface RippleOptions {
   circle?: boolean;
 }
 
-export interface RippleDirectiveBinding
-  extends Omit<DirectiveBinding, "modifiers" | "value"> {
+export interface RippleDirectiveBinding extends Omit<DirectiveBinding, 'modifiers' | 'value'> {
   value?: boolean | { class: string };
   modifiers: {
     center?: boolean;
@@ -24,11 +23,7 @@ function transform(el: HTMLElement, value: string) {
   el.style.webkitTransform = value;
 }
 
-const calculate = (
-  e: PointerEvent,
-  el: HTMLElement,
-  value: RippleOptions = {}
-) => {
+const calculate = (e: PointerEvent, el: HTMLElement, value: RippleOptions = {}) => {
   const offset = el.getBoundingClientRect();
 
   // 获取点击位置距离 el 的垂直和水平距离
@@ -41,9 +36,7 @@ const calculate = (
   if (el._ripple?.circle) {
     scale = 0.15;
     radius = el.clientWidth / 2;
-    radius = value.center
-      ? radius
-      : radius + Math.sqrt((localX - radius) ** 2 + (localY - radius) ** 2) / 4;
+    radius = value.center ? radius : radius + Math.sqrt((localX - radius) ** 2 + (localY - radius) ** 2) / 4;
   } else {
     radius = Math.sqrt(el.clientWidth ** 2 + el.clientHeight ** 2) / 2;
   }
@@ -66,11 +59,11 @@ const ripples = {
     }
 
     // 创建 ripple 元素和 ripple 父元素
-    const container = document.createElement("span");
-    const animation = document.createElement("span");
+    const container = document.createElement('span');
+    const animation = document.createElement('span');
 
     container.appendChild(animation);
-    container.className = "v-ripple__container";
+    container.className = 'v-ripple__container';
 
     if (value.class) {
       container.className += ` ${value.class}`;
@@ -81,7 +74,7 @@ const ripples = {
     // ripple 圆大小
     const size = `${radius * 2}px`;
 
-    animation.className = "v-ripple__animation";
+    animation.className = 'v-ripple__animation';
     animation.style.width = size;
     animation.style.height = size;
 
@@ -90,22 +83,19 @@ const ripples = {
     // 获取目标元素样式表
     const computed = window.getComputedStyle(el);
     // 防止 position 被覆盖导致 ripple 位置有问题
-    if (computed && computed.position === "static") {
-      el.style.position = "relative";
-      el.dataset.previousPosition = "static";
+    if (computed && computed.position === 'static') {
+      el.style.position = 'relative';
+      el.dataset.previousPosition = 'static';
     }
 
-    animation.classList.add("v-ripple__animation--enter");
-    animation.classList.add("v-ripple__animation--visible");
-    transform(
-      animation,
-      `translate(${x}, ${y}) scale3d(${scale},${scale},${scale})`
-    );
+    animation.classList.add('v-ripple__animation--enter');
+    animation.classList.add('v-ripple__animation--visible');
+    transform(animation, `translate(${x}, ${y}) scale3d(${scale},${scale},${scale})`);
     animation.dataset.activated = String(performance.now());
 
     setTimeout(() => {
-      animation.classList.remove("v-ripple__animation--enter");
-      animation.classList.add("v-ripple__animation--in");
+      animation.classList.remove('v-ripple__animation--enter');
+      animation.classList.add('v-ripple__animation--in');
       transform(animation, `translate(${centerX}, ${centerY}) scale3d(1,1,1)`);
     }, 0);
   },
@@ -113,37 +103,36 @@ const ripples = {
   hide(el: HTMLElement | null) {
     if (!el?._ripple?.enabled) return;
 
-    const ripples = el.getElementsByClassName("v-ripple__animation");
+    const ripples = el.getElementsByClassName('v-ripple__animation');
 
     if (ripples.length === 0) return;
     const animation = ripples[ripples.length - 1] as HTMLElement;
 
     if (animation.dataset.isHiding) return;
-    else animation.dataset.isHiding = "true";
+    else animation.dataset.isHiding = 'true';
 
     const diff = performance.now() - Number(animation.dataset.activated);
     const delay = Math.max(250 - diff, 0);
 
     setTimeout(() => {
-      animation.classList.remove("v-ripple__animation--in");
-      animation.classList.add("v-ripple__animation--out");
+      animation.classList.remove('v-ripple__animation--in');
+      animation.classList.add('v-ripple__animation--out');
 
       setTimeout(() => {
-        const ripples = el.getElementsByClassName("v-ripple__animation");
+        const ripples = el.getElementsByClassName('v-ripple__animation');
         if (ripples.length === 1 && el.dataset.previousPosition) {
           el.style.position = el.dataset.previousPosition;
           delete el.dataset.previousPosition;
         }
 
-        if (animation.parentNode?.parentNode === el)
-          el.removeChild(animation.parentNode);
+        if (animation.parentNode?.parentNode === el) el.removeChild(animation.parentNode);
       }, 300);
     }, delay);
-  }
+  },
 };
 
 function isRippleEnabled(value: any): value is true {
-  return typeof value === "undefined" || !!value;
+  return typeof value === 'undefined' || !!value;
 }
 
 function rippleShow(e: PointerEvent) {
@@ -172,11 +161,7 @@ function rippleHide(e: Event) {
   ripples.hide(element);
 }
 
-function updateRipple(
-  el: HTMLElement,
-  binding: RippleDirectiveBinding,
-  wasEnabled: boolean
-) {
+function updateRipple(el: HTMLElement, binding: RippleDirectiveBinding, wasEnabled: boolean) {
   const { value, modifiers } = binding;
   const enabled = isRippleEnabled(value);
   if (!enabled) {
@@ -192,16 +177,16 @@ function updateRipple(
   }
 
   if (enabled && !wasEnabled) {
-    el.addEventListener("pointerdown", rippleShow);
-    el.addEventListener("pointerup", rippleHide);
+    el.addEventListener('pointerdown', rippleShow);
+    el.addEventListener('pointerup', rippleHide);
   } else if (!enabled && wasEnabled) {
     removeListeners(el);
   }
 }
 
 function removeListeners(el: HTMLElement) {
-  el.removeEventListener("pointerdown", rippleShow);
-  el.removeEventListener("pointerup", rippleHide);
+  el.removeEventListener('pointerdown', rippleShow);
+  el.removeEventListener('pointerup', rippleHide);
 }
 
 function mounted(el: HTMLElement, binding: RippleDirectiveBinding) {
@@ -225,5 +210,5 @@ function updated(el: HTMLElement, binding: RippleDirectiveBinding) {
 export const Ripple: Directive = {
   mounted,
   unmounted,
-  updated
+  updated,
 };

@@ -1,29 +1,29 @@
 <script lang="ts" setup>
-import { useRenderIcon } from "@/components/CommonIcon/src/hooks";
-import CloseIcon from "@iconify-icons/ep/close";
-import StarIcon from "@iconify-icons/ep/star";
-import type { optionsItem } from "../types";
-import { $t } from "../../../../plugins/i18n";
+import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import CloseIcon from '@iconify-icons/ep/close';
+import StarIcon from '@iconify-icons/ep/star';
+import type { optionsItem } from '../types';
+import { $t } from '../../../../plugins/i18n';
 
 interface Props {
   item: optionsItem;
 }
 
 interface Emits {
-  (e: "collectItem", val: optionsItem): void;
+  (e: 'collectItem', val: optionsItem): void;
 
-  (e: "deleteItem", val: optionsItem): void;
+  (e: 'deleteItem', val: optionsItem): void;
 }
 
 const emit = defineEmits<Emits>();
 withDefaults(defineProps<Props>(), {});
 
 function handleCollect(item) {
-  emit("collectItem", item);
+  emit('collectItem', item);
 }
 
 function handleDelete(item) {
-  emit("deleteItem", item);
+  emit('deleteItem', item);
 }
 </script>
 
