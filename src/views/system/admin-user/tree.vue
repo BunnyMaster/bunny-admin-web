@@ -6,7 +6,7 @@ import OfficeBuilding from '@iconify-icons/ep/office-building';
 import LocationCompany from '@iconify-icons/ep/add-location';
 import ExpandIcon from '@/assets/svg/expand.svg?component';
 import UnExpandIcon from '@/assets/svg/unexpand.svg?component';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import Reset from '@iconify-icons/ri/restart-line';
 import { buttonClass, defaultProps, onSearch, Tree } from '@/views/system/admin-user/utils';
 import { useAdminUserStore } from '@/store/system/adminUser';

@@ -1,4 +1,4 @@
-import { addDialog } from '@/components/BaseDialog/index';
+import { addDialog } from '@/components/ReDialog/index';
 import SchedulersGroupDialog from '@/views/scheduler/schedulers-group/schedulers-group-dialog.vue';
 import { useSchedulersGroupStore } from '@/store/scheduler/schedulersGroup';
 import { h, ref } from 'vue';

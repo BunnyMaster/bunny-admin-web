@@ -2,7 +2,7 @@
 import { $t } from '@/plugins/i18n';
 import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import ReCol from '@/components/MyCol';
+import ReCol from '@/components/ReCol';
 import { auth, form, onSearch, rules, submitForm } from '@/views/configuration/web-configuration/utils';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
 import { usePublicHooks } from '@/views/hooks';
@@ -365,7 +365,7 @@ onMounted(() => {
       <!-- 提交内容 -->
       <re-col v-if="hasAuth(auth.update)" :sm="24" :value="24" :xs="24">
         <el-form-item>
-          <el-button class="w-full" type="primary" @click="submitForm(ruleFormRef)">
+          <el-button class="w-full" plain type="primary" @click="submitForm(ruleFormRef)">
             {{ $t('modifyingConfiguration') }}
           </el-button>
         </el-form-item>

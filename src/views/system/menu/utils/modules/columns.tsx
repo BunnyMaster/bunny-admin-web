@@ -1,15 +1,15 @@
-import { h, reactive } from 'vue';
-import type { FormRules } from 'element-plus';
-import { ElTag } from 'element-plus';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { $t } from '@/plugins/i18n';
 import { isAllEmpty } from '@pureadmin/utils';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { ElLink, ElTag, type FormRules } from 'element-plus';
+import { h, reactive } from 'vue';
+import { mergeArgs } from '@/views/system/menu/utils';
+import { messageBox } from '@/utils/message';
+import { userMenuStore } from '@/store/system/menu';
 
-/**
- * 标签栏菜单类型匹配
- * @param type
- * @param text
- */
+const menuStore = userMenuStore();
+
+/* 标签栏菜单类型匹配 */
 const getMenuType = (type: number, text: boolean = false): any => {
   switch (type) {
     case 0:
@@ -33,8 +33,26 @@ export const formatHigherMenuOptions = (treeList: any) => {
   return newTreeList;
 };
 
+/* 更新是否显示菜单 */
+const onChangeShowLink = async (row: any) => {
+  // 是否确认
+  let result = await messageBox({
+    title: $t('confirm_update_status'),
+    showMessage: false,
+    confirmMessage: undefined,
+    cancelMessage: $t('cancel'),
+  });
+  if (!result) return;
+
+  // 确认后进行修改
+  row.showLink = !row.showLink;
+  const data = mergeArgs(row);
+  await menuStore.updateMenu(data);
+};
+
 export const columns: TableColumnList = [
   { type: 'selection', align: 'left' },
+  // 显示标题
   {
     label: $t('menuName'),
     prop: 'title',
@@ -51,6 +69,7 @@ export const columns: TableColumnList = [
     ),
     minWidth: 170,
   },
+  // 菜单类型
   {
     label: $t('menuType'),
     prop: 'menuType',
@@ -62,19 +81,30 @@ export const columns: TableColumnList = [
     ),
   },
   { label: $t('routerPath'), prop: 'path', minWidth: 230 },
+  // 组件路径
   {
     label: $t('componentPath'),
     prop: 'component',
     formatter: ({ path, component }) => (isAllEmpty(component) ? path : component),
     minWidth: 200,
   },
+  // 路由等级
   { label: $t('sort'), prop: 'rank', minWidth: 80, slot: 'rank' },
-  { label: $t('visible'), prop: 'visible', slot: 'visible', minWidth: 100 },
+  // 是否i按时
+  {
+    label: $t('visible'),
+    prop: 'showLink',
+    cellRenderer: ({ row }) => (
+      <ElLink underline={false} onClick={() => onChangeShowLink(row)}>
+        {row.showLink ? $t('show') : $t('hidden')}
+      </ElLink>
+    ),
+  },
   { label: $t('table.updateTime'), prop: 'updateTime', sortable: true, minWidth: 160 },
   { label: $t('table.createTime'), prop: 'createTime', sortable: true, minWidth: 160 },
   { label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', minWidth: 130 },
   { label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', minWidth: 130 },
-  { label: $t('table.operation'), fixed: 'right', minWidth: 310, slot: 'operation' },
+  { label: $t('table.operation'), fixed: 'right', minWidth: 150, slot: 'operation' },
 ];
 
 /** 自定义表单规则校验 */

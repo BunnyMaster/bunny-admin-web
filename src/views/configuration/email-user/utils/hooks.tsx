@@ -1,4 +1,4 @@
-import { addDialog } from '@/components/BaseDialog/index';
+import { addDialog } from '@/components/ReDialog/index';
 import EmailUsersDialog from '@/views/configuration/email-user/email-users-dialog.vue';
 import { useEmailUsersStore } from '@/store/configuration/emailUsers';
 import { h, ref } from 'vue';

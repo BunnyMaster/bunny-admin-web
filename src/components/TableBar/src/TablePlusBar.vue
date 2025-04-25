@@ -13,7 +13,7 @@ import DragIcon from '@/assets/table-bar/drag.svg?component';
 import Sortable from 'sortablejs';
 import { $t } from '@/plugins/i18n';
 import { DeleteFilled, EditPen } from '@element-plus/icons-vue';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import Refresh from '@iconify-icons/ep/refresh';
 import { FormInstance } from 'element-plus';
 

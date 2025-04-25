@@ -1,4 +1,4 @@
-import { addDialog, closeDialog } from '@/components/BaseDialog/index';
+import { addDialog, closeDialog } from '@/components/ReDialog/index';
 import { $t } from '@/plugins/i18n';
 import { userI18nStore } from '@/store/i18n/i18n';
 import { messageBox } from '@/utils/message';

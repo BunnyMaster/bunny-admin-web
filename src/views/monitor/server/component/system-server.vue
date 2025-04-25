@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { cardClass, cardLogoClass } from '@/views/monitor/server/utils/columns';
 import { systemServerInfo } from '@/views/monitor/server/utils/hooks';
 import { $t } from '@/plugins/i18n';

@@ -47,6 +47,6 @@ export const tableSelectButtonClass = computed(() => [
   'dark:!text-white',
   'dark:hover:!text-primary',
 ]);
-// export const UserAvatar = 'http://116.196.101.14:9000/auth-admin/avatar/user.jpg';
+
 export const UserAvatar =
   'https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoj0hHXhgJNOTSOFsS4uZs8x1ConecaVOB8eIl115xmJZcT4oCicvia7wMEufibKtTLqiaJeanU2Lpg3w/132';

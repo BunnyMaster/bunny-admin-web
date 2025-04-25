@@ -1,4 +1,4 @@
-import { addDialog } from '@/components/BaseDialog/index';
+import { addDialog } from '@/components/ReDialog/index';
 import FilesDialog from '@/views/system/files/files-dialog.vue';
 import { useFilesStore } from '@/store/monitor/files';
 import { h, ref } from 'vue';
@@ -6,7 +6,7 @@ import { message, messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/files/utils/types';
 import { $t } from '@/plugins/i18n';
 import { downloadFilesByFileId } from '@/api/v1/files';
-import { downloadBlob } from '@/utils/sso';
+import { download } from '@/utils/sso';
 import type { UploadFiles } from 'element-plus';
 import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 
@@ -160,7 +160,7 @@ export const onDeleteBatch = async () => {
 export const onDownload = async (row: any) => {
   const blob = await downloadFilesByFileId({ id: row.id });
 
-  downloadBlob(blob, row.filename);
+  download(blob, row.filename);
 };
 
 /** 批量下载文件 */
@@ -168,6 +168,6 @@ export const onDownloadBatch = () => {
   selectRows.value.forEach(async (row) => {
     const blob = await downloadFilesByFileId({ id: row.id });
 
-    downloadBlob(blob, row.filename);
+    download(blob, row.filename);
   });
 };

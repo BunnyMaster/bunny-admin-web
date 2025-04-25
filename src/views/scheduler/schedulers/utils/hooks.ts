@@ -1,4 +1,4 @@
-import { addDialog } from '@/components/BaseDialog/index';
+import { addDialog } from '@/components/ReDialog/index';
 import SchedulersDialog from '@/views/scheduler/schedulers/schedulers-dialog.vue';
 import { useSchedulersStore } from '@/store/scheduler/schedulers';
 import { h, ref } from 'vue';

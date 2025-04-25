@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
-import SystemCardItem from '@/components/MyCol/SystemCardItem.vue';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import SystemCardItem from '@/components/ReCol/SystemCardItem.vue';
 import { info, onSearch, onSearchDisk, percentage } from '@/views/monitor/server/utils/hooks';
 import { onMounted } from 'vue';
 

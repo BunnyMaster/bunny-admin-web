@@ -1,4 +1,4 @@
-import { addDialog } from '@/components/BaseDialog/index';
+import { addDialog } from '@/components/ReDialog/index';
 import MessageTypeDialog from '@/views/message-manger/message-type/message-type-dialog.vue';
 import { useMessageTypeStore } from '@/store/message/messageType';
 import { h, ref } from 'vue';

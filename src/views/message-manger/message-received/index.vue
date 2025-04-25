@@ -14,7 +14,7 @@ import Delete from '@iconify-icons/ep/delete';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { FormInstance } from 'element-plus';
 import { messageLevel } from '@/views/message-manger/message-editing/utils';
 import { isReadStatus } from '@/enums/baseConstant';
@@ -22,6 +22,7 @@ import { useMessageReceivedStore } from '@/store/message/messageReceived';
 import { useMessageTypeStore } from '@/store/message/messageType';
 import { Message } from '@element-plus/icons-vue';
 import { hasAuth } from '@/router/utils';
+import ReAuth from '@/components/ReAuth/src/auth';
 
 const tableRef = ref();
 const formRef = ref();
@@ -59,7 +60,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <Auth :value="auth.search">
+    <ReAuth :value="auth.search">
       <el-form
         ref="formRef"
         :inline="true"
@@ -178,7 +179,7 @@ onMounted(() => {
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
         </el-form-item>
       </el-form>
-    </Auth>
+    </ReAuth>
 
     <PureTableBar :columns="columns" title="系统消息" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
@@ -187,8 +188,7 @@ onMounted(() => {
           v-if="hasAuth(auth.update)"
           :disabled="!(selectIds.length > 0)"
           :icon="useRenderIcon('octicon:read-24')"
-          bg
-          text
+          plain
           type="primary"
           @click="updateMarkMessageReceived(true)"
         >
@@ -200,8 +200,7 @@ onMounted(() => {
           v-if="hasAuth(auth.update)"
           :disabled="!(selectIds.length > 0)"
           :icon="Message"
-          bg
-          text
+          plain
           type="primary"
           @click="updateMarkMessageReceived(false)"
         >
@@ -213,8 +212,7 @@ onMounted(() => {
           v-if="hasAuth(auth.deleted)"
           :disabled="!(selectIds.length > 0)"
           :icon="useRenderIcon(Delete)"
-          bg
-          text
+          plain
           type="danger"
           @click="onDeleteBatch"
         >

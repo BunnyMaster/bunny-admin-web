@@ -17,9 +17,10 @@ import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useUserLoginLogStore } from '@/store/monitor/userLoginLog';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { FormInstance } from 'element-plus';
 import { hasAuth } from '@/router/utils';
+import ReAuth from '@/components/ReAuth/src/auth';
 
 const tableRef = ref();
 const formRef = ref();
@@ -124,7 +125,7 @@ onMounted(() => {
         <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
       </el-form-item>
     </el-form>
-    <Auth :value="auth.search" />
+    <ReAuth :value="auth.search" />
 
     <PureTableBar
       :columns="columns"
@@ -138,8 +139,7 @@ onMounted(() => {
           v-if="hasAuth(auth.deleted)"
           :disabled="!(deleteIds.length > 0)"
           :icon="useRenderIcon(Delete)"
-          bg
-          text
+          plain
           type="danger"
           @click="onDeleteBatch"
         >

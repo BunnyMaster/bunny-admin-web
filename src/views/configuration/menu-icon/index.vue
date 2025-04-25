@@ -11,7 +11,7 @@ import {
   onUpdate,
 } from '@/views/configuration/menu-icon/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
 import Delete from '@iconify-icons/ep/delete';
@@ -22,6 +22,7 @@ import { $t } from '@/plugins/i18n';
 import { useMenuIconStore } from '@/store/configuration/menuIcon';
 import MenuIconSelectIconName from '@/views/configuration/menu-icon/menu-icon-select-icon-name.vue';
 import { hasAuth } from '@/router/utils';
+import ReAuth from '@/components/ReAuth/src/auth';
 
 const tableRef = ref();
 const formRef = ref();
@@ -58,7 +59,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <Auth :value="auth.search">
+    <ReAuth :value="auth.search">
       <el-form
         ref="formRef"
         :inline="true"
@@ -88,11 +89,11 @@ onMounted(() => {
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
         </el-form-item>
       </el-form>
-    </Auth>
+    </ReAuth>
 
     <PureTableBar :columns="columns" :title="$t('menuIcon')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" bg text type="primary" @click="onAdd">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
 
@@ -101,8 +102,7 @@ onMounted(() => {
           v-if="hasAuth(auth.deleted)"
           :disabled="!(deleteIds.length > 0)"
           :icon="useRenderIcon(Delete)"
-          bg
-          text
+          plain
           type="danger"
           @click="onDeleteBatch"
         >

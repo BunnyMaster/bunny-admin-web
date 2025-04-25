@@ -23,11 +23,12 @@ const props = withDefaults(defineProps<FormProps>(), {
   }),
 });
 
+const emailTemplateStore = useEmailTemplateStore();
+
 // 用户是否停用样式
 const { switchStyle } = usePublicHooks();
 const formRef = ref<FormInstance>();
 const form = ref(props.formInline);
-const emailTemplateStore = useEmailTemplateStore();
 
 onMounted(() => {
   emailTemplateStore.getEmailTypes();
@@ -61,7 +62,7 @@ defineExpose({ formRef });
       <el-input v-model="form.subject" autocomplete="off" type="text" />
     </el-form-item>
 
-    <!-- 用户状态 -->
+    <!-- 是否默认 -->
     <el-form-item :label="$t('isDefault')" prop="isDefault">
       <el-switch
         v-model="form.isDefault"

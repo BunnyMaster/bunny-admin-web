@@ -2,7 +2,7 @@ import { useQuartzExecuteLogStore } from '@/store/monitor/quartzExecuteLog';
 import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
 import { $t } from '@/plugins/i18n';
-import { addDialog } from '@/components/BaseDialog/index';
+import { addDialog } from '@/components/ReDialog/index';
 import ScheduleExecuteLog from '@/views/monitor/scheduler-execute-log/schedule-execute-log.vue';
 
 export const formRef = ref();

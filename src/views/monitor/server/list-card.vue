@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, PropType } from 'vue';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { $t } from '@/plugins/i18n';
 
 interface CardProductType {

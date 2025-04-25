@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { toRaw } from 'vue';
 
 defineProps({

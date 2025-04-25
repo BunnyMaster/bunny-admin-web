@@ -1,4 +1,4 @@
-import { addDialog } from '@/components/BaseDialog/index';
+import { addDialog } from '@/components/ReDialog/index';
 import UserLoginLogDialog from '@/views/monitor/user-login-log/user-login-log-dialog.vue';
 import { useUserLoginLogStore } from '@/store/monitor/userLoginLog';
 import { h, ref } from 'vue';

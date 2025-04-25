@@ -11,7 +11,18 @@ interface FormItemProps {
   rank: number;
   icon: string;
   frameSrc: string;
-  visible: boolean;
+  extraIcon: string;
+  enterTransition: string;
+  leaveTransition: string;
+  redirect: string;
+  activePath: string;
+  roles: Array<string>;
+  frameLoading: boolean;
+  keepAlive: boolean;
+  hiddenTag: boolean;
+  fixedTag: boolean;
+  showLink: boolean;
+  showParent: boolean;
 }
 
 interface FormProps {

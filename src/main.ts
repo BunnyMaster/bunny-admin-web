@@ -24,9 +24,9 @@ import './assets/iconfont/iconfont.js';
 // 自定义指令
 import * as directives from '@/directives';
 // 全局注册@iconify/vue图标库
-import { FontIcon, IconifyIconOffline, IconifyIconOnline } from './components/CommonIcon';
+import { FontIcon, IconifyIconOffline, IconifyIconOnline } from './components/ReIcon';
 // 全局注册按钮级别权限组件
-import { Auth } from '@/components/Auth';
+import { Auth } from '@/components/ReAuth';
 import { Perms } from '@/components/Perms';
 // 全局注册vue-tippy
 import 'tippy.js/dist/tippy.css';
@@ -43,7 +43,7 @@ Object.keys(directives).forEach((key) => {
 app.component('IconifyIconOffline', IconifyIconOffline);
 app.component('IconifyIconOnline', IconifyIconOnline);
 app.component('FontIcon', FontIcon);
-app.component('Auth', Auth);
+app.component('ReAuth', Auth);
 app.component('Perms', Perms);
 app.config.globalProperties.$echarts = echarts;
 app.use(VueTippy);

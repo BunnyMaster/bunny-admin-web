@@ -1,4 +1,4 @@
-import { addDialog } from '@/components/BaseDialog/index';
+import { addDialog } from '@/components/ReDialog/index';
 import { h, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';
 import { $t } from '@/plugins/i18n';

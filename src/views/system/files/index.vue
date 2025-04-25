@@ -22,9 +22,10 @@ import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useFilesStore } from '@/store/monitor/files';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { FormInstance } from 'element-plus';
 import { hasAuth } from '@/router/utils';
+import ReAuth from '@/components/ReAuth/src/auth';
 
 const tableRef = ref();
 const formRef = ref();
@@ -61,7 +62,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <Auth :value="auth.search">
+    <ReAuth :value="auth.search">
       <el-form
         ref="formRef"
         :inline="true"
@@ -114,7 +115,7 @@ onMounted(() => {
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
         </el-form-item>
       </el-form>
-    </Auth>
+    </ReAuth>
 
     <PureTableBar
       :columns="columns"
@@ -123,17 +124,16 @@ onMounted(() => {
       @refresh="onSearch"
     >
       <template #buttons>
-        <el-button v-if="hasAuth(auth.add)" bg text :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
 
         <!-- 批量下载 -->
         <el-button
           v-if="hasAuth(auth.downloadFilesByFileId)"
-          bg
-          text
           :disabled="!(selectRows.length > 0)"
           :icon="useRenderIcon(Download)"
+          plain
           type="success"
           @click="onDownloadBatch"
         >
@@ -143,10 +143,9 @@ onMounted(() => {
         <!-- 批量删除按钮 -->
         <el-button
           v-if="hasAuth(auth.deleted)"
-          bg
-          text
           :disabled="!(selectRows.length > 0)"
           :icon="useRenderIcon(Delete)"
+          plain
           type="danger"
           @click="onDeleteBatch"
         >

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import 'animate.css';
 // 引入 src/components/CommonIcon/src/offlineIcon.ts 文件中所有使用addIcon添加过的本地图标
-import '@/components/CommonIcon/src/offlineIcon';
+import '@/components/ReIcon/src/offlineIcon';
 import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange';
 import { useAppStoreHook } from '@/store/modules/app';
 import { useSettingStoreHook } from '@/store/modules/settings';

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Text } from '@/components/Text';
+import { Text } from '@/components/ReText';
 import LaySidebarTopCollapse from '@/layout/components/lay-sidebar/components/SidebarTopCollapse.vue';
 import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange';
 import { $t } from '@/plugins/i18n';

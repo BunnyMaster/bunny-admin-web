@@ -13,7 +13,7 @@ import PureTable from '@pureadmin/table';
 import Delete from '@iconify-icons/ep/delete';
 import { $t } from '@/plugins/i18n';
 import { Message } from '@element-plus/icons-vue';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { isReadStatus } from '@/enums/baseConstant';
 import { useMessageUserStore } from '@/store/message/messageUser';
 import { useMessageTypeStore } from '@/store/message/messageType';

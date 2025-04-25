@@ -1,8 +1,8 @@
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
-import { isFunction, isNumber, useDark, useResizeObserver } from '@pureadmin/utils';
-import { defineComponent, getCurrentInstance, h, nextTick, type PropType, ref, toRef, watch } from 'vue';
 import './index.css';
 import type { OptionsType } from './type';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { isFunction, isNumber, useDark, useResizeObserver } from '@pureadmin/utils';
+import { defineComponent, getCurrentInstance, h, nextTick, type PropType, ref, toRef, watch } from 'vue';
 
 const props = {
   options: {
@@ -132,7 +132,13 @@ export default defineComponent({
             onClick={(event) => handleChange({ option, index }, event)}
           >
             <input type="radio" name="segmented" />
-            <div class="pure-segmented-item-label" v-tippy={{ content: option?.tip, zIndex: 41000 }}>
+            <div
+              class="pure-segmented-item-label"
+              v-tippy={{
+                content: option?.tip,
+                zIndex: 41000,
+              }}
+            >
               {option.icon && !isFunction(option.label) ? (
                 <span class="pure-segmented-item-icon" style={{ marginRight: option.label ? '6px' : 0 }}>
                   {h(

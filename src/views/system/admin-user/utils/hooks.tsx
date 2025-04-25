@@ -1,4 +1,4 @@
-import { addDialog } from '@/components/BaseDialog/index';
+import { addDialog } from '@/components/ReDialog/index';
 import AdminUserDialog from '@/views/system/admin-user/admin-user-dialog.vue';
 import { useAdminUserStore } from '@/store/system/adminUser';
 import { computed, h, reactive, ref } from 'vue';

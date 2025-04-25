@@ -19,9 +19,10 @@ import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useSchedulersStore } from '@/store/scheduler/schedulers';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { FormInstance } from 'element-plus';
 import { hasAuth } from '@/router/utils';
+import ReAuth from '@/components/ReAuth/src/auth';
 
 const tableRef = ref();
 const formRef = ref();
@@ -53,7 +54,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <Auth :value="auth.search">
+    <ReAuth :value="auth.search">
       <el-form
         ref="formRef"
         :inline="true"
@@ -120,11 +121,11 @@ onMounted(() => {
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
         </el-form-item>
       </el-form>
-    </Auth>
+    </ReAuth>
 
     <PureTableBar :columns="columns" title="Schedulers视图" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
-        <el-button v-if="hasAuth(auth.add)" bg text :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
       </template>
@@ -174,7 +175,7 @@ onMounted(() => {
             </el-button>
 
             <!-- 暂停-->
-            <Auth :value="auth.pause">
+            <ReAuth :value="auth.pause">
               <el-button
                 v-if="row.triggerState !== 'PAUSED'"
                 :icon="useRenderIcon('line-md:pause')"
@@ -186,10 +187,10 @@ onMounted(() => {
               >
                 {{ $t('pause') }}
               </el-button>
-            </Auth>
+            </ReAuth>
 
             <!-- 恢复 -->
-            <Auth :value="auth.resume">
+            <ReAuth :value="auth.resume">
               <el-button
                 v-if="row.triggerState === 'PAUSED'"
                 :icon="useRenderIcon('material-symbols:resume')"
@@ -201,7 +202,7 @@ onMounted(() => {
               >
                 {{ $t('resume') }}
               </el-button>
-            </Auth>
+            </ReAuth>
 
             <!-- 删除 -->
             <el-popconfirm

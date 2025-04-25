@@ -1,4 +1,4 @@
-import { addDialog } from '@/components/BaseDialog/index';
+import { addDialog } from '@/components/ReDialog/index';
 import MenuIconDialog from '@/views/configuration/menu-icon/menu-icon-dialog.vue';
 import { useMenuIconStore } from '@/store/configuration/menuIcon';
 import { h, ref } from 'vue';

@@ -5,6 +5,8 @@ import { fetchUploadFile } from '@/api/v1/system/system';
 import { message } from '@/utils/message';
 import { $t } from '@/plugins/i18n';
 
+const userStore = useUserStore();
+
 // 剪裁完成后头像数据
 export const cropperBlob = ref();
 // 上传地址路径
@@ -12,7 +14,6 @@ export const uploadAvatarSrc = ref();
 
 // 剪裁头像是否显示
 export const isShow = ref(false);
-const userStore = useUserStore();
 
 // 用户信息内容
 export const userInfos = reactive({

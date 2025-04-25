@@ -1,4 +1,4 @@
-import { addDialog } from '@/components/BaseDialog/index';
+import { addDialog } from '@/components/ReDialog/index';
 import RoleDialog from '@/views/system/role/role-dialog.vue';
 import { useRoleStore } from '@/store/system/role';
 import { h, ref } from 'vue';

@@ -1,4 +1,4 @@
-import { addDialog } from '@/components/BaseDialog/index';
+import { addDialog } from '@/components/ReDialog/index';
 import PowerDialog from '@/views/system/power/power-dialog.vue';
 import { usePowerStore } from '@/store/system/power';
 import { h, reactive, ref } from 'vue';

@@ -13,7 +13,7 @@ import {
   onUpdate,
   updateI18nSetting,
 } from '@/views/i18n/i18n-setting/utils';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import EditPen from '@iconify-icons/ep/edit-pen';
 import Delete from '@iconify-icons/ep/delete';
@@ -25,6 +25,7 @@ import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { hasAuth } from '@/router/utils';
 import Download from '@iconify-icons/ep/download';
 import Upload from '@iconify-icons/ri/upload-line';
+import ReAuth from '@/components/ReAuth/src/auth';
 
 const tableRef = ref();
 const pageFormRef = ref();
@@ -64,7 +65,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <Auth :value="auth.search">
+    <ReAuth :value="auth.search">
       <el-form
         ref="pageFormRef"
         :inline="true"
@@ -109,7 +110,7 @@ onMounted(() => {
           </el-button>
         </el-form-item>
       </el-form>
-    </Auth>
+    </ReAuth>
 
     <PureTableBar
       :columns="columns"
@@ -120,7 +121,7 @@ onMounted(() => {
       <template #buttons>
         <!-- 下载多语言配置 -->
         <el-dropdown v-if="hasAuth(auth.download)" class="mr-1" type="primary">
-          <el-button :icon="useRenderIcon(Download)" bg text type="primary">
+          <el-button :icon="useRenderIcon(Download)" plain type="primary">
             {{ $t('download_configuration') }}
           </el-button>
           <template #dropdown>
@@ -133,7 +134,7 @@ onMounted(() => {
 
         <!-- 下载多语言配置 -->
         <el-dropdown v-if="hasAuth(auth.update)" class="mr-1" type="primary">
-          <el-button :icon="useRenderIcon(Upload)" bg text type="primary">{{ $t('file_update') }}</el-button>
+          <el-button :icon="useRenderIcon(Upload)" plain type="primary">{{ $t('file_update') }}</el-button>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="updateI18nSetting('json')">{{ $t('use_json_update') }}</el-dropdown-item>
@@ -143,7 +144,7 @@ onMounted(() => {
         </el-dropdown>
 
         <!-- 添加多语言 -->
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" bg text type="primary" @click="onAdd">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
 
@@ -152,8 +153,7 @@ onMounted(() => {
           v-if="hasAuth(auth.deleted)"
           :disabled="!(deleteIds.length > 0)"
           :icon="useRenderIcon(Delete)"
-          bg
-          text
+          plain
           type="danger"
           @click="onDeleteBatch"
         >

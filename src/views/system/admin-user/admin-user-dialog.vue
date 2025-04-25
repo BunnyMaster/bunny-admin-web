@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { FormInstance } from 'element-plus';
 import { deptList, FormProps, isAddUserinfo, rules } from '@/views/system/admin-user/utils';
 import { $t } from '@/plugins/i18n';
-import ReCol from '@/components/MyCol';
+import ReCol from '@/components/ReCol';
 import { sexConstant } from '@/enums/baseConstant';
 import { deptSelector } from '@/views/system/dept/utils';
 import { usePublicHooks } from '@/views/hooks';

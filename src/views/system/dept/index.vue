@@ -19,10 +19,11 @@ import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useDeptStore } from '@/store/system/dept';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { handleTree } from '@/utils/tree';
 import { FormInstance } from 'element-plus';
 import { hasAuth } from '@/router/utils';
+import ReAuth from '@/components/ReAuth/src/auth';
 
 const tableRef = ref();
 const formRef = ref();
@@ -60,7 +61,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <Auth :value="auth.search">
+    <ReAuth :value="auth.search">
       <el-form
         ref="formRef"
         :inline="true"
@@ -95,7 +96,7 @@ onMounted(() => {
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
         </el-form-item>
       </el-form>
-    </Auth>
+    </ReAuth>
 
     <PureTableBar
       :columns="columns"
@@ -106,7 +107,7 @@ onMounted(() => {
       @refresh="onSearch"
     >
       <template #buttons>
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" bg text type="primary" @click="onAdd()">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd()">
           {{ $t('addNew') }}
         </el-button>
 
@@ -115,8 +116,7 @@ onMounted(() => {
           v-if="hasAuth(auth.deleted)"
           :disabled="!(deleteIds.length > 0)"
           :icon="useRenderIcon(Delete)"
-          bg
-          text
+          plain
           type="danger"
           @click="onDeleteBatch"
         >

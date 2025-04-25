@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
-import { Text } from '@/components/Text';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { Text } from '@/components/ReText';
 import { getConfig } from '@/config';
 import { useNav } from '@/layout/hooks/useNav';
 import { menuType } from '@/layout/types';

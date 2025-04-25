@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { FormInstance } from 'element-plus';
 import { FormProps, rules } from '@/views/i18n/i18n-type-setting/utils';
 import { frameSureOptions } from '@/enums';
-import Segmented from '@/components/Segmented';
+import Segmented from '@/components/ReSegmented';
 import { $t } from '@/plugins/i18n';
 
 const props = withDefaults(defineProps<FormProps>(), {

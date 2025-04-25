@@ -8,7 +8,7 @@
 <script lang="ts" setup>
 import { ElConfigProvider } from 'element-plus';
 import { computed, onMounted } from 'vue';
-import { ReDialog } from '@/components/BaseDialog';
+import { ReDialog } from '@/components/ReDialog';
 import en from 'element-plus/es/locale/lang/en';
 import zhCn from 'element-plus/es/locale/lang/zh-cn';
 import plusEn from 'plus-pro-components/es/locale/lang/en';

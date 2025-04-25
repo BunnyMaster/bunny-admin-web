@@ -1,19 +1,16 @@
-import { defineStore } from 'pinia';
-import { storeMessage } from '@/utils/message';
-import { handleTree } from '@/utils/tree';
 import {
   fetchAddMenu,
-  fetchAssignAddBatchRolesToRouter,
-  fetchAssignRolesToRouter,
   fetchClearAllRolesSelect,
   fetchDeletedMenuByIds,
-  fetchGetMenusList,
   fetchGetRoleListByRouterId,
+  fetchMenuList,
   fetchUpdateMenu,
-  fetchUpdateMenuByIdWithRank,
 } from '@/api/v1/menu/menu';
-import { isAllEmpty } from '@pureadmin/utils';
 import { $t } from '@/plugins/i18n';
+import { storeMessage } from '@/utils/message';
+import { handleTree } from '@/utils/tree';
+import { isAllEmpty } from '@pureadmin/utils';
+import { defineStore } from 'pinia';
 
 export const userMenuStore = defineStore('menuStore', {
   state() {
@@ -27,16 +24,18 @@ export const userMenuStore = defineStore('menuStore', {
   actions: {
     /** 获取菜单列表 */
     async getMenuList() {
-      const result = await fetchGetMenusList({ ...this.pagination });
+      const result = await fetchMenuList();
       if (result.code !== 200) return false;
 
       // 前端搜索菜单名称
       const title = this.form.title;
       let newData: Array<any> = result.data;
+
       if (!isAllEmpty(title)) {
         newData = newData.filter((item) => $t(item.title).includes(title));
       }
       this.datalist = handleTree(newData);
+
       return true;
     },
 
@@ -52,12 +51,6 @@ export const userMenuStore = defineStore('menuStore', {
       return storeMessage(result);
     },
 
-    /** 快速更新菜单排序 */
-    async updateMenuByIdWithRank(data: object) {
-      const result = await fetchUpdateMenuByIdWithRank(data);
-      return storeMessage(result);
-    },
-
     /** 删除菜单 */
     async deletedMenuByIds(data: object) {
       const result = await fetchDeletedMenuByIds(data);
@@ -69,18 +62,6 @@ export const userMenuStore = defineStore('menuStore', {
       const result = await fetchGetRoleListByRouterId(data);
       if (result.code !== 200) return;
       return result.data;
-    },
-
-    /** 为路由分配角色 */
-    async assignRolesToRouter(data: any) {
-      const result = await fetchAssignRolesToRouter(data);
-      return storeMessage(result);
-    },
-
-    /** 批量为菜单添加角色 */
-    async assignAddBatchRolesToRouter(data: any) {
-      const result = await fetchAssignAddBatchRolesToRouter(data);
-      return storeMessage(result);
     },
 
     /** 清除选中菜单所有角色 */

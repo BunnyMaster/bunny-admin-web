@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { useNav } from '@/layout/hooks/useNav';
 import { findRouteByPath, getParentPaths } from '@/router/utils';
 import { usePermissionStoreHook } from '@/store/permission';

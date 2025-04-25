@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import User from '@iconify-icons/ri/user-3-fill';
 import Lock from '@iconify-icons/ri/lock-fill';
 import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';

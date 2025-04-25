@@ -50,7 +50,7 @@ defineExpose({ ruleFormRef });
 </script>
 
 <template>
-  <div>
+  <div class="my-2">
     <el-form ref="ruleFormRef" :model="form" :rules="rules">
       <el-form-item :label="$t('adminUser_password')" prop="password">
         <el-input

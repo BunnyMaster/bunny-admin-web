@@ -1,4 +1,4 @@
-import { addDialog } from '@/components/BaseDialog/index';
+import { addDialog } from '@/components/ReDialog/index';
 import DeptDialog from '@/views/system/dept/dept-dialog.vue';
 import { useDeptStore } from '@/store/system/dept';
 import { h, ref } from 'vue';

@@ -46,6 +46,8 @@ export const rules = reactive({
   emailUser: [{ required: true, message: `${$t('input')}${$t('emailTemplate_templateName')}`, trigger: 'blur' }],
   // 主题
   subject: [{ required: true, message: `${$t('input')}${$t('emailTemplate_subject')}`, trigger: 'blur' }],
+  // 是否默认
+  isDefault: [{ required: true, message: `${$t('input')}${$t('emailTemplate_subject')}`, trigger: 'blur' }],
   // 邮件内容
   body: [{ required: true, message: `${$t('input')}${$t('emailTemplate_body')}`, trigger: 'blur' }],
   // 邮件类型

@@ -18,13 +18,16 @@ import { deviceDetection } from '@pureadmin/utils';
 import type { FormInstance } from 'element-plus';
 import { onMounted, ref } from 'vue';
 
+const adminUserStore = useAdminUserStore();
+
+// 用户表单Ref
 const userInfoFormRef = ref<FormInstance>();
+// 上传图片Ref
 const uploadRef = ref();
+// 剪裁头像Ref
 const cropRef = ref();
 // 剪裁完成后头像地址，base64内容
 const imgBase64Src = ref('');
-
-const adminUserStore = useAdminUserStore();
 
 /** 关闭弹窗 */
 const handleClose = () => {

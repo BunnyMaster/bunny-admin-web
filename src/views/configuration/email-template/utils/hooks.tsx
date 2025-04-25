@@ -1,5 +1,5 @@
-import { addDialog } from '@/components/BaseDialog/index';
-import EmailTemplateDialog from '@/views/configuration/email-template/email-template-dialog.vue';
+import { addDialog } from '@/components/ReDialog/index';
+import EmailTemplateDialog from '@/views/configuration/email-template/components/email-template-dialog.vue';
 import { useEmailTemplateStore } from '@/store/configuration/emailTemplate';
 import { h, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';
@@ -7,10 +7,10 @@ import type { FormItemProps } from '@/views/configuration/email-template/utils/t
 import { $t } from '@/plugins/i18n';
 import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 
+const emailTemplateStore = useEmailTemplateStore();
+
 // 选择的row列表
 export const selectRows = ref([]);
-export const formRef = ref();
-const emailTemplateStore = useEmailTemplateStore();
 
 /** 搜索初始化邮件模板表 */
 export async function onSearch() {
@@ -21,6 +21,8 @@ export async function onSearch() {
 
 /** 添加邮件模板表 */
 export function onAdd() {
+  const formRef = ref();
+
   addDialog({
     title: `${$t('addNew')}${$t('emailTemplate')}`,
     width: '30%',
@@ -57,6 +59,8 @@ export function onAdd() {
  * @param row
  */
 export function onUpdate(row: any) {
+  const formRef = ref();
+
   addDialog({
     title: `${$t('modify')}${$t('emailTemplate')}`,
     width: '30%',
@@ -76,6 +80,8 @@ export function onUpdate(row: any) {
     contentRenderer: () => h(EmailTemplateDialog, { ref: formRef }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
+
+      // 验证表单
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
 

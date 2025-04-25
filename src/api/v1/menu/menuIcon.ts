@@ -2,8 +2,8 @@ import { http } from '@/api/service/request';
 import type { BaseResult, ResultTable } from '@/api/service/types';
 
 /** 系统菜单图标---获取多语言列表 */
-export const fetchGetMenuIconList = (data: any) => {
-  return http.request<BaseResult<ResultTable>>('get', `menuIcon/getMenuIconList/${data.currentPage}/${data.pageSize}`, {
+export const fetchMenuIconList = (data: any) => {
+  return http.request<BaseResult<ResultTable>>('get', `menuIcon/menuIconList/${data.currentPage}/${data.pageSize}`, {
     params: data,
   });
 };

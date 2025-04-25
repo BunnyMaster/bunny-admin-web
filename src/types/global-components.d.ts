@@ -3,16 +3,16 @@ declare module 'vue' {
    * 自定义全局组件获得 Volar 提示（自定义的全局组件需要在这里声明下才能获得 Volar 类型提示哦）
    */
   export interface GlobalComponents {
-    IconifyIconOffline: (typeof import('../components/CommonIcon'))['IconifyIconOffline'];
-    IconifyIconOnline: (typeof import('../components/CommonIcon'))['IconifyIconOnline'];
-    FontIcon: (typeof import('../components/CommonIcon'))['FontIcon'];
-    Auth: (typeof import('../components/Auth'))['Auth'];
+    IconifyIconOffline: (typeof import('../components/ReIcon'))['IconifyIconOffline'];
+    IconifyIconOnline: (typeof import('../components/ReIcon'))['IconifyIconOnline'];
+    FontIcon: (typeof import('../components/ReIcon'))['FontIcon'];
+    Auth: (typeof import('../components/ReAuth'))['Auth'];
     Perms: (typeof import('../components/Perms'))['Perms'];
   }
 }
 
 /**
- * TODO https://github.com/element-plus/element-plus/blob/dev/global.d.ts#L2
+ * https://github.com/element-plus/element-plus/blob/dev/global.d.ts#L2
  * No need to install @vue/runtime-core
  */
 declare module 'vue' {

@@ -7,34 +7,28 @@ import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import {
-  assignBatchRolesToRouter,
-  assignRolesToRouter,
   auth,
   clearAllRolesSelect,
   columns,
+  mergeArgs,
   onAdd,
-  onChangeMenuRank,
-  onchangeVisible,
   onDelete,
   onSearch,
   onUpdate,
   selectIds,
-  switchLoadMap,
   tableRef,
 } from '@/views/system/menu/utils';
 import PureTable from '@pureadmin/table';
 import { userMenuStore } from '@/store/system/menu';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
-import Upload from '@iconify-icons/ri/upload-line';
 import { FormInstance } from 'element-plus';
-import { usePublicHooks } from '@/views/hooks';
 import { hasAuth } from '@/router/utils';
+import ReAuth from '@/components/ReAuth/src/auth';
 
-const formRef = ref();
+const menuStore = userMenuStore();
 const routerStore = userMenuStore();
-// 用户是否停用样式
-const { switchStyle } = usePublicHooks();
+const formRef = ref();
 
 /**
  * 表单重置
@@ -54,6 +48,13 @@ const onSelectionChange = (rows: Array<any>) => {
   selectIds.value = rows.map((row: any) => row.id);
 };
 
+/* 更新菜单排序 */
+const onChangeMenuRank = async (row: any) => {
+  const data = mergeArgs(row);
+  await menuStore.updateMenu(data);
+  await onSearch();
+};
+
 onMounted(() => {
   onSearch();
 });
@@ -61,7 +62,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <Auth :value="auth.search">
+    <ReAuth :value="auth.search">
       <el-form
         ref="formRef"
         :inline="true"
@@ -71,6 +72,7 @@ onMounted(() => {
         <el-form-item label="菜单名称" prop="title">
           <el-input v-model="routerStore.form.title" :placeholder="$t('input')" class="!w-[180px]" clearable />
         </el-form-item>
+
         <el-form-item>
           <el-button
             :icon="useRenderIcon('ri:search-line')"
@@ -83,7 +85,7 @@ onMounted(() => {
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
         </el-form-item>
       </el-form>
-    </Auth>
+    </ReAuth>
 
     <PureTableBar
       :columns="columns"
@@ -95,21 +97,8 @@ onMounted(() => {
     >
       <template #buttons>
         <!-- 添加菜单 -->
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" bg text type="primary" @click="onAdd()">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd()">
           {{ $t('addNew') }}
-        </el-button>
-
-        <!-- 批量为菜单添加角色 -->
-        <el-button
-          v-if="hasAuth(auth.assignAddBatchRolesToRouter)"
-          :disabled="!(selectIds.length > 0)"
-          :icon="useRenderIcon('iwwa:assign')"
-          bg
-          text
-          type="warning"
-          @click="assignBatchRolesToRouter()"
-        >
-          {{ $t('assignBatchRolesToRouter') }}
         </el-button>
 
         <!-- 清除选中所以角色 -->
@@ -117,8 +106,7 @@ onMounted(() => {
           v-if="hasAuth(auth.clearAllRolesSelect)"
           :disabled="!(selectIds.length > 0)"
           :icon="useRenderIcon('ic:baseline-clear')"
-          bg
-          text
+          plain
           type="danger"
           @click="clearAllRolesSelect()"
         >
@@ -144,20 +132,6 @@ onMounted(() => {
           table-layout="auto"
           @selection-change="onSelectionChange"
         >
-          <template #visible="{ row, index }">
-            <el-switch
-              v-model="row.visible"
-              :active-text="$t('show')"
-              :active-value="true"
-              :inactive-text="$t('hidden')"
-              :inactive-value="false"
-              :loading="switchLoadMap[index]?.loading"
-              :style="switchStyle"
-              inline-prompt
-              @click="onchangeVisible(row, index)"
-            />
-          </template>
-
           <template #rank="{ row }">
             <el-input v-model="row.rank" :max="9999" :min="1" type="number" @blur="onChangeMenuRank(row)" />
           </template>
@@ -189,7 +163,7 @@ onMounted(() => {
             </el-button>
 
             <!-- 新增 -->
-            <Auth :value="auth.add">
+            <ReAuth :value="auth.add">
               <el-button
                 v-show="row.menuType !== 3"
                 :icon="useRenderIcon(AddFill)"
@@ -201,7 +175,7 @@ onMounted(() => {
               >
                 {{ $t('addNew') }}
               </el-button>
-            </Auth>
+            </ReAuth>
 
             <!-- 删除操作 -->
             <el-popconfirm
@@ -215,21 +189,6 @@ onMounted(() => {
                 </el-button>
               </template>
             </el-popconfirm>
-
-            <!-- 分配角色 -->
-            <Auth :value="auth.assignRolesToRouter">
-              <el-button
-                v-show="row.menuType !== 3"
-                :icon="useRenderIcon(Upload)"
-                :size="size"
-                class="reset-margin"
-                link
-                type="primary"
-                @click="assignRolesToRouter(row)"
-              >
-                {{ $t('assign_roles') }}
-              </el-button>
-            </Auth>
           </template>
         </pure-table>
       </template>

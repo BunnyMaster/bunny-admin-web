@@ -3,7 +3,7 @@ import {
   fetchAddMenuIcon,
   fetchDeleteMenuIcon,
   fetchGetIconNameList,
-  fetchGetMenuIconList,
+  fetchMenuIconList,
   fetchUpdateMenuIcon,
 } from '@/api/v1/menu/menuIcon';
 import { pageSizes } from '@/enums/baseConstant';
@@ -46,7 +46,7 @@ export const useMenuIconStore = defineStore('menuIconStore', {
       delete data.pageSizes;
       delete data.total;
       delete data.background;
-      const response = await fetchGetMenuIconList(data);
+      const response = await fetchMenuIconList(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);

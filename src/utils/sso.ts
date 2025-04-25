@@ -144,7 +144,7 @@ export const downloadBlob = async (response: any, fileName: string) => {
  */
 async function blobToJson(blob: any): Promise<any> {
   try {
-    const text = await blob.data.text();
+    const text = await blob.text();
     const json = JSON.parse(text);
     if (json.code !== 200) {
       message(json.message, { type: 'error' });

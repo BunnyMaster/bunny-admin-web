@@ -16,7 +16,7 @@ import { type menuType, routerArrays } from '@/layout/types';
 import { useMultiTagsStoreHook } from '@/store/multiTags';
 import { usePermissionStoreHook } from '@/store/permission';
 // 动态路由
-import { getRouterAsync } from '@/api/v1/system/system';
+import { fetchRouterAsync } from '@/api/v1/system/system';
 // import { getAsyncRoutes } from '@/api/routes';
 
 const IFrame = () => import('@/layout/frame.vue');
@@ -162,7 +162,7 @@ function initRouter() {
       });
     } else {
       return new Promise((resolve) => {
-        getRouterAsync().then(({ data }) => {
+        fetchRouterAsync().then(({ data }) => {
           handleAsyncRoutes(cloneDeep(data));
           storageLocal().setItem(key, data);
           resolve(router);
@@ -171,7 +171,7 @@ function initRouter() {
     }
   } else {
     return new Promise((resolve) => {
-      getRouterAsync().then(({ data }) => {
+      fetchRouterAsync().then(({ data }) => {
         handleAsyncRoutes(cloneDeep(data));
         resolve(router);
       });
@@ -282,9 +282,9 @@ function addAsyncRoutes(arrRoutes: Array<RouteRecordRaw>) {
       addAsyncRoutes(v.children);
     }
   });
-  // arrRoutes.forEach(routes => {
-  // 	const children = routes.children;
-  // 	children === null || children.length === 0 ? delete routes.children : false;
+  // arrRoutes.forEach((routes) => {
+  //   const children = routes.children;
+  //   children === null || children.length === 0 ? delete routes.children : false;
   // });
   return arrRoutes;
 }

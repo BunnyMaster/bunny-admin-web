@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import ReCol from '@/components/MyCol';
+import ReCol from '@/components/ReCol';
 import { chartData, useDark } from './utils';
 import { ReNormalCountTo } from '@/components/CountTo';
 import ChartLine from '@/views/welcome/components/ChartLine.vue';

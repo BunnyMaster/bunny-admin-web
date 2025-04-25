@@ -2,12 +2,12 @@
 import { onMounted, reactive, ref } from 'vue';
 import { UtilsEChartsOption } from '@pureadmin/utils';
 // import 'echarts-gl';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import * as echarts from 'echarts';
 import { useIntervalFn } from '@vueuse/core';
 import dayjs from 'dayjs';
 import { fetchSystemProcessCPU } from '@/api/v1/actuator';
-import SystemCardItem from '@/components/MyCol/SystemCardItem.vue';
+import SystemCardItem from '@/components/ReCol/SystemCardItem.vue';
 
 const jvmCPUECharts = ref();
 const myChart = ref<any>();

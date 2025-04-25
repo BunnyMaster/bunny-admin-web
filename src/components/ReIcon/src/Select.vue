@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from 'vue';
-import { fetchGetMenuIconList } from '@/api/v1/menu/menuIcon';
-import { FormProps } from '@/components/SelectIcon/types';
+import { fetchMenuIconList } from '@/api/v1/menu/menuIcon';
+import { FormProps } from './types';
 import { $t } from '@/plugins/i18n';
 
 const props = withDefaults(defineProps<FormProps>(), {
@@ -25,7 +25,7 @@ const onSearch = async () => {
   const { currentPage, pageSize } = innerForm;
 
   // 获取数据
-  const baseResult = await fetchGetMenuIconList({ currentPage, pageSize });
+  const baseResult = await fetchMenuIconList({ currentPage, pageSize });
   if (baseResult.code !== 200) return;
   const data = baseResult.data;
 
@@ -98,6 +98,15 @@ onMounted(() => {
         <el-button bg class="justify-end mr-2 ml-2" size="small" text type="danger" @click="onClear">清空</el-button>
       </div>
     </el-popover>
+    <el-link
+      :title="$t('systemMenuIcon.officialWebsite')"
+      :underline="false"
+      href="https://icon-sets.iconify.design/"
+      target="_blank"
+      type="primary"
+    >
+      {{ $t('systemMenuIcon.officialWebsite') }}
+    </el-link>
   </div>
 </template>
 

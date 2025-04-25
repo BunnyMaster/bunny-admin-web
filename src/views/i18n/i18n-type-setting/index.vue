@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { auth, columns, onAdd, onDelete, onSearch, onUpdate } from '@/views/i18n/i18n-type-setting/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
-import { useRenderIcon } from '@/components/CommonIcon/src/hooks';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
@@ -68,7 +68,7 @@ onMounted(() => {
 
     <PureTableBar :columns="columns" :title="$t('i18n_type')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" type="primary" @click="onAdd">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
       </template>

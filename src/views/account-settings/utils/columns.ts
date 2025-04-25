@@ -3,11 +3,11 @@ import { reactive } from 'vue';
 import type { FormRules } from 'element-plus';
 import { $t } from '@/plugins/i18n';
 import ProfileIcon from '@iconify-icons/ri/user-3-line';
-import Profile from '@/views/account-settings/profile.vue';
+import Profile from '@/views/account-settings/components/profile.vue';
 import SecurityLogIcon from '@iconify-icons/ri/window-line';
-import SecurityLog from '@/views/account-settings/security-log.vue';
+import SecurityLog from '@/views/account-settings/components/security-log.vue';
 import AccountManagementIcon from '@iconify-icons/ri/profile-line';
-import AccountManagement from '@/views/account-settings/account-management.vue';
+import AccountManagement from '@/views/account-settings/components/account-management.vue';
 
 export const columns: TableColumnList = [
   { type: 'index', index: (index: number) => index + 1, label: '序号', width: 60 },
@@ -17,12 +17,12 @@ export const columns: TableColumnList = [
   { label: $t('userLoginLog_ipAddress'), prop: 'ipAddress', width: 140 },
   // 登录Ip归属地
   { label: $t('userLoginLog_ipRegion'), prop: 'ipRegion' },
-  // // 登录时代理
-  // { label: $t('userLoginLog_userAgent'), prop: 'userAgent' },
+  // 登录时代理
+  { label: $t('userLoginLog_userAgent'), prop: 'userAgent' },
   // 操作类型
   { label: $t('userLoginLog_type'), prop: 'type' },
-  // // 标识客户端是否是通过Ajax发送请求的
-  // { label: $t('userLoginLog_xRequestedWith'), prop: 'xRequestedWith', width: 150 },
+  // 标识客户端是否是通过Ajax发送请求的
+  { label: $t('userLoginLog_xRequestedWith'), prop: 'xRequestedWith', width: 150 },
   // 创建时间也就是操作时间
   {
     label: $t('op_time'),
