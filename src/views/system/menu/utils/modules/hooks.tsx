@@ -51,7 +51,7 @@ function onAdd(parentId: any = 0) {
         hiddenTag: false,
         fixedTag: false,
         showLink: true,
-        showParent: false,
+        showParent: true,
       },
     },
     width: '45%',

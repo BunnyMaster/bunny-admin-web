@@ -1,6 +1,6 @@
-import { reactive } from 'vue';
 import { $t } from '@/plugins/i18n';
 import { ElTag } from 'element-plus';
+import { reactive } from 'vue';
 
 // 表格列
 export const columns: TableColumnList = [
@@ -35,7 +35,7 @@ export const columns: TableColumnList = [
   { label: $t('table.createTime'), prop: 'createTime', sortable: true, minWidth: 160 },
   { label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', minWidth: 130 },
   { label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', minWidth: 130 },
-  { label: $t('table.operation'), fixed: 'right', minWidth: 210, slot: 'operation' },
+  { label: $t('table.operation'), fixed: 'right', minWidth: 160, slot: 'operation' },
 ];
 
 // 添加规则

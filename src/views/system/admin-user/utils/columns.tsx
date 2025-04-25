@@ -1,7 +1,7 @@
-import { computed, reactive, ref } from 'vue';
 import { $t } from '@/plugins/i18n';
-import type { FormRules } from 'element-plus';
 import { REGEXP_PWD } from '@/views/login/utils/rule';
+import type { FormRules } from 'element-plus';
+import { computed, reactive, ref } from 'vue';
 
 // 是否是更新用户信息
 export const isAddUserinfo = ref(false);

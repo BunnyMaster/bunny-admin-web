@@ -1,11 +1,11 @@
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { $t } from '@/plugins/i18n';
+import { userMenuStore } from '@/store/system/menu';
+import { messageBox } from '@/utils/message';
+import { mergeArgs } from '@/views/system/menu/utils';
 import { isAllEmpty } from '@pureadmin/utils';
 import { ElLink, ElTag, type FormRules } from 'element-plus';
 import { h, reactive } from 'vue';
-import { mergeArgs } from '@/views/system/menu/utils';
-import { messageBox } from '@/utils/message';
-import { userMenuStore } from '@/store/system/menu';
 
 const menuStore = userMenuStore();
 
@@ -104,7 +104,7 @@ export const columns: TableColumnList = [
   { label: $t('table.createTime'), prop: 'createTime', sortable: true, minWidth: 160 },
   { label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', minWidth: 130 },
   { label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', minWidth: 130 },
-  { label: $t('table.operation'), fixed: 'right', minWidth: 150, slot: 'operation' },
+  { label: $t('table.operation'), fixed: 'right', minWidth: 160, slot: 'operation' },
 ];
 
 /** 自定义表单规则校验 */
