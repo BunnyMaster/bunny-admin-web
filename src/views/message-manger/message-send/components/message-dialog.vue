@@ -18,8 +18,8 @@ import LoadingSvg from '@/assets/svg/loading.svg';
 import { beforeUpload, messageLevel, settingLR } from '@/views/message-manger/message-editing/utils';
 import { Plus } from '@element-plus/icons-vue';
 import SplitPane from '@/components/SplitPane';
-import RichEditor from '@/views/message-manger/message-send/rich-editor.vue';
-import MarkdownEditor from '@/views/message-manger/message-send/markdown-editor.vue';
+import RichEditor from '@/views/message-manger/message-send/components/rich-editor.vue';
+import MarkdownEditor from '@/views/message-manger/message-send/components/markdown-editor.vue';
 import ImageLoading from '@/components/Upload/ImageLoading.vue';
 
 // 用户是否停用样式

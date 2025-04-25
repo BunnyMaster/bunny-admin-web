@@ -2,10 +2,10 @@ import { addDialog, closeDialog } from '@/components/ReDialog/index';
 import { $t } from '@/plugins/i18n';
 import { userI18nStore } from '@/store/i18n/i18n';
 import { messageBox } from '@/utils/message';
-import I18nDialog from '@/views/i18n/i18n-setting/i18n-dialog.vue';
+import I18nDialog from '@/views/i18n/i18n-setting/components/i18n-dialog.vue';
 import type { FormProps } from '@/views/i18n/i18n-setting/utils/types';
 import { h, ref } from 'vue';
-import I18nUseFileUploadDoalog from '@/views/i18n/i18n-setting/i18n-use-file-upload-doalog.vue';
+import I18nUseFileUploadDoalog from '@/views/i18n/i18n-setting/components/i18n-use-file-upload-doalog.vue';
 
 export const formRef = ref();
 const i18nStore = userI18nStore();

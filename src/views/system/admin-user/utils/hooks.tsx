@@ -1,5 +1,5 @@
 import { addDialog } from '@/components/ReDialog/index';
-import AdminUserDialog from '@/views/system/admin-user/admin-user-dialog.vue';
+import AdminUserDialog from '@/views/system/admin-user/components/admin-user-dialog.vue';
 import { useAdminUserStore } from '@/store/system/adminUser';
 import { computed, h, reactive, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';
@@ -9,7 +9,7 @@ import { isAddUserinfo } from '@/views/system/admin-user/utils/columns';
 import ResetPasswordDialog from '@/components/Table/ResetPasswords.vue';
 import { deviceDetection, handleTree } from '@pureadmin/utils';
 import CropperPreview from '@/components/CropperPreview';
-import AssignUserToRole from '@/views/system/admin-user/assign-roles-to-user.vue';
+import AssignUserToRole from '@/views/system/admin-user/components/assign-roles-to-user.vue';
 import { fetchUploadAvatarByAdmin } from '@/api/v1/system/adminUser';
 import { useUserStore } from '@/store/system/user';
 import { useDeptStore } from '@/store/system/dept';

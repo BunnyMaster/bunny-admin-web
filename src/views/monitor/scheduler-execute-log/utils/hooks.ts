@@ -3,7 +3,7 @@ import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
 import { $t } from '@/plugins/i18n';
 import { addDialog } from '@/components/ReDialog/index';
-import ScheduleExecuteLog from '@/views/monitor/scheduler-execute-log/schedule-execute-log.vue';
+import ScheduleExecuteLog from '@/views/monitor/scheduler-execute-log/components/schedule-execute-log.vue';
 
 export const formRef = ref();
 // 删除ids

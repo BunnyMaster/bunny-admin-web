@@ -1,5 +1,5 @@
 import { addDialog } from '@/components/ReDialog/index';
-import MessageDialog from '@/views/message-manger/message-send/message-dialog.vue';
+import MessageDialog from '@/views/message-manger/message-send/components/message-dialog.vue';
 import { h, reactive, ref, toRaw } from 'vue';
 import { message, messageBox } from '@/utils/message';
 import { $t } from '@/plugins/i18n';

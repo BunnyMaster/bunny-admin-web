@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import SplitPane from '@/components/SplitPane';
-import MessageEditorFrom from '@/views/message-manger/message-editing/message-editor-from.vue';
-import RichEditor from '@/views/message-manger/message-editing/rich-editor.vue';
+import MessageEditorFrom from '@/views/message-manger/message-editing/components/message-editor-from.vue';
+import RichEditor from '@/views/message-manger/message-editing/components/rich-editor.vue';
 import { formState, settingLR } from '@/views/message-manger/message-editing/utils';
-import MarkdownEditor from '@/views/message-manger/message-editing/markdown-editor.vue';
+import MarkdownEditor from '@/views/message-manger/message-editing/components/markdown-editor.vue';
 import { onMounted } from 'vue';
 
 /** 退出提醒 */

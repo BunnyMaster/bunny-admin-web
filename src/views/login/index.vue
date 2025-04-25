@@ -11,8 +11,8 @@ import dayIcon from '@/assets/svg/day.svg?component';
 import darkIcon from '@/assets/svg/dark.svg?component';
 import globalization from '@/assets/svg/globalization.svg?component';
 import Check from '@iconify-icons/ep/check';
-import LoginForm from '@/views/login/login-form.vue';
-import LoginEmail from '@/views/login/login-email.vue';
+import LoginForm from '@/views/login/components/login-form.vue';
+import LoginEmail from '@/views/login/components/login-email.vue';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
 import { currentPage } from '@/views/login/utils';
 

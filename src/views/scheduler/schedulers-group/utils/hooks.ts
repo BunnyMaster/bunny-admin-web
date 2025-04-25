@@ -1,5 +1,5 @@
 import { addDialog } from '@/components/ReDialog/index';
-import SchedulersGroupDialog from '@/views/scheduler/schedulers-group/schedulers-group-dialog.vue';
+import SchedulersGroupDialog from '@/views/scheduler/schedulers-group/components/schedulers-group-dialog.vue';
 import { useSchedulersGroupStore } from '@/store/scheduler/schedulersGroup';
 import { h, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';

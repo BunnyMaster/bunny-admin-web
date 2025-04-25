@@ -1,5 +1,5 @@
 import { addDialog } from '@/components/ReDialog/index';
-import MenuIconDialog from '@/views/configuration/menu-icon/menu-icon-dialog.vue';
+import MenuIconDialog from '@/views/configuration/menu-icon/components/menu-icon-dialog.vue';
 import { useMenuIconStore } from '@/store/configuration/menuIcon';
 import { h, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';

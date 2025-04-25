@@ -1,5 +1,5 @@
 import { addDialog } from '@/components/ReDialog/index';
-import DeptDialog from '@/views/system/dept/dept-dialog.vue';
+import DeptDialog from '@/views/system/dept/components/dept-dialog.vue';
 import { useDeptStore } from '@/store/system/dept';
 import { h, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';

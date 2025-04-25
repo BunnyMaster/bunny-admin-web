@@ -34,7 +34,7 @@ import More from '@iconify-icons/ep/more-filled';
 import { useAdminUserStore } from '@/store/system/adminUser';
 import { sexConstant, tableSelectButtonClass, UserAvatar, userStatus } from '@/enums/baseConstant';
 import { deviceDetection } from '@pureadmin/utils';
-import Tree from '@/views/system/admin-user/tree.vue';
+import Tree from '@/views/system/admin-user/components/tree.vue';
 import Airplane from '@/assets/svg/airplane.svg';
 import { useDeptStore } from '@/store/system/dept';
 import { FormInstance } from 'element-plus';

@@ -27,7 +27,7 @@ import { useRoleStore } from '@/store/system/role';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { deviceDetection } from '@pureadmin/utils';
 import Menu from '@iconify-icons/ep/menu';
-import AssignPowersToRole from '@/views/system/role/assign-powers-to-role.vue';
+import AssignPowersToRole from '@/views/system/role/components/assign-powers-to-role.vue';
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
 

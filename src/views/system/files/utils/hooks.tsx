@@ -1,5 +1,5 @@
 import { addDialog } from '@/components/ReDialog/index';
-import FilesDialog from '@/views/system/files/files-dialog.vue';
+import FilesDialog from '@/views/system/files/components/files-dialog.vue';
 import { useFilesStore } from '@/store/monitor/files';
 import { h, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';

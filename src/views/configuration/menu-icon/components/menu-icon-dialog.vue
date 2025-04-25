@@ -4,7 +4,7 @@ import { FormInstance } from 'element-plus';
 import { FormProps, rules } from '@/views/configuration/menu-icon/utils';
 import { $t } from '@/plugins/i18n';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import MenuIconSelectIconName from '@/views/configuration/menu-icon/menu-icon-select-icon-name.vue';
+import MenuIconSelectIconName from '@/views/configuration/menu-icon/components/menu-icon-select-icon-name.vue';
 
 const props = withDefaults(defineProps<FormProps>(), {
   formInline: () => ({

@@ -1,5 +1,5 @@
 import { addDialog } from '@/components/ReDialog/index';
-import UserLoginLogDialog from '@/views/monitor/user-login-log/user-login-log-dialog.vue';
+import UserLoginLogDialog from '@/views/monitor/user-login-log/components/user-login-log-dialog.vue';
 import { useUserLoginLogStore } from '@/store/monitor/userLoginLog';
 import { h, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';

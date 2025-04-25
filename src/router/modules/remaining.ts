@@ -46,13 +46,13 @@ export default [
       {
         path: '/message-detail/:messageType',
         name: 'MessageDetailByMessageType',
-        component: () => import('@/views/message-manger/message-detail/detail-type.vue'),
+        component: () => import('@/views/message-manger/message-detail/components/detail-type.vue'),
         meta: { title: 'message', showLink: false },
       },
       {
         path: '/message-detail/:messageType/:messageId',
         name: 'MessageDetailByMessageId',
-        component: () => import('@/views/message-manger/message-detail/detail-message-id.vue'),
+        component: () => import('@/views/message-manger/message-detail/components/detail-message-id.vue'),
         meta: { title: 'message', showLink: false },
       },
     ],

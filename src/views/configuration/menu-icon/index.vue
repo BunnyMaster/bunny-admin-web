@@ -20,7 +20,7 @@ import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useMenuIconStore } from '@/store/configuration/menuIcon';
-import MenuIconSelectIconName from '@/views/configuration/menu-icon/menu-icon-select-icon-name.vue';
+import MenuIconSelectIconName from '@/views/configuration/menu-icon/components/menu-icon-select-icon-name.vue';
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
 

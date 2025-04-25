@@ -1,5 +1,5 @@
 import { addDialog } from '@/components/ReDialog/index';
-import AddI18nType from '@/views/i18n/i18n-type-setting/i18n-type-dialog.vue';
+import AddI18nType from '@/views/i18n/i18n-type-setting/components/i18n-type-dialog.vue';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
 import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
