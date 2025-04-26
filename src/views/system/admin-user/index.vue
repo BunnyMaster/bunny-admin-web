@@ -42,6 +42,8 @@ import { usePublicHooks } from '@/views/hooks';
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
 
+defineOptions({ name: 'AdminUserManger' });
+
 const adminUserStore = useAdminUserStore();
 const deptStore = useDeptStore();
 // 用户是否停用样式

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted } from 'vue';
+import { h, onMounted } from 'vue';
 import {
   auth,
   columns,
@@ -30,42 +30,74 @@ import Menu from '@iconify-icons/ep/menu';
 import AssignPowersToRole from '@/views/system/role/components/assign-powers-to-role.vue';
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
+import { fetchExportByExcel } from '@/api/v1/system/role';
+import { downloadBlob } from '@/utils/sso';
+import Download from '@iconify-icons/ep/download';
+import Upload from '@iconify-icons/ri/upload-line';
+import { addDialog } from '@/components/ReDialog/index';
+import FileUpdateRoleDialog from '@/views/system/role/components/file-update-role-dialog.vue';
+import { FormInstance } from 'element-plus';
+
+defineOptions({ name: 'RoleManger' });
 
 const roleStore = useRoleStore();
 
-/**
- * * 当前页改变时
- */
+/* 当前页改变时 */
 const onCurrentPageChange = async (value: number) => {
   roleStore.pagination.currentPage = value;
   await onSearch();
 };
 
-/**
- * * 当分页发生变化
- * @param value
- */
+/* 当分页发生变化 */
 const onPageSizeChange = async (value: number) => {
   roleStore.pagination.pageSize = value;
   await onSearch();
 };
 
-/**
- * * 选择多行
- * @param rows
- */
+/* 选择多行 */
 const onSelectionChange = (rows: Array<any>) => {
   deleteIds.value = rows.map((row: any) => row.id);
 };
 
-/**
- * 重置表单
- * @param formEl
- */
-const resetForm = async (formEl) => {
+/* 重置表单 */
+const resetForm = async (formEl: FormInstance) => {
   if (!formEl) return;
   formEl.resetFields();
   await onSearch();
+};
+
+/* 使用Excel导出导出角色列表 */
+const downloadRoleExcel = async () => {
+  const result = await fetchExportByExcel();
+
+  downloadBlob(result, 'role.zip');
+};
+
+/* 使用文件更新角色 */
+const onUpdateByFile = (row: any) => {
+  addDialog({
+    title: `${$t('modify')}${$t('role')}`,
+    width: '30%',
+    props: { form: { file: undefined } },
+    draggable: true,
+    fullscreenIcon: true,
+    closeOnClickModal: false,
+    contentRenderer: () => h(FileUpdateRoleDialog, { ref: formRef }),
+    beforeSure: (done, { options }) => {
+      const form = options.props.form;
+      formRef.value.formRef.validate(async (valid: any) => {
+        if (!valid) return;
+        // 更新文件 data
+        const data = { file: form.file[0].raw };
+
+        // 更新角色信息
+        const result = await roleStore.updateRoleByFile(data);
+        if (!result) return;
+        done();
+        await onSearch();
+      });
+    },
+  });
 };
 
 onMounted(() => {
@@ -122,6 +154,27 @@ onMounted(() => {
         @refresh="onSearch"
       >
         <template #buttons>
+          <!-- 下载Excel配置 -->
+          <el-button
+            v-if="hasAuth(auth.downloadRole)"
+            :icon="useRenderIcon(Download)"
+            plain
+            type="primary"
+            @click="downloadRoleExcel"
+          >
+            {{ $t('download_configuration') }}
+          </el-button>
+          <!-- 文件更新 -->
+          <el-button
+            v-if="hasAuth(auth.update)"
+            :icon="useRenderIcon(Upload)"
+            plain
+            type="primary"
+            @click="onUpdateByFile"
+          >
+            {{ $t('file_import') }}
+          </el-button>
+
           <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd">
             {{ $t('addNew') }}
           </el-button>

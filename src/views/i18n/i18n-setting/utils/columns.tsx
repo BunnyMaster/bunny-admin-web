@@ -1,7 +1,7 @@
 // 多语言表格列字段
-import { reactive } from 'vue';
-import type { FormRules } from 'element-plus';
 import { $t } from '@/plugins/i18n';
+import type { FormRules } from 'element-plus';
+import { reactive } from 'vue';
 
 export const columns: TableColumnList = [
   { type: 'selection', align: 'left' },
@@ -13,7 +13,7 @@ export const columns: TableColumnList = [
   { label: $t('table.createTime'), prop: 'createTime', sortable: true },
   { label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 130 },
   { label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 130 },
-  { label: $t('table.operation'), fixed: 'right', width: 160, slot: 'operation' },
+  { label: $t('table.operation'), fixed: 'right', width: 210, slot: 'operation' },
 ];
 
 // 添加多语言表单规则

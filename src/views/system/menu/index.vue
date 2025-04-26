@@ -26,24 +26,20 @@ import { FormInstance } from 'element-plus';
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
 
+defineOptions({ name: 'MenuManger' });
+
 const menuStore = userMenuStore();
 const routerStore = userMenuStore();
 const formRef = ref();
 
-/**
- * 表单重置
- * @param formEl
- */
+/* 表单重置 */
 const resetForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.resetFields();
   await onSearch();
 };
 
-/**
- * * 选择多行
- * @param rows
- */
+/* 选择多行 */
 const onSelectionChange = (rows: Array<any>) => {
   selectIds.value = rows.map((row: any) => row.id);
 };

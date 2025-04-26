@@ -27,6 +27,8 @@ import Download from '@iconify-icons/ep/download';
 import Upload from '@iconify-icons/ri/upload-line';
 import ReAuth from '@/components/ReAuth/src/auth';
 
+defineOptions({ name: 'I18n' });
+
 const tableRef = ref();
 const pageFormRef = ref();
 const i18nStore = userI18nStore();
@@ -134,7 +136,7 @@ onMounted(() => {
 
         <!-- 下载多语言配置 -->
         <el-dropdown v-if="hasAuth(auth.update)" class="mr-1" type="primary">
-          <el-button :icon="useRenderIcon(Upload)" plain type="primary">{{ $t('file_update') }}</el-button>
+          <el-button :icon="useRenderIcon(Upload)" plain type="primary">{{ $t('file_import') }}</el-button>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="updateI18nSetting('json')">{{ $t('use_json_update') }}</el-dropdown-item>

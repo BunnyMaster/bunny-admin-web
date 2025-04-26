@@ -14,6 +14,8 @@ import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { hasAuth } from '@/router/utils';
 
+defineOptions({ name: 'I18nType' });
+
 const tableRef = ref();
 const formRef = ref();
 const i18nTypeStore = userI18nTypeStore();

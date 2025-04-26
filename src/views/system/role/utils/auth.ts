@@ -9,4 +9,6 @@ export const auth = {
   deleted: ['role::deleteRole'],
   // 为角色分配权限
   assignPowersToRole: ['rolePower::assignPowersToRole'],
+  // 下载角色配置
+  downloadRole: ['role::downloadRole'],
 };

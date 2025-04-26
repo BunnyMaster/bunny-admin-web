@@ -10,7 +10,7 @@ import {
   onUpdate,
   onUpdateBatchParent,
   powerIds,
-} from '@/views/system/power/utils';
+} from '@/views/system/permission/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
@@ -25,6 +25,8 @@ import { handleTree } from '@pureadmin/utils';
 import { FormInstance } from 'element-plus';
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
+
+defineOptions({ name: 'PermissionManger' });
 
 const tableRef = ref();
 const formRef = ref();

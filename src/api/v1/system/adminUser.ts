@@ -55,8 +55,8 @@ export const fetchLogout = (data?: object) => {
 };
 
 /** 获取用户信息,根据当前token获取 */
-export const fetchGetUserinfo = () => {
-  return http.request<BaseResult<any>>('get', 'user/noManage/getUserinfo');
+export const fetchUserinfo = () => {
+  return http.request<BaseResult<any>>('get', 'user/noManage/userinfo');
 };
 
 /** 用户信息---获取用户信息列表 */

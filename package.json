@@ -1,9 +1,32 @@
 {
-  "name": "bunny-admin-web",
+  "name": "bunny-auth-admin",
   "version": "3.0.0",
   "private": true,
   "type": "module",
   "license": "MIT",
+  "keywords": [
+    "bunny-auth-admin",
+    "element-plus",
+    "tailwindcss",
+    "typescript",
+    "pinia",
+    "vue3",
+    "vite",
+    "esm"
+  ],
+  "homepage": "https://github.com/BunnyMaster",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BunnyMaster/bunny-admin-web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BunnyMaster/bunny-admin-web/issues"
+  },
+  "author": {
+    "name": "BunnyMaster",
+    "email": "1319900154@qq.com",
+    "url": "https://github.com/BunnyMaster"
+  },
   "scripts": {
     "dev": "NODE_OPTIONS=--max-old-space-size=1024 vite",
     "serve": "pnpm vite",

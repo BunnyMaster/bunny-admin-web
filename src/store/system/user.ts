@@ -2,10 +2,10 @@ import { defineStore } from 'pinia';
 import { resetRouter, router, routerArrays, storageLocal, store, type userType } from '../utils';
 import {
   fetchAssignRolesToUsers,
-  fetchGetUserinfo,
   fetchLogin,
   fetchLogout,
   fetchPostEmailCode,
+  fetchUserinfo,
   refreshTokenApi,
 } from '@/api/v1/system/adminUser';
 import { useMultiTagsStoreHook } from '../multiTags';
@@ -86,7 +86,7 @@ export const useUserStore = defineStore({
 
     /** 获取用户信息 */
     async getUserinfo() {
-      const result = await fetchGetUserinfo();
+      const result = await fetchUserinfo();
       if (result.code === 200) {
         const data = result.data;
         setToken(data);

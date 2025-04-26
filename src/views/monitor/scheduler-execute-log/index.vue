@@ -25,6 +25,8 @@ import 'vue-json-pretty/lib/styles.css';
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
 
+defineOptions({ name: 'SchedulerExecuteLog' });
+
 const tableRef = ref();
 const formRef = ref();
 const quartzExecuteLogStore = useQuartzExecuteLogStore();

@@ -2,6 +2,8 @@
 import { onMounted, ref } from 'vue';
 import { fetchSystemCaches } from '@/api/v1/actuator';
 
+defineOptions({ name: 'SystemCaches' });
+
 const caches = ref([]);
 const onSearch = async () => {
   let result = await fetchSystemCaches();
@@ -16,7 +18,7 @@ onMounted(() => {
 
 <template>
   <el-descriptions :column="2" border direction="vertical" title="系统已缓存内容">
-    <el-descriptions-item v-for="cache in caches" :key="cache.key" :label="cache.key" style="overflow: auto">
+    <el-descriptions-item v-for="cache in caches" :key="cache.key" :label="cache.key">
       {{ cache.value }}
     </el-descriptions-item>
   </el-descriptions>

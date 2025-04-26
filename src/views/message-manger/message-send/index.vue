@@ -25,6 +25,8 @@ import { useMessageTypeStore } from '@/store/message/messageType';
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
 
+defineOptions({ name: 'MessageSender' });
+
 const tableRef = ref();
 const formRef = ref();
 const messageTypeStore = useMessageTypeStore();

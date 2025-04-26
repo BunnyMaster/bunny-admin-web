@@ -58,10 +58,7 @@ export function onAdd() {
   });
 }
 
-/**
- * * 更新角色
- * @param row
- */
+/* 更新角色 */
 export function onUpdate(row: any) {
   addDialog({
     title: `${$t('modify')}${$t('role')}`,

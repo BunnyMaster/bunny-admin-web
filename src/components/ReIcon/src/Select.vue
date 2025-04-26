@@ -1,127 +1,184 @@
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from 'vue';
-import { fetchMenuIconList } from '@/api/v1/menu/menuIcon';
-import { FormProps } from './types';
-import { $t } from '@/plugins/i18n';
+import { IconJson } from '@/components/ReIcon/data';
+import { cloneDeep, isAllEmpty } from '@pureadmin/utils';
+import { computed, CSSProperties, ref, watch } from 'vue';
+import Search from '@iconify-icons/ri/search-eye-line';
 
-const props = withDefaults(defineProps<FormProps>(), {
-  formInline: () => ({
-    icon: '',
-  }),
+type ParameterCSSProperties = (item?: string) => CSSProperties | undefined;
+
+defineOptions({
+  name: 'IconSelect',
 });
 
-const innerForm = reactive({
-  datalist: [],
-  currentPage: 1,
-  pageSize: 30,
-  total: 100,
-  loading: false,
+const inputValue = defineModel({ type: String });
+
+const iconList = ref(IconJson);
+const icon = ref();
+const currentActiveType = ref('ep:');
+// 深拷贝图标数据，前端做搜索
+const copyIconList = cloneDeep(iconList.value);
+const totalPage = ref(0);
+// 每页显示35个图标
+const pageSize = ref(35);
+const currentPage = ref(1);
+
+// 搜索条件
+const filterValue = ref('');
+
+const tabsList = [
+  {
+    label: 'Element Plus',
+    name: 'ep:',
+  },
+  {
+    label: 'Remix Icon',
+    name: 'ri:',
+  },
+  {
+    label: 'Font Awesome 5 Solid',
+    name: 'fa-solid:',
+  },
+];
+
+const pageList = computed(
+  () =>
+    currentActiveType.value !== 'web' &&
+    copyIconList[currentActiveType.value]
+      .filter((i) => i.includes(filterValue.value))
+      .slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value)
+);
+
+const iconItemStyle = computed((): ParameterCSSProperties => {
+  return (item) => {
+    if (inputValue.value === currentActiveType.value + item) {
+      return {
+        borderColor: 'var(--el-color-primary)',
+        color: 'var(--el-color-primary)',
+      };
+    }
+  };
 });
-const form = ref(props.formInline);
 
-/** 搜索和初始化 */
-const onSearch = async () => {
-  innerForm.loading = true;
-  const { currentPage, pageSize } = innerForm;
+function setVal() {
+  currentActiveType.value = inputValue.value.substring(0, inputValue.value.indexOf(':') + 1);
+  icon.value = inputValue.value.substring(inputValue.value.indexOf(':') + 1);
+}
 
-  // 获取数据
-  const baseResult = await fetchMenuIconList({ currentPage, pageSize });
-  if (baseResult.code !== 200) return;
-  const data = baseResult.data;
+function onBeforeEnter() {
+  if (isAllEmpty(icon.value)) return;
+  setVal();
+  // 寻找当前图标在第几页
+  const curIconIndex = copyIconList[currentActiveType.value].findIndex((i) => i === icon.value);
+  currentPage.value = Math.ceil((curIconIndex + 1) / pageSize.value);
+}
 
-  // 赋值内容
-  innerForm.datalist = data.list;
-  innerForm.currentPage = data.pageNo;
-  innerForm.pageSize = data.pageSize;
-  innerForm.total = data.total;
-  innerForm.loading = false;
-};
+function onAfterLeave() {
+  filterValue.value = '';
+}
 
-/**
- * * 修改图标
- * @param value
- */
-const onChangeIcon = (value: any) => {
-  form.value.icon = value.iconCode;
-};
+function handleClick({ props }) {
+  currentPage.value = 1;
+  currentActiveType.value = props.name;
+}
 
-/** 清除图标 */
-const onClear = () => (form.value.icon = '');
+function onChangeIcon(item) {
+  icon.value = item;
+  inputValue.value = currentActiveType.value + item;
+}
 
-/** 修改当前页 */
-const onCurrentChange = async (value: number) => {
-  innerForm.currentPage = value;
-  await onSearch();
-};
+function onCurrentChange(page) {
+  currentPage.value = page;
+}
 
-onMounted(() => {
-  onSearch();
-});
+function onClear() {
+  icon.value = '';
+  inputValue.value = '';
+}
+
+watch(
+  () => pageList.value,
+  () =>
+    currentActiveType.value !== 'web' &&
+    (totalPage.value = copyIconList[currentActiveType.value].filter((i) => i.includes(filterValue.value)).length),
+  { immediate: true }
+);
+watch(
+  () => inputValue.value,
+  (val) => val && setVal(),
+  { immediate: true }
+);
+watch(
+  () => filterValue.value,
+  () => (currentPage.value = 1)
+);
 </script>
 
 <template>
   <div class="selector">
-    <el-popover :popper-options="{ placement: 'auto' }" :width="350" popper-class="pure-popper" trigger="click">
-      <template #reference>
-        <div class="w-[60px] h-[32px] cursor-pointer flex justify-center items-center">
-          <el-text v-if="!form.icon" type="primary">{{ $t('select_icon') }}</el-text>
-          <IconifyIconOnline v-else :icon="form.icon" style="font-size: 32px" />
-        </div>
-      </template>
-
-      <ul class="flex flex-wrap px-2 ml-2 h-[210px]">
-        <li
-          v-for="(item, key) in innerForm.datalist"
-          :key="key"
-          :class="`icon-item p-2 cursor-pointer mr-2 mt-1 flex justify-center items-center border border-[#e5e7eb] ${item.iconCode === form.icon ? 'current' : ''}`"
-          :title="item.iconName"
-          @click="onChangeIcon(item)"
+    <el-input v-model="inputValue" disabled>
+      <template #append>
+        <el-popover
+          :popper-options="{
+            placement: 'auto',
+          }"
+          :width="350"
+          popper-class="pure-popper"
+          trigger="click"
+          @before-enter="onBeforeEnter"
+          @after-leave="onAfterLeave"
         >
-          <IconifyIconOnline :icon="item.iconCode" height="20px" width="20px" />
-        </li>
-      </ul>
-      <el-empty v-show="innerForm.datalist.length === 0" :image-size="60" description="图标不存在" />
+          <template #reference>
+            <div class="w-[40px] h-[32px] cursor-pointer flex justify-center items-center">
+              <IconifyIconOffline v-if="!icon" :icon="Search" />
+              <IconifyIconOnline v-else :icon="inputValue" />
+            </div>
+          </template>
 
-      <div class="w-full h-9 flex items-center overflow-auto border-t border-[#e5e7eb]">
-        <el-pagination
-          :current-page="innerForm.currentPage"
-          :page-size="innerForm.pageSize"
-          :pager-count="5"
-          :total="innerForm.total"
-          background
-          class="flex-auto ml-2"
-          hide-on-single-page
-          layout="pager"
-          size="small"
-          @current-change="onCurrentChange"
-        />
-        <el-button bg class="justify-end mr-2 ml-2" size="small" text type="danger" @click="onClear">清空</el-button>
-      </div>
-    </el-popover>
-    <el-link
-      :title="$t('systemMenuIcon.officialWebsite')"
-      :underline="false"
-      href="https://icon-sets.iconify.design/"
-      target="_blank"
-      type="primary"
-    >
-      {{ $t('systemMenuIcon.officialWebsite') }}
-    </el-link>
+          <el-input v-model="filterValue" class="px-2 pt-2" clearable placeholder="搜索图标" />
+
+          <el-tabs v-model="currentActiveType" @tab-click="handleClick">
+            <el-tab-pane v-for="(pane, index) in tabsList" :key="index" :label="pane.label" :name="pane.name">
+              <el-scrollbar height="220px">
+                <ul class="flex flex-wrap px-2 ml-2">
+                  <li
+                    v-for="(item, key) in pageList"
+                    :key="key"
+                    :style="iconItemStyle(item)"
+                    :title="item"
+                    class="icon-item p-2 cursor-pointer mr-2 mt-1 flex justify-center items-center border border-[#e5e7eb]"
+                    @click="onChangeIcon(item)"
+                  >
+                    <IconifyIconOnline :icon="currentActiveType + item" height="20px" width="20px" />
+                  </li>
+                </ul>
+                <el-empty v-show="pageList.length === 0" :description="`${filterValue} 图标不存在`" :image-size="60" />
+              </el-scrollbar>
+              <div class="w-full h-9 flex items-center overflow-auto border-t border-[#e5e7eb]">
+                <el-pagination
+                  :current-page="currentPage"
+                  :page-size="pageSize"
+                  :pager-count="5"
+                  :total="totalPage"
+                  background
+                  class="flex-auto ml-2"
+                  layout="pager"
+                  size="small"
+                  @current-change="onCurrentChange"
+                />
+                <el-button bg class="justify-end mr-2 ml-2" size="small" text type="danger" @click="onClear">
+                  清空
+                </el-button>
+              </div>
+            </el-tab-pane>
+          </el-tabs>
+        </el-popover>
+      </template>
+    </el-input>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.current {
-  color: var(--el-color-primary);
-  border-color: var(--el-color-primary);
-  transition: all 0.4s;
-  transform: scaleX(1.05);
-}
-
 .icon-item {
-  width: 38px;
-  height: 38px;
-
   &:hover {
     color: var(--el-color-primary);
     border-color: var(--el-color-primary);

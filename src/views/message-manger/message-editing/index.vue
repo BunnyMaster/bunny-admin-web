@@ -6,6 +6,8 @@ import { formState, settingLR } from '@/views/message-manger/message-editing/uti
 import MarkdownEditor from '@/views/message-manger/message-editing/components/markdown-editor.vue';
 import { onMounted } from 'vue';
 
+defineOptions({ name: 'MessageEditer' });
+
 /** 退出提醒 */
 const exitAlter = () => {
   window.addEventListener('beforeunload', function (e) {

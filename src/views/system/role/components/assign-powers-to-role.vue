@@ -13,7 +13,7 @@ import Check from '@iconify-icons/ep/check';
 import { computed, nextTick, onMounted, ref, watch } from 'vue';
 import { delay, getKeyList, handleTree, subBefore, useResizeObserver } from '@pureadmin/utils';
 import { usePowerStore } from '@/store/system/power';
-import { powerCascadeProps } from '@/views/system/power/utils';
+import { powerCascadeProps } from '@/views/system/permission/utils';
 import { useRoleStore } from '@/store/system/role';
 
 const powerStore = usePowerStore();

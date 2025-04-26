@@ -28,6 +28,8 @@ import { hasAuth } from '@/router/utils';
 import { enabledOrNotStatus } from '@/enums/baseConstant';
 import ReAuth from '@/components/ReAuth/src/auth';
 
+defineOptions({ name: 'EmailUsersConfiguration' });
+
 const tableRef = ref();
 const formRef = ref();
 const emailUsersStore = useEmailUsersStore();

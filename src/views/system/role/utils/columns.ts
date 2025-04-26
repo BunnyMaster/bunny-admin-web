@@ -1,5 +1,5 @@
-import { computed, reactive } from 'vue';
 import { $t } from '@/plugins/i18n';
+import { computed, reactive } from 'vue';
 
 // 表格列
 export const columns: TableColumnList = [

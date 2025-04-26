@@ -24,6 +24,7 @@ import MenuIconSelectIconName from '@/views/configuration/menu-icon/components/m
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
 
+defineOptions({ name: 'MenuIconConfiguration' });
 const tableRef = ref();
 const formRef = ref();
 const menuIconStore = useMenuIconStore();

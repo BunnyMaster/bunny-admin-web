@@ -9,13 +9,28 @@ export const fetchGetRoleList = (data: any) => {
 };
 
 /** 角色---获取所有角色 */
-export const fetchGetAllRoles = () => {
-  return http.request<BaseResult<any>>('get', `role/noManage/getAllRoles`);
+export const fetchAllRoles = () => {
+  return http.request<BaseResult<any>>('get', `role/noManage/allRoles`);
 };
 
 /** 角色---根据用户id获取所有角色 */
 export const fetchGetRoleListByUserId = (data) => {
   return http.request<BaseResult<any>>('get', `userRole/getRoleListByUserId`, { params: data });
+};
+
+/** 角色---使用Excel导出导出角色列表 */
+export const fetchExportByExcel = () => {
+  return http.request<BaseResult<any>>('get', `role/exportByExcel`, { responseType: 'blob' });
+};
+
+/* 角色---使用Excel更新角色列表 */
+export const fetchUpdateRoleByFile = (data: any) => {
+  return http.request<BaseResult<any>>(
+    'put',
+    `/role/update/roleByFile`,
+    { data },
+    { headers: { 'Content-Type': 'multipart/form-data' } }
+  );
 };
 
 /** 角色---添加角色 */

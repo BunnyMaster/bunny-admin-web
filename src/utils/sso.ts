@@ -62,6 +62,7 @@ export async function download(blob: any, filename: string) {
   const result = await blobToJson(blob);
   if (result) return;
 
+  blob = blob.data;
   // 创建一个临时的 URL，用于下载文件
   const a = document.createElement('a');
   const url = window.URL.createObjectURL(new Blob([blob]));
@@ -117,8 +118,7 @@ export const downloadBlob = async (response: any, fileName: string) => {
     const contentDisposition = response.headers['content-disposition'];
     // let fileName = 'download.zip';
     if (contentDisposition) {
-      const fileNameMatch = contentDisposition.match(/filename="?(.+)"/);
-
+      const fileNameMatch = contentDisposition.match(/filename=?(.+)/);
       if (fileNameMatch && fileNameMatch[1]) {
         fileName = fileNameMatch[1];
       }
@@ -144,7 +144,8 @@ export const downloadBlob = async (response: any, fileName: string) => {
  */
 async function blobToJson(blob: any): Promise<any> {
   try {
-    const text = await blob.text();
+    const text = await blob.data.text();
+
     const json = JSON.parse(text);
     if (json.code !== 200) {
       message(json.message, { type: 'error' });

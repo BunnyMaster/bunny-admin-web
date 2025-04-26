@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import ReAnimateSelector from '@/components/ReAnimateSelector/src/index.vue';
 import ReCol from '@/components/ReCol';
-import IconSelect from '@/components/ReIcon/src/Select.vue';
 import Segmented from '@/components/ReSegmented';
 import {
   fixedTagOptions,
@@ -17,6 +16,7 @@ import { FormProps, formRules } from '@/views/system/menu/utils';
 import { onMounted, ref } from 'vue';
 import { userMenuStore } from '@/store/system/menu';
 import { useRoleStore } from '@/store/system/role';
+import NetWorkIcon from '@/components/ReIcon/src/NetWorkIcon.vue';
 
 const props = withDefaults(defineProps<FormProps>(), {
   formInline: () => ({
@@ -66,7 +66,7 @@ const getRoleListByRouterId = async () => {
 
 onMounted(() => {
   // 获取所有的角色列表
-  roleStore.getAllRoles();
+  roleStore.allRoles();
 
   // 根据当前路由id，查找这个路由下所有的角色信息
   getRoleListByRouterId();
@@ -150,7 +150,8 @@ defineExpose({ menuFormRef: formRef });
       <!-- 菜单图标 -->
       <re-col :sm="24" :value="12" :xs="24">
         <el-form-item label="菜单图标" prop="icon">
-          <IconSelect :form-inline="form" class="w-full" />
+          <!--<IconSelect v-show="true" :form-inline="form" class="w-full" />-->
+          <NetWorkIcon :form-inline="form" class="w-full" />
         </el-form-item>
       </re-col>
 

@@ -26,7 +26,7 @@ const getRoleListByUserId = async () => {
 };
 
 onMounted(() => {
-  roleStore.getAllRoles();
+  roleStore.allRoles();
   getRoleListByUserId();
 });
 

@@ -24,6 +24,8 @@ import { Message } from '@element-plus/icons-vue';
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
 
+defineOptions({ name: 'MessageReceived' });
+
 const tableRef = ref();
 const formRef = ref();
 const messageReceivedStore = useMessageReceivedStore();

@@ -18,7 +18,7 @@ export const columns: TableColumnList = [
   { label: $t('schedulers_triggerState'), prop: 'triggerState' },
   // corn表达式
   { label: $t('schedulers_cronExpression'), prop: 'cronExpression' },
-  { label: $t('table.operation'), fixed: 'right', minWidth: 160, slot: 'operation' },
+  { label: $t('table.operation'), fixed: 'right', minWidth: 210, slot: 'operation' },
 ];
 
 // 添加规则

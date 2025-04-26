@@ -25,6 +25,7 @@ import { FormInstance } from 'element-plus';
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
 
+defineOptions({ name: 'DeptManger' });
 const tableRef = ref();
 const formRef = ref();
 const deptStore = useDeptStore();

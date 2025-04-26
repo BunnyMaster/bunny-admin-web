@@ -4,6 +4,8 @@ import { info, loading, svg } from '@/views/monitor/server/utils';
 import SystemServer from '@/views/monitor/server/components/system-server.vue';
 import SystemCpu from '@/views/monitor/server/components/system-cpu.vue';
 import SystemJvmCpu from '@/views/monitor/server/components/system-jvm-cpu.vue';
+
+defineOptions({ name: 'MonitorServer' });
 </script>
 
 <template>

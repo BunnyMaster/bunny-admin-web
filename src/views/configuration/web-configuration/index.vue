@@ -8,6 +8,8 @@ import { userI18nTypeStore } from '@/store/i18n/i18nType';
 import { usePublicHooks } from '@/views/hooks';
 import { hasAuth } from '@/router/utils';
 
+defineOptions({ name: 'WebConfiguration' });
+
 const ruleFormRef = ref<FormInstance>();
 const i18nTypeStore = userI18nTypeStore();
 // 用户是否停用样式

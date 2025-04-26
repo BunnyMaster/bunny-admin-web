@@ -132,7 +132,7 @@ class PureHttp {
 
         // 检查配置的响应类型是否为二进制类型（'blob' 或 'arraybuffer'）, 如果是，直接返回响应对象
         if ($config.responseType === 'blob' || $config.responseType === 'arraybuffer') {
-          return data;
+          return response;
         }
 
         // 登录过期，和异常处理

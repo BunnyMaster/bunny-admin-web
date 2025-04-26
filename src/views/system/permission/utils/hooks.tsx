@@ -1,12 +1,12 @@
 import { addDialog } from '@/components/ReDialog/index';
-import PowerDialog from '@/views/system/power/components/power-dialog.vue';
+import PowerDialog from '@/views/system/permission/components/power-dialog.vue';
 import { usePowerStore } from '@/store/system/power';
 import { h, reactive, ref } from 'vue';
 import { message, messageBox } from '@/utils/message';
-import type { FormItemProps } from '@/views/system/power/utils/types';
+import type { FormItemProps } from '@/views/system/permission/utils/types';
 import { $t } from '@/plugins/i18n';
 import { handleTree } from '@pureadmin/utils';
-import { powerCascadeProps } from '@/views/system/power/utils/columns';
+import { powerCascadeProps } from '@/views/system/permission/utils/columns';
 import { ElCascader, ElForm, ElFormItem } from 'element-plus';
 import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 
