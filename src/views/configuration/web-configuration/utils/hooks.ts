@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import type { FormInstance } from 'element-plus';
-import { fetchGetWebConfig, fetchUpdateWebConfiguration } from '@/api/v1/configuration';
+import { getWebConfig, updateWebConfiguration } from '@/api/v1/configuration';
 import { message, messageBox } from '@/utils/message';
 import { $t } from '@/plugins/i18n';
 
@@ -35,7 +35,7 @@ export const form = ref({
 
 /** 获取前端配置文件 */
 export const onSearch = async () => {
-  const result = await fetchGetWebConfig();
+  const result = await getWebConfig();
   if (result.code !== 200) return;
   const data = result.data;
 
@@ -82,7 +82,7 @@ export const submitForm = async (formEl: FormInstance | undefined) => {
       if (!confirm) return;
 
       // 修改内容
-      const result = await fetchUpdateWebConfiguration(form.value);
+      const result = await updateWebConfiguration(form.value);
       if (result.code !== 200) return;
 
       // 提交成功后刷新

@@ -31,7 +31,7 @@ const formRef = ref<FormInstance>();
 const form = ref(props.formInline);
 
 onMounted(() => {
-  emailTemplateStore.getEmailTypes();
+  emailTemplateStore.loadEmailTypeList();
 });
 
 defineExpose({ formRef });

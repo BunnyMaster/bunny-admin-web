@@ -1,4 +1,4 @@
-import editForm from '@/views/system/menu/components/menu-dialog.vue';
+import EditForm from '@/views/system/menu/components/menu-dialog.vue';
 import { $t } from '@/plugins/i18n';
 import { addDialog, closeAllDialog } from '@/components/ReDialog/index';
 import { h, ref } from 'vue';
@@ -40,8 +40,8 @@ function onAdd(parentId: any = 0) {
         icon: '',
         id: '',
         extraIcon: '',
-        enterTransition: 'fade',
-        leaveTransition: 'fade',
+        enterTransition: 'fade-transform',
+        leaveTransition: 'fade-transform',
         activePath: '',
         redirect: '',
         roles: [],
@@ -58,7 +58,7 @@ function onAdd(parentId: any = 0) {
     draggable: true,
     closeOnClickModal: false,
     fullscreenIcon: true,
-    contentRenderer: () => h(editForm, { ref: dialogFormRef }),
+    contentRenderer: () => h(EditForm, { ref: dialogFormRef }),
     beforeSure: (done, { options }) => {
       const menuFormRef = dialogFormRef.value.menuFormRef;
       const curData = options.props.formInline as FormItemProps;
@@ -115,7 +115,7 @@ function onUpdate(row?: FormItemProps) {
     fullscreen: deviceDetection(),
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(editForm, { ref: dialogFormRef }),
+    contentRenderer: () => h(EditForm, { ref: dialogFormRef }),
     beforeSure: (done, { options }) => {
       const menuFormRef = dialogFormRef.value.menuFormRef;
       const curData = options.props.formInline as FormItemProps;
@@ -193,12 +193,13 @@ export const clearAllRolesSelect = async () => {
 /* 更新是整理后端参数 */
 export const mergeArgs = (curData: any) => {
   // 判断 入场 和 离场动画是否添加
-  let transition = { enterTransition: 'fade', leaveTransition: 'fade' };
   const enterTransition = curData.enterTransition;
   const leaveTransition = curData.leaveTransition;
 
-  transition.enterTransition = enterTransition ? `animate__${enterTransition}` : 'fade';
-  transition.leaveTransition = leaveTransition ? `animate__${leaveTransition}` : 'fade';
+  let transition = { enterTransition: '', leaveTransition: '' };
+
+  transition.enterTransition = enterTransition ? `animate__${enterTransition}` : '';
+  transition.leaveTransition = leaveTransition ? `animate__${leaveTransition}` : '';
 
   // 整理参数返回后端
   return {

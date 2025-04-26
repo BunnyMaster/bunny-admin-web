@@ -8,6 +8,8 @@ export interface FormItemProps {
   powerName: string;
   // 请求路径
   requestUrl: string;
+  // 请求方法
+  requestMethod: string;
 }
 
 // 添加或修改表单Props

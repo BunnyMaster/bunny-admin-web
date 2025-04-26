@@ -15,7 +15,7 @@ export const selectRows = ref([]);
 /** 搜索初始化邮件模板表 */
 export async function onSearch() {
   emailTemplateStore.loading = true;
-  await emailTemplateStore.getEmailTemplateList();
+  await emailTemplateStore.fetchEmailTemplatePage();
   emailTemplateStore.loading = false;
 }
 

@@ -25,6 +25,7 @@ import { handleTree } from '@pureadmin/utils';
 import { FormInstance } from 'element-plus';
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
+import { RequestMethod } from '@/enums/baseConstant';
 
 defineOptions({ name: 'PermissionManger' });
 
@@ -33,35 +34,24 @@ const formRef = ref();
 const powerStore = usePowerStore();
 const datalist = computed(() => handleTree(powerStore.datalist));
 
-/**
- * * 当前页改变时
- */
+/* 当前页改变时 */
 const onCurrentPageChange = async (value: number) => {
   powerStore.pagination.currentPage = value;
   await onSearch();
 };
 
-/**
- * * 当分页发生变化
- * @param value
- */
+/* 当分页发生变化 */
 const onPageSizeChange = async (value: number) => {
   powerStore.pagination.pageSize = value;
   await onSearch();
 };
 
-/**
- * * 选择多行
- * @param rows
- */
+/* 选择多行 */
 const onSelectionChange = (rows: Array<any>) => {
   powerIds.value = rows.map((row: any) => row.id);
 };
 
-/**
- * 重置表单
- * @param formEl
- */
+/* 重置表单 */
 const resetForm = async (formEl: FormInstance) => {
   if (!formEl) return;
   formEl.resetFields();
@@ -105,6 +95,18 @@ onMounted(() => {
             class="!w-[180px]"
             clearable
           />
+        </el-form-item>
+        <el-form-item :label="$t('requestMethod')" prop="requestMethod">
+          <el-select
+            v-model="powerStore.form.requestMethod"
+            :placeholder="$t('requestMethod')"
+            autocomplete="off"
+            class="!w-[180px]"
+            clearable
+            filterable
+          >
+            <el-option v-for="item in RequestMethod" :key="item" :label="item" :value="item" />
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button

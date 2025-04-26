@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import {
-  fetchAddEmailTemplate,
+  addEmailTemplate,
   fetchDeleteEmailTemplate,
-  fetchGetEmailTemplateList,
-  fetchGetEmailTypes,
   fetchUpdateEmailTemplate,
+  getEmailTemplatePage,
+  getEmailTypeList,
 } from '@/api/v1/email/emailTemplate';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
@@ -54,7 +54,7 @@ export const useEmailTemplateStore = defineStore('emailTemplateStore', {
   },
   actions: {
     /** 获取邮件模板表 */
-    async getEmailTemplateList() {
+    async fetchEmailTemplatePage() {
       // 整理请求参数
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
@@ -62,7 +62,7 @@ export const useEmailTemplateStore = defineStore('emailTemplateStore', {
       delete data.background;
 
       // 获取邮件模板表列表
-      const result = await fetchGetEmailTemplateList(data);
+      const result = await getEmailTemplatePage(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);
@@ -78,15 +78,15 @@ export const useEmailTemplateStore = defineStore('emailTemplateStore', {
     },
 
     /** 获取模板类型字段 */
-    async getEmailTypes() {
-      const result = await fetchGetEmailTypes();
+    async loadEmailTypeList() {
+      const result = await getEmailTypeList();
       if (result.code !== 200) return;
       this.allEmailTypes = result.data;
     },
 
     /** 添加邮件模板表 */
     async addEmailTemplate(data: any) {
-      const result = await fetchAddEmailTemplate(data);
+      const result = await addEmailTemplate(data);
       return storeMessage(result);
     },
 

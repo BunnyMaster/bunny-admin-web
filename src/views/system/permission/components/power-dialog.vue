@@ -5,6 +5,7 @@ import { FormProps, powerCascadeProps, rules } from '@/views/system/permission/u
 import { $t } from '@/plugins/i18n';
 import { handleTree } from '@pureadmin/utils';
 import { usePowerStore } from '@/store/system/power';
+import { RequestMethod } from '@/enums/baseConstant';
 
 const props = withDefaults(defineProps<FormProps>(), {
   formInline: () => ({
@@ -16,6 +17,8 @@ const props = withDefaults(defineProps<FormProps>(), {
     powerName: undefined,
     // 请求路径
     requestUrl: undefined,
+    // 请求方法
+    requestMethod: undefined,
   }),
 });
 
@@ -51,6 +54,17 @@ defineExpose({ formRef });
     </el-form-item>
     <el-form-item :label="$t('power_requestUrl')" prop="requestUrl">
       <el-input v-model="form.requestUrl" :placeholder="$t('inputRequestUrlTip')" autocomplete="off" type="text" />
+    </el-form-item>
+    <el-form-item :label="$t('requestMethod')" prop="requestMethod">
+      <el-select
+        v-model="form.requestMethod"
+        :placeholder="$t('requestMethod')"
+        autocomplete="off"
+        clearable
+        filterable
+      >
+        <el-option v-for="item in RequestMethod" :key="item" :label="item" :value="item" />
+      </el-select>
     </el-form-item>
   </el-form>
 </template>

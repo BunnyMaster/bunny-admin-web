@@ -29,6 +29,8 @@ export const usePowerStore = defineStore('powerStore', {
         powerName: undefined,
         // 请求路径
         requestUrl: undefined,
+        // 请求方法
+        requestMethod: undefined,
       },
       // 分页查询结果
       pagination: {

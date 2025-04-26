@@ -12,6 +12,7 @@ export const columns: TableColumnList = [
   { label: $t('power_powerName'), prop: 'powerName', minWidth: 320 },
   // 请求路径
   { label: $t('power_requestUrl'), prop: 'requestUrl', minWidth: 360 },
+  { label: $t('requestMethod'), prop: 'requestMethod', minWidth: 360 },
   { label: $t('table.updateTime'), prop: 'updateTime', sortable: true, minWidth: 160 },
   { label: $t('table.createTime'), prop: 'createTime', sortable: true, minWidth: 160 },
   { label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', minWidth: 130 },
