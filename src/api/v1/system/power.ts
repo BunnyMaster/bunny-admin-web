@@ -23,6 +23,21 @@ export const deletePermission = (data: any) => {
   return http.request<BaseResult<object>>('delete', 'permission', { data });
 };
 
+/** 权限---导出权限 */
+export const exportPermission = () => {
+  return http.request<any>('get', 'permission/file/export', { responseType: 'blob' });
+};
+
+/** 权限---导入权限权限 */
+export const importPermission = (data: any) => {
+  return http.request<any>(
+    'put',
+    'permission/file/import',
+    { data },
+    { headers: { 'Content-Type': 'multipart/form-data' } }
+  );
+};
+
 /** 权限---获取所有权限 */
 export const getPermissionList = () => {
   return http.request<BaseResult<any>>('get', `permission/getPermissionList`);

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, h, onMounted, ref } from 'vue';
 import {
   auth,
   columns,
@@ -26,6 +26,12 @@ import { FormInstance } from 'element-plus';
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
 import { RequestMethod } from '@/enums/baseConstant';
+import Download from '@iconify-icons/ep/download';
+import { downloadBlob } from '@/utils/sso';
+import { exportPermission, importPermission } from '@/api/v1/system/power';
+import Upload from '@iconify-icons/ri/upload-line';
+import { addDialog } from '@/components/ReDialog/index';
+import FileUpdateRoleDialog from '@/views/system/role/components/file-update-role-dialog.vue';
 
 defineOptions({ name: 'PermissionManger' });
 
@@ -33,6 +39,8 @@ const tableRef = ref();
 const formRef = ref();
 const powerStore = usePermissionStore();
 const datalist = computed(() => handleTree(powerStore.datalist));
+
+computed(() => ['!h-[20px]', 'reset-margin', '!text-gray-500', 'dark:!text-white', 'dark:hover:!text-primary']);
 
 /* 当前页改变时 */
 const onCurrentPageChange = async (value: number) => {
@@ -57,7 +65,39 @@ const resetForm = async (formEl: FormInstance) => {
   formEl.resetFields();
   await onSearch();
 };
-computed(() => ['!h-[20px]', 'reset-margin', '!text-gray-500', 'dark:!text-white', 'dark:hover:!text-primary']);
+
+/* 导出权限 */
+const downloadPermission = async () => {
+  const result = await exportPermission();
+
+  downloadBlob(result, 'role.zip');
+};
+
+/* 导入权限 */
+const uploadPermission = async () => {
+  addDialog({
+    title: `${$t('modify')}${$t('role')}`,
+    width: '30%',
+    props: { form: { file: undefined } },
+    draggable: true,
+    fullscreenIcon: true,
+    closeOnClickModal: false,
+    contentRenderer: () => h(FileUpdateRoleDialog, { ref: formRef }),
+    beforeSure: (done, { options }) => {
+      const form = options.props.form;
+      formRef.value.formRef.validate(async (valid: any) => {
+        if (!valid) return;
+        // 更新文件 data
+        const data = { file: form.file[0].raw };
+
+        const result = await importPermission(data);
+        if (!result) return;
+        done();
+        await onSearch();
+      });
+    },
+  });
+};
 onMounted(() => {
   onSearch();
 });
@@ -131,6 +171,27 @@ onMounted(() => {
       @refresh="onSearch"
     >
       <template #buttons>
+        <!-- 添加权限按钮 -->
+        <el-button
+          v-if="hasAuth(auth.update)"
+          :icon="useRenderIcon(Download)"
+          plain
+          type="primary"
+          @click="downloadPermission()"
+        >
+          {{ $t('download_configuration') }}
+        </el-button>
+        <!-- 文件更新 -->
+        <el-button
+          v-if="hasAuth(auth.update)"
+          :icon="useRenderIcon(Upload)"
+          plain
+          type="primary"
+          @click="uploadPermission"
+        >
+          {{ $t('file_import') }}
+        </el-button>
+
         <!-- 添加权限按钮 -->
         <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd()">
           {{ $t('addNew') }}
