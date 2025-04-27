@@ -12,11 +12,11 @@ import Close from '@iconify-icons/ep/close';
 import Check from '@iconify-icons/ep/check';
 import { computed, nextTick, onMounted, ref, watch } from 'vue';
 import { delay, getKeyList, handleTree, subBefore, useResizeObserver } from '@pureadmin/utils';
-import { usePowerStore } from '@/store/system/power';
+import { usePermissionStore } from '@/store/system/power';
 import { powerCascadeProps } from '@/views/system/permission/utils';
 import { useRoleStore } from '@/store/system/role';
 
-const powerStore = usePowerStore();
+const powerStore = usePermissionStore();
 const roleStore = useRoleStore();
 // 是否展开全部
 const isExpandAll = ref(false);
@@ -34,7 +34,7 @@ const datalist = computed(() => handleTree(powerStore.allPowerList));
 
 /** 获取所有权限 */
 const getAllPowers = async () => {
-  await powerStore.getAllPowers();
+  await powerStore.loadPermissionList();
   treeIds.value = getKeyList(powerStore.allPowerList, 'id');
 };
 
@@ -46,23 +46,16 @@ const onSave = async () => {
   const data = { roleId: id, powerIds, description };
 
   // 保存分配的权限
-  const result = await roleStore.assignPowersToRole(data);
+  const result = await roleStore.addRolePermission(data);
   if (!result) return;
   currentRow.value = null;
   powerTreeIsShow.value = false;
 };
 
-/**
- * * 权限过滤
- * @param query
- * @param node
- */
+/* 权限过滤 */
 const filterMethod = (query: string, node: any) => node.powerName!.includes(query);
 
-/**
- * * 菜单搜索
- * @param query
- */
+/* 菜单搜索 */
 const onQueryChanged = (query: string) => powerTreeRef.value!.filter(query);
 
 watch(isExpandAll, (val) => {

@@ -32,10 +32,10 @@ const schedulersGroupStore = useSchedulersGroupStore();
 
 onMounted(() => {
   // 获取所有可用调度任务
-  schedulersStore.getAllScheduleJobList();
+  schedulersStore.loadScheduleJobList();
 
   // 获取所有任务调度分组
-  schedulersGroupStore.getAllSchedulersGroup();
+  schedulersGroupStore.loadSchedulersGroupList();
 });
 
 defineExpose({ formRef });

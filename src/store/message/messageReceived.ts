@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
 import {
-  fetchDeleteMessageReceivedByIds,
-  fetchGetMessageReceivedList,
-  fetchUpdateMarkMessageReceived,
+  deleteMessageReceivedByAdmin,
+  getMessageReceivedPage,
+  updateMessageReceivedByAdmin,
 } from '@/api/v1/message/messageReceived';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
@@ -47,7 +47,7 @@ export const useMessageReceivedStore = defineStore('messageReceivedStore', {
   getters: {},
   actions: {
     /** 管理员操作用户消息---获取系统管理消息列表 */
-    async getMessageReceivedList() {
+    async fetchMessageReceivedPage() {
       // 整理请求参数
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
@@ -55,7 +55,7 @@ export const useMessageReceivedStore = defineStore('messageReceivedStore', {
       delete data.background;
 
       // 获取系统消息列表
-      const result = await fetchGetMessageReceivedList(data);
+      const result = await getMessageReceivedPage(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);
@@ -63,14 +63,14 @@ export const useMessageReceivedStore = defineStore('messageReceivedStore', {
     },
 
     /** 管理员操作用户消息---将用户消息标为已读 */
-    async updateMarkMessageReceived(data: any) {
-      const result = await fetchUpdateMarkMessageReceived(data);
+    async editMessageReceived(data: any) {
+      const result = await updateMessageReceivedByAdmin(data);
       return storeMessage(result);
     },
 
     /** 删除系统消息 */
-    async deleteMessageReceivedByIds(data: any) {
-      const result = await fetchDeleteMessageReceivedByIds(data);
+    async removeMessageReceivedByAdmin(data: any) {
+      const result = await deleteMessageReceivedByAdmin(data);
       return storeMessage(result);
     },
   },

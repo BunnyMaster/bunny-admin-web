@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia';
 import {
-  fetchAddRole,
-  fetchAllRoles,
-  fetchAssignPowersToRole,
-  fetchDeleteRole,
-  fetchGetRoleList,
-  fetchUpdateRole,
-  fetchUpdateRoleByFile,
+  crateRole,
+  createRolePermission,
+  deleteRole,
+  getRoleList,
+  getRolePage,
+  updateRole,
+  updateRoleByFile,
 } from '@/api/v1/system/role';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
@@ -43,7 +43,7 @@ export const useRoleStore = defineStore('roleStore', {
   getters: {},
   actions: {
     /** 获取角色 */
-    async getRoleList() {
+    async fetchRolePage() {
       // 整理请求参数
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
@@ -51,7 +51,7 @@ export const useRoleStore = defineStore('roleStore', {
       delete data.background;
 
       // 获取角色列表
-      const result = await fetchGetRoleList(data);
+      const result = await getRolePage(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);
@@ -59,8 +59,8 @@ export const useRoleStore = defineStore('roleStore', {
     },
 
     /** 获取所有角色 */
-    async allRoles() {
-      const result = await fetchAllRoles();
+    async loadRoleList() {
+      const result = await getRoleList();
       if (result.code !== 200) return;
 
       this.allRoleList = result.data.map((role) => ({ key: role.id, label: role.description }));
@@ -68,31 +68,31 @@ export const useRoleStore = defineStore('roleStore', {
 
     /** 添加角色 */
     async addRole(data: any) {
-      const result = await fetchAddRole(data);
-      return storeMessage(result);
-    },
-
-    /* 使用Excel更新角色列表 */
-    async updateRoleByFile(data: any) {
-      const result = await fetchUpdateRoleByFile(data);
-      return storeMessage(result);
-    },
-
-    /** 为角色分配权限 */
-    async assignPowersToRole(data: any) {
-      const result = await fetchAssignPowersToRole(data);
+      const result = await crateRole(data);
       return storeMessage(result);
     },
 
     /** 修改角色 */
-    async updateRole(data: any) {
-      const result = await fetchUpdateRole(data);
+    async editRole(data: any) {
+      const result = await updateRole(data);
       return storeMessage(result);
     },
 
     /** 删除角色 */
-    async deleteRole(data: any) {
-      const result = await fetchDeleteRole(data);
+    async removeRole(data: any) {
+      const result = await deleteRole(data);
+      return storeMessage(result);
+    },
+
+    /* 使用Excel更新角色列表 */
+    async editRoleByFile(data: any) {
+      const result = await updateRoleByFile(data);
+      return storeMessage(result);
+    },
+
+    /** 为角色分配权限 */
+    async addRolePermission(data: any) {
+      const result = await createRolePermission(data);
       return storeMessage(result);
     },
   },

@@ -1,10 +1,10 @@
 export const auth = {
   // 分页查询
-  search: ['emailTemplate::getEmailTemplateList'],
+  query: ['emailTemplate::query', 'emailTemplate::queryPage'],
   // 添加操作
-  add: ['emailTemplate::addEmailTemplate'],
+  add: ['emailTemplate::add'],
   // 更新操作
-  update: ['emailTemplate::updateEmailTemplate'],
+  update: ['emailTemplate::update'],
   // 删除操作
-  deleted: ['emailTemplate::deleteEmailTemplate'],
+  delete: ['emailTemplate::delete'],
 };

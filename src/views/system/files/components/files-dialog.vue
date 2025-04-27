@@ -40,8 +40,8 @@ const handleExceed: UploadProps['onExceed'] = (files) => {
 };
 
 onMounted(() => {
-  filesStore.getAllMediaTypes();
-  filesStore.getAllFilesStoragePath();
+  filesStore.loadMediaTypeList();
+  filesStore.loadFilesStoragePath();
 });
 
 defineExpose({ formRef });

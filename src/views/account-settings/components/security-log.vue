@@ -21,7 +21,7 @@ const userLoginLogs = reactive({
 const onSearchByLoginLog = async () => {
   userLoginLogs.loading = true;
 
-  const data = await userLoginLogStore.getUserLoginLogListByLocalUser(userLoginLogs);
+  const data = await userLoginLogStore.fetchUserLoginLogPageByUser(userLoginLogs);
   userLoginLogs.datalist = data.list;
   userLoginLogs.currentPage = data.pageNo;
   userLoginLogs.pageSize = data.pageSize;

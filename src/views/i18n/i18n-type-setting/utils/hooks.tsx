@@ -8,18 +8,14 @@ import type { FormItemProps } from '@/views/i18n/i18n-type-setting/utils/types';
 export const formRef = ref();
 const i18nTypeStore = userI18nTypeStore();
 
-/**
- * * 搜索初始化多语言类型
- */
+/* 搜索初始化多语言类型 */
 export async function onSearch() {
   i18nTypeStore.loading = true;
-  await i18nTypeStore.getI18nTypeList();
+  await i18nTypeStore.loadI18nTypeList();
   i18nTypeStore.loading = false;
 }
 
-/**
- * * 添加多语言
- */
+/* 添加多语言 */
 export function onAdd() {
   addDialog({
     title: `添加多语言类型`,
@@ -45,10 +41,7 @@ export function onAdd() {
   });
 }
 
-/**
- * * 更新内容
- * @param row
- */
+/* 更新内容 */
 export function onUpdate(row: any) {
   addDialog({
     title: `修改多语言类型`,
@@ -63,7 +56,7 @@ export function onUpdate(row: any) {
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
 
-        const result = await i18nTypeStore.updateI18nType({ ...form, id: row.id });
+        const result = await i18nTypeStore.editI18nType({ ...form, id: row.id });
         if (!result) return;
         done();
         await onSearch();
@@ -72,9 +65,7 @@ export function onUpdate(row: any) {
   });
 }
 
-/**
- * * 删除多语言类容
- */
+/* 删除多语言类容 */
 export const onDelete = async (row: any) => {
   const id = row.id;
 
@@ -89,6 +80,6 @@ export const onDelete = async (row: any) => {
   if (!result) return;
 
   // 删除数据
-  await i18nTypeStore.deleteI18nType([id]);
+  await i18nTypeStore.removeI18nType([id]);
   await onSearch();
 };

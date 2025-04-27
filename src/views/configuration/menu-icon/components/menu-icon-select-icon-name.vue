@@ -22,7 +22,7 @@ const onRequestIconName = async (iconName: string) => {
   loading.value = true;
 
   if (iconName) {
-    await menuIconStore.getIconNameList(data);
+    await menuIconStore.getIconNameListByIconName(data);
   } else menuIconStore.iconNameList = [];
 
   loading.value = false;

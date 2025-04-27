@@ -66,7 +66,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
 };
 
 onMounted(() => {
-  messageTypeStore.getAllMessageTypeList();
+  messageTypeStore.loadMessageTypeList();
 });
 </script>
 
@@ -175,7 +175,14 @@ onMounted(() => {
 
     <!-- 消息等级 -->
     <el-form-item :label="$t('level')" prop="level">
-      <el-select v-model="formState.level" :placeholder="$t('level')" clearable filterable remote remote-show-suffix>
+      <el-select
+        v-model="formState.level"
+        :placeholder="$t('select') + $t('level')"
+        clearable
+        filterable
+        remote
+        remote-show-suffix
+      >
         <el-option v-for="item in messageLevel" :key="item" :label="$t(item)" :value="item" />
       </el-select>
     </el-form-item>

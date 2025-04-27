@@ -24,9 +24,7 @@ export const columns: TableColumnList = [
       return isDefault ? (
         <ElTag type={'success'}>{$t('default')}</ElTag>
       ) : (
-        <ElTag size={'large'} type={'danger'}>
-          {$t('no_default')}
-        </ElTag>
+        <ElTag type={'danger'}>{$t('no_default')}</ElTag>
       );
     },
     minWidth: 100,

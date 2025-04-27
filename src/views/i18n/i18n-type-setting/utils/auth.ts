@@ -1,8 +1,8 @@
 export const auth = {
   // 添加操作
-  add: ['i18nType::addI18nType'],
+  add: ['i18nType::add'],
   // 更新操作
-  update: ['i18nType::updateI18nType'],
+  update: ['i18nType::update'],
   // 删除操作
-  deleted: ['i18nType::deleteI18nType'],
+  delete: ['i18nType::delete'],
 };

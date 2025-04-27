@@ -13,6 +13,8 @@ export const rules = {
   editorType: [{ required: true, message: `${$t('input')}${$t('editorType')}`, trigger: 'blur' }],
   // 消息简介
   summary: [{ required: true, message: `${$t('input')}${$t('summary')}`, trigger: 'blur' }],
+  // 消息简介
+  level: [{ required: true, message: `${$t('select')}${$t('level')}`, trigger: 'blur' }],
 };
 
 export const messageLevel = ['primary', 'success', 'warning', 'info', 'danger'];

@@ -34,7 +34,7 @@ function onResetPassword() {
         if (valid) {
           // 更新用户密码
           const data = { password: restPasswordForm.password };
-          const result = await adminUserStore.updateUserPasswordByLocalUser(data);
+          const result = await adminUserStore.editUserPassword(data);
 
           // 更新成功关闭弹窗
           if (!result) return;

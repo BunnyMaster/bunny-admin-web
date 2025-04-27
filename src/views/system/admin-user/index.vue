@@ -54,7 +54,7 @@ const formRef = ref();
 /** 加载部门列表 */
 const onSearchDept = async () => {
   deptStore.loading = true;
-  await deptStore.getAllDeptList();
+  await deptStore.loadDeptList();
   deptStore.loading = false;
 };
 
@@ -99,7 +99,7 @@ onMounted(() => {
       @tree-select="onTreeSelect"
     />
     <div :class="[deviceDetection() ? ['w-full', 'mt-2'] : 'w-[calc(100%-200px)]']">
-      <ReAuth :value="auth.search">
+      <ReAuth :value="auth.query">
         <el-form
           ref="formRef"
           :inline="true"
@@ -216,7 +216,7 @@ onMounted(() => {
 
           <!-- 批量删除按钮 -->
           <el-button
-            v-if="hasAuth(auth.deleted)"
+            v-if="hasAuth(auth.delete)"
             :disabled="!(deleteIds.length > 0)"
             :icon="useRenderIcon(Delete)"
             plain
@@ -315,7 +315,7 @@ onMounted(() => {
 
               <!-- 删除 -->
               <el-popconfirm
-                v-if="hasAuth(auth.deleted)"
+                v-if="hasAuth(auth.delete)"
                 :title="`${$t('delete')} ${row.username}?`"
                 @confirm="onDelete(row)"
               >
@@ -332,7 +332,7 @@ onMounted(() => {
                 <template #dropdown>
                   <el-dropdown-menu>
                     <!-- 上传头像 -->
-                    <el-dropdown-item v-if="hasAuth(auth.uploadAvatarByAdmin)">
+                    <el-dropdown-item v-if="hasAuth(auth.update)">
                       <el-button
                         :class="tableSelectButtonClass"
                         :icon="useRenderIcon(Upload)"
@@ -345,7 +345,7 @@ onMounted(() => {
                       </el-button>
                     </el-dropdown-item>
                     <!-- 重置密码 -->
-                    <el-dropdown-item v-if="hasAuth(auth.updateUserPasswordByAdmin)">
+                    <el-dropdown-item v-if="hasAuth(auth.update)">
                       <el-button
                         :class="tableSelectButtonClass"
                         :icon="useRenderIcon(Password)"
@@ -358,7 +358,7 @@ onMounted(() => {
                       </el-button>
                     </el-dropdown-item>
                     <!-- 分配角色 -->
-                    <el-dropdown-item v-if="hasAuth(auth.updateUserPasswordByAdmin)">
+                    <el-dropdown-item v-if="hasAuth(auth.update)">
                       <el-button
                         :class="tableSelectButtonClass"
                         :icon="useRenderIcon(Role)"
@@ -371,7 +371,7 @@ onMounted(() => {
                       </el-button>
                     </el-dropdown-item>
                     <!-- 强制下线 -->
-                    <el-dropdown-item v-if="hasAuth(auth.forcedOffline)">
+                    <el-dropdown-item v-if="hasAuth(auth.update)">
                       <el-button
                         :class="tableSelectButtonClass"
                         :icon="useRenderIcon(Airplane)"

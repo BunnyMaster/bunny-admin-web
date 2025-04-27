@@ -60,13 +60,13 @@ const getRoleListByRouterId = async () => {
   // 根据路由id查找当前菜单所拥有的角色
   const routerId = form.value.id;
   if (routerId) {
-    form.value.roles = await menuStore.getRoleListByRouterId({ routerId });
+    form.value.roles = await menuStore.loadRoleListByRouterId({ routerId });
   }
 };
 
 onMounted(() => {
   // 获取所有的角色列表
-  roleStore.allRoles();
+  roleStore.loadRoleList();
 
   // 根据当前路由id，查找这个路由下所有的角色信息
   getRoleListByRouterId();

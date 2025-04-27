@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia';
 import {
-  fetchAddSchedulers,
-  fetchDeleteSchedulers,
-  fetchGetAllScheduleJobList,
-  fetchGetSchedulersList,
-  fetchPauseSchedulers,
-  fetchResumeSchedulers,
-  fetchUpdateSchedulers,
+  createSchedulers,
+  deleteSchedulers,
+  getScheduleJobList,
+  getSchedulersPage,
+  updateSchedulers,
+  updateSchedulersByPause,
+  updateSchedulersByResume,
 } from '@/api/v1/schedulers/schedulers';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
@@ -53,7 +53,7 @@ export const useSchedulersStore = defineStore('schedulersStore', {
   getters: {},
   actions: {
     /** 获取Schedulers视图 */
-    async getSchedulersList() {
+    async fetchSchedulersPage() {
       // 整理请求参数
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
@@ -61,7 +61,7 @@ export const useSchedulersStore = defineStore('schedulersStore', {
       delete data.background;
 
       // 获取Schedulers视图列表
-      const result = await fetchGetSchedulersList(data);
+      const result = await getSchedulersPage(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);
@@ -69,39 +69,39 @@ export const useSchedulersStore = defineStore('schedulersStore', {
     },
 
     /** 获取所有可用调度任务 */
-    async getAllScheduleJobList() {
-      const result = await fetchGetAllScheduleJobList();
+    async loadScheduleJobList() {
+      const result = await getScheduleJobList();
       if (result.code !== 200) return;
       this.allScheduleJobList = result.data;
     },
 
     /** 添加Schedulers视图 */
     async addSchedulers(data: any) {
-      const result = await fetchAddSchedulers(data);
+      const result = await createSchedulers(data);
       return storeMessage(result);
     },
 
     /** 修改Schedulers视图 */
-    async updateSchedulers(data: any) {
-      const result = await fetchUpdateSchedulers(data);
+    async editSchedulers(data: any) {
+      const result = await updateSchedulers(data);
       return storeMessage(result);
     },
 
     /** 删除Schedulers视图 */
-    async deleteSchedulers(data: any) {
-      const result = await fetchDeleteSchedulers(data);
+    async removeSchedulers(data: any) {
+      const result = await deleteSchedulers(data);
       return storeMessage(result);
     },
 
     /** 暂停任务 */
     async pauseSchedulers(data: any) {
-      const result = await fetchPauseSchedulers(data);
+      const result = await updateSchedulersByPause(data);
       return storeMessage(result);
     },
 
     /** 恢复任务 */
     async resumeSchedulers(data: any) {
-      const result = await fetchResumeSchedulers(data);
+      const result = await updateSchedulersByResume(data);
       return storeMessage(result);
     },
   },

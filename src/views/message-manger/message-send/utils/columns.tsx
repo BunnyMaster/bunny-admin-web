@@ -26,9 +26,11 @@ export const columns: TableColumnList = [
     prop: 'level',
     formatter({ level }) {
       return (
-        <ElTag type={level} effect={'plain'} round>
-          {$t(level)}
-        </ElTag>
+        level && (
+          <ElTag type={level} effect={'plain'} round>
+            {$t(level)}
+          </ElTag>
+        )
       );
     },
     minWidth: 130,

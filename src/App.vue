@@ -25,7 +25,7 @@ const { $storage } = useNav();
  * * 设置多语言内容
  */
 const setI18n = async () => {
-  await i18nStore.fetchI18n();
+  await i18nStore.loadI18nMap();
   const languageData = JSON.parse(localStorage.getItem('i18nStore') as any);
   // 初始化设置多语言内容
   const locale = $storage.locale.locale;

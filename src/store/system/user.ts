@@ -1,17 +1,10 @@
 import { defineStore } from 'pinia';
 import { resetRouter, router, routerArrays, storageLocal, store, type userType } from '../utils';
-import {
-  fetchAssignRolesToUsers,
-  fetchLogin,
-  fetchLogout,
-  fetchPostEmailCode,
-  fetchUserinfo,
-  refreshTokenApi,
-} from '@/api/v1/system/adminUser';
+import { getUserinfo, logout, refreshTokenApi, sendLoginEmail, userLogin } from '@/api/v1/system/adminUser';
 import { useMultiTagsStoreHook } from '../multiTags';
 import { type DataInfo, removeToken, setToken, userKey } from '@/utils/auth';
 import { message, storeMessage } from '@/utils/message';
-import { fetchGetRoleListByUserId } from '@/api/v1/system/role';
+import { createUserRole, getRoleListByUserId } from '@/api/v1/system/role';
 
 export const useUserStore = defineStore({
   id: 'system-user',
@@ -35,7 +28,7 @@ export const useUserStore = defineStore({
     /** 登入 */
     async loginByUsername(data: any) {
       data = this.isRemembered ? { ...data, readMeDay: this.readMeDay } : data;
-      const result = await fetchLogin(data);
+      const result = await userLogin(data);
 
       if (result.code === 200) {
         setToken(result.data);
@@ -44,9 +37,9 @@ export const useUserStore = defineStore({
       return false;
     },
 
-    /** 发送邮箱验证码 */
-    async postEmailCode(email: string) {
-      const response = await fetchPostEmailCode({ email });
+    /** 发送登录邮箱验证码 */
+    async sendLoginEmailCode(email: string) {
+      const response = await sendLoginEmail({ email });
       if (response.code === 200) {
         message(response.message, { type: 'success' });
         return true;
@@ -58,7 +51,7 @@ export const useUserStore = defineStore({
 
     /** 前端登出 */
     async logOut() {
-      const result = await fetchLogout();
+      const result = await logout();
       if (result.code == 200) {
         this.username = '';
         this.roles = [];
@@ -85,8 +78,8 @@ export const useUserStore = defineStore({
     },
 
     /** 获取用户信息 */
-    async getUserinfo() {
-      const result = await fetchUserinfo();
+    async loadUserinfo() {
+      const result = await getUserinfo();
       if (result.code === 200) {
         const data = result.data;
         setToken(data);
@@ -96,15 +89,15 @@ export const useUserStore = defineStore({
     },
 
     /** 根据用户id获取角色列表 */
-    async getRoleListByUserId(data: any) {
-      const result = await fetchGetRoleListByUserId(data);
+    async loadRoleListByUserId(data: any) {
+      const result = await getRoleListByUserId(data);
       if (result.code !== 200) return;
       return result.data;
     },
 
     /** 为用户分配角色 */
-    async assignRolesToUsers(data: any) {
-      const result = await fetchAssignRolesToUsers(data);
+    async addUserRole(data: any) {
+      const result = await createUserRole(data);
       return storeMessage(result);
     },
   },

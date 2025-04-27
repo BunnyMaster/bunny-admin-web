@@ -1,10 +1,10 @@
 export const auth = {
   // 分页查询
-  search: ['schedulersGroup::getSchedulersGroupList'],
+  query: ['schedulersGroup::query'],
   // 添加操作
-  add: ['schedulersGroup::addSchedulersGroup'],
+  add: ['schedulersGroup::add'],
   // 更新操作
-  update: ['schedulersGroup::updateSchedulersGroup'],
+  update: ['schedulersGroup::update'],
   // 删除操作
-  deleted: ['schedulersGroup::deleteSchedulersGroup'],
+  delete: ['schedulersGroup::delete'],
 };

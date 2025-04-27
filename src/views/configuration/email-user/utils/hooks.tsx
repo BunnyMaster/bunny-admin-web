@@ -2,10 +2,9 @@ import { addDialog } from '@/components/ReDialog/index';
 import EmailUsersDialog from '@/views/configuration/email-user/components/email-users-dialog.vue';
 import { useEmailUsersStore } from '@/store/configuration/emailUsers';
 import { h, ref } from 'vue';
-import { message, messageBox } from '@/utils/message';
+import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/configuration/email-user/utils/types';
 import { $t } from '@/plugins/i18n';
-import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 
 export const formRef = ref();
 // 用户是否停用加载集合
@@ -17,7 +16,7 @@ const emailUsersStore = useEmailUsersStore();
 /** 搜索初始化邮箱用户发送配置 */
 export async function onSearch() {
   emailUsersStore.loading = true;
-  await emailUsersStore.getEmailUsersList();
+  await emailUsersStore.fetchEmailUserPage();
   emailUsersStore.loading = false;
 }
 
@@ -55,10 +54,7 @@ export function onAdd() {
   });
 }
 
-/**
- * * 更新邮箱用户发送配置
- * @param row
- */
+/* 更新邮箱用户发送配置 */
 export function onUpdate(row: any) {
   addDialog({
     title: `${$t('modify')}${$t('emailUsers')}`,
@@ -83,7 +79,7 @@ export function onUpdate(row: any) {
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
 
-        const result = await emailUsersStore.updateEmailUsers({ ...form, id: row.id });
+        const result = await emailUsersStore.editEmailUsers({ ...form, id: row.id });
         if (!result) return;
         done();
         await onSearch();
@@ -94,8 +90,6 @@ export function onUpdate(row: any) {
 
 /** 删除邮箱用户发送配置 */
 export const onDelete = async (row: any) => {
-  const id = row.id;
-
   // 是否确认删除
   const result = await messageBox({
     title: $t('confirmDelete'),
@@ -106,45 +100,29 @@ export const onDelete = async (row: any) => {
   if (!result) return;
 
   // 删除数据
-  await emailUsersStore.deleteEmailUsers([id]);
+  const id = row.id;
+  await emailUsersStore.removeEmailUsers([id]);
   await onSearch();
 };
 
 /** 批量删除 */
 export const onDeleteBatch = async () => {
-  const ids = deleteIds.value;
-  const formDeletedBatchRef = ref();
-
-  addDialog({
-    title: $t('deleteBatchTip'),
-    width: '30%',
-    props: { formInline: { confirmText: '' } },
-    draggable: true,
-    fullscreenIcon: true,
-    closeOnClickModal: false,
-    contentRenderer: () => h(DeleteBatchDialog, { ref: formDeletedBatchRef }),
-    beforeSure: (done, { options }) => {
-      formDeletedBatchRef.value.formDeletedBatchRef.validate(async (valid: any) => {
-        if (!valid) return;
-
-        const text = options.props.formInline.confirmText.toLowerCase();
-        if (text === 'yes' || text === 'y') {
-          // 删除数据
-          await emailUsersStore.deleteEmailUsers(ids);
-          await onSearch();
-
-          done();
-        } else message($t('deleteBatchTip'), { type: 'warning' });
-      });
-    },
+  // 是否确认删除
+  const result = await messageBox({
+    title: $t('confirmDelete'),
+    showMessage: false,
+    confirmMessage: undefined,
+    cancelMessage: $t('cancel_delete'),
   });
+  if (!result) return;
+
+  // 删除数据
+  const ids = deleteIds.value;
+  await emailUsersStore.removeEmailUsers(ids);
+  await onSearch();
 };
 
-/**
- * * 修改是否默认
- * @param row
- * @param index
- */
+/* 修改是否默认 */
 export const onChangeDefault = async (row: any, index: number) => {
   // 点击时开始loading加载
   switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
@@ -160,25 +138,10 @@ export const onChangeDefault = async (row: any, index: number) => {
   });
 
   // 如果不修改将值恢复到之前状态
-  if (!confirm) {
-    row.isDefault = !row.isDefault;
-    switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
-      loading: false,
-    });
-    return;
+  if (confirm) {
+    const result = await emailUsersStore.editEmailUsers(row);
+    result && (await onSearch());
   }
-
-  // 修改用户状态
-  const result = await emailUsersStore.updateEmailUserStatus({ id: row.id, isDefault: row.isDefault });
-  if (!result) {
-    row.isDefault = !row.isDefault;
-    switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
-      loading: false,
-    });
-    return;
-  }
-
-  await onSearch();
   switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
     loading: false,
   });

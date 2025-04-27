@@ -10,7 +10,6 @@ import ResetPasswordDialog from '@/components/Table/ResetPasswords.vue';
 import { deviceDetection, handleTree } from '@pureadmin/utils';
 import CropperPreview from '@/components/CropperPreview';
 import AssignUserToRole from '@/views/system/admin-user/components/assign-roles-to-user.vue';
-import { fetchUploadAvatarByAdmin } from '@/api/v1/system/adminUser';
 import { useUserStore } from '@/store/system/user';
 import { useDeptStore } from '@/store/system/dept';
 import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
@@ -41,12 +40,10 @@ export const switchLoadMap = ref({});
 // 部门数据树形结构
 export const deptList = computed(() => handleTree(deptStore.allDeptList));
 
-/**
- * * 搜索初始化用户信息
- */
+/* 搜索初始化用户信息 */
 export async function onSearch() {
   adminUserStore.loading = true;
-  await adminUserStore.getAdminUserList();
+  await adminUserStore.fetchUserPageByAdmin();
   adminUserStore.loading = false;
 }
 
@@ -79,7 +76,7 @@ export function onAdd() {
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
 
-        const result = await adminUserStore.addAdminUser(form);
+        const result = await adminUserStore.addUserByAdmin(form);
         if (!result) return;
         done();
         await onSearch();
@@ -88,10 +85,7 @@ export function onAdd() {
   });
 }
 
-/**
- * * 更新用户信息
- * @param row
- */
+/* 更新用户信息 */
 export function onUpdate(row: any) {
   isAddUserinfo.value = false;
   addDialog({
@@ -119,7 +113,9 @@ export function onUpdate(row: any) {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
-        const result = await adminUserStore.updateAdminUser({ ...form, id: row.id });
+        const data = { id: row.id, ...form };
+        delete data.avatar; // 删除头像不上传
+        const result = await adminUserStore.updateUserByAdmin(data);
         if (!result) return;
 
         done();
@@ -143,7 +139,7 @@ export const onDelete = async (row: any) => {
   if (!result) return;
 
   // 删除数据
-  await adminUserStore.deleteAdminUser([id]);
+  await adminUserStore.removeUserByAdmin([id]);
   await onSearch();
 };
 
@@ -166,7 +162,7 @@ export const onDeleteBatch = async () => {
         const text = options.props.formInline.confirmText.toLowerCase();
         if (text === 'yes' || text === 'y') {
           // 删除数据
-          await adminUserStore.deleteAdminUser(deleteIds.value);
+          await adminUserStore.removeUserByAdmin(deleteIds.value);
           await onSearch();
 
           done();
@@ -176,11 +172,7 @@ export const onDeleteBatch = async () => {
   });
 };
 
-/**
- * * 更新用户状态
- * @param row
- * @param index
- */
+/* 更新用户状态 */
 export const updateUserStatus = async (row: any, index: number) => {
   // 点击时开始loading加载
   switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
@@ -195,35 +187,20 @@ export const updateUserStatus = async (row: any, index: number) => {
     cancelMessage: $t('cancel'),
   });
 
-  // 如果不修改将值恢复到之前状态
-  if (!confirm) {
+  // 修改用户状态
+  if (confirm) {
+    await adminUserStore.updateUserByAdmin(row);
+    await onSearch();
+  } else {
     row.status = !row.status;
-    switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
-      loading: false,
-    });
-    return;
   }
 
-  // 修改用户状态
-  const data = { userId: row.id, status: row.status };
-  const result = await adminUserStore.updateUserStatusByAdmin(data);
-  if (!result) {
-    row.status = !row.status;
-    switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
-      loading: false,
-    });
-    return;
-  }
-  await onSearch();
   switchLoadMap.value[index] = Object.assign({}, switchLoadMap.value[index], {
     loading: false,
   });
 };
 
-/**
- * * 上传头像
- * @param row
- */
+/* 上传头像 */
 export const onUploadAvatar = (row: any) => {
   addDialog({
     title: $t('crop_and_upload_avatars'),
@@ -238,11 +215,9 @@ export const onUploadAvatar = (row: any) => {
       }),
     beforeSure: async (done) => {
       // 上传头像
-      const data = { userId: row.id, avatar: avatarInfo.value.blob };
-      const result = await fetchUploadAvatarByAdmin(data);
-      if (result.code !== 200) return;
+      const data = { ...row, avatar: avatarInfo.value.blob };
+      await adminUserStore.updateUserByAdmin(data);
 
-      message(result.message, { type: 'success' });
       done();
       await onSearch();
     },
@@ -250,10 +225,7 @@ export const onUploadAvatar = (row: any) => {
   });
 };
 
-/**
- * * 重置密码
- * @param row
- */
+/* 重置密码 */
 export const onResetPassword = (row: any) => {
   addDialog({
     title: `${$t('buttons.reset')} ${row.username} ${$t('userPassword')}`,
@@ -267,8 +239,9 @@ export const onResetPassword = (row: any) => {
       ruleFormByRestPasswordRef.value.ruleFormRef.validate(async (valid: any) => {
         if (valid) {
           // 更新用户密码
-          const data = { userId: row.id, password: restPasswordForm.password };
-          const result = await adminUserStore.updateAdminUserPasswordByManager(data);
+          const data = { ...row, password: restPasswordForm.password };
+          delete data.avatar; // 删除头像不上传
+          const result = await adminUserStore.updateUserByAdmin(data);
 
           // 更新成功关闭弹窗
           if (!result) return;
@@ -281,10 +254,7 @@ export const onResetPassword = (row: any) => {
   });
 };
 
-/**
- * 为用户分配角色
- * @param row
- */
+/* 为用户分配角色 */
 export const onAssignRolesToUser = (row: any) => {
   addDialog({
     title: `${$t('for')} ${row.username} ${$t('assign_roles')}`,
@@ -296,7 +266,7 @@ export const onAssignRolesToUser = (row: any) => {
     beforeSure: async (done: any) => {
       // 分配用户角色
       const data = { userId: row.id, roleIds: assignRolesRef.value.assignRoles };
-      const result = await userStore.assignRolesToUsers(data);
+      const result = await userStore.addUserRole(data);
 
       // 更新成功关闭弹窗
       if (!result) return;
@@ -305,10 +275,7 @@ export const onAssignRolesToUser = (row: any) => {
   });
 };
 
-/**
- * * 强制下线
- * @param row
- */
+/* 强制下线 */
 export const onForcedOffline = async (row: any) => {
   const id = row.id;
   const confirm = await messageBox({
@@ -324,11 +291,7 @@ export const onForcedOffline = async (row: any) => {
   message(result.message, { type: 'success' });
 };
 
-/**
- * * 当树形结构选择时
- * 搜索当前用户属于哪个部门
- * @param dept
- */
+/* 当树形结构选择时 搜索当前用户属于哪个部门*/
 export const onTreeSelect = async (dept: any) => {
   /** 递归查找子级Id*/
   function findChildIds(node: any, ids: string[]) {

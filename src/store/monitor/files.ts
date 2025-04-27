@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
 import {
+  deleteFiles,
   fetchAddFiles,
-  fetchDeleteFiles,
-  fetchGetAllFilesStoragePath,
-  fetchGetAllMediaTypes,
-  fetchGetFilesList,
-  fetchUpdateFiles,
+  getFilesPage,
+  getFilesStoragePath,
+  getMediaTypeList,
+  updateFiles,
 } from '@/api/v1/files';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
@@ -48,7 +48,7 @@ export const useFilesStore = defineStore('filesStore', {
   getters: {},
   actions: {
     /** 获取系统文件表 */
-    async getFilesList() {
+    async fetchFilesPage() {
       // 整理请求参数
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
@@ -56,27 +56,11 @@ export const useFilesStore = defineStore('filesStore', {
       delete data.background;
 
       // 获取系统文件表列表
-      const result = await fetchGetFilesList(data);
+      const result = await getFilesPage(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);
       return pagination(result);
-    },
-
-    /** 获取所有文件类型 */
-    async getAllMediaTypes() {
-      const result = await fetchGetAllMediaTypes();
-      if (result.code === 200) {
-        this.allMediaTypes = result.data;
-      }
-    },
-
-    /** 获取所有文件类型 */
-    async getAllFilesStoragePath() {
-      const result = await fetchGetAllFilesStoragePath();
-      if (result.code === 200) {
-        this.allFilesStoragePath = result.data;
-      }
     },
 
     /** 添加系统文件表 */
@@ -86,15 +70,31 @@ export const useFilesStore = defineStore('filesStore', {
     },
 
     /** 修改系统文件表 */
-    async updateFiles(data: any) {
-      const result = await fetchUpdateFiles(data);
+    async editFiles(data: any) {
+      const result = await updateFiles(data);
       return storeMessage(result);
     },
 
     /** 删除系统文件表 */
-    async deleteFiles(data: any) {
-      const result = await fetchDeleteFiles(data);
+    async removeFiles(data: any) {
+      const result = await deleteFiles(data);
       return storeMessage(result);
+    },
+
+    /** 获取所有文件类型 */
+    async loadMediaTypeList() {
+      const result = await getMediaTypeList();
+      if (result.code === 200) {
+        this.allMediaTypes = result.data;
+      }
+    },
+
+    /** 获取所有文件类型 */
+    async loadFilesStoragePath() {
+      const result = await getFilesStoragePath();
+      if (result.code === 200) {
+        this.allFilesStoragePath = result.data;
+      }
     },
   },
 });

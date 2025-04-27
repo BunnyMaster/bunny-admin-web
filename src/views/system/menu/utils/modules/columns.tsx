@@ -47,7 +47,7 @@ const onChangeShowLink = async (row: any) => {
   // 确认后进行修改
   row.showLink = !row.showLink;
   const data = mergeArgs(row);
-  await menuStore.updateMenu(data);
+  await menuStore.editRouter(data);
 };
 
 export const columns: TableColumnList = [

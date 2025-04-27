@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
 import { pageSizes } from '@/enums/baseConstant';
 import {
-  fetchAddMessage,
-  fetchDeleteMessage,
-  fetchGetMessageList,
-  fetchGetReceivedUserinfoByMessageId,
-  fetchUpdateMessage,
+  createMessage,
+  deleteMessage,
+  getMessagePage,
+  getReceivedUserinfoByMessageId,
+  updateMessage,
 } from '@/api/v1/message/messageSend';
 import { storePagination } from '@/store/useStorePagination';
 import { storeMessage } from '@/utils/message';
@@ -48,7 +48,7 @@ export const useMessageSendStore = defineStore('messageSendStore', {
   getters: {},
   actions: {
     /** 获取系统消息 */
-    async getMessageList() {
+    async fetchMessagePage() {
       // 整理请求参数
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
@@ -56,7 +56,7 @@ export const useMessageSendStore = defineStore('messageSendStore', {
       delete data.background;
 
       // 获取系统消息列表
-      const result = await fetchGetMessageList(data);
+      const result = await getMessagePage(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);
@@ -64,8 +64,8 @@ export const useMessageSendStore = defineStore('messageSendStore', {
     },
 
     /** 根据消息id获取接收人信息 */
-    async getReceivedUserinfoByMessageId(data: any) {
-      const result = await fetchGetReceivedUserinfoByMessageId(data);
+    async loadReceivedUserinfoByMessageId(data: any) {
+      const result = await getReceivedUserinfoByMessageId(data);
       if (result.code === 200) {
         this.receivedUserinfoList = result.data;
       }
@@ -73,19 +73,19 @@ export const useMessageSendStore = defineStore('messageSendStore', {
 
     /** 添加系统消息 */
     async addMessage(data: any) {
-      const result = await fetchAddMessage(data);
+      const result = await createMessage(data);
       return storeMessage(result);
     },
 
     /** 修改系统消息 */
-    async updateMessage(data: any) {
-      const result = await fetchUpdateMessage(data);
+    async editMessage(data: any) {
+      const result = await updateMessage(data);
       return storeMessage(result);
     },
 
     /** 删除系统消息 */
-    async deleteMessage(data: any) {
-      const result = await fetchDeleteMessage(data);
+    async removeMessage(data: any) {
+      const result = await deleteMessage(data);
       return storeMessage(result);
     },
   },

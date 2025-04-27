@@ -14,13 +14,13 @@ export const deleteIds = ref([]);
 /* 查询内容 */
 export const onSearch = async () => {
   i18nStore.loading = true;
-  await i18nStore.getI18nMangeList();
+  await i18nStore.fetchI18nPage();
   i18nStore.loading = false;
 };
 
 /* 下载多语言配置 */
 export const downloadI18nSetting = (type: string) => {
-  i18nStore.downloadI18nSetting({ type });
+  i18nStore.downloadI18nFile({ type });
 };
 
 /* 下载多语言配置 */
@@ -39,7 +39,7 @@ export const updateI18nSetting = (fileType: string) => {
       i18nUseFileUploadRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
         const { type, file, fileType } = options.props.form;
-        await i18nStore.updateI18nByFile({ type, file: file[0].raw, fileType });
+        await i18nStore.editI18nByFile({ type, file: file[0].raw, fileType });
         done();
         await onSearch();
       });
@@ -121,7 +121,7 @@ export const onUpdate = (row: any) => {
       formRef.value.ruleFormRef.validate(async (valid: any) => {
         if (!valid) return;
 
-        const result = await i18nStore.updateI18n({ ...form, id });
+        const result = await i18nStore.editI18n({ ...form, id });
         if (!result) return;
         done();
         await onSearch();
@@ -141,7 +141,7 @@ export const onDelete = async (row: any) => {
   });
 
   if (isConfirm) {
-    await i18nStore.deleteI18n([row.id]);
+    await i18nStore.removeI18n([row.id]);
     await onSearch();
   }
 };
@@ -157,7 +157,7 @@ export const onDeleteBatch = async () => {
   });
 
   if (isConfirm) {
-    await i18nStore.deleteI18n(deleteIds.value);
+    await i18nStore.removeI18n(deleteIds.value);
     await onSearch();
   }
 };

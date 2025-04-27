@@ -36,7 +36,7 @@ const onSearchUserinfo = async (keyword: string) => {
 };
 
 onMounted(() => {
-  deptStore.getAllDeptList();
+  deptStore.loadDeptList();
 });
 
 defineExpose({ formRef });

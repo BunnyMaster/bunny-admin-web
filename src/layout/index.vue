@@ -107,7 +107,7 @@ useResizeObserver(appWrapperRef, (entries) => {
 onMounted(() => {
   if (isMobile) toggle('mobile', false);
   // 获取用户信息
-  userStore.getUserinfo();
+  userStore.loadUserinfo();
 });
 
 onBeforeMount(() => {

@@ -1,15 +1,14 @@
 import { defineStore } from 'pinia';
 import {
-  addEmailTemplate,
-  fetchDeleteEmailTemplate,
-  fetchUpdateEmailTemplate,
+  createEmailTemplate,
+  deleteEmailTemplate,
   getEmailTemplatePage,
   getEmailTypeList,
+  updateEmailTemplate,
 } from '@/api/v1/email/emailTemplate';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
-import { fetchGetAllMailboxConfigurationUsers } from '@/api/v1/email/emailUsers';
 
 /**
  * 邮件模板表 Store
@@ -19,8 +18,6 @@ export const useEmailTemplateStore = defineStore('emailTemplateStore', {
     return {
       // 邮件模板表列表
       datalist: [],
-      // 邮件模板用户列表
-      emailUserList: [],
       // 邮件类型枚举
       allEmailTypes: [],
       // 查询表单
@@ -45,13 +42,7 @@ export const useEmailTemplateStore = defineStore('emailTemplateStore', {
       loading: false,
     };
   },
-  getters: {
-    getMailboxConfigurationUser(state) {
-      const map = {};
-      state.emailUserList.forEach((user) => (map[user.value] = user.key));
-      return map;
-    },
-  },
+  getters: {},
   actions: {
     /** 获取邮件模板表 */
     async fetchEmailTemplatePage() {
@@ -69,14 +60,6 @@ export const useEmailTemplateStore = defineStore('emailTemplateStore', {
       return pagination(result);
     },
 
-    /** 获取所有邮箱配置用户 */
-    async getAllMailboxConfigurationUsers() {
-      const result = await fetchGetAllMailboxConfigurationUsers();
-      if (result.code !== 200) return;
-
-      this.emailUserList = result.data;
-    },
-
     /** 获取模板类型字段 */
     async loadEmailTypeList() {
       const result = await getEmailTypeList();
@@ -86,19 +69,19 @@ export const useEmailTemplateStore = defineStore('emailTemplateStore', {
 
     /** 添加邮件模板表 */
     async addEmailTemplate(data: any) {
-      const result = await addEmailTemplate(data);
+      const result = await createEmailTemplate(data);
       return storeMessage(result);
     },
 
     /** 修改邮件模板表 */
-    async updateEmailTemplate(data: any) {
-      const result = await fetchUpdateEmailTemplate(data);
+    async editEmailTemplate(data: any) {
+      const result = await updateEmailTemplate(data);
       return storeMessage(result);
     },
 
     /** 删除邮件模板表 */
-    async deleteEmailTemplate(data: any) {
-      const result = await fetchDeleteEmailTemplate(data);
+    async removeEmailTemplate(data: any) {
+      const result = await deleteEmailTemplate(data);
       return storeMessage(result);
     },
   },

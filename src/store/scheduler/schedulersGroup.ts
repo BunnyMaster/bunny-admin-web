@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import {
-  fetchAddSchedulersGroup,
-  fetchDeleteSchedulersGroup,
-  fetchGetAllSchedulersGroup,
-  fetchGetSchedulersGroupList,
-  fetchUpdateSchedulersGroup,
+  createSchedulersGroup,
+  deleteSchedulersGroup,
+  getSchedulersGroupList,
+  getSchedulersGroupPage,
+  updateSchedulersGroup,
 } from '@/api/v1/schedulers/schedulersGroup';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
@@ -41,7 +41,7 @@ export const useSchedulersGroupStore = defineStore('schedulersGroupStore', {
   getters: {},
   actions: {
     /** 获取任务调度分组 */
-    async getSchedulersGroupList() {
+    async fetchSchedulersGroupPage() {
       // 整理请求参数
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
@@ -49,7 +49,7 @@ export const useSchedulersGroupStore = defineStore('schedulersGroupStore', {
       delete data.background;
 
       // 获取任务调度分组列表
-      const result = await fetchGetSchedulersGroupList(data);
+      const result = await getSchedulersGroupPage(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);
@@ -57,27 +57,27 @@ export const useSchedulersGroupStore = defineStore('schedulersGroupStore', {
     },
 
     /** 获取所有任务调度分组 */
-    async getAllSchedulersGroup() {
-      const result = await fetchGetAllSchedulersGroup();
+    async loadSchedulersGroupList() {
+      const result = await getSchedulersGroupList();
       if (result.code !== 200) return;
       this.allSchedulersGroup = result.data;
     },
 
     /** 添加任务调度分组 */
     async addSchedulersGroup(data: any) {
-      const result = await fetchAddSchedulersGroup(data);
+      const result = await createSchedulersGroup(data);
       return storeMessage(result);
     },
 
     /** 修改任务调度分组 */
-    async updateSchedulersGroup(data: any) {
-      const result = await fetchUpdateSchedulersGroup(data);
+    async editSchedulersGroup(data: any) {
+      const result = await updateSchedulersGroup(data);
       return storeMessage(result);
     },
 
     /** 删除任务调度分组 */
-    async deleteSchedulersGroup(data: any) {
-      const result = await fetchDeleteSchedulersGroup(data);
+    async removeSchedulersGroup(data: any) {
+      const result = await deleteSchedulersGroup(data);
       return storeMessage(result);
     },
   },

@@ -52,10 +52,7 @@ const onPageSizeChange = async (value: number) => {
   await onSearch();
 };
 
-/**
- * * 选择多行
- * @param rows
- */
+/* 选择多行 */
 const onSelectionChange = (rows: Array<any>) => {
   deleteIds.value = rows.map((row: any) => row.id);
 };
@@ -67,7 +64,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <ReAuth :value="auth.search">
+    <ReAuth :value="auth.query">
       <el-form
         ref="pageFormRef"
         :inline="true"
@@ -134,7 +131,7 @@ onMounted(() => {
           </template>
         </el-dropdown>
 
-        <!-- 下载多语言配置 -->
+        <!-- 更新多语言配置 -->
         <el-dropdown v-if="hasAuth(auth.update)" class="mr-1" type="primary">
           <el-button :icon="useRenderIcon(Upload)" plain type="primary">{{ $t('file_import') }}</el-button>
           <template #dropdown>

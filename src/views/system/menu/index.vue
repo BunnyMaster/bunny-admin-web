@@ -47,7 +47,7 @@ const onSelectionChange = (rows: Array<any>) => {
 /* 更新菜单排序 */
 const onChangeMenuRank = async (row: any) => {
   const data = mergeArgs(row);
-  await menuStore.updateMenu(data);
+  await menuStore.editRouter(data);
   await onSearch();
 };
 

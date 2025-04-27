@@ -19,7 +19,7 @@ const dialogFormRef = ref();
 /** 获取菜单数据 */
 async function onSearch() {
   menuStore.loading = true;
-  await menuStore.getMenuList();
+  await menuStore.loadRouterList();
   menuStore.loading = false;
 }
 
@@ -67,7 +67,7 @@ function onAdd(parentId: any = 0) {
         delete curData.higherMenuOptions;
 
         const data = mergeArgs(curData);
-        const result = await menuStore.addMenu(data);
+        const result = await menuStore.addRouter(data);
         // 刷新表格数据
         if (result) {
           done();
@@ -129,7 +129,7 @@ function onUpdate(row?: FormItemProps) {
 
         // 整理后端需要的参数
         const data = mergeArgs(curData);
-        const result = await menuStore.updateMenu(data);
+        const result = await menuStore.editRouter(data);
 
         // 刷新表格数据
         if (result) {
@@ -152,7 +152,7 @@ async function onDelete(row: any) {
   });
   if (!result) return;
 
-  await menuStore.deletedMenuByIds([row.id]);
+  await menuStore.removeRouterByIds([row.id]);
   await onSearch();
 }
 
@@ -178,7 +178,7 @@ export const clearAllRolesSelect = async () => {
         contentRenderer: () => <ElText type={'danger'}>{$t('clearAllRolesSelectTip')}</ElText>,
         beforeSure: async () => {
           // 清除所有角色
-          const result = await menuStore.clearAllRolesSelect(selectIds.value);
+          const result = await menuStore.clearSelectRouterRole(selectIds.value);
 
           // 更新成功关闭弹窗
           if (!result) return;

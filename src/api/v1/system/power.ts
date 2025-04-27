@@ -2,38 +2,40 @@ import { http } from '@/api/service/request';
 import type { BaseResult, ResultTable } from '@/api/service/types';
 
 /** 权限---获取权限列表 */
-export const fetchGetPowerList = (data: any) => {
-  return http.request<BaseResult<ResultTable>>('get', `power/getPowerList/${data.currentPage}/${data.pageSize}`, {
+export const getPermissionPage = (data: any) => {
+  return http.request<BaseResult<ResultTable>>('get', `permission/${data.currentPage}/${data.pageSize}`, {
     params: data,
   });
 };
 
-/** 权限---根据角色id获取权限内容 */
-export const fetchGetPowerListByRoleId = (data: any) => {
-  return http.request<BaseResult<object>>('get', 'rolePower/noManage/getPowerListByRoleId', { params: data });
-};
-
-/** 权限---获取所有权限 */
-export const fetchGetAllPowers = () => {
-  return http.request<BaseResult<any>>('get', `power/getAllPowers`);
-};
-
 /** 权限---添加权限 */
-export const fetchAddPower = (data: any) => {
-  return http.request<BaseResult<object>>('post', 'power/addPower', { data });
+export const createPermission = (data: any) => {
+  return http.request<BaseResult<object>>('post', 'permission', { data });
 };
 
 /** 权限---更新权限 */
-export const fetchUpdatePower = (data: any) => {
-  return http.request<BaseResult<object>>('put', 'power/updatePower', { data });
-};
-
-/** 权限---更新权限 */
-export const fetchUpdateBatchByPowerWithParentId = (data: any) => {
-  return http.request<BaseResult<object>>('put', 'power/updateBatchByPowerWithParentId', { data });
+export const updatePermission = (data: any) => {
+  return http.request<BaseResult<object>>('put', 'permission', { data });
 };
 
 /** 权限---删除权限 */
-export const fetchDeletePower = (data: any) => {
-  return http.request<BaseResult<object>>('delete', 'power/deletePower', { data });
+export const deletePermission = (data: any) => {
+  return http.request<BaseResult<object>>('delete', 'permission', { data });
+};
+
+/** 权限---获取所有权限 */
+export const getPermissionList = () => {
+  return http.request<BaseResult<any>>('get', `permission/getPermissionList`);
+};
+
+/** 权限---更新权限 */
+export const updatePermissionListByParentId = (data: any) => {
+  return http.request<BaseResult<object>>('put', 'permission/update/permissionListByParentId', { data });
+};
+
+/** 角色和权限---根据角色id获取权限内容 */
+export const getPowerListByRoleId = (data: any) => {
+  return http.request<BaseResult<object>>('get', 'rolePermission/private/getPermissionListByRoleId', {
+    params: data,
+  });
 };

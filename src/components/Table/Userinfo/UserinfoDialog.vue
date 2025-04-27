@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { fetchGetUserinfoById } from '@/api/v1/system/adminUser';
+import { loadUserinfoById } from '@/api/v1/system/adminUser';
 import userAvatarIcon from '@/assets/svg/user_avatar.svg?component';
 import { $t } from '@/plugins/i18n';
 
@@ -10,9 +10,7 @@ const props = defineProps({
 const userinfo = ref();
 const loading = ref(false);
 
-/**
- * * 获取用户信息
- */
+/* 获取用户信息 */
 const getUserInfo = async () => {
   loading.value = true;
   // 如果没有传入用户ID直接返回
@@ -22,7 +20,7 @@ const getUserInfo = async () => {
   }
 
   // 判断是否是web端
-  const result = await fetchGetUserinfoById({ id: props.userId });
+  const result = await loadUserinfoById({ id: props.userId });
   if (result.code === 200) {
     userinfo.value = result.data;
   }

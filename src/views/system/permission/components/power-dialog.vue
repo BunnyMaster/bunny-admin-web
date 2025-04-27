@@ -4,7 +4,7 @@ import { FormInstance } from 'element-plus';
 import { FormProps, powerCascadeProps, rules } from '@/views/system/permission/utils';
 import { $t } from '@/plugins/i18n';
 import { handleTree } from '@pureadmin/utils';
-import { usePowerStore } from '@/store/system/power';
+import { usePermissionStore } from '@/store/system/power';
 import { RequestMethod } from '@/enums/baseConstant';
 
 const props = withDefaults(defineProps<FormProps>(), {
@@ -24,10 +24,10 @@ const props = withDefaults(defineProps<FormProps>(), {
 
 const formRef = ref<FormInstance>();
 const form = ref(props.formInline);
-const powerStore = usePowerStore();
+const powerStore = usePermissionStore();
 
 onMounted(() => {
-  powerStore.getAllPowers();
+  powerStore.loadPermissionList();
 });
 
 defineExpose({ formRef });

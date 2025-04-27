@@ -24,7 +24,7 @@ import { Plus } from '@element-plus/icons-vue';
 import { ElMessage, UploadRawFile, UploadRequestOptions } from 'element-plus';
 import { onMounted, ref } from 'vue';
 import { SystemEnum } from '@/enums/upload';
-import { fetchUploadFile } from '@/api/v1/system/system';
+import { uploadFile } from '@/api/v1/system/system';
 import ImageLoading from '@/components/Upload/ImageLoading.vue';
 
 const props = defineProps({
@@ -46,7 +46,7 @@ const onUpload = async (options: UploadRequestOptions) => {
   const data = { file, type };
 
   // 上传文件并返回文件地址
-  const result: any = await fetchUploadFile(data);
+  const result: any = await uploadFile(data);
   imageSrc.value = result.data.url;
   emits('uploadCallback', result);
 };

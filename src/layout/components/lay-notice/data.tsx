@@ -1,8 +1,8 @@
-import { $t } from '@/plugins/i18n';
 import { computed, ref } from 'vue';
-import { fetchGetUserMessageList } from '@/api/v1/message/messageUser';
 import { throttle } from '@pureadmin/utils';
 import { ElNotification, ElTag } from 'element-plus';
+import { getMessageReceivedPageByUser } from '@/api/v1/message/messageReceived';
+import { $t } from '@/plugins/i18n';
 
 export interface ListItem {
   messageId: string;
@@ -37,7 +37,7 @@ export const getLabel = computed(() => (item) => item.name + (item.list.length >
 
 /** 获取所有消息 */
 export const getAllMessageList = async () => {
-  const baseResult = await fetchGetUserMessageList(form);
+  const baseResult = await getMessageReceivedPageByUser(form);
   const datalist = baseResult?.data?.list;
 
   // 通知消息
@@ -51,7 +51,7 @@ export const getAllMessageList = async () => {
       description: message.summary,
       messageType: message.messageType,
       type: '1',
-      status: message.level,
+      status: message.level ? message.level : 'info',
       extra: message.extra,
     })) as ListItem[];
 
@@ -66,7 +66,7 @@ export const getAllMessageList = async () => {
       title: message.title,
       datetime: message.createTime,
       type: '2',
-      status: message.level,
+      status: message.level ? message.level : 'info',
       extra: message.extra,
     })) as ListItem[];
 
@@ -81,7 +81,7 @@ export const getAllMessageList = async () => {
       title: message.title,
       datetime: message.createTime,
       type: '3',
-      status: message.level,
+      status: message.level ? message.level : 'info',
       extra: message.extra,
     })) as ListItem[];
 

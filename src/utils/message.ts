@@ -75,10 +75,7 @@ export const message = (message: string | VNode | (() => VNode), params?: Messag
   }
 };
 
-/**
- * 仓库消息展示
- * @param result
- */
+/* 仓库消息展示 */
 export const storeMessage = (result: BaseResult<any>) => {
   if (result.code !== 200) {
     return false;
@@ -95,11 +92,7 @@ const defaultBoxOption: any = {
   cancelMessage: undefined,
 };
 
-/**
- * 消息弹窗确认
- * @param type
- * @param option
- */
+/* 消息弹窗确认 */
 export const messageBox = async (option: any = defaultBoxOption, type: any = 'warning') => {
   return ElMessageBox.confirm(option.message, option.title, {
     confirmButtonText: '确认',

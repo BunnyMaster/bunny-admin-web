@@ -1,11 +1,5 @@
 import { defineStore } from 'pinia';
-import {
-  fetchAddDept,
-  fetchDeleteDept,
-  fetchGetAllDeptList,
-  fetchGetDeptList,
-  fetchUpdateDept,
-} from '@/api/v1/system/dept';
+import { createDept, deleteDept, getDeptList, getDeptPage, updateDept } from '@/api/v1/system/dept';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -43,7 +37,7 @@ export const useDeptStore = defineStore('deptStore', {
   getters: {},
   actions: {
     /** 获取部门 */
-    async getDeptList() {
+    async fetchDeptPage() {
       // 整理请求参数
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
@@ -51,36 +45,36 @@ export const useDeptStore = defineStore('deptStore', {
       delete data.background;
 
       // 获取部门列表
-      const result = await fetchGetDeptList(data);
+      const result = await getDeptPage(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);
       return pagination(result);
     },
 
-    /** 获取所有部门列表 */
-    async getAllDeptList() {
-      const result = await fetchGetAllDeptList();
-      if (result.code !== 200) return;
-      this.allDeptList = result.data;
-    },
-
     /** 添加部门 */
     async addDept(data: any) {
-      const result = await fetchAddDept(data);
+      const result = await createDept(data);
       return storeMessage(result);
     },
 
     /** 修改部门 */
-    async updateDept(data: any) {
-      const result = await fetchUpdateDept(data);
+    async editDept(data: any) {
+      const result = await updateDept(data);
       return storeMessage(result);
     },
 
     /** 删除部门 */
-    async deleteDept(data: any) {
-      const result = await fetchDeleteDept(data);
+    async removeDept(data: any) {
+      const result = await deleteDept(data);
       return storeMessage(result);
+    },
+
+    /** 获取所有部门列表 */
+    async loadDeptList() {
+      const result = await getDeptList();
+      if (result.code !== 200) return;
+      this.allDeptList = result.data;
     },
   },
 });

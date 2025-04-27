@@ -1,24 +1,23 @@
 import { addDialog } from '@/components/ReDialog/index';
 import PowerDialog from '@/views/system/permission/components/power-dialog.vue';
-import { usePowerStore } from '@/store/system/power';
+import { usePermissionStore } from '@/store/system/power';
 import { h, reactive, ref } from 'vue';
-import { message, messageBox } from '@/utils/message';
+import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/permission/utils/types';
 import { $t } from '@/plugins/i18n';
 import { handleTree } from '@pureadmin/utils';
 import { powerCascadeProps } from '@/views/system/permission/utils/columns';
 import { ElCascader, ElForm, ElFormItem } from 'element-plus';
-import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 
 export const formRef = ref();
 // 批量点击id列表
 export const powerIds = ref([]);
-const powerStore = usePowerStore();
+const powerStore = usePermissionStore();
 
 /** 搜索初始化权限 */
 export async function onSearch() {
   powerStore.loading = true;
-  await powerStore.getPowerList();
+  await powerStore.fetchPermissionPage();
   powerStore.loading = false;
 }
 
@@ -45,7 +44,7 @@ export function onAdd(parentId = 0) {
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
 
-        const result = await powerStore.addPower(form);
+        const result = await powerStore.addPermission(form);
         if (!result) return;
         done();
         await onSearch();
@@ -54,10 +53,7 @@ export function onAdd(parentId = 0) {
   });
 }
 
-/**
- * * 更新权限
- * @param row
- */
+/* 更新权限 */
 export function onUpdate(row: any) {
   addDialog({
     title: `${$t('modify')}${$t('power')}`,
@@ -80,7 +76,7 @@ export function onUpdate(row: any) {
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
 
-        const result = await powerStore.updatePower({ ...form, id: row.id });
+        const result = await powerStore.editPermission({ ...form, id: row.id });
         if (!result) return;
         done();
         await onSearch();
@@ -103,38 +99,25 @@ export const onDelete = async (row: any) => {
   if (!result) return;
 
   // 删除数据
-  await powerStore.deletePower([id]);
+  await powerStore.removePermission([id]);
   await onSearch();
 };
 
 /** 批量删除 */
 export const onDeleteBatch = async () => {
-  const ids = powerIds.value;
-  const formDeletedBatchRef = ref();
-
-  addDialog({
-    title: $t('deleteBatchTip'),
-    width: '30%',
-    props: { formInline: { confirmText: '' } },
-    draggable: true,
-    fullscreenIcon: true,
-    closeOnClickModal: false,
-    contentRenderer: () => h(DeleteBatchDialog, { ref: formDeletedBatchRef }),
-    beforeSure: (done, { options }) => {
-      formDeletedBatchRef.value.formDeletedBatchRef.validate(async (valid: any) => {
-        if (!valid) return;
-
-        const text = options.props.formInline.confirmText.toLowerCase();
-        if (text === 'yes' || text === 'y') {
-          // 删除数据
-          await powerStore.deletePower(ids);
-          await onSearch();
-
-          done();
-        } else message($t('deleteBatchTip'), { type: 'warning' });
-      });
-    },
+  // 是否确认删除
+  const result = await messageBox({
+    title: $t('confirmDelete'),
+    showMessage: false,
+    confirmMessage: undefined,
+    cancelMessage: $t('cancel_delete'),
   });
+  if (!result) return;
+
+  // 删除数据
+  const ids = powerIds.value;
+  await powerStore.removePermission(ids);
+  await onSearch();
 };
 
 /** 批量更新父级id */
@@ -145,7 +128,7 @@ export const onUpdateBatchParent = async () => {
     parentId: undefined,
   });
 
-  await powerStore.getAllPowers();
+  await powerStore.loadPermissionList();
   addDialog({
     title: $t('update_batches_parent'),
     width: '30%',
@@ -175,7 +158,7 @@ export const onUpdateBatchParent = async () => {
       formUpdateParentRef.value.validate(async (valid: any) => {
         if (!valid) return;
 
-        const result = await powerStore.updateBatchByPowerWithParentId(form);
+        const result = await powerStore.updatePermissionListByParentId(form);
         if (!result) return;
 
         done();

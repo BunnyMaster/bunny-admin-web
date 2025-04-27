@@ -26,7 +26,7 @@ const { locale, translation } = useTranslationLang();
 const i18nTypeStore = userI18nTypeStore();
 
 onMounted(() => {
-  i18nTypeStore.getI18nTypeList();
+  i18nTypeStore.loadI18nTypeList();
 });
 </script>
 

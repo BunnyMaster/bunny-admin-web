@@ -30,7 +30,7 @@ import Menu from '@iconify-icons/ep/menu';
 import AssignPowersToRole from '@/views/system/role/components/assign-powers-to-role.vue';
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
-import { fetchExportByExcel } from '@/api/v1/system/role';
+import { exportRoleList } from '@/api/v1/system/role';
 import { downloadBlob } from '@/utils/sso';
 import Download from '@iconify-icons/ep/download';
 import Upload from '@iconify-icons/ri/upload-line';
@@ -68,13 +68,13 @@ const resetForm = async (formEl: FormInstance) => {
 
 /* 使用Excel导出导出角色列表 */
 const downloadRoleExcel = async () => {
-  const result = await fetchExportByExcel();
+  const result = await exportRoleList();
 
   downloadBlob(result, 'role.zip');
 };
 
 /* 使用文件更新角色 */
-const onUpdateByFile = (row: any) => {
+const onUpdateByFile = () => {
   addDialog({
     title: `${$t('modify')}${$t('role')}`,
     width: '30%',
@@ -90,8 +90,7 @@ const onUpdateByFile = (row: any) => {
         // 更新文件 data
         const data = { file: form.file[0].raw };
 
-        // 更新角色信息
-        const result = await roleStore.updateRoleByFile(data);
+        const result = await roleStore.editRoleByFile(data);
         if (!result) return;
         done();
         await onSearch();
@@ -107,7 +106,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <ReAuth :value="auth.search">
+    <ReAuth :value="auth.query">
       <el-form
         ref="formRef"
         :inline="true"
@@ -156,7 +155,7 @@ onMounted(() => {
         <template #buttons>
           <!-- 下载Excel配置 -->
           <el-button
-            v-if="hasAuth(auth.downloadRole)"
+            v-if="hasAuth(auth.update)"
             :icon="useRenderIcon(Download)"
             plain
             type="primary"
@@ -181,7 +180,7 @@ onMounted(() => {
 
           <!-- 批量删除按钮 -->
           <el-button
-            v-if="hasAuth(auth.deleted)"
+            v-if="hasAuth(auth.delete)"
             :disabled="!(deleteIds.length > 0)"
             :icon="useRenderIcon(Delete)"
             plain
@@ -240,7 +239,7 @@ onMounted(() => {
 
               <!-- 删除 -->
               <el-popconfirm
-                v-if="hasAuth(auth.deleted)"
+                v-if="hasAuth(auth.delete)"
                 :title="`${$t('delete')}${row.roleCode}?`"
                 @confirm="onDelete(row)"
               >
@@ -252,7 +251,7 @@ onMounted(() => {
               </el-popconfirm>
 
               <el-button
-                v-if="hasAuth(auth.assignPowersToRole)"
+                v-if="hasAuth(auth.rolePowerAdd)"
                 :icon="useRenderIcon(Menu)"
                 :size="size"
                 class="reset-margin"

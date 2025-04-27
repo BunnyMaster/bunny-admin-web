@@ -67,7 +67,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <ReAuth :value="auth.search">
+    <ReAuth :value="auth.query">
       <el-form
         ref="formRef"
         :inline="true"
@@ -157,7 +157,7 @@ onMounted(() => {
 
         <!-- 批量删除按钮 -->
         <el-button
-          v-if="hasAuth(auth.deleted)"
+          v-if="hasAuth(auth.delete)"
           :disabled="!(deleteIds.length > 0)"
           :icon="useRenderIcon(Delete)"
           plain
@@ -208,14 +208,22 @@ onMounted(() => {
             />
           </template>
 
+          <!-- 插槽-创建用户 -->
           <template #createUser="{ row }">
             <el-button v-show="row.createUser" link type="primary" @click="selectUserinfo(row.createUser)">
               {{ row.createUsername }}
             </el-button>
           </template>
 
+          <!-- 插槽-更新用户 -->
           <template #updateUser="{ row }">
-            <el-button v-show="row.updateUser" link type="primary" @click="selectUserinfo(row.updateUser)">
+            <el-button
+              v-if="hasAuth(auth.update)"
+              v-show="row.updateUser"
+              link
+              type="primary"
+              @click="selectUserinfo(row.updateUser)"
+            >
               {{ row.updateUsername }}
             </el-button>
           </template>
@@ -232,11 +240,7 @@ onMounted(() => {
             >
               {{ $t('modify') }}
             </el-button>
-            <el-popconfirm
-              v-if="hasAuth(auth.deleted)"
-              :title="`${$t('delete')}${row.email}?`"
-              @confirm="onDelete(row)"
-            >
+            <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')}${row.email}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

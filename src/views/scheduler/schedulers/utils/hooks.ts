@@ -12,7 +12,7 @@ const schedulersStore = useSchedulersStore();
 /** 搜索初始化Schedulers视图 */
 export async function onSearch() {
   schedulersStore.loading = true;
-  await schedulersStore.getSchedulersList();
+  await schedulersStore.fetchSchedulersPage();
   schedulersStore.loading = false;
 }
 
@@ -48,10 +48,7 @@ export function onAdd() {
   });
 }
 
-/**
- * * 更新Schedulers视图
- * @param row
- */
+/* 更新Schedulers视图 */
 export function onUpdate(row: any) {
   addDialog({
     title: `${$t('modify')}${$t('schedulers')}`,
@@ -75,7 +72,7 @@ export function onUpdate(row: any) {
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
 
-        const result = await schedulersStore.updateSchedulers({ ...form, id: row.id });
+        const result = await schedulersStore.editSchedulers({ ...form, id: row.id });
         if (!result) return;
         done();
         await onSearch();
@@ -98,7 +95,7 @@ export const onDelete = async (row: any) => {
   if (!result) return;
 
   // 删除数据
-  await schedulersStore.deleteSchedulers(data);
+  await schedulersStore.removeSchedulers(data);
   await onSearch();
 };
 

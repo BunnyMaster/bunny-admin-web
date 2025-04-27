@@ -1,14 +1,10 @@
 <script lang="ts" setup>
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import { fetchUploadFile } from '@/api/v1/system/system';
+import { uploadFile } from '@/api/v1/system/system';
 import { updateMessage } from '@/views/message-manger/message-send/utils';
 
-/**
- * * 上传图片
- * @param files
- * @param callback
- */
+/* 上传图片 */
 const onUploadImg = async (files: any, callback: any) => {
   // 上传图片等待结果
   const res = await Promise.all(
@@ -17,7 +13,7 @@ const onUploadImg = async (files: any, callback: any) => {
         const form = new FormData();
         form.append('file', file);
         form.append('type', 'message');
-        resolve(await fetchUploadFile(form));
+        resolve(await uploadFile(form));
       });
     })
   );

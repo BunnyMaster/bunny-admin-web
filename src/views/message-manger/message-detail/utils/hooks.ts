@@ -13,7 +13,7 @@ export const onSearch = async (messageType?: string) => {
   if (messageType) {
     messageUserStore.form.messageType = messageType;
   }
-  await messageUserStore.getMessageList();
+  await messageUserStore.fetchMessageReceivedPageByUser();
   messageUserStore.loading = false;
 };
 
@@ -31,7 +31,7 @@ export const onDelete = async () => {
   if (!result) return;
 
   // 删除数据
-  await messageUserStore.deleteUserMessageByIds(ids);
+  await messageUserStore.removeMessageReceivedByUser(ids);
   await onSearch();
 };
 
@@ -49,7 +49,7 @@ export const markAsRead = async () => {
   if (!result) return;
 
   // 标为已读
-  await messageUserStore.updateUserMarkAsRead(ids);
+  await messageUserStore.editeMessageByUser(ids);
   await onSearch();
 };
 
@@ -67,6 +67,6 @@ export const markAsAllRead = async () => {
   if (!result) return;
 
   // 标为已读
-  await messageUserStore.updateUserMarkAsRead(ids);
+  await messageUserStore.editeMessageByUser(ids);
   await onSearch();
 };

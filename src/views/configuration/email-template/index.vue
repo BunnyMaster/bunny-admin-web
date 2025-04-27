@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import ReAuth from '@/components/ReAuth/src/auth';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
@@ -15,7 +15,6 @@ import {
   onSearch,
   onUpdate,
   selectRows,
-  viewTemplate,
 } from '@/views/configuration/email-template/utils';
 import Delete from '@iconify-icons/ep/delete';
 import EditPen from '@iconify-icons/ep/edit-pen';
@@ -24,12 +23,16 @@ import View from '@iconify-icons/ep/view';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
 import { onMounted, ref } from 'vue';
+import { useEmailUsersStore } from '@/store/configuration/emailUsers';
+import { addDialog } from '@/components/ReDialog/index';
 
 defineOptions({ name: 'EmailTemplate' });
 
+const emailTemplateStore = useEmailTemplateStore();
+const emailUsersStore = useEmailUsersStore();
+
 const tableRef = ref();
 const formRef = ref();
-const emailTemplateStore = useEmailTemplateStore();
 
 /** 当前页改变时 */
 const onCurrentPageChange = async (value: number) => {
@@ -55,15 +58,26 @@ const onSelectionChange = (rows: Array<any>) => {
   selectRows.value = rows;
 };
 
+/** 查看模板 */
+const viewTemplate = (template: string) => {
+  addDialog({
+    title: $t('view'),
+    draggable: true,
+    fullscreenIcon: true,
+    closeOnClickModal: false,
+    contentRenderer: () => <div v-html={template} />,
+  });
+};
+
 onMounted(() => {
-  emailTemplateStore.getAllMailboxConfigurationUsers();
+  emailUsersStore.loadEmailUserList();
   onSearch();
 });
 </script>
 
 <template>
   <div class="main">
-    <ReAuth :value="auth.search">
+    <ReAuth :value="auth.query">
       <el-form
         ref="formRef"
         :inline="true"
@@ -129,7 +143,7 @@ onMounted(() => {
 
         <!-- 批量删除按钮 -->
         <el-button
-          v-if="hasAuth(auth.deleted)"
+          v-if="hasAuth(auth.delete)"
           :disabled="!(selectRows.length > 0)"
           :icon="useRenderIcon(Delete)"
           plain
@@ -162,15 +176,17 @@ onMounted(() => {
           @page-current-change="onCurrentPageChange"
         >
           <template #emailUser="{ row }">
-            {{ emailTemplateStore.getMailboxConfigurationUser[row.emailUser] }}
+            {{ emailUsersStore.getMailboxConfigurationUser[row.emailUser] }}
           </template>
 
+          <!-- 插槽-创建用户 -->
           <template #createUser="{ row }">
             <el-button v-show="row.createUser" link type="primary" @click="selectUserinfo(row.createUser)">
               {{ row.createUsername }}
             </el-button>
           </template>
 
+          <!-- 插槽-更新用户 -->
           <template #updateUser="{ row }">
             <el-button v-show="row.updateUser" link type="primary" @click="selectUserinfo(row.updateUser)">
               {{ row.updateUsername }}
@@ -178,6 +194,7 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
+            <!--查看模板-->
             <el-button
               :icon="useRenderIcon(View)"
               :size="size"
@@ -188,6 +205,8 @@ onMounted(() => {
             >
               {{ $t('view') }}
             </el-button>
+
+            <!-- 修改 -->
             <el-button
               v-if="hasAuth(auth.update)"
               :icon="useRenderIcon(EditPen)"
@@ -199,8 +218,10 @@ onMounted(() => {
             >
               {{ $t('modify') }}
             </el-button>
+
+            <!-- 删除 -->
             <el-popconfirm
-              v-if="hasAuth(auth.deleted)"
+              v-if="hasAuth(auth.delete)"
               :title="`${$t('delete')} ${row.templateName}?`"
               @confirm="onDelete(row)"
             >

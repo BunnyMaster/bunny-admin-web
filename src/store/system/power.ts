@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
 import {
-  fetchAddPower,
-  fetchDeletePower,
-  fetchGetAllPowers,
-  fetchGetPowerList,
-  fetchUpdateBatchByPowerWithParentId,
-  fetchUpdatePower,
+  createPermission,
+  deletePermission,
+  getPermissionList,
+  getPermissionPage,
+  updatePermission,
+  updatePermissionListByParentId,
 } from '@/api/v1/system/power';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
@@ -14,7 +14,7 @@ import { storePagination } from '@/store/useStorePagination';
 /**
  * 权限 Store
  */
-export const usePowerStore = defineStore('powerStore', {
+export const usePermissionStore = defineStore('PermissionStore', {
   state() {
     return {
       // 权限列表
@@ -46,7 +46,7 @@ export const usePowerStore = defineStore('powerStore', {
   getters: {},
   actions: {
     /** 获取权限 */
-    async getPowerList() {
+    async fetchPermissionPage() {
       // 整理请求参数
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
@@ -54,7 +54,7 @@ export const usePowerStore = defineStore('powerStore', {
       delete data.background;
 
       // 获取权限列表
-      const result = await fetchGetPowerList(data);
+      const result = await getPermissionPage(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);
@@ -62,32 +62,32 @@ export const usePowerStore = defineStore('powerStore', {
     },
 
     /** 添加权限 */
-    async addPower(data: any) {
-      const result = await fetchAddPower(data);
+    async addPermission(data: any) {
+      const result = await createPermission(data);
       return storeMessage(result);
     },
 
     /** 修改权限 */
-    async updatePower(data: any) {
-      const result = await fetchUpdatePower(data);
-      return storeMessage(result);
-    },
-
-    /** 批量修改权限父级 */
-    async updateBatchByPowerWithParentId(data: any) {
-      const result = await fetchUpdateBatchByPowerWithParentId(data);
+    async editPermission(data: any) {
+      const result = await updatePermission(data);
       return storeMessage(result);
     },
 
     /** 删除权限 */
-    async deletePower(data: any) {
-      const result = await fetchDeletePower(data);
+    async removePermission(data: any) {
+      const result = await deletePermission(data);
+      return storeMessage(result);
+    },
+
+    /** 批量修改权限父级 */
+    async updatePermissionListByParentId(data: any) {
+      const result = await updatePermissionListByParentId(data);
       return storeMessage(result);
     },
 
     /** 获取所有权限 */
-    async getAllPowers() {
-      const result = await fetchGetAllPowers();
+    async loadPermissionList() {
+      const result = await getPermissionList();
       if (result.code !== 200) return;
       this.allPowerList = result.data;
     },

@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import {
-  fetchAddMessageType,
-  fetchDeleteMessageType,
-  fetchGetAllMessageTypes,
-  fetchGetMessageTypeList,
-  fetchUpdateMessageType,
+  createMessageType,
+  deleteMessageType,
+  getMessageTypeList,
+  getMessageTypePage,
+  updateMessageType,
 } from '@/api/v1/message/messageType';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
@@ -47,7 +47,7 @@ export const useMessageTypeStore = defineStore('messageTypeStore', {
   getters: {},
   actions: {
     /** 获取系统消息类型 */
-    async getMessageTypeList() {
+    async fetchMessageTypePage() {
       // 整理请求参数
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
@@ -55,7 +55,7 @@ export const useMessageTypeStore = defineStore('messageTypeStore', {
       delete data.background;
 
       // 获取系统消息类型列表
-      const result = await fetchGetMessageTypeList(data);
+      const result = await getMessageTypePage(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);
@@ -63,26 +63,26 @@ export const useMessageTypeStore = defineStore('messageTypeStore', {
     },
 
     /** 所有系统类型 */
-    async getAllMessageTypeList() {
-      const baseResult = await fetchGetAllMessageTypes();
+    async loadMessageTypeList() {
+      const baseResult = await getMessageTypeList();
       this.allMessageTypeList = baseResult.data;
     },
 
     /** 添加系统消息类型 */
     async addMessageType(data: any) {
-      const result = await fetchAddMessageType(data);
+      const result = await createMessageType(data);
       return storeMessage(result);
     },
 
     /** 修改系统消息类型 */
-    async updateMessageType(data: any) {
-      const result = await fetchUpdateMessageType(data);
+    async editMessageType(data: any) {
+      const result = await updateMessageType(data);
       return storeMessage(result);
     },
 
     /** 删除系统消息类型 */
-    async deleteMessageType(data: any) {
-      const result = await fetchDeleteMessageType(data);
+    async removeMessageType(data: any) {
+      const result = await deleteMessageType(data);
       return storeMessage(result);
     },
   },

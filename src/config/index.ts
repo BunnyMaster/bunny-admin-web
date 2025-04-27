@@ -31,7 +31,7 @@ export const getPlatformConfig = async (app: App): Promise<undefined> => {
   app.config.globalProperties.$config = getConfig();
   return axios({
     method: 'get',
-    url: `${VITE_BASE_API}/config/noAuth/webConfig`,
+    url: `${VITE_BASE_API}/config/public/webConfig`,
   })
     .then(({ data: config }) => {
       let $config = app.config.globalProperties.$config;

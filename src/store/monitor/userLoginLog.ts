@@ -1,9 +1,5 @@
 import { defineStore } from 'pinia';
-import {
-  fetchDeleteUserLoginLog,
-  fetchGetUserLoginLogList,
-  fetchGetUserLoginLogListByLocalUser,
-} from '@/api/v1/log/userLoginLog';
+import { deleteUserLoginLog, getUserLoginLogPageByAdmin, getUserLoginLogPageByUser } from '@/api/v1/log/userLoginLog';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -45,7 +41,7 @@ export const useUserLoginLogStore = defineStore('userLoginLogStore', {
   getters: {},
   actions: {
     /** 获取用户登录日志 */
-    async getUserLoginLogList() {
+    async fetchUserLoginLogPageByAdmin() {
       // 整理请求参数
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
@@ -53,7 +49,7 @@ export const useUserLoginLogStore = defineStore('userLoginLogStore', {
       delete data.background;
 
       // 获取用户登录日志列表
-      const result = await fetchGetUserLoginLogList(data);
+      const result = await getUserLoginLogPageByAdmin(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);
@@ -61,16 +57,16 @@ export const useUserLoginLogStore = defineStore('userLoginLogStore', {
     },
 
     /** 分页查询根据用户Id用户登录日志内容 */
-    async getUserLoginLogListByLocalUser(data: any) {
-      const baseResult = await fetchGetUserLoginLogListByLocalUser(data);
+    async fetchUserLoginLogPageByUser(data: any) {
+      const baseResult = await getUserLoginLogPageByUser(data);
       if (baseResult.code === 200) {
         return baseResult.data;
       }
     },
 
     /** 删除用户登录日志 */
-    async deleteUserLoginLog(data: any) {
-      const result = await fetchDeleteUserLoginLog(data);
+    async removeUserLoginLog(data: any) {
+      const result = await deleteUserLoginLog(data);
       return storeMessage(result);
     },
   },

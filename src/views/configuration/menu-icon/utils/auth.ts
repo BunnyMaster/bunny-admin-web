@@ -1,10 +1,10 @@
 export const auth = {
   // 分页查询
-  search: ['menuIcon::getMenuIconList'],
+  query: ['menuIcon::query', 'menuIcon::queryPage'],
   // 添加操作
-  add: ['menuIcon::addMenuIcon'],
+  add: ['menuIcon::add'],
   // 更新操作
-  update: ['menuIcon::updateMenuIcon'],
+  update: ['menuIcon::update'],
   // 删除操作
-  deleted: ['menuIcon::deleteMenuIcon'],
+  delete: ['menuIcon::delete'],
 };

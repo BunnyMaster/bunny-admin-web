@@ -1,41 +1,39 @@
 import { http } from '@/api/service/request';
 import type { BaseResult, ResultTable } from '@/api/service/types';
 
-/** Schedulers视图---获取Schedulers视图列表 */
-export const fetchGetSchedulersList = (data: any) => {
-  return http.request<BaseResult<ResultTable>>(
-    'get',
-    `schedulers/getSchedulersList/${data.currentPage}/${data.pageSize}`,
-    { params: data }
-  );
-};
-
-/** Schedulers视图---获取所有可用调度任务 */
-export const fetchGetAllScheduleJobList = () => {
-  return http.request<BaseResult<ResultTable>>('get', 'schedulers/noManage/getAllScheduleJobList');
+/** Schedulers视图---分页查询任务执行 */
+export const getSchedulersPage = (data: any) => {
+  return http.request<BaseResult<ResultTable>>('get', `schedulers/${data.currentPage}/${data.pageSize}`, {
+    params: data,
+  });
 };
 
 /** Schedulers视图---添加Schedulers视图 */
-export const fetchAddSchedulers = (data: any) => {
-  return http.request<BaseResult<object>>('post', 'schedulers/addSchedulers', { data });
+export const createSchedulers = (data: any) => {
+  return http.request<BaseResult<object>>('post', 'schedulers', { data });
 };
 
 /** Schedulers视图---更新Schedulers视图 */
-export const fetchUpdateSchedulers = (data: any) => {
-  return http.request<BaseResult<object>>('put', 'schedulers/updateSchedulers', { data });
-};
-
-/** Schedulers视图---暂停任务 */
-export const fetchPauseSchedulers = (data: any) => {
-  return http.request<BaseResult<object>>('put', 'schedulers/pauseSchedulers', { data });
-};
-
-/** Schedulers视图---恢复任务 */
-export const fetchResumeSchedulers = (data: any) => {
-  return http.request<BaseResult<object>>('put', 'schedulers/resumeSchedulers', { data });
+export const updateSchedulers = (data: any) => {
+  return http.request<BaseResult<object>>('put', 'schedulers', { data });
 };
 
 /** Schedulers视图---删除Schedulers视图 */
-export const fetchDeleteSchedulers = (data: any) => {
-  return http.request<BaseResult<object>>('delete', 'schedulers/deleteSchedulers', { data });
+export const deleteSchedulers = (data: any) => {
+  return http.request<BaseResult<object>>('delete', 'schedulers', { data });
+};
+
+/** Schedulers视图---获取所有可用调度任务 */
+export const getScheduleJobList = () => {
+  return http.request<BaseResult<ResultTable>>('get', 'schedulers/private');
+};
+
+/** Schedulers视图---暂停任务 */
+export const updateSchedulersByPause = (data: any) => {
+  return http.request<BaseResult<object>>('put', 'schedulers/pause', { data });
+};
+
+/** Schedulers视图---恢复任务 */
+export const updateSchedulersByResume = (data: any) => {
+  return http.request<BaseResult<object>>('put', 'schedulers/resume', { data });
 };

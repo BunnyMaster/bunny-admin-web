@@ -5,6 +5,7 @@ import { FormProps, rules } from '@/views/configuration/email-template/utils';
 import { $t } from '@/plugins/i18n';
 import { useEmailTemplateStore } from '@/store/configuration/emailTemplate';
 import { usePublicHooks } from '@/views/hooks';
+import { useEmailUsersStore } from '@/store/configuration/emailUsers';
 
 const props = withDefaults(defineProps<FormProps>(), {
   formInline: () => ({
@@ -24,6 +25,7 @@ const props = withDefaults(defineProps<FormProps>(), {
 });
 
 const emailTemplateStore = useEmailTemplateStore();
+const emailUsersStore = useEmailUsersStore();
 
 // 用户是否停用样式
 const { switchStyle } = usePublicHooks();
@@ -48,7 +50,7 @@ defineExpose({ formRef });
     <el-form-item :label="$t('emailTemplate_emailUser')" prop="emailUser">
       <el-select v-model="form.emailUser" :placeholder="$t('emailTemplate_emailUser')" clearable filterable>
         <el-option
-          v-for="(item, index) in emailTemplateStore.emailUserList"
+          v-for="(item, index) in emailUsersStore.emailUserList"
           :key="index"
           :label="item.key"
           :navigationBar="false"

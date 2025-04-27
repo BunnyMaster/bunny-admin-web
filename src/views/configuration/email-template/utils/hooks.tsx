@@ -2,10 +2,9 @@ import { addDialog } from '@/components/ReDialog/index';
 import EmailTemplateDialog from '@/views/configuration/email-template/components/email-template-dialog.vue';
 import { useEmailTemplateStore } from '@/store/configuration/emailTemplate';
 import { h, ref } from 'vue';
-import { message, messageBox } from '@/utils/message';
+import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/configuration/email-template/utils/types';
 import { $t } from '@/plugins/i18n';
-import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 
 const emailTemplateStore = useEmailTemplateStore();
 
@@ -31,7 +30,7 @@ export function onAdd() {
         templateName: undefined,
         emailUser: undefined,
         subject: undefined,
-        isDefault: undefined,
+        isDefault: false,
         body: undefined,
         type: undefined,
       },
@@ -54,10 +53,7 @@ export function onAdd() {
   });
 }
 
-/**
- * * 更新邮件模板表
- * @param row
- */
+/* 更新邮件模板表 */
 export function onUpdate(row: any) {
   const formRef = ref();
 
@@ -85,7 +81,7 @@ export function onUpdate(row: any) {
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
 
-        const result = await emailTemplateStore.updateEmailTemplate({ ...form, id: row.id });
+        const result = await emailTemplateStore.editEmailTemplate({ ...form, id: row.id });
         if (!result) return;
         done();
         await onSearch();
@@ -108,47 +104,23 @@ export const onDelete = async (row: any) => {
   if (!result) return;
 
   // 删除数据
-  await emailTemplateStore.deleteEmailTemplate([id]);
+  await emailTemplateStore.removeEmailTemplate([id]);
   await onSearch();
 };
 
 /** 批量删除 */
 export const onDeleteBatch = async () => {
+  // 是否确认删除
+  const result = await messageBox({
+    title: $t('confirmDelete'),
+    showMessage: false,
+    confirmMessage: undefined,
+    cancelMessage: $t('cancel_delete'),
+  });
+  if (!result) return;
+
+  // 删除数据
   const ids = selectRows.value.map((row: any) => row.id);
-  const formDeletedBatchRef = ref();
-
-  addDialog({
-    title: $t('deleteBatchTip'),
-    width: '30%',
-    props: { formInline: { confirmText: '' } },
-    draggable: true,
-    fullscreenIcon: true,
-    closeOnClickModal: false,
-    contentRenderer: () => h(DeleteBatchDialog, { ref: formDeletedBatchRef }),
-    beforeSure: (done, { options }) => {
-      formDeletedBatchRef.value.formDeletedBatchRef.validate(async (valid: any) => {
-        if (!valid) return;
-
-        const text = options.props.formInline.confirmText.toLowerCase();
-        if (text === 'yes' || text === 'y') {
-          // 删除数据
-          await emailTemplateStore.deleteEmailTemplate(ids);
-          await onSearch();
-
-          done();
-        } else message($t('deleteBatchTip'), { type: 'warning' });
-      });
-    },
-  });
-};
-
-/** 查看模板 */
-export const viewTemplate = (template: string) => {
-  addDialog({
-    title: $t('view'),
-    draggable: true,
-    fullscreenIcon: true,
-    closeOnClickModal: false,
-    contentRenderer: () => <div v-html={template} />,
-  });
+  await emailTemplateStore.removeEmailTemplate(ids);
+  await onSearch();
 };

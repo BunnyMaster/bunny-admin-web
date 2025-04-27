@@ -1,7 +1,7 @@
 import { useUserStore } from '@/store/system/user';
 import { reactive, ref } from 'vue';
 import { createFormData } from '@pureadmin/utils';
-import { fetchUploadFile } from '@/api/v1/system/system';
+import { uploadFile } from '@/api/v1/system/system';
 import { message } from '@/utils/message';
 import { $t } from '@/plugins/i18n';
 
@@ -29,7 +29,7 @@ export const userInfos = reactive({
 
 /** 获取用户信息内容 */
 export const onSearchByUserinfo = async () => {
-  const data = await userStore.getUserinfo();
+  const data = await userStore.loadUserinfo();
   userInfos.summary = data.personDescription;
   userInfos.avatar = data.avatar;
   userInfos.username = data.username;
@@ -50,7 +50,7 @@ export const handleSubmitImage = async () => {
   });
 
   // 上传头像
-  const result = await fetchUploadFile(formData);
+  const result = await uploadFile(formData);
 
   // 上传成功后关闭弹窗
   if (result.code === 200) {

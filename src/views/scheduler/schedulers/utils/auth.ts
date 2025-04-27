@@ -1,12 +1,12 @@
 export const auth = {
   // 分页查询
-  search: ['schedulers::getSchedulersList'],
+  query: ['schedulers::query'],
   // 添加操作
-  add: ['schedulers::addSchedulers'],
+  add: ['schedulers::add'],
   // 暂停
-  pause: ['schedulers::pauseSchedulers'],
+  pause: ['schedulers::pause'],
   // 恢复
-  resume: ['schedulers::resumeSchedulers'],
+  resume: ['schedulers::resume'],
   // 删除操作
-  deleted: ['schedulers::deleteSchedulers'],
+  delete: ['schedulers::delete'],
 };

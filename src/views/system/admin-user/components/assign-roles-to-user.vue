@@ -13,20 +13,18 @@ const userStore = useUserStore();
 // 分配的角色
 const assignRoles = ref([]);
 
-/**
- * * 根据用户id获取当前用户角色
- */
+/* 根据用户id获取当前用户角色 */
 const getRoleListByUserId = async () => {
   // 初始化值为空数组
   assignRoles.value = [];
 
   // 根据用户id查询角色信息
   const userId = props.userId;
-  assignRoles.value = await userStore.getRoleListByUserId({ userId });
+  assignRoles.value = await userStore.loadRoleListByUserId({ userId });
 };
 
 onMounted(() => {
-  roleStore.allRoles();
+  roleStore.loadRoleList();
   getRoleListByUserId();
 });
 

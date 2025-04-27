@@ -29,16 +29,13 @@ const router = useRouter();
 /** 当前页改变时 */
 const onCurrentPageChange = (value: number) => {
   messageUserStore.pagination.currentPage = value;
-  onSearch(route.params.messageType);
+  onSearch((route.params as any)?.messageType);
 };
 
-/**
- * * 当分页发生变化
- * @param value
- */
+/* 当分页发生变化 */
 const onPageSizeChange = (value: number) => {
   messageUserStore.pagination.pageSize = value;
-  onSearch(route.params.messageType);
+  onSearch((route.params as any).messageType);
 };
 
 /**
@@ -50,24 +47,34 @@ const onSelectionChange = (rows: Array<any>) => {
 };
 
 onMounted(() => {
-  onSearch(route.params.messageType);
+  onSearch((route.params as any).messageType);
 });
 </script>
 
 <template>
   <div class="main">
-    <PureTableBar :columns="columns" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch(route.params.messageType)">
+    <PureTableBar
+      :columns="columns"
+      @fullscreen="tableRef.setAdaptive()"
+      @refresh="onSearch((route.params as any).messageType)"
+    >
       <template #title>
         <el-segmented
           v-model="messageUserStore.form.status"
           :options="isReadStatus"
-          @change="onSearch(route.params.messageType)"
+          @change="onSearch((route.params as any).messageType)"
         />
       </template>
 
       <template #buttons>
         <!-- 删除按钮 -->
-        <el-button :disabled="!(selectIds.length > 0)" :icon="useRenderIcon(Delete)" type="danger" @click="onDelete">
+        <el-button
+          :disabled="!(selectIds.length > 0)"
+          :icon="useRenderIcon(Delete)"
+          plain
+          type="danger"
+          @click="onDelete"
+        >
           {{ $t('delete') }}
         </el-button>
 
@@ -75,6 +82,7 @@ onMounted(() => {
         <el-button
           :disabled="!(selectIds.length > 0)"
           :icon="useRenderIcon('octicon:read-24')"
+          plain
           type="primary"
           @click="markAsRead"
         >
@@ -82,7 +90,7 @@ onMounted(() => {
         </el-button>
 
         <!-- 全部标为已读 -->
-        <el-button :icon="useRenderIcon('octicon:read-24')" type="primary" @click="markAsAllRead">
+        <el-button :icon="useRenderIcon('octicon:read-24')" plain type="primary" @click="markAsAllRead">
           {{ $t('allMarkAsRead') }}
         </el-button>
 
@@ -92,7 +100,7 @@ onMounted(() => {
           :placeholder="`${$t('input')}${$t('title')}`"
           class="!w-[180px] ml-3"
           clearable
-          @input="onSearch(route.params.messageType)"
+          @input="onSearch((route.params as any).messageType)"
         />
       </template>
 

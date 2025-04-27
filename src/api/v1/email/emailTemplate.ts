@@ -1,29 +1,29 @@
 import { http } from '@/api/service/request';
 import type { BaseResult, ResultTable } from '@/api/service/types';
 
-/** 邮件模板表---获取邮件模板表列表 */
+/** 邮件模板表---分页查询邮件模板 */
 export const getEmailTemplatePage = (data: any) => {
-  return http.request<BaseResult<ResultTable>>('get', `emailTemplate/query/page/${data.currentPage}/${data.pageSize}`, {
+  return http.request<BaseResult<ResultTable>>('get', `emailTemplate/${data.currentPage}/${data.pageSize}`, {
     params: data,
   });
 };
 
-/** 邮件模板表---获取模板类型字段 */
+/** 邮件模板表---添加邮件模板 */
+export const createEmailTemplate = (data: any) => {
+  return http.request<BaseResult<object>>('post', 'emailTemplate', { data });
+};
+
+/** 邮件模板表---更新邮件模板 */
+export const updateEmailTemplate = (data: any) => {
+  return http.request<BaseResult<object>>('put', 'emailTemplate', { data });
+};
+
+/** 邮件模板表---删除邮件模板 */
+export const deleteEmailTemplate = (data: any) => {
+  return http.request<BaseResult<object>>('delete', 'emailTemplate', { data });
+};
+
+/** 邮件模板表---获取全部邮件类型列表 */
 export const getEmailTypeList = () => {
-  return http.request<BaseResult<any>>('get', 'emailTemplate/query/emailTypes');
-};
-
-/** 邮件模板表---添加邮件模板表 */
-export const addEmailTemplate = (data: any) => {
-  return http.request<BaseResult<object>>('post', 'emailTemplate/add/emailTemplate', { data });
-};
-
-/** 邮件模板表---更新邮件模板表 */
-export const fetchUpdateEmailTemplate = (data: any) => {
-  return http.request<BaseResult<object>>('put', 'emailTemplate/updateEmailTemplate', { data });
-};
-
-/** 邮件模板表---删除邮件模板表 */
-export const fetchDeleteEmailTemplate = (data: any) => {
-  return http.request<BaseResult<object>>('delete', 'emailTemplate/deleteEmailTemplate', { data });
+  return http.request<BaseResult<any>>('get', 'emailTemplate/public');
 };

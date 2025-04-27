@@ -58,7 +58,7 @@ const onSubmit = async (formEl: FormInstance) => {
       if (avatar) userInfos.avatar = avatar;
 
       // 更新用户信息
-      const result = await adminUserStore.updateAdminUserByLocalUser(userInfos);
+      const result = await adminUserStore.editUserinfo(userInfos);
       if (!result) return;
 
       // 重新加载用户信息

@@ -1,12 +1,12 @@
 export const auth = {
   // 分页查询
-  search: ['i18n::getI18nList'],
+  query: ['i18n::query', 'i18n::queryPage'],
   // 添加操作
-  add: ['i18n::addI18n'],
+  add: ['i18n::add'],
   // 更新操作
-  update: ['i18n::updateI18n', 'i18n::updateI18nByFile'],
+  update: ['i18n::update'],
   // 删除操作
-  deleted: ['i18n::deleteI18n'],
+  deleted: ['i18n::delete'],
   // 下载多语言配置
-  download: ['i18n::downloadI18n'],
+  download: ['i18n::update', 'i18n::download'],
 };

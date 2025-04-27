@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchDeleteQuartzExecuteLog, fetchGetQuartzExecuteLogList } from '@/api/v1/log/quartzExecuteLog';
+import { deleteScheduleExecuteLog, getScheduleExecuteLogPage } from '@/api/v1/log/scheduleExecuteLog';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -41,7 +41,7 @@ export const useQuartzExecuteLogStore = defineStore('quartzExecuteLogStore', {
   getters: {},
   actions: {
     /** 获取调度任务执行日志 */
-    async getQuartzExecuteLogList() {
+    async fetchScheduleExecuteLogPage() {
       // 整理请求参数
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
@@ -49,7 +49,7 @@ export const useQuartzExecuteLogStore = defineStore('quartzExecuteLogStore', {
       delete data.background;
 
       // 获取调度任务执行日志列表
-      const result = await fetchGetQuartzExecuteLogList(data);
+      const result = await getScheduleExecuteLogPage(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);
@@ -57,8 +57,8 @@ export const useQuartzExecuteLogStore = defineStore('quartzExecuteLogStore', {
     },
 
     /** 删除调度任务执行日志 */
-    async deleteQuartzExecuteLog(data: any) {
-      const result = await fetchDeleteQuartzExecuteLog(data);
+    async removeScheduleExecuteLog(data: any) {
+      const result = await deleteScheduleExecuteLog(data);
       return storeMessage(result);
     },
   },

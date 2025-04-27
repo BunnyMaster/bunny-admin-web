@@ -1,8 +1,8 @@
 export const auth = {
   // 分页查询
-  search: ['messageReceived::getMessageReceivedList'],
+  query: ['messageReceived::query', 'messageReceived::queryPage'],
   // 更新操作
-  update: ['messageReceived::updateMarkMessageReceived'],
+  update: ['messageReceived::update'],
   // 删除操作
-  deleted: ['messageReceived::deleteMessageReceivedByIds'],
+  delete: ['messageReceived::delete'],
 };

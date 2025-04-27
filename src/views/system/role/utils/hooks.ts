@@ -2,12 +2,11 @@ import { addDialog } from '@/components/ReDialog/index';
 import RoleDialog from '@/views/system/role/components/role-dialog.vue';
 import { useRoleStore } from '@/store/system/role';
 import { h, ref } from 'vue';
-import { message, messageBox } from '@/utils/message';
+import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/role/utils/types';
 import { $t } from '@/plugins/i18n';
-import { fetchGetPowerListByRoleId } from '@/api/v1/system/power';
+import { getPowerListByRoleId } from '@/api/v1/system/power';
 import { isAllEmpty } from '@pureadmin/utils';
-import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 
 // 表格ref
 export const tableRef = ref();
@@ -25,12 +24,10 @@ export const powerTreeIsShow = ref(false);
 export const currentRow = ref();
 const roleStore = useRoleStore();
 
-/**
- * * 搜索初始化角色
- */
+/* 搜索初始化角色 */
 export async function onSearch() {
   roleStore.loading = true;
-  await roleStore.getRoleList();
+  await roleStore.fetchRolePage();
   roleStore.loading = false;
 }
 
@@ -73,7 +70,7 @@ export function onUpdate(row: any) {
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
 
-        const result = await roleStore.updateRole({ ...form, id: row.id });
+        const result = await roleStore.editRole({ ...form, id: row.id });
         if (!result) return;
         done();
         await onSearch();
@@ -96,43 +93,28 @@ export const onDelete = async (row: any) => {
   if (!result) return;
 
   // 删除数据
-  await roleStore.deleteRole([id]);
+  await roleStore.removeRole([id]);
   await onSearch();
 };
 
 /** 批量删除 */
 export const onDeleteBatch = async () => {
-  const ids = deleteIds.value;
-  const formDeletedBatchRef = ref();
-  addDialog({
-    title: $t('deleteBatchTip'),
-    width: '30%',
-    props: { formInline: { confirmText: '' } },
-    draggable: true,
-    fullscreenIcon: true,
-    closeOnClickModal: false,
-    contentRenderer: () => h(DeleteBatchDialog, { ref: formDeletedBatchRef }),
-    beforeSure: (done, { options }) => {
-      formDeletedBatchRef.value.formDeletedBatchRef.validate(async (valid: any) => {
-        if (!valid) return;
-
-        const text = options.props.formInline.confirmText.toLowerCase();
-        if (text === 'yes' || text === 'y') {
-          // 删除数据
-          await roleStore.deleteRole(ids);
-          await onSearch();
-
-          done();
-        } else message($t('deleteBatchTip'), { type: 'warning' });
-      });
-    },
+  // 是否确认删除
+  const result = await messageBox({
+    title: $t('confirmDelete'),
+    showMessage: false,
+    confirmMessage: undefined,
+    cancelMessage: $t('cancel_delete'),
   });
+  if (!result) return;
+
+  // 删除数据
+  const ids = deleteIds.value;
+  await roleStore.removeRole(ids);
+  await onSearch();
 };
 
-/**
- * 菜单权限
- * @param row
- */
+/* 菜单权限 */
 export const onMenuPowerClick = async (row: any) => {
   const { id } = row;
 
@@ -142,7 +124,7 @@ export const onMenuPowerClick = async (row: any) => {
   } else {
     currentRow.value = row;
     powerTreeIsShow.value = true;
-    const { data } = await fetchGetPowerListByRoleId({ id });
+    const { data } = await getPowerListByRoleId({ id });
     powerTreeRef.value.setCheckedKeys(data);
   }
 };

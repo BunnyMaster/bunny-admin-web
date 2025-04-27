@@ -3,16 +3,14 @@ import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
 import {
-  fetchAddAdminUser,
-  fetchDeleteAdminUser,
-  fetchForcedOffline,
-  fetchGetAdminUserList,
-  fetchQueryUser,
-  fetchUpdateAdminUser,
-  fetchUpdateAdminUserByLocalUser,
-  fetchUpdateUserPasswordByAdmin,
-  fetchUpdateUserPasswordByLocalUser,
-  fetchUpdateUserStatusByAdmin,
+  createUserByAdmin,
+  deleteUserByAdmin,
+  forcedOfflineByAdmin,
+  getUserListByKeyword,
+  getUserPageByAdmin,
+  updateUserByAdmin,
+  updateUserinfo,
+  updateUserPassword,
 } from '@/api/v1/system/adminUser';
 
 /**
@@ -55,8 +53,12 @@ export const useAdminUserStore = defineStore('adminUserStore', {
   },
   getters: {},
   actions: {
+    // -----------------------------------------
+    // 管理用户CURD
+    // -----------------------------------------
+
     /** 获取用户信息 */
-    getAdminUserList: async function () {
+    fetchUserPageByAdmin: async function () {
       // 整理请求参数
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
@@ -64,65 +66,57 @@ export const useAdminUserStore = defineStore('adminUserStore', {
       delete data.background;
 
       // 获取用户信息列表
-      const result = await fetchGetAdminUserList(data);
+      const result = await getUserPageByAdmin(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);
       return pagination(result);
     },
 
-    /** 查询用户 */
-    async queryUser(data: any) {
-      const result = await fetchQueryUser(data);
-      if (result.code !== 200) return [];
-      return result.data;
+    /** 修改用户信息 */
+    async updateUserByAdmin(data: any) {
+      const result = await updateUserByAdmin(data);
+      return storeMessage(result);
     },
 
     /** 添加用户信息 */
-    async addAdminUser(data: any) {
-      const result = await fetchAddAdminUser(data);
-      return storeMessage(result);
-    },
-
-    /** 修改本地用户信息 */
-    async updateAdminUserByLocalUser(data: any) {
-      const result = await fetchUpdateAdminUserByLocalUser(data);
-      return storeMessage(result);
-    },
-
-    /** 修改用户信息 */
-    async updateAdminUser(data: any) {
-      const result = await fetchUpdateAdminUser(data);
+    async addUserByAdmin(data: any) {
+      const result = await createUserByAdmin(data);
       return storeMessage(result);
     },
 
     /** 删除用户信息 */
-    async deleteAdminUser(data: any) {
-      const result = await fetchDeleteAdminUser(data);
-      return storeMessage(result);
-    },
-
-    /** 更新本地用户密码 */
-    async updateUserPasswordByLocalUser(data: any) {
-      const result: any = await fetchUpdateUserPasswordByLocalUser(data);
-      return storeMessage(result);
-    },
-
-    /** 更新用户密码 */
-    async updateAdminUserPasswordByManager(data: any) {
-      const result: any = await fetchUpdateUserPasswordByAdmin(data);
-      return storeMessage(result);
-    },
-
-    /** 修改用户状态 */
-    async updateUserStatusByAdmin(data: any) {
-      const result = await fetchUpdateUserStatusByAdmin(data);
+    async removeUserByAdmin(data: any) {
+      const result = await deleteUserByAdmin(data);
       return storeMessage(result);
     },
 
     /** 强制用户下线 */
     async forcedOffline(data: any) {
-      const result = await fetchForcedOffline(data);
+      const result = await forcedOfflineByAdmin(data);
+      return storeMessage(result);
+    },
+
+    /** 查询用户 */
+    async queryUser(data: any) {
+      const result = await getUserListByKeyword(data);
+      if (result.code !== 200) return [];
+      return result.data;
+    },
+
+    // -----------------------------------------
+    // 普通用户
+    // -----------------------------------------
+
+    /** 修改本地用户信息 */
+    async editUserinfo(data: any) {
+      const result = await updateUserinfo(data);
+      return storeMessage(result);
+    },
+
+    /** 更新本地用户密码 */
+    async editUserPassword(data: any) {
+      const result: any = await updateUserPassword(data);
       return storeMessage(result);
     },
   },

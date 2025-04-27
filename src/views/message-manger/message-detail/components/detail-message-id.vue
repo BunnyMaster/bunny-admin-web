@@ -15,7 +15,7 @@ const getMessageDetail = async () => {
   const messageId = route.params.messageId.toString();
 
   // 获取消息详情
-  await messageUserStore.getMessageDetailById(messageId);
+  await messageUserStore.loadMessageDetailById(messageId);
 };
 
 onMounted(() => {

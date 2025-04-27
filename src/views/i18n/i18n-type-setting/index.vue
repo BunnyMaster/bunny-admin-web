@@ -121,7 +121,7 @@ onMounted(() => {
               {{ $t('modify') }}
             </el-button>
             <el-popconfirm
-              v-if="hasAuth(auth.deleted)"
+              v-if="hasAuth(auth.delete)"
               :title="`${$t('delete')} ${row.typeName}?`"
               @confirm="onDelete(row)"
             >

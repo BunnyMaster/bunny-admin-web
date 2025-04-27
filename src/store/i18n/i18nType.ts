@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAddI18nType, fetchDeleteI18nType, fetchGetI18nTypeList, fetchUpdateI18nType } from '@/api/v1/i18n';
+import { createI18Type, deleteI18nType, getI18nTypeList, updateI18nType } from '@/api/v1/i18n';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 
@@ -28,11 +28,9 @@ export const userI18nTypeStore = defineStore('i18nTypeStore', {
     },
   },
   actions: {
-    /**
-     * * 获取多语言类型
-     */
-    async getI18nTypeList() {
-      const result = await fetchGetI18nTypeList(this.form);
+    /* 获取多语言类型 */
+    async loadI18nTypeList() {
+      const result = await getI18nTypeList(this.form);
       if (result.code === 200) {
         this.datalist = result.data;
         return true;
@@ -40,27 +38,21 @@ export const userI18nTypeStore = defineStore('i18nTypeStore', {
       return false;
     },
 
-    /**
-     * * 添加多语言类型
-     */
+    /* 添加多语言类型 */
     async addI18nType(data: any) {
-      const result = await fetchAddI18nType(data);
+      const result = await createI18Type(data);
       return storeMessage(result);
     },
 
-    /**
-     * * 修改多语言类型
-     */
-    async updateI18nType(data: any) {
-      const result = await fetchUpdateI18nType(data);
+    /* 修改多语言类型 */
+    async editI18nType(data: any) {
+      const result = await updateI18nType(data);
       return storeMessage(result);
     },
 
-    /**
-     * * 删除多语言类型
-     */
-    async deleteI18nType(data: any) {
-      const result = await fetchDeleteI18nType(data);
+    /* 删除多语言类型 */
+    async removeI18nType(data: any) {
+      const result = await deleteI18nType(data);
       return storeMessage(result);
     },
   },

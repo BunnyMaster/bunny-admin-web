@@ -10,12 +10,14 @@ import { hasAuth } from '@/router/utils';
 
 defineOptions({ name: 'WebConfiguration' });
 
-const ruleFormRef = ref<FormInstance>();
-const i18nTypeStore = userI18nTypeStore();
-// 用户是否停用样式
-const { switchStyle } = usePublicHooks();
 const theme = ['dark', 'light', 'system'];
 const layout = ['vertical', 'horizontal', 'mix'];
+
+// 用户是否停用样式
+const { switchStyle } = usePublicHooks();
+
+const ruleFormRef = ref<FormInstance>();
+const i18nTypeStore = userI18nTypeStore();
 
 onMounted(() => {
   onSearch();

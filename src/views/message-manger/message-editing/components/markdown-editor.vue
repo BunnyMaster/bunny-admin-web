@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import { fetchUploadFile } from '@/api/v1/system/system';
+import { uploadFile } from '@/api/v1/system/system';
 import { formState } from '@/views/message-manger/message-editing/utils';
 
 /**
@@ -17,7 +17,7 @@ const onUploadImg = async (files: any, callback: any) => {
         const form = new FormData();
         form.append('file', file);
         form.append('type', 'message');
-        resolve(await fetchUploadFile(form));
+        resolve(await uploadFile(form));
       });
     })
   );

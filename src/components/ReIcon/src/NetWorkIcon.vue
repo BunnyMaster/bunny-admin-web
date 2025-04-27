@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from 'vue';
-import { fetchMenuIconList } from '@/api/v1/menu/menuIcon';
+import { getMenuIconPage } from '@/api/v1/menu/menuIcon';
 import { FormProps } from './types';
 import { $t } from '@/plugins/i18n';
 
@@ -25,7 +25,7 @@ const onSearch = async () => {
   const { currentPage, pageSize } = innerForm;
 
   // 获取数据
-  const baseResult = await fetchMenuIconList({ currentPage, pageSize });
+  const baseResult = await getMenuIconPage({ currentPage, pageSize });
   if (baseResult.code !== 200) return;
   const data = baseResult.data;
 

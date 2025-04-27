@@ -132,7 +132,7 @@ onMounted(() => {
       <template #buttons>
         <!-- 批量删除按钮 -->
         <el-button
-          v-if="hasAuth(auth.deleted)"
+          v-if="hasAuth(auth.delete)"
           :disabled="!(deleteIds.length > 0)"
           :icon="useRenderIcon(Delete)"
           plain
@@ -203,7 +203,7 @@ onMounted(() => {
               {{ $t('view') }}
             </el-button>
             <el-popconfirm
-              v-if="hasAuth(auth.deleted)"
+              v-if="hasAuth(auth.delete)"
               :title="`${$t('delete')}${row.jobName}?`"
               @confirm="onDelete(row)"
             >

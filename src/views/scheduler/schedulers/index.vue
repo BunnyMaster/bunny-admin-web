@@ -56,7 +56,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <ReAuth :value="auth.search">
+    <ReAuth :value="auth.query">
       <el-form
         ref="formRef"
         :inline="true"
@@ -208,7 +208,7 @@ onMounted(() => {
 
             <!-- 删除 -->
             <el-popconfirm
-              v-if="hasAuth(auth.deleted)"
+              v-if="hasAuth(auth.delete)"
               :title="`${$t('delete')}${row.jobName}?`"
               @confirm="onDelete(row)"
             >

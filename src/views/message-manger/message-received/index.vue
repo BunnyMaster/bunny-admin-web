@@ -62,7 +62,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <ReAuth :value="auth.search">
+    <ReAuth :value="auth.query">
       <el-form
         ref="formRef"
         :inline="true"
@@ -211,7 +211,7 @@ onMounted(() => {
 
         <!-- 批量删除按钮 -->
         <el-button
-          v-if="hasAuth(auth.deleted)"
+          v-if="hasAuth(auth.delete)"
           :disabled="!(selectIds.length > 0)"
           :icon="useRenderIcon(Delete)"
           plain

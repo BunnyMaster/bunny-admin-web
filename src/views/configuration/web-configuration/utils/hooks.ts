@@ -35,9 +35,8 @@ export const form = ref({
 
 /** 获取前端配置文件 */
 export const onSearch = async () => {
-  const result = await getWebConfig();
-  if (result.code !== 200) return;
-  const data = result.data;
+  const data = await getWebConfig();
+  if (!data) return;
 
   form.value.version = data.Version;
   form.value.title = data.Title;

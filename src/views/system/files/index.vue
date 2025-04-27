@@ -64,7 +64,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <ReAuth :value="auth.search">
+    <ReAuth :value="auth.query">
       <el-form
         ref="formRef"
         :inline="true"
@@ -132,7 +132,7 @@ onMounted(() => {
 
         <!-- 批量下载 -->
         <el-button
-          v-if="hasAuth(auth.downloadFilesByFileId)"
+          v-if="hasAuth(auth.download)"
           :disabled="!(selectRows.length > 0)"
           :icon="useRenderIcon(Download)"
           plain
@@ -144,7 +144,7 @@ onMounted(() => {
 
         <!-- 批量删除按钮 -->
         <el-button
-          v-if="hasAuth(auth.deleted)"
+          v-if="hasAuth(auth.delete)"
           :disabled="!(selectRows.length > 0)"
           :icon="useRenderIcon(Delete)"
           plain
@@ -201,7 +201,7 @@ onMounted(() => {
               {{ $t('modify') }}
             </el-button>
             <el-button
-              v-if="hasAuth(auth.downloadFilesByFileId)"
+              v-if="hasAuth(auth.download)"
               :icon="useRenderIcon(EditPen)"
               :size="size"
               class="reset-margin"
@@ -212,7 +212,7 @@ onMounted(() => {
               {{ $t('download') }}
             </el-button>
             <el-popconfirm
-              v-if="hasAuth(auth.deleted)"
+              v-if="hasAuth(auth.delete)"
               :title="`${$t('delete')} ${row.filename}?`"
               @confirm="onDelete(row)"
             >

@@ -1,6 +1,6 @@
 export const auth = {
   // 分页查询
-  search: ['userLoginLog::getUserLoginLogList'],
+  search: ['userLoginLog::query', 'userLoginLog::queryPage'],
   // 删除操作
-  deleted: ['userLoginLog::deleteUserLoginLog'],
+  delete: ['userLoginLog::delete'],
 };

@@ -29,109 +29,97 @@ export interface RefreshTokenResult {
   expires: Date;
 }
 
-/** 登录 */
-export const fetchLogin = (data?: object) => {
-  return http.request<BaseResult<UserResult>>('post', '/user/login', { data });
-};
+// -----------------------------------------
+// 管理用户CURD
+// -----------------------------------------
 
-/** 发送邮件 */
-export const fetchPostEmailCode = (data: any) => {
-  return http.request<BaseResult<any>>(
-    'post',
-    '/user/noAuth/sendLoginEmail',
-    { data },
-    { headers: { 'Content-Type': 'multipart/form-data' } }
-  );
-};
-
-/** 刷新`token` */
-export const refreshTokenApi = (data?: object) => {
-  return http.request<BaseResult<RefreshTokenResult>>('post', 'user/noAuth/refreshToken', { data });
-};
-
-/** 退出账户 */
-export const fetchLogout = (data?: object) => {
-  return http.request<BaseResult<any>>('post', 'user/noManage/logout', { data });
-};
-
-/** 获取用户信息,根据当前token获取 */
-export const fetchUserinfo = () => {
-  return http.request<BaseResult<any>>('get', 'user/noManage/userinfo');
-};
-
-/** 用户信息---获取用户信息列表 */
-export const fetchGetAdminUserList = (data: any) => {
-  return http.request<BaseResult<ResultTable>>('get', `user/getAdminUserList/${data.currentPage}/${data.pageSize}`, {
+/** 用户信息---分页查询用户信息 */
+export const getUserPageByAdmin = (data: any) => {
+  return http.request<BaseResult<ResultTable>>('get', `user/${data.currentPage}/${data.pageSize}`, {
     params: data,
   });
 };
 
-/** 用户信息---查询用户 */
-export const fetchQueryUser = (data: any) => {
-  return http.request<BaseResult<object>>('get', 'user/noManage/queryUser', { params: data });
+/** 用户信息---添加用户信息 */
+export const createUserByAdmin = (data: any) => {
+  return http.request<BaseResult<object>>('post', 'user', { data });
 };
 
 /** 用户信息---更新用户信息 */
-export const fetchUpdateAdminUser = (data: any) => {
-  return http.request<BaseResult<object>>('put', 'user/updateAdminUser', { data });
-};
-
-/** 用户信息---更新本地用户信息 */
-export const fetchUpdateAdminUserByLocalUser = (data: any) => {
-  return http.request<BaseResult<object>>('put', 'user/noManage/updateAdminUserByLocalUser', { data });
-};
-
-/** 用户信息---更新本地用户密码 */
-export const fetchUpdateUserPasswordByLocalUser = (data: any) => {
+export const updateUserByAdmin = (data: any) => {
   return http.request<BaseResult<object>>(
     'put',
-    'user/noManage/updateUserPasswordByLocalUser',
+    'user',
     { data },
     { headers: { 'Content-Type': 'multipart/form-data' } }
   );
-};
-
-/** 用户信息---添加用户信息 */
-export const fetchAddAdminUser = (data: any) => {
-  return http.request<BaseResult<object>>('post', 'user/addAdminUser', { data });
 };
 
 /** 用户信息---删除用户信息 */
-export const fetchDeleteAdminUser = (data: any) => {
-  return http.request<BaseResult<object>>('delete', 'user/deleteAdminUser', { data });
+export const deleteUserByAdmin = (data: any) => {
+  return http.request<BaseResult<object>>('delete', 'user', { data });
 };
 
-/** 用户管理---获取用户信息 */
-export const fetchGetUserinfoById = (data?: object) => {
-  return http.request<BaseResult<UserResult>>('get', 'user/getUserinfoById', { params: data });
+/** 用户管理---根据用户id查询 */
+export const loadUserinfoById = (data?: object) => {
+  return http.request<BaseResult<UserResult>>('get', 'user/private/getUserinfoById', { params: data });
 };
 
-/** 用户管理---修改用户状态 */
-export const fetchUpdateUserStatusByAdmin = (data?: object) => {
-  return http.request<BaseResult<UserResult>>('put', 'user/updateUserStatusByAdmin', { data });
+/** 用户信息---根据用户名查询用户列表 */
+export const getUserListByKeyword = (data: any) => {
+  return http.request<BaseResult<object>>('get', 'user/private/getUserListByKeyword', { params: data });
 };
 
-/** 用户管理---管理员修改管理员用户密码 */
-export const fetchUpdateUserPasswordByAdmin = (data: any) => {
-  return http.request<BaseResult<UserResult>>('put', 'user/updateUserPasswordByAdmin', { data });
+/** 用户管理---强制用户下线 */
+export const forcedOfflineByAdmin = (data: any) => {
+  return http.request<BaseResult<UserResult>>('put', 'user/forcedOffline', { data });
 };
 
-/** 用户管理---管理员修改管理员用户头像 */
-export const fetchUploadAvatarByAdmin = (data: any) => {
-  return http.request<BaseResult<UserResult>>(
-    'put',
-    'user/uploadAvatarByAdmin',
+// -----------------------------------------
+// 普通用户
+// -----------------------------------------
+
+/** 登录 */
+export const userLogin = (data?: object) => {
+  return http.request<BaseResult<UserResult>>('post', '/user/login', { data });
+};
+
+/** 刷新`token` */
+export const refreshTokenApi = (data?: object) => {
+  return http.request<BaseResult<RefreshTokenResult>>('post', 'user/public/refreshToken', { data });
+};
+
+/** 发送邮件 */
+export const sendLoginEmail = (data: any) => {
+  return http.request<BaseResult<any>>(
+    'post',
+    '/user/public/sendLoginEmail',
     { data },
     { headers: { 'Content-Type': 'multipart/form-data' } }
   );
 };
 
-/** 用户管理---强制用户下线 */
-export const fetchForcedOffline = (data: any) => {
-  return http.request<BaseResult<UserResult>>('put', 'user/forcedOffline', { data });
+/** 获取用户信息,根据当前token获取 */
+export const getUserinfo = () => {
+  return http.request<BaseResult<any>>('get', 'user/private/userinfo');
 };
 
-/** 用户管理---为用户分配角色 */
-export const fetchAssignRolesToUsers = (data: object) => {
-  return http.request<BaseResult<any>>('post', 'userRole/assignRolesToUsers', { data });
+/** 退出账户 */
+export const logout = (data?: object) => {
+  return http.request<BaseResult<any>>('post', 'user/private/logout', { data });
+};
+
+/** 用户信息---更新用户信息 */
+export const updateUserinfo = (data: any) => {
+  return http.request<BaseResult<object>>('put', 'user/private/update/userinfo', { data });
+};
+
+/** 用户信息---更新用户密码 */
+export const updateUserPassword = (data: any) => {
+  return http.request<BaseResult<object>>(
+    'put',
+    'user/private/update/password',
+    { data },
+    { headers: { 'Content-Type': 'multipart/form-data' } }
+  );
 };

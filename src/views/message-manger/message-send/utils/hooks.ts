@@ -1,13 +1,12 @@
 import { addDialog } from '@/components/ReDialog/index';
 import MessageDialog from '@/views/message-manger/message-send/components/message-dialog.vue';
 import { h, reactive, ref, toRaw } from 'vue';
-import { message, messageBox } from '@/utils/message';
+import { messageBox } from '@/utils/message';
 import { $t } from '@/plugins/i18n';
-import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
 import { useAdminUserStore } from '@/store/system/adminUser';
 import { decode, encode } from 'js-base64';
 import type { UploadRequestOptions } from 'element-plus';
-import { fetchUploadFile } from '@/api/v1/system/system';
+import { uploadFile } from '@/api/v1/system/system';
 import { useMessageSendStore } from '@/store/message/messageSend';
 
 export const formRef = ref();
@@ -53,7 +52,7 @@ const adminUserStore = useAdminUserStore();
 /** 搜索初始化系统消息 */
 export async function onSearch() {
   messageSendStore.loading = true;
-  await messageSendStore.getMessageList();
+  await messageSendStore.fetchMessagePage();
   messageSendStore.loading = false;
 }
 
@@ -64,10 +63,7 @@ export const onSearchUserinfo = async (keyword: string) => {
   loading.value = false;
 };
 
-/**
- * * 更新系统消息
- * @param row
- */
+/* 更新系统消息 */
 export async function onUpdate(row: any) {
   // 将表格数据合并到更新数据中
   Object.assign(updateMessage, row);
@@ -76,7 +72,7 @@ export async function onUpdate(row: any) {
   updateMessage.content = decode(updateMessage.content);
 
   // 获取当前消息内容和接收者信息
-  await messageSendStore.getReceivedUserinfoByMessageId({ messageId: row.id });
+  await messageSendStore.loadReceivedUserinfoByMessageId({ messageId: row.id });
   userDataList.value = messageSendStore.receivedUserinfoList.map((item: any) => ({
     id: item.receivedUserId,
     nickname: item.nickname,
@@ -103,7 +99,7 @@ export async function onUpdate(row: any) {
         data.content = encode(data.content);
 
         // 更新消息内容
-        const result = await messageSendStore.updateMessage({ ...data, id: row.id });
+        const result = await messageSendStore.editMessage({ ...data, id: row.id });
         if (!result) return;
         Object.assign(updateMessage, {});
         done();
@@ -127,44 +123,31 @@ export const onDelete = async (row: any) => {
   if (!result) return;
 
   // 删除数据
-  await messageSendStore.deleteMessage([id]);
+  await messageSendStore.removeMessage([id]);
   await onSearch();
 };
 
 /** 批量删除 */
 export const onDeleteBatch = async () => {
-  const ids = deleteIds.value;
-  const formDeletedBatchRef = ref();
-
-  addDialog({
-    title: $t('deleteBatchTip'),
-    width: '30%',
-    props: { formInline: { confirmText: '' } },
-    draggable: true,
-    fullscreenIcon: true,
-    closeOnClickModal: false,
-    contentRenderer: () => h(DeleteBatchDialog, { ref: formDeletedBatchRef }),
-    beforeSure: (done, { options }) => {
-      formDeletedBatchRef.value.formDeletedBatchRef.validate(async (valid: any) => {
-        if (!valid) return;
-
-        const text = options.props.formInline.confirmText.toLowerCase();
-        if (text === 'yes' || text === 'y') {
-          // 删除数据
-          await messageSendStore.deleteMessage(ids);
-          await onSearch();
-
-          done();
-        } else message($t('deleteBatchTip'), { type: 'warning' });
-      });
-    },
+  // 是否确认删除
+  const result = await messageBox({
+    title: $t('confirmDelete'),
+    showMessage: false,
+    confirmMessage: undefined,
+    cancelMessage: $t('cancel_delete'),
   });
+  if (!result) return;
+
+  // 删除数据
+  const ids = deleteIds.value;
+  await messageSendStore.removeMessage(ids);
+  await onSearch();
 };
 
 /** 上传时 */
 export const onUpload = async (options: UploadRequestOptions) => {
   const data = { file: options.file, type: 'message' };
-  const result: any = await fetchUploadFile(data);
+  const result: any = await uploadFile(data);
   coverUrl.value = result.data.url;
   updateMessage.cover = result.data.filepath;
 };

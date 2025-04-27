@@ -1,10 +1,10 @@
 export const auth = {
   // 分页查询
-  search: ['emailUsers::getEmailUsersList'],
+  query: ['emailUsers::query', 'emailUsers::queryPage'],
   // 添加操作
-  add: ['emailUsers::addEmailUsers'],
+  add: ['emailUsers::add'],
   // 更新操作
-  update: ['emailUsers::updateEmailUsers'],
+  update: ['emailUsers::update'],
   // 删除操作
-  deleted: ['emailUsers::deleteEmailUsers'],
+  delete: ['emailUsers::delete'],
 };

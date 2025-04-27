@@ -2,28 +2,28 @@ import { http } from '@/api/service/request';
 import type { BaseResult, ResultTable } from '@/api/service/types';
 
 /** 部门管理---获取部门管理列表 */
-export const fetchGetDeptList = (data: any) => {
-  return http.request<BaseResult<ResultTable>>('get', `dept/getDeptList/${data.currentPage}/${data.pageSize}`, {
+export const getDeptPage = (data: any) => {
+  return http.request<BaseResult<ResultTable>>('get', `dept/${data.currentPage}/${data.pageSize}`, {
     params: data,
   });
 };
 
-/** 部门管理---获取所有部门管理列表 */
-export const fetchGetAllDeptList = () => {
-  return http.request<BaseResult<object>>('get', 'dept/noManage/allDeptList');
-};
-
 /** 部门管理---添加部门管理 */
-export const fetchAddDept = (data: any) => {
-  return http.request<BaseResult<object>>('post', 'dept/addDept', { data });
+export const createDept = (data: any) => {
+  return http.request<BaseResult<object>>('post', 'dept', { data });
 };
 
 /** 部门管理---更新部门管理 */
-export const fetchUpdateDept = (data: any) => {
-  return http.request<BaseResult<object>>('put', 'dept/updateDept', { data });
+export const updateDept = (data: any) => {
+  return http.request<BaseResult<object>>('put', 'dept', { data });
 };
 
 /** 部门管理---删除部门管理 */
-export const fetchDeleteDept = (data: any) => {
-  return http.request<BaseResult<object>>('delete', 'dept/deleteDept', { data });
+export const deleteDept = (data: any) => {
+  return http.request<BaseResult<object>>('delete', 'dept', { data });
+};
+
+/** 部门管理---获取所有部门管理列表 */
+export const getDeptList = () => {
+  return http.request<BaseResult<object>>('get', 'dept/private/getDeptList');
 };

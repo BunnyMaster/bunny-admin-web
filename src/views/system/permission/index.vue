@@ -19,7 +19,7 @@ import EditPen from '@iconify-icons/ep/edit-pen';
 import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { usePowerStore } from '@/store/system/power';
+import { usePermissionStore } from '@/store/system/power';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { handleTree } from '@pureadmin/utils';
 import { FormInstance } from 'element-plus';
@@ -31,7 +31,7 @@ defineOptions({ name: 'PermissionManger' });
 
 const tableRef = ref();
 const formRef = ref();
-const powerStore = usePowerStore();
+const powerStore = usePermissionStore();
 const datalist = computed(() => handleTree(powerStore.datalist));
 
 /* 当前页改变时 */
@@ -65,7 +65,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <ReAuth :value="auth.search">
+    <ReAuth :value="auth.query">
       <el-form
         ref="formRef"
         :inline="true"
@@ -138,7 +138,7 @@ onMounted(() => {
 
         <!-- 批量更新父级id -->
         <el-button
-          v-if="hasAuth(auth.updateBatchByPowerWithParentId)"
+          v-if="hasAuth(auth.update)"
           :disabled="!(powerIds.length > 0)"
           :icon="useRenderIcon(EditPen)"
           plain
@@ -150,7 +150,7 @@ onMounted(() => {
 
         <!-- 批量删除按钮 -->
         <el-button
-          v-if="hasAuth(auth.deleted)"
+          v-if="hasAuth(auth.delete)"
           :disabled="!(powerIds.length > 0)"
           :icon="useRenderIcon(Delete)"
           plain
@@ -222,7 +222,7 @@ onMounted(() => {
             </el-button>
             <!-- 删除 -->
             <el-popconfirm
-              v-if="hasAuth(auth.deleted)"
+              v-if="hasAuth(auth.delete)"
               :title="`${$t('delete')}${row.powerName}?`"
               @confirm="onDelete(row)"
             >

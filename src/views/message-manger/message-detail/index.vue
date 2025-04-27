@@ -23,7 +23,7 @@ const onMenuClick = (item: any) => {
 
 onBeforeMount(() => {
   // 获取所有消息类型
-  messageTypeStore.getAllMessageTypeList();
+  messageTypeStore.loadMessageTypeList();
 
   // 设置路由消息类型
   messageTypeStore.form.messageType = route.params.messageType as string;
@@ -39,12 +39,15 @@ onBeforeMount(() => {
       class="pure-account-settings overflow-hidden px-2 dark:!bg-[var(--el-bg-color)] border-r-[1px] border-[var(--pure-border-color)]"
     >
       <el-menu :default-active="messageTypeStore.form.messageType" class="pure-account-settings-menu">
-        <el-menu-item class="!h-[50px]" @click="router.go(-1)">
-          <div class="flex items-center hover:!transition-all hover:!duration-200 hover:!text-base">
-            <IconifyIconOffline :icon="leftLine" />
-            <span>{{ $t('back') }}</span>
+        <el-menu-item class="!h-[50px]">
+          <div class="flex items-center">
+            <el-button link type="primary" @click="router.push('/')">
+              <template #icon>
+                <IconifyIconOffline :icon="leftLine" />
+              </template>
+              {{ $t('returnToHomepage') }}
+            </el-button>
           </div>
-          <el-button class="ml-2" link type="primary" @click="router.push('/')">{{ $t('returnToHomepage') }}</el-button>
         </el-menu-item>
         <el-menu-item
           v-for="item in messageTypeStore.allMessageTypeList"

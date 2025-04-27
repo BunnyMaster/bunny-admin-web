@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import {
-  fetchAddEmailUsers,
-  fetchDeleteEmailUsers,
-  fetchGetEmailUsersList,
-  fetchUpdateEmailUsers,
-  fetchUpdateEmailUserStatus,
+  createEmailUsers,
+  deleteEmailUsers,
+  getEmailUserList,
+  getEmailUserPage,
+  updateEmailUsers,
 } from '@/api/v1/email/emailUsers';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
@@ -18,6 +18,8 @@ export const useEmailUsersStore = defineStore('emailUsersStore', {
     return {
       // 邮箱用户发送配置列表
       datalist: [],
+      // 邮件模板用户列表
+      emailUserList: [],
       // 查询表单
       form: {
         // 邮箱
@@ -42,12 +44,16 @@ export const useEmailUsersStore = defineStore('emailUsersStore', {
       loading: false,
     };
   },
-  getters: {},
+  getters: {
+    getMailboxConfigurationUser(state) {
+      const map = {};
+      state.emailUserList.forEach((user) => (map[user.value] = user.key));
+      return map;
+    },
+  },
   actions: {
-    /**
-     * * 获取邮箱用户发送配置
-     */
-    async getEmailUsersList() {
+    /* 获取邮箱用户发送配置 */
+    async fetchEmailUserPage() {
       // 整理请求参数
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
@@ -55,34 +61,36 @@ export const useEmailUsersStore = defineStore('emailUsersStore', {
       delete data.background;
 
       // 获取邮箱用户发送配置列表
-      const result = await fetchGetEmailUsersList(data);
+      const result = await getEmailUserPage(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);
       return pagination(result);
     },
 
+    /** 获取所有邮箱配置用户 */
+    async loadEmailUserList() {
+      const result = await getEmailUserList();
+      if (result.code !== 200) return;
+
+      this.emailUserList = result.data;
+    },
+
     /** 添加邮箱用户发送配置 */
     async addEmailUsers(data: any) {
-      const result = await fetchAddEmailUsers(data);
+      const result = await createEmailUsers(data);
       return storeMessage(result);
     },
 
     /** 修改邮箱用户发送配置 */
-    async updateEmailUsers(data: any) {
-      const result = await fetchUpdateEmailUsers(data);
-      return storeMessage(result);
-    },
-
-    /** 更新邮箱用户状态 */
-    async updateEmailUserStatus(data: any) {
-      const result = await fetchUpdateEmailUserStatus(data);
+    async editEmailUsers(data: any) {
+      const result = await updateEmailUsers(data);
       return storeMessage(result);
     },
 
     /** 删除邮箱用户发送配置 */
-    async deleteEmailUsers(data: any) {
-      const result = await fetchDeleteEmailUsers(data);
+    async removeEmailUsers(data: any) {
+      const result = await deleteEmailUsers(data);
       return storeMessage(result);
     },
   },

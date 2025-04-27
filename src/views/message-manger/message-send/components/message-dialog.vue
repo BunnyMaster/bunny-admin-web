@@ -28,7 +28,7 @@ const formRef = ref<FormInstance>();
 const messageTypeStore = useMessageTypeStore();
 
 onMounted(() => {
-  messageTypeStore.getAllMessageTypeList();
+  messageTypeStore.loadMessageTypeList();
 });
 
 defineExpose({ formRef });

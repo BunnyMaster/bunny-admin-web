@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import {
-  fetchAddMenuIcon,
-  fetchDeleteMenuIcon,
-  fetchGetIconNameList,
-  fetchMenuIconList,
-  fetchUpdateMenuIcon,
+  createMenuIcon,
+  deleteMenuIcon,
+  getIconNameListByIconName,
+  getMenuIconPage,
+  updateMenuIcon,
 } from '@/api/v1/menu/menuIcon';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
@@ -41,12 +41,12 @@ export const useMenuIconStore = defineStore('menuIconStore', {
   getters: {},
   actions: {
     /** 获取系统菜单图标 */
-    async getMenuIconList() {
+    async fetchMenuIconListPage() {
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
       delete data.total;
       delete data.background;
-      const response = await fetchMenuIconList(data);
+      const response = await getMenuIconPage(data);
 
       // 公共页面函数hook
       const pagination = storePagination.bind(this);
@@ -54,26 +54,26 @@ export const useMenuIconStore = defineStore('menuIconStore', {
     },
 
     /** 根据iconName搜索menuIcon */
-    async getIconNameList(data: any) {
-      const result = await fetchGetIconNameList(data);
+    async getIconNameListByIconName(data: any) {
+      const result = await getIconNameListByIconName(data);
       this.iconNameList = result.data;
     },
 
     /** 添加系统菜单图标 */
     async addMenuIcon(data: any) {
-      const result = await fetchAddMenuIcon(data);
+      const result = await createMenuIcon(data);
       return storeMessage(result);
     },
 
     /** 修改系统菜单图标 */
-    async updateMenuIcon(data: any) {
-      const result = await fetchUpdateMenuIcon(data);
+    async editMenuIcon(data: any) {
+      const result = await updateMenuIcon(data);
       return storeMessage(result);
     },
 
     /** 删除系统菜单图标 */
-    async deleteMenuIcon(data: any) {
-      const result = await fetchDeleteMenuIcon(data);
+    async removeMenuIcon(data: any) {
+      const result = await deleteMenuIcon(data);
       return storeMessage(result);
     },
   },

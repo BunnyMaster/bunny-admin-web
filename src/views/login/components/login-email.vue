@@ -36,7 +36,7 @@ const onSendEmailCode = async () => {
     message('请先填写邮箱地址', { type: 'warning' });
     return false;
   }
-  const result = await userStore.postEmailCode(ruleForm.username);
+  const result = await userStore.sendLoginEmailCode(ruleForm.username);
   if (result) {
     // 开始倒计时，之后发送邮箱验证码
     onSendEmailTimer();

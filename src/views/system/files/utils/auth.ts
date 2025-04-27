@@ -1,12 +1,12 @@
 export const auth = {
-  // 更新操作
-  update: ['files::updateFiles'],
-  // 添加操作
-  add: ['files::addFiles'],
   // 分页查询
-  search: ['files::getFilesList'],
+  query: ['files:query', 'files:queryPage'],
+  // 更新操作
+  update: ['files::update'],
+  // 添加操作
+  add: ['files::add'],
   // 删除操作
-  deleted: ['files::deleteFiles'],
+  delete: ['files::delete'],
   // 下载文件
-  downloadFilesByFileId: ['files::downloadFilesByFileId'],
+  download: ['files::download'],
 };

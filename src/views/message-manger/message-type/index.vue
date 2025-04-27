@@ -65,7 +65,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <ReAuth :value="auth.search">
+    <ReAuth :value="auth.query">
       <el-form
         ref="formRef"
         :inline="true"
@@ -143,7 +143,7 @@ onMounted(() => {
 
         <!-- 批量删除按钮 -->
         <el-button
-          v-if="hasAuth(auth.deleted)"
+          v-if="hasAuth(auth.delete)"
           :disabled="!(deleteIds.length > 0)"
           :icon="useRenderIcon(Delete)"
           plain
@@ -213,7 +213,7 @@ onMounted(() => {
               {{ $t('modify') }}
             </el-button>
             <el-popconfirm
-              v-if="hasAuth(auth.deleted)"
+              v-if="hasAuth(auth.delete)"
               :title="`${$t('delete')}${row.messageName}?`"
               @confirm="onDelete(row)"
             >

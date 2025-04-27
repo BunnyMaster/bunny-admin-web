@@ -1,10 +1,10 @@
 export const auth = {
   // 分页查询
-  search: ['dept::getDeptList'],
+  query: ['dept::query', 'dept::queryPage'],
   // 添加操作
-  add: ['dept::addDept'],
+  add: ['dept::add'],
   // 更新操作
-  update: ['dept::updateDept'],
+  update: ['dept::update'],
   // 删除操作
-  deleted: ['dept::deleteDept'],
+  delete: ['dept::delete'],
 };

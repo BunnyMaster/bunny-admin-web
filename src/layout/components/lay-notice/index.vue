@@ -10,7 +10,7 @@ const { t } = useI18n();
 const messageTypeStore = useMessageTypeStore();
 
 onMounted(() => {
-  messageTypeStore.getAllMessageTypeList();
+  messageTypeStore.loadMessageTypeList();
   computedNoticesNum();
 });
 </script>
