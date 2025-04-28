@@ -5,6 +5,7 @@ import {
   exportPermission,
   getPermissionList,
   getPermissionPage,
+  getSystemApiInfoList,
   importPermission,
   updatePermission,
   updatePermissionListByParentId,
@@ -24,6 +25,8 @@ export const usePermissionStore = defineStore('PermissionStore', {
       datalist: [],
       // 权限树形结构
       allPowerList: [],
+      // 系统api列表
+      systemApiInfoList: [],
       // 查询表单
       form: {
         // 权限编码
@@ -100,6 +103,13 @@ export const usePermissionStore = defineStore('PermissionStore', {
       const result = await getPermissionList();
       if (result.code !== 200) return;
       this.allPowerList = result.data;
+    },
+
+    /* 获取系统API信息 */
+    async loadSystemApiInfoList() {
+      const result = await getSystemApiInfoList();
+      if (result.code !== 200) return;
+      this.systemApiInfoList = result.data;
     },
 
     /** 批量修改权限父级 */

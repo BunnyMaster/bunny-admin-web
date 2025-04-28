@@ -35,7 +35,12 @@ export const importPermission = (data: any) => {
 
 /** 权限---获取所有权限 */
 export const getPermissionList = () => {
-  return http.request<BaseResult<any>>('get', `permission/getPermissionList`);
+  return http.request<BaseResult<any>>('get', `permission/private/getPermissionList`);
+};
+
+/* 权限---获取系统API信息 */
+export const getSystemApiInfoList = () => {
+  return http.request<BaseResult<any>>('get', 'permission/private/getSystemApiInfoList');
 };
 
 /** 权限---更新权限 */

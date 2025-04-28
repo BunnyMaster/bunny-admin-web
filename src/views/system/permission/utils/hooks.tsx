@@ -75,7 +75,8 @@ export function onUpdate(row: any) {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
-
+        // 请求方法是否存在，不存在就为空
+        form.requestMethod = form.requestMethod ? form.requestMethod : '';
         const result = await powerStore.editPermission({ ...form, id: row.id });
         if (!result) return;
         done();
