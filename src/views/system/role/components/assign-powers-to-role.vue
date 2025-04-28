@@ -5,11 +5,12 @@ import Check from '@iconify-icons/ep/check';
 import { computed, nextTick, onMounted, ref, watch } from 'vue';
 import { delay, getKeyList, handleTree, subBefore, useResizeObserver } from '@pureadmin/utils';
 import { usePermissionStore } from '@/store/system/power';
-import { powerCascadeProps } from '@/views/system/permission/utils';
 import { useRoleStore } from '@/store/system/role';
+import { powerCascadeProps } from '@/views/system/permission/utils';
 
 const powerStore = usePermissionStore();
 const roleStore = useRoleStore();
+
 // 是否展开全部
 const isExpandAll = ref(false);
 // 是否选择全部

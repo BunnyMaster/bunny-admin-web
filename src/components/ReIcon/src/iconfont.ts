@@ -25,7 +25,7 @@ export default defineComponent({
         'svg',
         {
           class: 'icon-svg',
-          'aria-hidden': true,
+          'aria-hidden': false,
         },
         {
           default: () => [
