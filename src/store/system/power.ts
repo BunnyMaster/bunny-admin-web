@@ -83,8 +83,8 @@ export const usePermissionStore = defineStore('PermissionStore', {
     },
 
     /* 使用Excel导出权限 */
-    async downloadPermissionByFile() {
-      const result = await exportPermission();
+    async downloadPermissionByFile(data: any) {
+      const result = await exportPermission(data);
 
       downloadBlob(result, 'role.zip');
     },

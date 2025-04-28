@@ -55,12 +55,12 @@ const resetForm = async (formEl: FormInstance) => {
 };
 
 /* 导出权限 */
-const downloadPermission = () => {
-  powerStore.downloadPermissionByFile();
+const downloadPermission = (type: string) => {
+  powerStore.downloadPermissionByFile({ type });
 };
 
 /* 导入权限 */
-const uploadPermission = async () => {
+const uploadPermission = async (type: string) => {
   addDialog({
     title: `${$t('modify')}${$t('role')}`,
     width: '30%',
@@ -74,7 +74,7 @@ const uploadPermission = async () => {
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
         // 更新文件 data
-        const data = { file: form.file[0].raw };
+        const data = { file: form.file[0].raw, type };
 
         const result = await powerStore.uploadPermissionByFile(data);
         if (!result) return;
@@ -125,14 +125,29 @@ onMounted(() => {
       @refresh="onSearch"
     >
       <template #buttons>
-        <!-- 添加权限按钮 -->
-        <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(Download)" plain type="primary" @click="downloadPermission()">
-          {{ $t('download_configuration') }}
-        </el-button>
-        <!-- 文件更新 -->
-        <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(Upload)" plain type="primary" @click="uploadPermission">
-          {{ $t('file_import') }}
-        </el-button>
+        <!-- 下载配置 -->
+        <el-dropdown v-if="hasAuth(auth.update)" class="mr-1" type="primary">
+          <el-button :icon="useRenderIcon(Download)" plain type="primary">
+            {{ $t('download_configuration') }}
+          </el-button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="downloadPermission('json')">{{ $t('download_json') }}</el-dropdown-item>
+              <el-dropdown-item @click="downloadPermission('excel')">{{ $t('download_excel') }}</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+
+        <!-- 更新配置 -->
+        <el-dropdown v-if="hasAuth(auth.update)" class="mr-1" type="primary">
+          <el-button :icon="useRenderIcon(Upload)" plain type="primary">{{ $t('file_import') }}</el-button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="uploadPermission('json')">{{ $t('use_json_update') }}</el-dropdown-item>
+              <el-dropdown-item @click="uploadPermission('excel')">{{ $t('use_excel_update') }}</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
 
         <!-- 添加权限按钮 -->
         <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd()">

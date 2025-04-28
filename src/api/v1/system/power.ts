@@ -24,8 +24,8 @@ export const deletePermission = (data: any) => {
 };
 
 /** 权限---导出权限 */
-export const exportPermission = () => {
-  return http.request<any>('get', 'permission/file/export', { responseType: 'blob' });
+export const exportPermission = (data: any) => {
+  return http.request<any>('get', 'permission/file/export', { params: data }, { responseType: 'blob' });
 };
 
 /** 权限---导入权限权限 */
