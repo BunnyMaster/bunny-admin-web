@@ -1,15 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import {
-  auth,
-  columns,
-  deleteIds,
-  onAdd,
-  onDelete,
-  onDeleteBatch,
-  onSearch,
-  onUpdate,
-} from '@/views/configuration/menu-icon/utils';
+import { auth, columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/configuration/menu-icon/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import AddFill from '@iconify-icons/ri/add-circle-line';
@@ -61,30 +52,15 @@ onMounted(() => {
 <template>
   <div class="main">
     <ReAuth :value="auth.query">
-      <el-form
-        ref="formRef"
-        :inline="true"
-        :model="menuIconStore.form"
-        class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto"
-      >
+      <el-form ref="formRef" :inline="true" :model="menuIconStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
         <el-form-item :label="$t('menuIcon_iconCode')" prop="iconCode">
-          <el-input
-            v-model="menuIconStore.form.iconCode"
-            :placeholder="`${$t('input')} ${$t('iconCode')}`"
-            class="!w-[180px]"
-            clearable
-          />
+          <el-input v-model="menuIconStore.form.iconCode" :placeholder="`${$t('input')} ${$t('iconCode')}`" class="!w-[180px]" clearable />
         </el-form-item>
         <el-form-item :label="$t('menuIcon_iconName')" prop="iconName">
           <MenuIconSelectIconName :form-inline="menuIconStore.form" class="!w-[180px]" />
         </el-form-item>
         <el-form-item>
-          <el-button
-            :icon="useRenderIcon('ri:search-line')"
-            :loading="menuIconStore.loading"
-            type="primary"
-            @click="onSearch"
-          >
+          <el-button :icon="useRenderIcon('ri:search-line')" :loading="menuIconStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -99,14 +75,7 @@ onMounted(() => {
         </el-button>
 
         <!-- 批量删除按钮 -->
-        <el-button
-          v-if="hasAuth(auth.delete)"
-          :disabled="!(deleteIds.length > 0)"
-          :icon="useRenderIcon(Delete)"
-          plain
-          type="danger"
-          @click="onDeleteBatch"
-        >
+        <el-button v-if="hasAuth(auth.delete)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
           {{ $t('deleteBatches') }}
         </el-button>
       </template>
@@ -151,22 +120,10 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
-            <el-button
-              v-if="hasAuth(auth.update)"
-              :icon="useRenderIcon(EditPen)"
-              :size="size"
-              class="reset-margin"
-              link
-              type="primary"
-              @click="onUpdate(row)"
-            >
+            <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
-            <el-popconfirm
-              v-if="hasAuth(auth.delete)"
-              :title="`${$t('delete')}${row.iconName}?`"
-              @confirm="onDelete(row)"
-            >
+            <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')}${row.iconName}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

@@ -46,10 +46,7 @@ onMounted(() => {
             <span class="text-md font-medium">
               {{ item.name }}
             </span>
-            <div
-              :style="{ backgroundColor: isDark ? 'transparent' : item.bgColor }"
-              class="w-8 h-8 flex justify-center items-center rounded-md"
-            >
+            <div :style="{ backgroundColor: isDark ? 'transparent' : item.bgColor }" class="w-8 h-8 flex justify-center items-center rounded-md">
               <IconifyIconOffline :color="item.color" :icon="item.icon" width="18" />
             </div>
           </div>
@@ -87,28 +84,14 @@ onMounted(() => {
           </el-card>
         </re-col>
 
-        <re-col
-          v-motion
-          :enter="{ opacity: 1, y: 0, transition: { delay: 640 } }"
-          :initial="{ opacity: 0, y: 100 }"
-          :lg="8"
-          :sm="24"
-          :xl="6"
-          :xs="24"
-        >
+        <re-col v-motion :enter="{ opacity: 1, y: 0, transition: { delay: 640 } }" :initial="{ opacity: 0, y: 100 }" :lg="8" :sm="24" :xl="6" :xs="24">
           <el-card class="mb-[18px]" shadow="never">
             <div class="flex justify-between">
               <span class="text-md font-medium">前端git近期20次更改</span>
             </div>
             <el-scrollbar class="mt-3" max-height="504">
               <el-timeline>
-                <el-timeline-item
-                  v-for="(item, index) in webCommitList"
-                  :key="index"
-                  :timestamp="item.date"
-                  center
-                  placement="top"
-                >
+                <el-timeline-item v-for="(item, index) in webCommitList" :key="index" :timestamp="item.date" center placement="top">
                   <p class="text-text_color_regular text-sm">
                     <el-link :href="item.html_url" :title="item.message" :underline="false" target="_blank">
                       {{ `提交信息：${item.message}，提交用户：` }}
@@ -129,13 +112,7 @@ onMounted(() => {
             </div>
             <el-scrollbar class="mt-3" max-height="504">
               <el-timeline>
-                <el-timeline-item
-                  v-for="(item, index) in serverCommitList"
-                  :key="index"
-                  :timestamp="item.date"
-                  center
-                  placement="top"
-                >
+                <el-timeline-item v-for="(item, index) in serverCommitList" :key="index" :timestamp="item.date" center placement="top">
                   <p class="text-text_color_regular text-sm">
                     <el-link :href="item.html_url" :title="item.message" :underline="false" target="_blank">
                       {{ `提交信息：${item.message}，提交用户：` }}

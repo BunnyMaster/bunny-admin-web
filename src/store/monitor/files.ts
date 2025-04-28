@@ -1,12 +1,5 @@
 import { defineStore } from 'pinia';
-import {
-  deleteFiles,
-  fetchAddFiles,
-  getFilesPage,
-  getFilesStoragePath,
-  getMediaTypeList,
-  updateFiles,
-} from '@/api/v1/files';
+import { deleteFiles, fetchAddFiles, getFilesPage, getFilesStoragePath, getMediaTypeList, updateFiles } from '@/api/v1/files';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';

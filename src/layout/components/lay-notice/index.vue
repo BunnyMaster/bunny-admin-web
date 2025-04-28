@@ -29,12 +29,7 @@ onMounted(() => {
     </span>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-tabs
-          v-model="activeKey"
-          :stretch="true"
-          :style="{ width: notices.length === 0 ? '200px' : '330px' }"
-          class="dropdown-tabs"
-        >
+        <el-tabs v-model="activeKey" :stretch="true" :style="{ width: notices.length === 0 ? '200px' : '330px' }" class="dropdown-tabs">
           <el-empty v-if="notices.length === 0" :description="t('status.pureNoMessage')" :image-size="60" />
           <span v-else>
             <template v-for="item in notices" :key="item.key">

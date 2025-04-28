@@ -56,13 +56,7 @@ defineExpose({ formRef });
       <el-input v-model="form.requestUrl" :placeholder="$t('inputRequestUrlTip')" autocomplete="off" type="text" />
     </el-form-item>
     <el-form-item :label="$t('requestMethod')" prop="requestMethod">
-      <el-select
-        v-model="form.requestMethod"
-        :placeholder="$t('requestMethod')"
-        autocomplete="off"
-        clearable
-        filterable
-      >
+      <el-select v-model="form.requestMethod" :placeholder="$t('requestMethod')" autocomplete="off" clearable filterable>
         <el-option v-for="item in RequestMethod" :key="item" :label="item" :value="item" />
       </el-select>
     </el-form-item>

@@ -1,12 +1,5 @@
 <template>
-  <el-upload
-    :auto-upload="true"
-    :before-upload="beforeUpload"
-    :http-request="onUpload"
-    :show-file-list="false"
-    accept="image/*"
-    drag
-  >
+  <el-upload :auto-upload="true" :before-upload="beforeUpload" :http-request="onUpload" :show-file-list="false" accept="image/*" drag>
     <el-image v-if="imageSrc" :src="imageSrc" fit="cover" lazy>
       <template #placeholder>
         <ImageLoading />

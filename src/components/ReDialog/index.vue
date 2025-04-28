@@ -107,19 +107,12 @@ function handleClose(options: DialogOptions, index: number, args = { command: 'c
             }
           "
         >
-          <IconifyIconOffline
-            :icon="options?.fullscreen ? ExitFullscreen : fullscreen ? ExitFullscreen : Fullscreen"
-            class="pure-dialog-svg"
-          />
+          <IconifyIconOffline :icon="options?.fullscreen ? ExitFullscreen : fullscreen ? ExitFullscreen : Fullscreen" class="pure-dialog-svg" />
         </i>
       </div>
       <component :is="options?.headerRenderer({ close, titleId, titleClass })" v-else />
     </template>
-    <component
-      :is="options.contentRenderer({ options, index })"
-      v-bind="options?.props"
-      @close="(args) => handleClose(options, index, args)"
-    />
+    <component :is="options.contentRenderer({ options, index })" v-bind="options?.props" @close="(args) => handleClose(options, index, args)" />
     <!-- footer -->
     <template v-if="!options?.hideFooter" #footer>
       <template v-if="options?.footerRenderer">

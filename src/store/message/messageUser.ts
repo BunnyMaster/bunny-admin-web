@@ -3,11 +3,7 @@ import { pageSizes } from '@/enums/baseConstant';
 import { storePagination } from '@/store/useStorePagination';
 import { storeMessage } from '@/utils/message';
 import { decode } from 'js-base64';
-import {
-  deleteMessageReceivedByUser,
-  getMessageReceivedPageByUser,
-  updateMessageByUser,
-} from '@/api/v1/message/messageReceived';
+import { deleteMessageReceivedByUser, getMessageReceivedPageByUser, updateMessageByUser } from '@/api/v1/message/messageReceived';
 import { getMessageDetailById } from '@/api/v1/message/messageSend';
 
 /**

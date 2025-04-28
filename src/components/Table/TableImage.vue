@@ -11,13 +11,5 @@ defineProps({
 </script>
 
 <template>
-  <el-image
-    :initial-index="index"
-    :preview-src-list="[image]"
-    :src="image"
-    class="w-[50px] h-[50px]"
-    fit="fill"
-    loading="lazy"
-    preview-teleported
-  />
+  <el-image :initial-index="index" :preview-src-list="[image]" :src="image" class="w-[50px] h-[50px]" fit="fill" loading="lazy" preview-teleported />
 </template>

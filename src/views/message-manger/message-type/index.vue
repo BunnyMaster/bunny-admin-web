@@ -1,15 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import {
-  auth,
-  columns,
-  deleteIds,
-  onAdd,
-  onDelete,
-  onDeleteBatch,
-  onSearch,
-  onUpdate,
-} from '@/views/message-manger/message-type/utils';
+import { auth, columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/message-manger/message-type/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
@@ -66,68 +57,31 @@ onMounted(() => {
 <template>
   <div class="main">
     <ReAuth :value="auth.query">
-      <el-form
-        ref="formRef"
-        :inline="true"
-        :model="messageTypeStore.form"
-        class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto"
-      >
+      <el-form ref="formRef" :inline="true" :model="messageTypeStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
         <!-- 消息名称 -->
         <el-form-item :label="$t('messageName')" prop="messageName">
-          <el-input
-            v-model="messageTypeStore.form.messageName"
-            :placeholder="`${$t('input')}${$t('messageName')}`"
-            class="!w-[180px]"
-            clearable
-          />
+          <el-input v-model="messageTypeStore.form.messageName" :placeholder="`${$t('input')}${$t('messageName')}`" class="!w-[180px]" clearable />
         </el-form-item>
 
         <!-- 消息类型 -->
         <el-form-item :label="$t('messageType')" prop="messageType">
-          <el-input
-            v-model="messageTypeStore.form.messageType"
-            :placeholder="`${$t('input')}${$t('messageType')}`"
-            class="!w-[180px]"
-            clearable
-          />
+          <el-input v-model="messageTypeStore.form.messageType" :placeholder="`${$t('input')}${$t('messageType')}`" class="!w-[180px]" clearable />
         </el-form-item>
 
         <!-- 消息备注 -->
         <el-form-item :label="$t('summary')" prop="summary">
-          <el-input
-            v-model="messageTypeStore.form.summary"
-            :placeholder="`${$t('input')}${$t('summary')}`"
-            class="!w-[180px]"
-            clearable
-          />
+          <el-input v-model="messageTypeStore.form.summary" :placeholder="`${$t('input')}${$t('summary')}`" class="!w-[180px]" clearable />
         </el-form-item>
 
         <!-- 是否启用 -->
         <el-form-item :label="$t('status')" prop="status">
-          <el-select
-            v-model="messageTypeStore.form.status"
-            :placeholder="`${$t('select')}${$t('status')}`"
-            class="!w-[180px]"
-            clearable
-            filterable
-          >
-            <el-option
-              v-for="(item, index) in enabledOrNotStatus"
-              :key="index"
-              :label="item.label"
-              :navigationBar="false"
-              :value="item.value"
-            />
+          <el-select v-model="messageTypeStore.form.status" :placeholder="`${$t('select')}${$t('status')}`" class="!w-[180px]" clearable filterable>
+            <el-option v-for="(item, index) in enabledOrNotStatus" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
           </el-select>
         </el-form-item>
 
         <el-form-item>
-          <el-button
-            :icon="useRenderIcon('ri:search-line')"
-            :loading="messageTypeStore.loading"
-            type="primary"
-            @click="onSearch"
-          >
+          <el-button :icon="useRenderIcon('ri:search-line')" :loading="messageTypeStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -142,14 +96,7 @@ onMounted(() => {
         </el-button>
 
         <!-- 批量删除按钮 -->
-        <el-button
-          v-if="hasAuth(auth.delete)"
-          :disabled="!(deleteIds.length > 0)"
-          :icon="useRenderIcon(Delete)"
-          plain
-          type="danger"
-          @click="onDeleteBatch"
-        >
+        <el-button v-if="hasAuth(auth.delete)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
           {{ $t('delete_batches') }}
         </el-button>
       </template>
@@ -201,22 +148,10 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
-            <el-button
-              v-if="hasAuth(auth.update)"
-              :icon="useRenderIcon(EditPen)"
-              :size="size"
-              class="reset-margin"
-              link
-              type="primary"
-              @click="onUpdate(row)"
-            >
+            <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
-            <el-popconfirm
-              v-if="hasAuth(auth.delete)"
-              :title="`${$t('delete')}${row.messageName}?`"
-              @confirm="onDelete(row)"
-            >
+            <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')}${row.messageName}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

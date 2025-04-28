@@ -39,13 +39,7 @@ defineExpose({ formRef });
 
     <!-- icon 官网 -->
     <el-form-item :label="$t('systemMenuIcon.officialWebsite')">
-      <el-link
-        :title="$t('systemMenuIcon.officialWebsite')"
-        :underline="false"
-        href="https://icon-sets.iconify.design/"
-        target="_blank"
-        type="primary"
-      >
+      <el-link :title="$t('systemMenuIcon.officialWebsite')" :underline="false" href="https://icon-sets.iconify.design/" target="_blank" type="primary">
         {{ $t('systemMenuIcon.officialWebsite') }}
       </el-link>
     </el-form-item>

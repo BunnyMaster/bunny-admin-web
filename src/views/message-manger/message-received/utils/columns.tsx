@@ -21,11 +21,7 @@ export const columns: TableColumnList = [
     prop: 'editorType',
     minWidth: 130,
     formatter({ editorType }) {
-      return editorType === 'rich' ? (
-        <ElText type={'info'}>{editorType}</ElText>
-      ) : (
-        <ElText type={'warning'}>{editorType}</ElText>
-      );
+      return editorType === 'rich' ? <ElText type={'info'}>{editorType}</ElText> : <ElText type={'warning'}>{editorType}</ElText>;
     },
   },
   // 封面

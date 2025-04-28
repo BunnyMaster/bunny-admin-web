@@ -31,11 +31,7 @@ export default defineComponent({
     const rightClass = ref(['splitter-pane splitter-paneR', props.splitSet?.split]);
 
     const cursor = computed(() => {
-      return active.value
-        ? props.splitSet?.split === 'vertical'
-          ? { cursor: 'col-resize' }
-          : { cursor: 'row-resize' }
-        : { cursor: 'default' };
+      return active.value ? (props.splitSet?.split === 'vertical' ? { cursor: 'col-resize' } : { cursor: 'row-resize' }) : { cursor: 'default' };
     });
 
     const onClick = (): void => {
@@ -75,8 +71,7 @@ export default defineComponent({
         }
 
         const currentPage = props.splitSet?.split === 'vertical' ? e.pageX : e.pageY;
-        const targetOffset =
-          props.splitSet?.split === 'vertical' ? e.currentTarget.offsetWidth : e.currentTarget.offsetHeight;
+        const targetOffset = props.splitSet?.split === 'vertical' ? e.currentTarget.offsetWidth : e.currentTarget.offsetHeight;
         const percents = Math.floor(((currentPage - offset) / targetOffset) * 10000) / 100;
 
         if (percents > props.splitSet?.minPercent && percents < 100 - props.splitSet?.minPercent) {
@@ -91,12 +86,7 @@ export default defineComponent({
 
     return () => (
       <>
-        <div
-          class="vue-splitter-container clearfix"
-          style={unref(cursor)}
-          onMouseup={() => onMouseUp()}
-          onMousemove={() => onMouseMove(event)}
-        >
+        <div class="vue-splitter-container clearfix" style={unref(cursor)} onMouseup={() => onMouseUp()} onMousemove={() => onMouseMove(event)}>
           <div class={unref(leftClass)} style={{ [unref(type)]: unref(percent) + '%' }}>
             {ctx.slots.paneL()}
           </div>

@@ -69,16 +69,8 @@ onBeforeMount(() => {
       </el-menu>
     </el-aside>
     <el-main>
-      <LaySidebarTopCollapse
-        v-if="deviceDetection()"
-        :is-active="isOpen"
-        class="px-0"
-        @toggleClick="isOpen = !isOpen"
-      />
-      <component
-        :is="panes.find((item) => item.key === witchPane).component"
-        :class="[!deviceDetection() && 'ml-[120px]']"
-      />
+      <LaySidebarTopCollapse v-if="deviceDetection()" :is-active="isOpen" class="px-0" @toggleClick="isOpen = !isOpen" />
+      <component :is="panes.find((item) => item.key === witchPane).component" :class="[!deviceDetection() && 'ml-[120px]']" />
     </el-main>
   </el-container>
 </template>

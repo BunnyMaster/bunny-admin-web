@@ -1,11 +1,5 @@
 import { defineStore } from 'pinia';
-import {
-  createEmailTemplate,
-  deleteEmailTemplate,
-  getEmailTemplatePage,
-  getEmailTypeList,
-  updateEmailTemplate,
-} from '@/api/v1/email/emailTemplate';
+import { createEmailTemplate, deleteEmailTemplate, getEmailTemplatePage, getEmailTypeList, updateEmailTemplate } from '@/api/v1/email/emailTemplate';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';

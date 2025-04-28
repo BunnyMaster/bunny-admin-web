@@ -41,12 +41,7 @@ const onRequestIconName = async (iconName: string) => {
     remote
     remote-show-suffix
   >
-    <el-option
-      v-for="menuIcon in menuIconStore.iconNameList"
-      :key="menuIcon.id"
-      :label="menuIcon.iconName"
-      :value="menuIcon.iconName"
-    />
+    <el-option v-for="menuIcon in menuIconStore.iconNameList" :key="menuIcon.id" :label="menuIcon.iconName" :value="menuIcon.iconName" />
     <template #loading>
       <el-icon class="is-loading">
         <LoadingSvg />

@@ -16,10 +16,7 @@ const props = defineProps({
   },
 });
 const cardClass = computed(() => ['list-card-item', { 'list-card-item__disabled': !props.product.status }]);
-const cardLogoClass = computed(() => [
-  'list-card-item_detail--logo',
-  { 'list-card-item_detail--logo__disabled': !props.product.status },
-]);
+const cardLogoClass = computed(() => ['list-card-item_detail--logo', { 'list-card-item_detail--logo__disabled': !props.product.status }]);
 </script>
 
 <template>
@@ -34,11 +31,7 @@ const cardLogoClass = computed(() => [
           <component :is="useRenderIcon('mage:compact-disk')" v-if="product.type === 'diskSpace'" />
         </div>
         <div class="list-card-item_detail--operation">
-          <el-tag
-            :color="product.status ? '#00a870' : '#eee'"
-            class="mx-1 list-card-item_detail--operation--tag"
-            effect="dark"
-          >
+          <el-tag :color="product.status ? '#00a870' : '#eee'" class="mx-1 list-card-item_detail--operation--tag" effect="dark">
             {{ product.status ? $t('enable') : $t('disable') }}
           </el-tag>
         </div>

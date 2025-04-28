@@ -34,12 +34,7 @@ export const exportRoleList = () => {
 
 /* 角色---使用Excel更新角色列表 */
 export const updateRoleByFile = (data: any) => {
-  return http.request<BaseResult<any>>(
-    'put',
-    `/role/file/import`,
-    { data },
-    { headers: { 'Content-Type': 'multipart/form-data' } }
-  );
+  return http.request<BaseResult<any>>('put', `/role/file/import`, { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
 
 /** 为用户分配角色---根据用户id获取所有角色 */

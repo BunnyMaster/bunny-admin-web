@@ -1,11 +1,5 @@
 import { defineStore } from 'pinia';
-import {
-  createMessageType,
-  deleteMessageType,
-  getMessageTypeList,
-  getMessageTypePage,
-  updateMessageType,
-} from '@/api/v1/message/messageType';
+import { createMessageType, deleteMessageType, getMessageTypeList, getMessageTypePage, updateMessageType } from '@/api/v1/message/messageType';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';

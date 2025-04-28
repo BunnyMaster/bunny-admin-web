@@ -30,12 +30,7 @@ export const exportPermission = () => {
 
 /** 权限---导入权限权限 */
 export const importPermission = (data: any) => {
-  return http.request<any>(
-    'put',
-    'permission/file/import',
-    { data },
-    { headers: { 'Content-Type': 'multipart/form-data' } }
-  );
+  return http.request<any>('put', 'permission/file/import', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
 
 /** 权限---获取所有权限 */

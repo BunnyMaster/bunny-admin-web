@@ -36,52 +36,27 @@ defineExpose({ formRef });
   <el-form ref="formRef" :model="form" :rules="rules" label-width="auto">
     <!-- 任务名称 -->
     <el-form-item :label="$t('quartzExecuteLog_jobName')" prop="jobName">
-      <el-input
-        v-model="form.jobName"
-        :placeholder="$t('input') + $t('quartzExecuteLog_jobName')"
-        autocomplete="off"
-        type="text"
-      />
+      <el-input v-model="form.jobName" :placeholder="$t('input') + $t('quartzExecuteLog_jobName')" autocomplete="off" type="text" />
     </el-form-item>
 
     <!-- 任务分组 -->
     <el-form-item :label="$t('quartzExecuteLog_jobGroup')" prop="jobGroup">
-      <el-input
-        v-model="form.jobGroup"
-        :placeholder="$t('input') + $t('quartzExecuteLog_jobGroup')"
-        autocomplete="off"
-        type="text"
-      />
+      <el-input v-model="form.jobGroup" :placeholder="$t('input') + $t('quartzExecuteLog_jobGroup')" autocomplete="off" type="text" />
     </el-form-item>
 
     <!-- 执行任务类名 -->
     <el-form-item :label="$t('quartzExecuteLog_jobClassName')" prop="jobClassName">
-      <el-input
-        v-model="form.jobClassName"
-        :placeholder="$t('input') + $t('quartzExecuteLog_jobClassName')"
-        autocomplete="off"
-        type="text"
-      />
+      <el-input v-model="form.jobClassName" :placeholder="$t('input') + $t('quartzExecuteLog_jobClassName')" autocomplete="off" type="text" />
     </el-form-item>
 
     <!-- 执行任务core表达式 -->
     <el-form-item :label="$t('quartzExecuteLog_cronExpression')" prop="cronExpression">
-      <el-input
-        v-model="form.cronExpression"
-        :placeholder="$t('input') + $t('quartzExecuteLog_cronExpression')"
-        autocomplete="off"
-        type="text"
-      />
+      <el-input v-model="form.cronExpression" :placeholder="$t('input') + $t('quartzExecuteLog_cronExpression')" autocomplete="off" type="text" />
     </el-form-item>
 
     <!-- 触发器名称 -->
     <el-form-item :label="$t('quartzExecuteLog_triggerName')" prop="triggerName">
-      <el-input
-        v-model="form.triggerName"
-        :placeholder="$t('input') + $t('quartzExecuteLog_triggerName')"
-        autocomplete="off"
-        type="text"
-      />
+      <el-input v-model="form.triggerName" :placeholder="$t('input') + $t('quartzExecuteLog_triggerName')" autocomplete="off" type="text" />
     </el-form-item>
 
     <!-- 执行结果 -->
@@ -101,12 +76,7 @@ defineExpose({ formRef });
 
     <!-- 用执行时间户Id -->
     <el-form-item :label="$t('quartzExecuteLog_duration')" prop="duration">
-      <el-input
-        v-model="form.duration"
-        :placeholder="$t('input') + $t('quartzExecuteLog_duration')"
-        autocomplete="off"
-        type="text"
-      />
+      <el-input v-model="form.duration" :placeholder="$t('input') + $t('quartzExecuteLog_duration')" autocomplete="off" type="text" />
     </el-form-item>
   </el-form>
 </template>

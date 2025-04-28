@@ -38,15 +38,7 @@ defineExpose({ formRef });
 <template>
   <el-form ref="formRef" :model="form" :rules="rules" isDefault-icon>
     <el-form-item :label="$t('files')" prop="file">
-      <el-upload
-        ref="uploadRef"
-        v-model:file-list="form.file"
-        :autoUpload="false"
-        :limit="1"
-        :on-exceed="handleExceed"
-        class="w-full mt-2"
-        drag
-      >
+      <el-upload ref="uploadRef" v-model:file-list="form.file" :autoUpload="false" :limit="1" :on-exceed="handleExceed" class="w-full mt-2" drag>
         <el-icon class="el-icon--upload">
           <UploadFilled />
         </el-icon>

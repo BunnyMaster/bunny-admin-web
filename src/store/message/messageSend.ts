@@ -1,12 +1,6 @@
 import { defineStore } from 'pinia';
 import { pageSizes } from '@/enums/baseConstant';
-import {
-  createMessage,
-  deleteMessage,
-  getMessagePage,
-  getReceivedUserinfoByMessageId,
-  updateMessage,
-} from '@/api/v1/message/messageSend';
+import { createMessage, deleteMessage, getMessagePage, getReceivedUserinfoByMessageId, updateMessage } from '@/api/v1/message/messageSend';
 import { storePagination } from '@/store/useStorePagination';
 import { storeMessage } from '@/utils/message';
 

@@ -106,8 +106,7 @@ export const appendFieldByUniqueId = (tree: any[], uniqueId: number | string, fi
   if (!tree || tree.length === 0) return [];
   for (const node of tree) {
     const hasChildren = node.children && node.children.length > 0;
-    if (node.uniqueId === uniqueId && Object.prototype.toString.call(fields) === '[object Object]')
-      Object.assign(node, fields);
+    if (node.uniqueId === uniqueId && Object.prototype.toString.call(fields) === '[object Object]') Object.assign(node, fields);
     if (hasChildren) {
       appendFieldByUniqueId(node.children, uniqueId, fields);
     }

@@ -157,15 +157,7 @@ interface DialogOptions extends DialogProps {
    * @description 自定义对话框标题的内容渲染器
    * @see {@link https://element-plus.org/zh-CN/component/dialog.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%B4%E9%83%A8}
    */
-  headerRenderer?: ({
-    close,
-    titleId,
-    titleClass,
-  }: {
-    close: Function;
-    titleId: string;
-    titleClass: string;
-  }) => VNode | Component;
+  headerRenderer?: ({ close, titleId, titleClass }: { close: Function; titleId: string; titleClass: string }) => VNode | Component;
   /** 自定义内容渲染器 */
   contentRenderer?: ({ options, index }: { options: DialogOptions; index: number }) => VNode | Component;
   /** 自定义按钮操作区的内容渲染器，会覆盖`footerButtons`以及默认的 `取消` 和 `确定` 按钮 */

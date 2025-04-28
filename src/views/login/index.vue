@@ -35,19 +35,11 @@ onMounted(() => {
     <img :src="bg" alt="" class="wave" />
     <div class="flex-c absolute right-5 top-3">
       <!-- 主题 -->
-      <el-switch
-        v-model="dataTheme"
-        :active-icon="dayIcon"
-        :inactive-icon="darkIcon"
-        inline-prompt
-        @change="dataThemeChange"
-      />
+      <el-switch v-model="dataTheme" :active-icon="dayIcon" :inactive-icon="darkIcon" inline-prompt @change="dataThemeChange" />
 
       <!-- 国际化 -->
       <el-dropdown trigger="click">
-        <globalization
-          class="hover:text-primary hover:!bg-[transparent] w-[20px] h-[20px] ml-1.5 cursor-pointer outline-none duration-300"
-        />
+        <globalization class="hover:text-primary hover:!bg-[transparent] w-[20px] h-[20px] ml-1.5 cursor-pointer outline-none duration-300" />
         <template #dropdown>
           <el-dropdown-menu class="translation">
             <el-dropdown-item

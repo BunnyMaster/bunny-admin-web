@@ -68,30 +68,15 @@ onMounted(() => {
 <template>
   <div class="main">
     <ReAuth :value="auth.query">
-      <el-form
-        ref="formRef"
-        :inline="true"
-        :model="emailUsersStore.form"
-        class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto"
-      >
+      <el-form ref="formRef" :inline="true" :model="emailUsersStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
         <!-- 邮箱-->
         <el-form-item :label="$t('emailUsers_email')" prop="email">
-          <el-input
-            v-model="emailUsersStore.form.email"
-            :placeholder="`${$t('input')}${$t('emailUsers_email')}`"
-            class="!w-[180px]"
-            clearable
-          />
+          <el-input v-model="emailUsersStore.form.email" :placeholder="`${$t('input')}${$t('emailUsers_email')}`" class="!w-[180px]" clearable />
         </el-form-item>
 
         <!-- host地址-->
         <el-form-item :label="$t('emailUsers_host')" prop="host">
-          <el-input
-            v-model="emailUsersStore.form.host"
-            :placeholder="`${$t('input')}${$t('emailUsers_host')}`"
-            class="!w-[180px]"
-            clearable
-          />
+          <el-input v-model="emailUsersStore.form.host" :placeholder="`${$t('input')}${$t('emailUsers_host')}`" class="!w-[180px]" clearable />
         </el-form-item>
 
         <!-- 端口号-->
@@ -120,23 +105,12 @@ onMounted(() => {
         <!-- 是否启用SSL -->
         <el-form-item label="SSL" prop="openSSL">
           <el-select v-model="emailUsersStore.form.openSSL" class="!w-[180px]" clearable filterable placeholder="SSL">
-            <el-option
-              v-for="(item, index) in enabledOrNotStatus"
-              :key="index"
-              :label="item.label"
-              :navigationBar="false"
-              :value="item.value"
-            />
+            <el-option v-for="(item, index) in enabledOrNotStatus" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
           </el-select>
         </el-form-item>
 
         <el-form-item>
-          <el-button
-            :icon="useRenderIcon('ri:search-line')"
-            :loading="emailUsersStore.loading"
-            type="primary"
-            @click="onSearch"
-          >
+          <el-button :icon="useRenderIcon('ri:search-line')" :loading="emailUsersStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -144,26 +118,14 @@ onMounted(() => {
       </el-form>
     </ReAuth>
 
-    <PureTableBar
-      :columns="columns"
-      :title="$t('email_user_send_config')"
-      @fullscreen="tableRef.setAdaptive()"
-      @refresh="onSearch"
-    >
+    <PureTableBar :columns="columns" :title="$t('email_user_send_config')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
         <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
 
         <!-- 批量删除按钮 -->
-        <el-button
-          v-if="hasAuth(auth.delete)"
-          :disabled="!(deleteIds.length > 0)"
-          :icon="useRenderIcon(Delete)"
-          plain
-          type="danger"
-          @click="onDeleteBatch"
-        >
+        <el-button v-if="hasAuth(auth.delete)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
           {{ $t('deleteBatches') }}
         </el-button>
       </template>
@@ -217,27 +179,13 @@ onMounted(() => {
 
           <!-- 插槽-更新用户 -->
           <template #updateUser="{ row }">
-            <el-button
-              v-if="hasAuth(auth.update)"
-              v-show="row.updateUser"
-              link
-              type="primary"
-              @click="selectUserinfo(row.updateUser)"
-            >
+            <el-button v-if="hasAuth(auth.update)" v-show="row.updateUser" link type="primary" @click="selectUserinfo(row.updateUser)">
               {{ row.updateUsername }}
             </el-button>
           </template>
 
           <template #operation="{ row }">
-            <el-button
-              v-if="hasAuth(auth.update)"
-              :icon="useRenderIcon(EditPen)"
-              :size="size"
-              class="reset-margin"
-              link
-              type="primary"
-              @click="onUpdate(row)"
-            >
+            <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
             <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')}${row.email}?`" @confirm="onDelete(row)">

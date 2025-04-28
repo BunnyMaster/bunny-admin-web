@@ -16,19 +16,7 @@ import { userI18nTypeStore } from '@/store/i18n/i18nType';
 import { onMounted } from 'vue';
 import DropdownMenu from '@/layout/components/lay-navbar/dropdown-menu.vue';
 
-const {
-  layout,
-  device,
-  logout,
-  onPanel,
-  pureApp,
-  username,
-  userAvatar,
-  avatarsStyle,
-  toggleSideBar,
-  getDropdownItemStyle,
-  getDropdownItemClass,
-} = useNav();
+const { layout, device, logout, onPanel, pureApp, username, userAvatar, avatarsStyle, toggleSideBar, getDropdownItemStyle, getDropdownItemClass } = useNav();
 
 const { locale, translation } = useTranslationLang();
 
@@ -41,12 +29,7 @@ onMounted(() => {
 
 <template>
   <div class="navbar bg-[#fff] shadow-sm shadow-[rgba(0,21,41,0.08)]">
-    <LaySidebarTopCollapse
-      v-if="device === 'mobile'"
-      :is-active="pureApp.sidebar.opened"
-      class="hamburger-container"
-      @toggleClick="toggleSideBar"
-    />
+    <LaySidebarTopCollapse v-if="device === 'mobile'" :is-active="pureApp.sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <LaySidebarBreadCrumb v-if="layout !== 'mix' && device !== 'mobile'" class="breadcrumb-container" />
 

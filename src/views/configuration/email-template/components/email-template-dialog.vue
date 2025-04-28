@@ -49,13 +49,7 @@ defineExpose({ formRef });
     <!-- 配置模板邮件关联用户邮件 -->
     <el-form-item :label="$t('emailTemplate_emailUser')" prop="emailUser">
       <el-select v-model="form.emailUser" :placeholder="$t('emailTemplate_emailUser')" clearable filterable>
-        <el-option
-          v-for="(item, index) in emailUsersStore.emailUserList"
-          :key="index"
-          :label="item.key"
-          :navigationBar="false"
-          :value="item.value"
-        />
+        <el-option v-for="(item, index) in emailUsersStore.emailUserList" :key="index" :label="item.key" :navigationBar="false" :value="item.value" />
       </el-select>
     </el-form-item>
 
@@ -85,13 +79,7 @@ defineExpose({ formRef });
     <!--配置邮件类型-->
     <el-form-item :label="$t('emailTemplate_type')" prop="type">
       <el-select v-model="form.type" :placeholder="$t('emailTemplate_type')" clearable filterable>
-        <el-option
-          v-for="(item, index) in emailTemplateStore.allEmailTypes"
-          :key="index"
-          :label="item.key"
-          :navigationBar="false"
-          :value="item.value"
-        />
+        <el-option v-for="(item, index) in emailTemplateStore.allEmailTypes" :key="index" :label="item.key" :navigationBar="false" :value="item.value" />
       </el-select>
     </el-form-item>
   </el-form>

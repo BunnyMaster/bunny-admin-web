@@ -1,13 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import {
-  columns,
-  markAsAllRead,
-  markAsRead,
-  onDelete,
-  onSearch,
-  selectIds,
-} from '@/views/message-manger/message-detail/utils';
+import { columns, markAsAllRead, markAsRead, onDelete, onSearch, selectIds } from '@/views/message-manger/message-detail/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
 import Delete from '@iconify-icons/ep/delete';
@@ -53,39 +46,19 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <PureTableBar
-      :columns="columns"
-      @fullscreen="tableRef.setAdaptive()"
-      @refresh="onSearch((route.params as any).messageType)"
-    >
+    <PureTableBar :columns="columns" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch((route.params as any).messageType)">
       <template #title>
-        <el-segmented
-          v-model="messageUserStore.form.status"
-          :options="isReadStatus"
-          @change="onSearch((route.params as any).messageType)"
-        />
+        <el-segmented v-model="messageUserStore.form.status" :options="isReadStatus" @change="onSearch((route.params as any).messageType)" />
       </template>
 
       <template #buttons>
         <!-- 删除按钮 -->
-        <el-button
-          :disabled="!(selectIds.length > 0)"
-          :icon="useRenderIcon(Delete)"
-          plain
-          type="danger"
-          @click="onDelete"
-        >
+        <el-button :disabled="!(selectIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDelete">
           {{ $t('delete') }}
         </el-button>
 
         <!-- 标为已读 -->
-        <el-button
-          :disabled="!(selectIds.length > 0)"
-          :icon="useRenderIcon('octicon:read-24')"
-          plain
-          type="primary"
-          @click="markAsRead"
-        >
+        <el-button :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('octicon:read-24')" plain type="primary" @click="markAsRead">
           {{ $t('markAsRead') }}
         </el-button>
 

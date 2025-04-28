@@ -27,12 +27,7 @@ defineExpose({ ruleFormRef });
   <el-form ref="ruleFormRef" :model="form" :rules="rules" isDefault-icon label-position="left" label-width="135px">
     <el-form-item :label="$t('i18n.typeName')" prop="typeName">
       <el-select v-model="form.typeName" :placeholder="$t('select') + $t('i18n.typeName')" filterable>
-        <el-option
-          v-for="item in i18nTypeStore.datalist"
-          :key="item.id"
-          :label="item.typeName"
-          :value="item.typeName"
-        />
+        <el-option v-for="item in i18nTypeStore.datalist" :key="item.id" :label="item.typeName" :value="item.typeName" />
       </el-select>
     </el-form-item>
 

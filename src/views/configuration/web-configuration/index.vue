@@ -25,15 +25,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-form
-    ref="ruleFormRef"
-    :model="form"
-    :rules="rules"
-    class="bg-white p-[30px] h-[100%]"
-    label-position="left"
-    label-width="auto"
-    status-icon
-  >
+  <el-form ref="ruleFormRef" :model="form" :rules="rules" class="bg-white p-[30px] h-[100%]" label-position="left" label-width="auto" status-icon>
     <el-row :gutter="30">
       <!-- 应用程序的版本 -->
       <re-col :sm="24" :value="12" :xs="24">
@@ -52,12 +44,7 @@ onMounted(() => {
       <!-- 版权信息 -->
       <re-col :sm="24" :value="12" :xs="24">
         <el-form-item :label="$t('copyright')" prop="copyright">
-          <el-input
-            v-model="form.copyright"
-            :placeholder="$t('input') + $t('copyright')"
-            autocomplete="off"
-            type="text"
-          />
+          <el-input v-model="form.copyright" :placeholder="$t('input') + $t('copyright')" autocomplete="off" type="text" />
         </el-form-item>
       </re-col>
 
@@ -125,12 +112,7 @@ onMounted(() => {
       <re-col :sm="24" :value="12" :xs="24">
         <el-form-item :label="$t('appLocale')" prop="locale">
           <el-select v-model="form.locale" :placeholder="$t('select') + $t('appLocale')" filterable>
-            <el-option
-              v-for="item in i18nTypeStore.datalist"
-              :key="item.id"
-              :label="item.summary"
-              :value="item.typeName"
-            />
+            <el-option v-for="item in i18nTypeStore.datalist" :key="item.id" :label="item.summary" :value="item.typeName" />
           </el-select>
         </el-form-item>
       </re-col>
@@ -292,12 +274,7 @@ onMounted(() => {
       <!-- 要显示的模型 -->
       <re-col :sm="24" :value="12" :xs="24">
         <el-form-item :label="$t('showModel')" prop="showModel">
-          <el-input
-            v-model="form.showModel"
-            :placeholder="$t('input') + $t('showModel')"
-            autocomplete="off"
-            type="text"
-          />
+          <el-input v-model="form.showModel" :placeholder="$t('input') + $t('showModel')" autocomplete="off" type="text" />
         </el-form-item>
       </re-col>
 
@@ -343,26 +320,14 @@ onMounted(() => {
       <!-- 响应式存储的命名空间 -->
       <re-col :sm="24" :value="12" :xs="24">
         <el-form-item :label="$t('responsiveStorageNameSpace')" prop="responsiveStorageNameSpace">
-          <el-input
-            v-model="form.responsiveStorageNameSpace"
-            :placeholder="$t('input') + $t('responsiveStorageNameSpace')"
-            autocomplete="off"
-            type="text"
-          />
+          <el-input v-model="form.responsiveStorageNameSpace" :placeholder="$t('input') + $t('responsiveStorageNameSpace')" autocomplete="off" type="text" />
         </el-form-item>
       </re-col>
 
       <!-- 菜单搜索历史 -->
       <re-col :sm="24" :value="12" :xs="24">
         <el-form-item :label="$t('menuSearchHistory')" prop="menuSearchHistory">
-          <el-input
-            v-model="form.menuSearchHistory"
-            :max="99"
-            :min="1"
-            :placeholder="$t('input') + $t('menuSearchHistory')"
-            autocomplete="off"
-            type="number"
-          />
+          <el-input v-model="form.menuSearchHistory" :max="99" :min="1" :placeholder="$t('input') + $t('menuSearchHistory')" autocomplete="off" type="number" />
         </el-form-item>
       </re-col>
 

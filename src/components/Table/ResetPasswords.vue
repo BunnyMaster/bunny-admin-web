@@ -53,13 +53,7 @@ defineExpose({ ruleFormRef });
   <div class="my-2">
     <el-form ref="ruleFormRef" :model="form" :rules="rules">
       <el-form-item :label="$t('adminUser_password')" prop="password">
-        <el-input
-          v-model="form.password!"
-          :placeholder="$t('adminUser_password')"
-          clearable
-          show-password
-          type="password"
-        />
+        <el-input v-model="form.password!" :placeholder="$t('adminUser_password')" clearable show-password type="password" />
       </el-form-item>
     </el-form>
 

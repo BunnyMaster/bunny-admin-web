@@ -47,25 +47,12 @@ defineExpose({ formRef });
   <el-form ref="formRef" :model="form" :rules="rules" isDefault-icon>
     <el-form-item :label="$t('i18n_type')" prop="type">
       <el-select v-model="form.type" :placeholder="$t('select') + $t('i18n.typeName')" filterable>
-        <el-option
-          v-for="(item, index) in i18nTypeStore.datalist"
-          :key="index"
-          :label="item.typeName"
-          :value="item.typeName"
-        />
+        <el-option v-for="(item, index) in i18nTypeStore.datalist" :key="index" :label="item.typeName" :value="item.typeName" />
       </el-select>
     </el-form-item>
 
     <el-form-item :label="$t('files')" prop="file">
-      <el-upload
-        ref="uploadRef"
-        v-model:file-list="form.file"
-        :autoUpload="false"
-        :limit="1"
-        :on-exceed="handleExceed"
-        class="w-full mt-2"
-        drag
-      >
+      <el-upload ref="uploadRef" v-model:file-list="form.file" :autoUpload="false" :limit="1" :on-exceed="handleExceed" class="w-full mt-2" drag>
         <el-icon class="el-icon--upload">
           <UploadFilled />
         </el-icon>

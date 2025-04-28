@@ -16,9 +16,7 @@
       if (c && !e.__iconfont__svg__cssinject__) {
         e.__iconfont__svg__cssinject__ = !0;
         try {
-          document.write(
-            '<style>.svgfont {display: inline-block;width: 1em;height: 1em;fill: currentColor;vertical-align: -0.1em;font-size:16px;}</style>'
-          );
+          document.write('<style>.svgfont {display: inline-block;width: 1em;height: 1em;fill: currentColor;vertical-align: -0.1em;font-size:16px;}</style>');
         } catch (t) {
           console && console.log(t);
         }

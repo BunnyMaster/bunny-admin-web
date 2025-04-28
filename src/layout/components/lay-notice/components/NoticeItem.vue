@@ -22,9 +22,7 @@ const router = useRouter();
 
 function hoverTitle() {
   nextTick(() => {
-    titleRef.value?.scrollWidth > titleRef.value?.clientWidth
-      ? (titleTooltip.value = true)
-      : (titleTooltip.value = false);
+    titleRef.value?.scrollWidth > titleRef.value?.clientWidth ? (titleTooltip.value = true) : (titleTooltip.value = false);
   });
 }
 
@@ -50,10 +48,7 @@ function goMessageDetail(message: ListItem) {
 </script>
 
 <template>
-  <div
-    class="notice-container border-b-[1px] border-solid border-[#f0f0f0] dark:border-[#303030]"
-    @click="goMessageDetail(noticeItem)"
-  >
+  <div class="notice-container border-b-[1px] border-solid border-[#f0f0f0] dark:border-[#303030]" @click="goMessageDetail(noticeItem)">
     <!--<el-avatar v-if="noticeItem.cover" :size="30" :src="noticeItem.cover" class="notice-container-avatar" />-->
     <img v-if="noticeItem.cover" :src="noticeItem.cover" alt="" class="notice-container-avatar" />
     <div class="notice-container-text">
@@ -82,11 +77,7 @@ function goMessageDetail(message: ListItem) {
         placement="top-start"
         popper-class="notice-title-popper"
       >
-        <div
-          ref="descriptionRef"
-          class="notice-text-description"
-          @mouseover="hoverDescription($event, noticeItem.description)"
-        >
+        <div ref="descriptionRef" class="notice-text-description" @mouseover="hoverDescription($event, noticeItem.description)">
           {{ noticeItem.description }}
         </div>
       </el-tooltip>

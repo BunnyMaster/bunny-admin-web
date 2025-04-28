@@ -12,13 +12,7 @@ const { title, getLogo } = useNav();
 <template>
   <div :class="{ collapses: collapse }" class="sidebar-logo-container">
     <transition name="sidebarLogoFade">
-      <router-link
-        v-if="collapse"
-        key="collapse"
-        :title="title"
-        :to="getTopMenu()?.path ?? '/'"
-        class="sidebar-logo-link"
-      >
+      <router-link v-if="collapse" key="collapse" :title="title" :to="getTopMenu()?.path ?? '/'" class="sidebar-logo-link">
         <img :src="getLogo()" alt="logo" />
         <span class="sidebar-title">{{ title }}</span>
       </router-link>

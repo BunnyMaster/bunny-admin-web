@@ -14,29 +14,13 @@ const router = useRouter();
   <div class="flex justify-center items-center h-[640px]">
     <noServer />
     <div class="ml-12">
-      <p
-        v-motion
-        :enter="{ opacity: 1, y: 0, transition: { delay: 80 } }"
-        :initial="{ opacity: 0, y: 100 }"
-        class="font-medium text-4xl mb-4 dark:text-white"
-      >
+      <p v-motion :enter="{ opacity: 1, y: 0, transition: { delay: 80 } }" :initial="{ opacity: 0, y: 100 }" class="font-medium text-4xl mb-4 dark:text-white">
         500
       </p>
-      <p
-        v-motion
-        :enter="{ opacity: 1, y: 0, transition: { delay: 120 } }"
-        :initial="{ opacity: 0, y: 100 }"
-        class="mb-4 text-gray-500"
-      >
+      <p v-motion :enter="{ opacity: 1, y: 0, transition: { delay: 120 } }" :initial="{ opacity: 0, y: 100 }" class="mb-4 text-gray-500">
         {{ $t('sorryServerError') }}
       </p>
-      <el-button
-        v-motion
-        :enter="{ opacity: 1, y: 0, transition: { delay: 160 } }"
-        :initial="{ opacity: 0, y: 100 }"
-        type="primary"
-        @click="router.push('/')"
-      >
+      <el-button v-motion :enter="{ opacity: 1, y: 0, transition: { delay: 160 } }" :initial="{ opacity: 0, y: 100 }" type="primary" @click="router.push('/')">
         {{ $t('returnToHomepage') }}
       </el-button>
     </div>

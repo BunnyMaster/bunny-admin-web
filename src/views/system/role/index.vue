@@ -30,8 +30,6 @@ import Menu from '@iconify-icons/ep/menu';
 import AssignPowersToRole from '@/views/system/role/components/assign-powers-to-role.vue';
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
-import { exportRoleList } from '@/api/v1/system/role';
-import { downloadBlob } from '@/utils/sso';
 import Download from '@iconify-icons/ep/download';
 import Upload from '@iconify-icons/ri/upload-line';
 import { addDialog } from '@/components/ReDialog/index';
@@ -67,10 +65,8 @@ const resetForm = async (formEl: FormInstance) => {
 };
 
 /* 使用Excel导出导出角色列表 */
-const downloadRoleExcel = async () => {
-  const result = await exportRoleList();
-
-  downloadBlob(result, 'role.zip');
+const downloadRoleExcel = () => {
+  roleStore.downloadRoleByFile();
 };
 
 /* 使用文件更新角色 */
@@ -107,35 +103,15 @@ onMounted(() => {
 <template>
   <div class="main">
     <ReAuth :value="auth.query">
-      <el-form
-        ref="formRef"
-        :inline="true"
-        :model="roleStore.form"
-        class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto"
-      >
+      <el-form ref="formRef" :inline="true" :model="roleStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
         <el-form-item :label="$t('role_roleCode')" prop="roleCode">
-          <el-input
-            v-model="roleStore.form.roleCode"
-            :placeholder="`${$t('input')}${$t('role_roleCode')}`"
-            class="!w-[180px]"
-            clearable
-          />
+          <el-input v-model="roleStore.form.roleCode" :placeholder="`${$t('input')}${$t('role_roleCode')}`" class="!w-[180px]" clearable />
         </el-form-item>
         <el-form-item :label="$t('role_description')" prop="description">
-          <el-input
-            v-model="roleStore.form.description"
-            :placeholder="`${$t('input')}${$t('role_description')}`"
-            class="!w-[180px]"
-            clearable
-          />
+          <el-input v-model="roleStore.form.description" :placeholder="`${$t('input')}${$t('role_description')}`" class="!w-[180px]" clearable />
         </el-form-item>
         <el-form-item>
-          <el-button
-            :icon="useRenderIcon('ri:search-line')"
-            :loading="roleStore.loading"
-            type="primary"
-            @click="onSearch"
-          >
+          <el-button :icon="useRenderIcon('ri:search-line')" :loading="roleStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -154,23 +130,11 @@ onMounted(() => {
       >
         <template #buttons>
           <!-- 下载Excel配置 -->
-          <el-button
-            v-if="hasAuth(auth.update)"
-            :icon="useRenderIcon(Download)"
-            plain
-            type="primary"
-            @click="downloadRoleExcel"
-          >
+          <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(Download)" plain type="primary" @click="downloadRoleExcel">
             {{ $t('download_configuration') }}
           </el-button>
           <!-- 文件更新 -->
-          <el-button
-            v-if="hasAuth(auth.update)"
-            :icon="useRenderIcon(Upload)"
-            plain
-            type="primary"
-            @click="onUpdateByFile"
-          >
+          <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(Upload)" plain type="primary" @click="onUpdateByFile">
             {{ $t('file_import') }}
           </el-button>
 
@@ -179,14 +143,7 @@ onMounted(() => {
           </el-button>
 
           <!-- 批量删除按钮 -->
-          <el-button
-            v-if="hasAuth(auth.delete)"
-            :disabled="!(deleteIds.length > 0)"
-            :icon="useRenderIcon(Delete)"
-            plain
-            type="danger"
-            @click="onDeleteBatch"
-          >
+          <el-button v-if="hasAuth(auth.delete)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
             {{ $t('delete_batches') }}
           </el-button>
         </template>
@@ -238,11 +195,7 @@ onMounted(() => {
               </el-button>
 
               <!-- 删除 -->
-              <el-popconfirm
-                v-if="hasAuth(auth.delete)"
-                :title="`${$t('delete')}${row.roleCode}?`"
-                @confirm="onDelete(row)"
-              >
+              <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')}${row.roleCode}?`" @confirm="onDelete(row)">
                 <template #reference>
                   <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                     {{ $t('delete') }}

@@ -94,16 +94,8 @@ function resolvePath(routePath) {
 </script>
 
 <template>
-  <SidebarLinkItem
-    v-if="hasOneShowingChild(item.children, item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren)"
-    :to="item"
-  >
-    <el-menu-item
-      :class="{ 'submenu-title-noDropdown': !isNest }"
-      :index="resolvePath(onlyOneChild.path)"
-      :style="getNoDropdownStyle"
-      v-bind="attrs"
-    >
+  <SidebarLinkItem v-if="hasOneShowingChild(item.children, item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren)" :to="item">
+    <el-menu-item :class="{ 'submenu-title-noDropdown': !isNest }" :index="resolvePath(onlyOneChild.path)" :style="getNoDropdownStyle" v-bind="attrs">
       <div v-if="toRaw(item.meta.icon)" :style="getSubMenuIconStyle" class="sub-menu-icon">
         <component :is="useRenderIcon(toRaw(onlyOneChild.meta.icon) || (item.meta && toRaw(item.meta.icon)))" />
       </div>
@@ -160,13 +152,6 @@ function resolvePath(routePath) {
       <SidebarExtraIcon v-if="!isCollapse" :extraIcon="item.meta.extraIcon" />
     </template>
 
-    <sidebar-item
-      v-for="child in item.children"
-      :key="child.path"
-      :base-path="resolvePath(child.path)"
-      :is-nest="true"
-      :item="child"
-      class="nest-menu"
-    />
+    <sidebar-item v-for="child in item.children" :key="child.path" :base-path="resolvePath(child.path)" :is-nest="true" :item="child" class="nest-menu" />
   </el-sub-menu>
 </template>

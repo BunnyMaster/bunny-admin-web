@@ -62,13 +62,7 @@ onBeforeUnmount(() => {
           }"
           :class="iconClass"
         >
-          <IconifyIconOffline
-            :icon="CloseIcon"
-            class="dark:text-white"
-            height="18px"
-            width="18px"
-            @click="show = !show"
-          />
+          <IconifyIconOffline :icon="CloseIcon" class="dark:text-white" height="18px" width="18px" @click="show = !show" />
         </span>
       </div>
       <el-scrollbar>

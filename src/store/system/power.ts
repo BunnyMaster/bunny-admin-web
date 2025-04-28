@@ -2,14 +2,17 @@ import { defineStore } from 'pinia';
 import {
   createPermission,
   deletePermission,
+  exportPermission,
   getPermissionList,
   getPermissionPage,
+  importPermission,
   updatePermission,
   updatePermissionListByParentId,
 } from '@/api/v1/system/power';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
+import { downloadBlob } from '@/utils/sso';
 
 /**
  * 权限 Store
@@ -79,9 +82,16 @@ export const usePermissionStore = defineStore('PermissionStore', {
       return storeMessage(result);
     },
 
-    /** 批量修改权限父级 */
-    async updatePermissionListByParentId(data: any) {
-      const result = await updatePermissionListByParentId(data);
+    /* 使用Excel导出权限 */
+    async downloadPermissionByFile() {
+      const result = await exportPermission();
+
+      downloadBlob(result, 'role.zip');
+    },
+
+    /* 使用文件导入权限 */
+    async uploadPermissionByFile(data: any) {
+      const result = await importPermission(data);
       return storeMessage(result);
     },
 
@@ -90,6 +100,12 @@ export const usePermissionStore = defineStore('PermissionStore', {
       const result = await getPermissionList();
       if (result.code !== 200) return;
       this.allPowerList = result.data;
+    },
+
+    /** 批量修改权限父级 */
+    async updatePermissionListByParentId(data: any) {
+      const result = await updatePermissionListByParentId(data);
+      return storeMessage(result);
     },
   },
 });

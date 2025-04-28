@@ -40,13 +40,7 @@ export const isReadStatus = [
 
 /** 分页默认数组个数 */
 export const pageSizes: number[] = [15, 30, 50, 100, 150];
-export const tableSelectButtonClass = computed(() => [
-  '!h-[20px]',
-  'reset-margin',
-  '!text-gray-500',
-  'dark:!text-white',
-  'dark:hover:!text-primary',
-]);
+export const tableSelectButtonClass = computed(() => ['!h-[20px]', 'reset-margin', '!text-gray-500', 'dark:!text-white', 'dark:hover:!text-primary']);
 
 export const UserAvatar =
   'https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoj0hHXhgJNOTSOFsS4uZs8x1ConecaVOB8eIl115xmJZcT4oCicvia7wMEufibKtTLqiaJeanU2Lpg3w/132';

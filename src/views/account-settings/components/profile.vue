@@ -4,15 +4,7 @@ import { sexConstant } from '@/enums/baseConstant';
 import { $t } from '@/plugins/i18n';
 import { useAdminUserStore } from '@/store/system/adminUser';
 import { message } from '@/utils/message';
-import {
-  cropperBlob,
-  handleSubmitImage,
-  isShow,
-  onSearchByUserinfo,
-  rules,
-  uploadAvatarSrc,
-  userInfos,
-} from '@/views/account-settings/utils';
+import { cropperBlob, handleSubmitImage, isShow, onSearchByUserinfo, rules, uploadAvatarSrc, userInfos } from '@/views/account-settings/utils';
 import uploadLine from '@iconify-icons/ri/upload-line';
 import { deviceDetection } from '@pureadmin/utils';
 import type { FormInstance } from 'element-plus';
@@ -82,14 +74,7 @@ onMounted(() => {
     <el-form ref="userInfoFormRef" :model="userInfos" :rules="rules" label-position="top">
       <el-form-item :label="$t('avatar')">
         <el-avatar :size="80" :src="userInfos.avatar" />
-        <el-upload
-          ref="uploadRef"
-          :auto-upload="false"
-          :limit="1"
-          :on-change="onChange"
-          :show-file-list="false"
-          accept="image/*"
-        >
+        <el-upload ref="uploadRef" :auto-upload="false" :limit="1" :on-change="onChange" :show-file-list="false" accept="image/*">
           <el-button class="ml-4" plain>
             <IconifyIconOffline :icon="uploadLine" />
             <span class="ml-2">{{ $t('upload_avatar') }}</span>
@@ -102,13 +87,7 @@ onMounted(() => {
 
       <!-- 用户名 -->
       <el-form-item :label="$t('adminUser_username')" prop="username">
-        <el-input
-          v-model="userInfos.username"
-          :placeholder="$t('adminUser_username')"
-          autocomplete="off"
-          disabled
-          type="text"
-        />
+        <el-input v-model="userInfos.username" :placeholder="$t('adminUser_username')" autocomplete="off" disabled type="text" />
       </el-form-item>
 
       <!-- 昵称 -->
@@ -129,13 +108,7 @@ onMounted(() => {
       <!-- 性别 -->
       <el-form-item :label="$t('adminUser_sex')" prop="sex">
         <el-select v-model="userInfos.sex" :placeholder="$t('adminUser_sex')" clearable filterable>
-          <el-option
-            v-for="(item, index) in sexConstant"
-            :key="index"
-            :label="item.label"
-            :navigationBar="false"
-            :value="item.value"
-          />
+          <el-option v-for="(item, index) in sexConstant" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
         </el-select>
       </el-form-item>
 

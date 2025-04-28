@@ -30,34 +30,17 @@ defineExpose({ formRef });
   <el-form ref="formRef" :model="form" :rules="rules" label-width="auto">
     <!-- 消息类型 -->
     <el-form-item :label="$t('messageType')" prop="messageType">
-      <el-input
-        v-model="form.messageType"
-        :placeholder="$t('input') + $t('messageType')"
-        autocomplete="off"
-        type="text"
-      />
+      <el-input v-model="form.messageType" :placeholder="$t('input') + $t('messageType')" autocomplete="off" type="text" />
     </el-form-item>
 
     <!-- 消息名称 -->
     <el-form-item :label="$t('messageName')" prop="messageName">
-      <el-input
-        v-model="form.messageName"
-        :placeholder="$t('input') + $t('messageName')"
-        autocomplete="off"
-        type="text"
-      />
+      <el-input v-model="form.messageName" :placeholder="$t('input') + $t('messageName')" autocomplete="off" type="text" />
     </el-form-item>
 
     <!-- 消息备注 -->
     <el-form-item :label="$t('summary')" prop="summary">
-      <el-input
-        v-model="form.summary"
-        :placeholder="$t('input') + $t('summary')"
-        autocomplete="off"
-        maxlength="300"
-        show-word-limit
-        type="textarea"
-      />
+      <el-input v-model="form.summary" :placeholder="$t('input') + $t('summary')" autocomplete="off" maxlength="300" show-word-limit type="textarea" />
     </el-form-item>
 
     <!-- 是否启用 -->

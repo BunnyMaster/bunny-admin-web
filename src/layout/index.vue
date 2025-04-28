@@ -131,9 +131,7 @@ const LayHeader = defineComponent({
       },
       {
         default: () => [
-          !pureSetting.hiddenSideBar && (layout.value.includes('vertical') || layout.value.includes('mix'))
-            ? h(LayNavbar)
-            : null,
+          !pureSetting.hiddenSideBar && (layout.value.includes('vertical') || layout.value.includes('mix')) ? h(LayNavbar) : null,
           !pureSetting.hiddenSideBar && layout.value.includes('horizontal') ? h(NavHorizontal) : null,
           h(LayTag),
         ],
@@ -145,11 +143,7 @@ const LayHeader = defineComponent({
 
 <template>
   <div ref="appWrapperRef" :class="['app-wrapper', set.classes]">
-    <div
-      v-show="set.device === 'mobile' && set.sidebar.opened && layout.includes('vertical')"
-      class="app-mask"
-      @click="useAppStoreHook().toggleSideBar()"
-    />
+    <div v-show="set.device === 'mobile' && set.sidebar.opened && layout.includes('vertical')" class="app-mask" @click="useAppStoreHook().toggleSideBar()" />
     <NavVertical v-show="!pureSetting.hiddenSideBar && (layout.includes('vertical') || layout.includes('mix'))" />
     <div :class="['main-container', pureSetting.hiddenSideBar ? 'main-hidden' : '']">
       <div v-if="set.fixedHeader">

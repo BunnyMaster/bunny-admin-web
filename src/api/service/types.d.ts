@@ -38,12 +38,7 @@ export interface PureHttpRequestConfig extends AxiosRequestConfig {
 }
 
 export default class PureHttp {
-  request<T>(
-    method: RequestMethods,
-    url: string,
-    param?: AxiosRequestConfig,
-    axiosConfig?: PureHttpRequestConfig
-  ): Promise<T>;
+  request<T>(method: RequestMethods, url: string, param?: AxiosRequestConfig, axiosConfig?: PureHttpRequestConfig): Promise<T>;
 
   post<T, P>(url: string, params?: P, config?: PureHttpRequestConfig): Promise<T>;
 

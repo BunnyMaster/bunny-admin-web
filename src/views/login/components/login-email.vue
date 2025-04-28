@@ -109,24 +109,13 @@ onBeforeUnmount(() => {
   <el-form ref="ruleFormRef" :model="ruleForm" :rules="emailRules" size="large">
     <Motion :delay="100">
       <el-form-item prop="username">
-        <el-input
-          v-model="ruleForm.username"
-          :placeholder="t('login.username')"
-          :prefix-icon="useRenderIcon(User)"
-          clearable
-        />
+        <el-input v-model="ruleForm.username" :placeholder="t('login.username')" :prefix-icon="useRenderIcon(User)" clearable />
       </el-form-item>
     </Motion>
 
     <Motion :delay="150">
       <el-form-item prop="password">
-        <el-input
-          v-model="ruleForm.password"
-          :placeholder="t('login.password')"
-          :prefix-icon="useRenderIcon(Lock)"
-          clearable
-          show-password
-        />
+        <el-input v-model="ruleForm.password" :placeholder="t('login.password')" :prefix-icon="useRenderIcon(Lock)" clearable show-password />
       </el-form-item>
     </Motion>
 
@@ -150,9 +139,7 @@ onBeforeUnmount(() => {
           </template>
         </el-input>
         <el-checkbox v-model="userStore.isRemembered">
-          <el-text size="small" type="primary">
-            {{ userStore.readMeDay }}天免登录(邮箱验证码随便输入,后端校验验证码已注释)
-          </el-text>
+          <el-text size="small" type="primary">{{ userStore.readMeDay }}天免登录(邮箱验证码随便输入,后端校验验证码已注释)</el-text>
         </el-checkbox>
       </el-form-item>
     </Motion>

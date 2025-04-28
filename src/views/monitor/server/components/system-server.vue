@@ -87,9 +87,7 @@ const formatValue = (va: any) => {
         </el-row>
         <p class="list-card-item_detail--name text-text_color_primary">Redis状态</p>
         <el-text>
-          <div>
-            Redis状态：{{ systemServerInfo?.components?.redis?.status === 'UP' ? $t('enable') : $t('disable') }}
-          </div>
+          <div>Redis状态：{{ systemServerInfo?.components?.redis?.status === 'UP' ? $t('enable') : $t('disable') }}</div>
           <div>Redis版本：{{ systemServerInfo?.components?.redis?.details.version }}</div>
         </el-text>
       </div>

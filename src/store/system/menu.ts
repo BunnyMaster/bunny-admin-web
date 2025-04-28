@@ -1,11 +1,4 @@
-import {
-  clearRouterRole,
-  createRouter,
-  deletedRouterByIds,
-  getRoleListByRouterId,
-  getRouterList,
-  updateRouter,
-} from '@/api/v1/menu/menu';
+import { clearRouterRole, createRouter, deletedRouterByIds, getRoleListByRouterId, getRouterList, updateRouter } from '@/api/v1/menu/menu';
 import { $t } from '@/plugins/i18n';
 import { storeMessage } from '@/utils/message';
 import { handleTree } from '@/utils/tree';

@@ -27,8 +27,7 @@ const mixRef = ref();
 const verticalRef = ref();
 const horizontalRef = ref();
 
-const { dataTheme, overallStyle, layoutTheme, themeColors, toggleClass, dataThemeChange, setLayoutThemeColor } =
-  useDataThemeChange();
+const { dataTheme, overallStyle, layoutTheme, themeColors, toggleClass, dataThemeChange, setLayoutThemeColor } = useDataThemeChange();
 
 /* body添加layout属性，作用于src/style/sidebar.scss */
 if (unref(layoutTheme)) {
@@ -366,13 +365,7 @@ onUnmounted(() => removeMatchMedia);
 
       <span v-if="useAppStoreHook().getViewportWidth > 1280">
         <p :class="['mt-5', pClass]">{{ t('panel.pureStretch') }}</p>
-        <Segmented
-          :modelValue="isNumber(settings.stretch) ? 1 : 0"
-          :options="stretchTypeOptions"
-          class="mb-2 select-none"
-          resize
-          @change="stretchTypeChange"
-        />
+        <Segmented :modelValue="isNumber(settings.stretch) ? 1 : 0" :options="stretchTypeOptions" class="mb-2 select-none" resize @change="stretchTypeChange" />
         <el-input-number
           v-if="isNumber(settings.stretch)"
           v-model="settings.stretch as number"
@@ -387,11 +380,7 @@ onUnmounted(() => removeMatchMedia);
           class="bg-transparent flex-c w-full h-20 rounded-md border border-[var(--pure-border-color)]"
           @click="setStretch(!settings.stretch)"
         >
-          <div
-            :class="[settings.stretch ? 'w-[24%]' : 'w-[50%]']"
-            class="flex-bc transition-all duration-300"
-            style="color: var(--el-color-primary)"
-          >
+          <div :class="[settings.stretch ? 'w-[24%]' : 'w-[50%]']" class="flex-bc transition-all duration-300" style="color: var(--el-color-primary)">
             <IconifyIconOffline :icon="settings.stretch ? RightArrow : LeftArrow" height="20" />
             <div class="flex-grow border-b border-dashed" style="border-color: var(--el-color-primary)" />
             <IconifyIconOffline :icon="settings.stretch ? LeftArrow : RightArrow" height="20" />
@@ -400,13 +389,7 @@ onUnmounted(() => removeMatchMedia);
       </span>
 
       <p :class="['mt-4', pClass]">{{ t('panel.pureTagsStyle') }}</p>
-      <Segmented
-        :modelValue="markValue === 'smart' ? 0 : markValue === 'card' ? 1 : 2"
-        :options="markOptions"
-        class="select-none"
-        resize
-        @change="onChange"
-      />
+      <Segmented :modelValue="markValue === 'smart' ? 0 : markValue === 'card' ? 1 : 2" :options="markOptions" class="select-none" resize @change="onChange" />
 
       <p class="mt-5 font-medium text-sm dark:text-white">
         {{ t('panel.pureInterfaceDisplay') }}

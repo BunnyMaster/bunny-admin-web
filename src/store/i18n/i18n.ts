@@ -1,12 +1,4 @@
-import {
-  createI18n,
-  deleteI18n,
-  downloadI18n,
-  getI18nMap,
-  getI18nPage,
-  updateI18n,
-  uploadI18nFile,
-} from '@/api/v1/i18n';
+import { createI18n, deleteI18n, downloadI18n, getI18nMap, getI18nPage, updateI18n, uploadI18nFile } from '@/api/v1/i18n';
 import { pageSizes } from '@/enums/baseConstant';
 import { storePagination } from '@/store/useStorePagination';
 import { storeMessage } from '@/utils/message';

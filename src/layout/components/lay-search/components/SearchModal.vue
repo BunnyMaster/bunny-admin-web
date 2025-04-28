@@ -110,8 +110,7 @@ function search() {
   resultOptions.value = flatMenusData.filter((menu) =>
     keyword.value
       ? $t(menu.meta?.title).toLocaleLowerCase().includes(keyword.value.toLocaleLowerCase().trim()) ||
-        (locale.value === 'zh' &&
-          !isAllEmpty(match($t(menu.meta?.title).toLocaleLowerCase(), keyword.value.toLocaleLowerCase().trim())))
+        (locale.value === 'zh' && !isAllEmpty(match($t(menu.meta?.title).toLocaleLowerCase(), keyword.value.toLocaleLowerCase().trim())))
       : false
   );
   activePath.value = resultOptions.value?.length > 0 ? resultOptions.value[0].path : '';
@@ -270,14 +269,7 @@ onKeyStroke('ArrowDown', handleDown);
     @closed="inputRef.blur()"
     @opened="inputRef.focus()"
   >
-    <el-input
-      ref="inputRef"
-      v-model="keyword"
-      :placeholder="t('search.purePlaceholder')"
-      clearable
-      size="large"
-      @input="handleSearch"
-    >
+    <el-input ref="inputRef" v-model="keyword" :placeholder="t('search.purePlaceholder')" clearable size="large" @input="handleSearch">
       <template #prefix>
         <IconifyIconOffline :icon="SearchIcon" class="text-primary w-[24px] h-[24px]" />
       </template>
@@ -295,13 +287,7 @@ onKeyStroke('ArrowDown', handleDown);
           @delete="handleDelete"
           @drag="handleDrag"
         />
-        <SearchResult
-          v-if="showSearchResult"
-          ref="resultRef"
-          v-model:value="activePath"
-          :options="resultOptions"
-          @click="handleEnter"
-        />
+        <SearchResult v-if="showSearchResult" ref="resultRef" v-model:value="activePath" :options="resultOptions" @click="handleEnter" />
       </el-scrollbar>
     </div>
     <template #footer>

@@ -39,13 +39,7 @@ defineExpose({ hidePopover });
         </div>
       </template>
       <div class="flex flex-wrap justify-center items-center text-center">
-        <el-image
-          v-if="cropperImg"
-          :preview-src-list="Array.of(cropperImg)"
-          :src="cropperImg"
-          class="cropper-img-preview"
-          fit="contain"
-        />
+        <el-image v-if="cropperImg" :preview-src-list="Array.of(cropperImg)" :src="cropperImg" class="cropper-img-preview" fit="contain" />
         <div v-if="infos" class="mt-1">
           <p>{{ $t('image_size') }}：{{ parseInt(infos.width) }} × {{ parseInt(infos.height) }}{{ $t('pixel') }}</p>
           <p>{{ $t('file_size') }}：{{ formatBytes(infos.size) }}（{{ infos.size }} {{ $t('bytes') }}</p>

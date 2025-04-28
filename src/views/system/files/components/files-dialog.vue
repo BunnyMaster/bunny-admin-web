@@ -59,26 +59,14 @@ defineExpose({ formRef });
       <el-input v-if="form.isUpload" v-model="form.filepath" autocomplete="off" disabled type="text" />
 
       <el-select v-else v-model="form.filepath" :placeholder="$t('select') + $t('files_filepath')" clearable filterable>
-        <el-option
-          v-for="(item, index) in filesStore.allFilesStoragePath"
-          :key="index"
-          :label="item"
-          :navigationBar="false"
-          :value="item"
-        />
+        <el-option v-for="(item, index) in filesStore.allFilesStoragePath" :key="index" :label="item" :navigationBar="false" :value="item" />
       </el-select>
     </el-form-item>
 
     <!-- 文件类型---上传显示 -->
     <el-form-item v-show="form.isUpload" :label="$t('files_fileType')" prop="fileType">
       <el-select v-model="form.fileType" :placeholder="$t('select') + $t('files_fileType')" clearable filterable>
-        <el-option
-          v-for="(item, index) in filesStore.allMediaTypes"
-          :key="index"
-          :label="item"
-          :navigationBar="false"
-          :value="item"
-        />
+        <el-option v-for="(item, index) in filesStore.allMediaTypes" :key="index" :label="item" :navigationBar="false" :value="item" />
       </el-select>
     </el-form-item>
 
@@ -88,16 +76,7 @@ defineExpose({ formRef });
 
     <!-- 文件列表---上传不显示 -->
     <el-form-item :label="$t('files')" prop="files">
-      <el-upload
-        v-if="form.isUpload"
-        ref="upload"
-        v-model:file-list="form.files"
-        :auto-upload="false"
-        :limit="1"
-        :on-exceed="handleExceed"
-        class="w-full"
-        drag
-      >
+      <el-upload v-if="form.isUpload" ref="upload" v-model:file-list="form.files" :auto-upload="false" :limit="1" :on-exceed="handleExceed" class="w-full" drag>
         <el-icon class="el-icon--upload">
           <UploadFilled />
         </el-icon>

@@ -33,35 +33,15 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <el-form
-      ref="formRef"
-      :inline="true"
-      :model="i18nTypeStore.form"
-      class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto"
-    >
+    <el-form ref="formRef" :inline="true" :model="i18nTypeStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
       <el-form-item :label="$t('i18n_typeName')" prop="typeName">
-        <el-input
-          v-model="i18nTypeStore.form.typeName"
-          :placeholder="`${$t('input')}${$t('i18n_typeName')}`"
-          class="!w-[180px]"
-          clearable
-        />
+        <el-input v-model="i18nTypeStore.form.typeName" :placeholder="`${$t('input')}${$t('i18n_typeName')}`" class="!w-[180px]" clearable />
       </el-form-item>
       <el-form-item :label="$t('i18n_summary')" prop="summary">
-        <el-input
-          v-model="i18nTypeStore.form.summary"
-          :placeholder="`${$t('input')}${$t('i18n_summary')}`"
-          class="!w-[180px]"
-          clearable
-        />
+        <el-input v-model="i18nTypeStore.form.summary" :placeholder="`${$t('input')}${$t('i18n_summary')}`" class="!w-[180px]" clearable />
       </el-form-item>
       <el-form-item>
-        <el-button
-          :icon="useRenderIcon('ri:search-line')"
-          :loading="i18nTypeStore.loading"
-          type="primary"
-          @click="onSearch"
-        >
+        <el-button :icon="useRenderIcon('ri:search-line')" :loading="i18nTypeStore.loading" type="primary" @click="onSearch">
           {{ $t('search') }}
         </el-button>
         <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -109,22 +89,10 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
-            <el-button
-              v-if="hasAuth(auth.update)"
-              :icon="useRenderIcon(EditPen)"
-              :size="size"
-              class="reset-margin"
-              link
-              type="primary"
-              @click="onUpdate(row)"
-            >
+            <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
-            <el-popconfirm
-              v-if="hasAuth(auth.delete)"
-              :title="`${$t('delete')} ${row.typeName}?`"
-              @confirm="onDelete(row)"
-            >
+            <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')} ${row.typeName}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

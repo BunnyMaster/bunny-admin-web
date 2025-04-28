@@ -1,11 +1,5 @@
 import { defineStore } from 'pinia';
-import {
-  createEmailUsers,
-  deleteEmailUsers,
-  getEmailUserList,
-  getEmailUserPage,
-  updateEmailUsers,
-} from '@/api/v1/email/emailUsers';
+import { createEmailUsers, deleteEmailUsers, getEmailUserList, getEmailUserPage, updateEmailUsers } from '@/api/v1/email/emailUsers';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';

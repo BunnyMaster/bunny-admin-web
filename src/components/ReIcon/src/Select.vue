@@ -97,9 +97,7 @@ function onClear() {
 
 watch(
   () => pageList.value,
-  () =>
-    currentActiveType.value !== 'web' &&
-    (totalPage.value = copyIconList[currentActiveType.value].filter((i) => i.includes(filterValue.value)).length),
+  () => currentActiveType.value !== 'web' && (totalPage.value = copyIconList[currentActiveType.value].filter((i) => i.includes(filterValue.value)).length),
   { immediate: true }
 );
 watch(
@@ -165,9 +163,7 @@ watch(
                   size="small"
                   @current-change="onCurrentChange"
                 />
-                <el-button bg class="justify-end mr-2 ml-2" size="small" text type="danger" @click="onClear">
-                  清空
-                </el-button>
+                <el-button bg class="justify-end mr-2 ml-2" size="small" text type="danger" @click="onClear">清空</el-button>
               </div>
             </el-tab-pane>
           </el-tabs>

@@ -87,9 +87,7 @@ const isIndeterminate = ref(false);
 // 动态行
 const dynamicColumns = ref(props.column);
 // 过滤是否选中的列
-const filterColumns = cloneDeep(props.column).filter((column) =>
-  isBoolean(column?.hide) ? !column.hide : !(isFunction(column?.hide) && column?.hide())
-);
+const filterColumns = cloneDeep(props.column).filter((column) => (isBoolean(column?.hide) ? !column.hide : !(isFunction(column?.hide) && column?.hide())));
 // 选择当前列
 const checkedColumns = ref(getKeyList(cloneDeep(filterColumns), 'label'));
 const checkColumnList = ref(getKeyList(cloneDeep(dynamicColumns.value), 'label'));
@@ -174,8 +172,7 @@ const onReset = async () => {
 /** 列展示拖拽排序 */
 const rowDrop = (event: any) => {
   nextTick(() => {
-    const wrapper: HTMLElement = (instance?.proxy?.$refs[`GroupRef${unref(props.tableKey)}`] as any).$el
-      .firstElementChild;
+    const wrapper: HTMLElement = (instance?.proxy?.$refs[`GroupRef${unref(props.tableKey)}`] as any).$el.firstElementChild;
     Sortable.create(wrapper, {
       animation: 300,
       handle: '.drag-btn',
@@ -260,11 +257,7 @@ onMounted(() => {
             </div>
 
             <!-- 表格刷新按钮 -->
-            <RefreshIcon
-              v-tippy="rendTipProps('刷新')"
-              :class="`w-[16px] ${iconClass()}} ${loading ? 'animate-spin' : ''}`"
-              @click="onReFresh"
-            />
+            <RefreshIcon v-tippy="rendTipProps('刷新')" :class="`w-[16px] ${iconClass()}} ${loading ? 'animate-spin' : ''}`" @click="onReFresh" />
             <el-divider direction="vertical" />
 
             <!-- 选择表格大小 -->
@@ -275,10 +268,7 @@ onMounted(() => {
                   <el-dropdown-item :style="getDropdownItemStyle(size, 'large')" @click="handleTableSizeClick('large')">
                     {{ $t('style.larger') }}
                   </el-dropdown-item>
-                  <el-dropdown-item
-                    :style="getDropdownItemStyle(size, 'default')"
-                    @click="handleTableSizeClick('default')"
-                  >
+                  <el-dropdown-item :style="getDropdownItemStyle(size, 'default')" @click="handleTableSizeClick('default')">
                     {{ t('style.default') }}
                   </el-dropdown-item>
                   <el-dropdown-item :style="getDropdownItemStyle(size, 'small')" @click="handleTableSizeClick('small')">
@@ -296,13 +286,7 @@ onMounted(() => {
               </template>
 
               <div :class="topClass()">
-                <el-checkbox
-                  v-model="checkAll"
-                  :indeterminate="isIndeterminate"
-                  class="!-mr-1"
-                  label="列展示"
-                  @change="handleCheckAllChange"
-                />
+                <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" class="!-mr-1" label="列展示" @change="handleCheckAllChange" />
                 <el-button link type="primary" @click="onReset">
                   {{ t('buttons.rest') }}
                 </el-button>
@@ -310,23 +294,11 @@ onMounted(() => {
 
               <div class="pt-[6px] pl-[11px]">
                 <el-scrollbar max-height="36vh">
-                  <el-checkbox-group
-                    :ref="`GroupRef${unref(props.tableKey)}`"
-                    :modelValue="checkedColumns"
-                    @change="handleCheckedColumnsChange"
-                  >
+                  <el-checkbox-group :ref="`GroupRef${unref(props.tableKey)}`" :modelValue="checkedColumns" @change="handleCheckedColumnsChange">
                     <el-space :alignment="'flex-start'" :size="0" direction="vertical">
                       <div v-for="(item, index) in checkColumnList" :key="index" class="flex items-center">
-                        <DragIcon
-                          :class="`drag-btn w-[16px] mr-2 ${isFixedColumn(item) ? '!cursor-no-drop' : '!cursor-grab'}`"
-                          @mouseenter.prevent="rowDrop"
-                        />
-                        <el-checkbox
-                          :key="index"
-                          :label="item"
-                          :value="item"
-                          @change="handleCheckColumnListChange(item)"
-                        >
+                        <DragIcon :class="`drag-btn w-[16px] mr-2 ${isFixedColumn(item) ? '!cursor-no-drop' : '!cursor-grab'}`" @mouseenter.prevent="rowDrop" />
+                        <el-checkbox :key="index" :label="item" :value="item" @change="handleCheckColumnListChange(item)">
                           <span :title="item" class="inline-block w-[120px] truncate hover:text-text_color_primary">
                             {{ item }}
                           </span>

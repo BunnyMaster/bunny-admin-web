@@ -9,22 +9,12 @@ export const getFilesPage = (data: any) => {
 };
 /** 系统文件管理---添加系统文件 */
 export const fetchAddFiles = (data: any) => {
-  return http.request<BaseResult<any>>(
-    'post',
-    'files',
-    { data },
-    { headers: { 'Content-Type': 'multipart/form-data' } }
-  );
+  return http.request<BaseResult<any>>('post', 'files', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
 
 /** 系统文件管理---更新系统文件 */
 export const updateFiles = (data: any) => {
-  return http.request<BaseResult<object>>(
-    'put',
-    'files',
-    { data },
-    { headers: { 'Content-Type': 'multipart/form-data' } }
-  );
+  return http.request<BaseResult<object>>('put', 'files', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
 
 /** 系统文件管理---删除系统文件 */

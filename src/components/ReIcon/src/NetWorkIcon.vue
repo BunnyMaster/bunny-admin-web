@@ -98,13 +98,7 @@ onMounted(() => {
         <el-button bg class="justify-end mr-2 ml-2" size="small" text type="danger" @click="onClear">清空</el-button>
       </div>
     </el-popover>
-    <el-link
-      :title="$t('systemMenuIcon.officialWebsite')"
-      :underline="false"
-      href="https://icon-sets.iconify.design/"
-      target="_blank"
-      type="primary"
-    >
+    <el-link :title="$t('systemMenuIcon.officialWebsite')" :underline="false" href="https://icon-sets.iconify.design/" target="_blank" type="primary">
       {{ $t('systemMenuIcon.officialWebsite') }}
     </el-link>
   </div>

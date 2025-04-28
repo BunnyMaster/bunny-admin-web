@@ -2,15 +2,7 @@
 import ReAnimateSelector from '@/components/ReAnimateSelector/src/index.vue';
 import ReCol from '@/components/ReCol';
 import Segmented from '@/components/ReSegmented';
-import {
-  fixedTagOptions,
-  frameLoadingOptions,
-  hiddenTagOptions,
-  keepAliveOptions,
-  menuTypeOptions,
-  showLinkOptions,
-  showParentOptions,
-} from '@/enums/menu';
+import { fixedTagOptions, frameLoadingOptions, hiddenTagOptions, keepAliveOptions, menuTypeOptions, showLinkOptions, showParentOptions } from '@/enums/menu';
 import { $t } from '@/plugins/i18n';
 import { FormProps, formRules } from '@/views/system/menu/utils';
 import { onMounted, ref } from 'vue';

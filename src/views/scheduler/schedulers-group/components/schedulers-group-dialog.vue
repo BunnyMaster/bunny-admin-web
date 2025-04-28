@@ -22,20 +22,10 @@ defineExpose({ formRef });
 <template>
   <el-form ref="formRef" :model="form" :rules="rules" label-width="auto">
     <el-form-item :label="$t('schedulersGroup_groupName')" prop="groupName">
-      <el-input
-        v-model="form.groupName"
-        :placeholder="$t('input') + $t('schedulersGroup_groupName')"
-        autocomplete="off"
-        type="text"
-      />
+      <el-input v-model="form.groupName" :placeholder="$t('input') + $t('schedulersGroup_groupName')" autocomplete="off" type="text" />
     </el-form-item>
     <el-form-item :label="$t('schedulersGroup_description')" prop="description">
-      <el-input
-        v-model="form.description"
-        :placeholder="$t('input') + $t('schedulersGroup_description')"
-        autocomplete="off"
-        type="text"
-      />
+      <el-input v-model="form.description" :placeholder="$t('input') + $t('schedulersGroup_description')" autocomplete="off" type="text" />
     </el-form-item>
   </el-form>
 </template>

@@ -22,26 +22,13 @@ const menuRef = ref();
 const defaultActive = ref(null);
 const { t } = useI18n();
 const { route, locale, translationCh, translationEn } = useTranslationLang(menuRef);
-const {
-  device,
-  logout,
-  onPanel,
-  resolvePath,
-  username,
-  userAvatar,
-  getDivStyle,
-  avatarsStyle,
-  getDropdownItemStyle,
-  getDropdownItemClass,
-} = useNav();
+const { device, logout, onPanel, resolvePath, username, userAvatar, getDivStyle, avatarsStyle, getDropdownItemStyle, getDropdownItemClass } = useNav();
 
 function getDefaultActive(routePath) {
   const wholeMenus = usePermissionStoreHook().wholeMenus;
   /** 当前路由的父级路径 */
   const parentRoutes = getParentPaths(routePath, wholeMenus)[0];
-  defaultActive.value = !isAllEmpty(route.meta?.activePath)
-    ? route.meta.activePath
-    : findRouteByPath(parentRoutes, wholeMenus)?.children[0]?.path;
+  defaultActive.value = !isAllEmpty(route.meta?.activePath) ? route.meta.activePath : findRouteByPath(parentRoutes, wholeMenus)?.children[0]?.path;
 }
 
 onMounted(() => {
@@ -61,24 +48,9 @@ watch(
 </script>
 
 <template>
-  <div
-    v-if="device !== 'mobile'"
-    v-loading="usePermissionStoreHook().wholeMenus.length === 0"
-    class="horizontal-header"
-  >
-    <el-menu
-      ref="menuRef"
-      :default-active="defaultActive"
-      class="horizontal-header-menu"
-      mode="horizontal"
-      popper-class="pure-scrollbar"
-      router
-    >
-      <el-menu-item
-        v-for="route in usePermissionStoreHook().wholeMenus"
-        :key="route.path"
-        :index="resolvePath(route) || route.redirect"
-      >
+  <div v-if="device !== 'mobile'" v-loading="usePermissionStoreHook().wholeMenus.length === 0" class="horizontal-header">
+    <el-menu ref="menuRef" :default-active="defaultActive" class="horizontal-header-menu" mode="horizontal" popper-class="pure-scrollbar" router>
+      <el-menu-item v-for="route in usePermissionStoreHook().wholeMenus" :key="route.path" :index="resolvePath(route) || route.redirect">
         <template #title>
           <div v-if="toRaw(route.meta.icon)" :class="['sub-menu-icon', route.meta.icon]">
             <component :is="useRenderIcon(route.meta && toRaw(route.meta.icon))" />

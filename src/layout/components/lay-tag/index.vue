@@ -91,10 +91,7 @@ const moveToView = async (index: number): Promise<void> => {
   } else if (tabItemElOffsetLeft < -translateX.value) {
     // 标签在可视区域左侧
     translateX.value = -tabItemElOffsetLeft + tabNavPadding;
-  } else if (
-    tabItemElOffsetLeft > -translateX.value &&
-    tabItemElOffsetLeft + tabItemOffsetWidth < -translateX.value + scrollbarDomWidth
-  ) {
+  } else if (tabItemElOffsetLeft > -translateX.value && tabItemElOffsetLeft + tabItemOffsetWidth < -translateX.value + scrollbarDomWidth) {
     // 标签在可视区域
     translateX.value = Math.min(0, scrollbarDomWidth - tabItemOffsetWidth - tabItemElOffsetLeft - tabNavPadding);
   } else {
@@ -204,10 +201,7 @@ function deleteDynamicTag(obj: any, current: any, tag?: string) {
 
   const spliceRoute = (startIndex?: number, length?: number, other?: boolean): void => {
     if (other) {
-      useMultiTagsStoreHook().handleTags(
-        'equal',
-        [VITE_HIDE_HOME === 'false' ? fixedTags : toRaw(getTopMenu()), obj].flat()
-      );
+      useMultiTagsStoreHook().handleTags('equal', [VITE_HIDE_HOME === 'false' ? fixedTags : toRaw(getTopMenu()), obj].flat());
     } else {
       useMultiTagsStoreHook().handleTags('splice', '', {
         startIndex,
@@ -525,23 +519,13 @@ onBeforeUnmount(() => {
     <span v-show="isShowArrow" class="arrow-left">
       <IconifyIconOffline :icon="ArrowLeftSLine" @click="handleScroll(200)" />
     </span>
-    <div
-      ref="scrollbarDom"
-      :class="showModel === 'chrome' && 'chrome-scroll-container'"
-      class="scroll-container"
-      @wheel.prevent="handleWheel"
-    >
+    <div ref="scrollbarDom" :class="showModel === 'chrome' && 'chrome-scroll-container'" class="scroll-container" @wheel.prevent="handleWheel">
       <div ref="tabDom" :style="getTabStyle" class="tab select-none">
         <div
           v-for="(item, index) in multiTags"
           :key="index"
           :ref="'dynamic' + index"
-          :class="[
-            'scroll-item is-closable',
-            linkIsActive(item),
-            showModel === 'chrome' && 'chrome-item',
-            isFixedTag(item) && 'fixed-tag',
-          ]"
+          :class="['scroll-item is-closable', linkIsActive(item), showModel === 'chrome' && 'chrome-item', isFixedTag(item) && 'fixed-tag']"
           @click="tagOnClick(item)"
           @contextmenu.prevent="openMenu(item, $event)"
           @mouseenter.prevent="onMouseenter(index)"
@@ -596,13 +580,7 @@ onBeforeUnmount(() => {
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item
-            v-for="(item, key) in tagsViews"
-            :key="key"
-            :command="{ key, item }"
-            :disabled="item.disabled"
-            :divided="item.divided"
-          >
+          <el-dropdown-item v-for="(item, key) in tagsViews" :key="key" :command="{ key, item }" :disabled="item.disabled" :divided="item.divided">
             <IconifyIconOffline :icon="item.icon" />
             {{ item.text }}
           </el-dropdown-item>

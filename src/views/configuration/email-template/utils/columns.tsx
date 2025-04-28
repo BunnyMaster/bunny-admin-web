@@ -21,11 +21,7 @@ export const columns: TableColumnList = [
     label: $t('isDefault'),
     prop: 'isDefault',
     formatter({ isDefault }) {
-      return isDefault ? (
-        <ElTag type={'success'}>{$t('default')}</ElTag>
-      ) : (
-        <ElTag type={'danger'}>{$t('no_default')}</ElTag>
-      );
+      return isDefault ? <ElTag type={'success'}>{$t('default')}</ElTag> : <ElTag type={'danger'}>{$t('no_default')}</ElTag>;
     },
     minWidth: 100,
   },

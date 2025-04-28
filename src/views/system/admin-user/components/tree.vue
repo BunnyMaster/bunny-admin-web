@@ -81,19 +81,9 @@ defineExpose({ onTreeReset });
 </script>
 
 <template>
-  <div
-    v-loading="treeLoading"
-    :style="{ minHeight: `calc(100vh - 130px)` }"
-    class="h-full bg-bg_color overflow-hidden relative"
-  >
+  <div v-loading="treeLoading" :style="{ minHeight: `calc(100vh - 130px)` }" class="h-full bg-bg_color overflow-hidden relative">
     <div class="flex items-center h-[34px]">
-      <el-input
-        v-model="searchValue"
-        :placeholder="$t('input') + $t('adminUser_dept')"
-        class="ml-2"
-        clearable
-        size="small"
-      >
+      <el-input v-model="searchValue" :placeholder="$t('input') + $t('adminUser_dept')" class="ml-2" clearable size="small">
         <template #suffix>
           <el-icon class="el-input__icon">
             <IconifyIconOffline v-show="searchValue.length === 0" icon="ri:search-line" />

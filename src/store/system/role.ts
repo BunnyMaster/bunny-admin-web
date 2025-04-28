@@ -1,16 +1,9 @@
 import { defineStore } from 'pinia';
-import {
-  crateRole,
-  createRolePermission,
-  deleteRole,
-  getRoleList,
-  getRolePage,
-  updateRole,
-  updateRoleByFile,
-} from '@/api/v1/system/role';
+import { crateRole, createRolePermission, deleteRole, exportRoleList, getRoleList, getRolePage, updateRole, updateRoleByFile } from '@/api/v1/system/role';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
+import { downloadBlob } from '@/utils/sso';
 
 /**
  * 角色 Store
@@ -82,6 +75,13 @@ export const useRoleStore = defineStore('roleStore', {
     async removeRole(data: any) {
       const result = await deleteRole(data);
       return storeMessage(result);
+    },
+
+    /* 使用Excel导出角色 */
+    async downloadRoleByFile() {
+      const result = await exportRoleList();
+
+      downloadBlob(result, 'role.zip');
     },
 
     /* 使用Excel更新角色列表 */

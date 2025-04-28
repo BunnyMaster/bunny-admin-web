@@ -4,11 +4,8 @@ import { getConfig, responsiveStorageNameSpace, storageLocal, store } from './ut
 export const useEpThemeStore = defineStore({
   id: 'pure-epTheme',
   state: () => ({
-    epThemeColor:
-      storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}layout`)?.epThemeColor ??
-      getConfig().EpThemeColor,
-    epTheme:
-      storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}layout`)?.theme ?? getConfig().Theme,
+    epThemeColor: storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}layout`)?.epThemeColor ?? getConfig().EpThemeColor,
+    epTheme: storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}layout`)?.theme ?? getConfig().Theme,
   }),
   getters: {
     getEpThemeColor(state) {

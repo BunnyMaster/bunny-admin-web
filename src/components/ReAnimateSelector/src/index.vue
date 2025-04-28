@@ -101,20 +101,12 @@ function onMouseleave() {
               @mouseenter.prevent="onMouseEnter(index)"
               @mouseleave.prevent="onMouseleave"
             >
-              <h4
-                :class="[
-                  `animate__animated animate__${animateMap[index]?.loading ? animate + ' animate__infinite' : ''} `,
-                ]"
-              >
+              <h4 :class="[`animate__animated animate__${animateMap[index]?.loading ? animate + ' animate__infinite' : ''} `]">
                 {{ animate }}
               </h4>
             </li>
           </ul>
-          <el-empty
-            v-show="animatesList.length === 0"
-            :description="`${searchVal} ${$t('animationNotExist')}`"
-            :image-size="60"
-          />
+          <el-empty v-show="animatesList.length === 0" :description="`${searchVal} ${$t('animationNotExist')}`" :image-size="60" />
         </el-scrollbar>
       </div>
     </template>

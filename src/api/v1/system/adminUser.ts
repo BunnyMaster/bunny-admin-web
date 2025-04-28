@@ -47,12 +47,7 @@ export const createUserByAdmin = (data: any) => {
 
 /** 用户信息---更新用户信息 */
 export const updateUserByAdmin = (data: any) => {
-  return http.request<BaseResult<object>>(
-    'put',
-    'user',
-    { data },
-    { headers: { 'Content-Type': 'multipart/form-data' } }
-  );
+  return http.request<BaseResult<object>>('put', 'user', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
 
 /** 用户信息---删除用户信息 */
@@ -91,12 +86,7 @@ export const refreshTokenApi = (data?: object) => {
 
 /** 发送邮件 */
 export const sendLoginEmail = (data: any) => {
-  return http.request<BaseResult<any>>(
-    'post',
-    '/user/public/sendLoginEmail',
-    { data },
-    { headers: { 'Content-Type': 'multipart/form-data' } }
-  );
+  return http.request<BaseResult<any>>('post', '/user/public/sendLoginEmail', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
 
 /** 获取用户信息,根据当前token获取 */
@@ -116,10 +106,5 @@ export const updateUserinfo = (data: any) => {
 
 /** 用户信息---更新用户密码 */
 export const updateUserPassword = (data: any) => {
-  return http.request<BaseResult<object>>(
-    'put',
-    'user/private/update/password',
-    { data },
-    { headers: { 'Content-Type': 'multipart/form-data' } }
-  );
+  return http.request<BaseResult<object>>('put', 'user/private/update/password', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };

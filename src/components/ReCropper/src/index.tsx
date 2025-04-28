@@ -101,15 +101,7 @@ export default defineComponent({
     });
 
     const iconClass = computed(() => {
-      return [
-        'p-[6px]',
-        'h-[30px]',
-        'w-[30px]',
-        'outline-none',
-        'rounded-[4px]',
-        'cursor-pointer',
-        'hover:bg-[rgba(0,0,0,0.06)]',
-      ];
+      return ['p-[6px]', 'h-[30px]', 'w-[30px]', 'outline-none', 'rounded-[4px]', 'cursor-pointer', 'hover:bg-[rgba(0,0,0,0.06)]'];
     });
 
     const getWrapperStyle = computed((): CSSProperties => {
@@ -249,11 +241,7 @@ export default defineComponent({
                 realTimeCroppered();
               }}
             />
-            <Reload
-              class={iconClass.value}
-              v-tippy={{ content: '重置', placement: 'right-start' }}
-              onClick={() => handCropper('reset')}
-            />
+            <Reload class={iconClass.value} v-tippy={{ content: '重置', placement: 'right-start' }} onClick={() => handCropper('reset')} />
             <ArrowUp
               class={iconClass.value}
               v-tippy={{ content: '上移（可长按）', placement: 'left-start' }}
@@ -277,26 +265,10 @@ export default defineComponent({
               v-tippy={{ content: '右移（可长按）', placement: 'right-start' }}
               v-longpress={[() => handCropper('move', [10, 0]), '0:100']}
             />
-            <ArrowH
-              class={iconClass.value}
-              v-tippy={{ content: '水平翻转', placement: 'left-start' }}
-              onClick={() => handCropper('scaleX', -1)}
-            />
-            <ArrowV
-              class={iconClass.value}
-              v-tippy={{ content: '垂直翻转', placement: 'right-start' }}
-              onClick={() => handCropper('scaleY', -1)}
-            />
-            <RotateLeft
-              class={iconClass.value}
-              v-tippy={{ content: '逆时针旋转', placement: 'left-start' }}
-              onClick={() => handCropper('rotate', -45)}
-            />
-            <RotateRight
-              class={iconClass.value}
-              v-tippy={{ content: '顺时针旋转', placement: 'right-start' }}
-              onClick={() => handCropper('rotate', 45)}
-            />
+            <ArrowH class={iconClass.value} v-tippy={{ content: '水平翻转', placement: 'left-start' }} onClick={() => handCropper('scaleX', -1)} />
+            <ArrowV class={iconClass.value} v-tippy={{ content: '垂直翻转', placement: 'right-start' }} onClick={() => handCropper('scaleY', -1)} />
+            <RotateLeft class={iconClass.value} v-tippy={{ content: '逆时针旋转', placement: 'left-start' }} onClick={() => handCropper('rotate', -45)} />
+            <RotateRight class={iconClass.value} v-tippy={{ content: '顺时针旋转', placement: 'right-start' }} onClick={() => handCropper('rotate', 45)} />
             <SearchPlus
               class={iconClass.value}
               v-tippy={{ content: '放大（可长按）', placement: 'left-start' }}

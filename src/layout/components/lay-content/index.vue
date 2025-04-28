@@ -52,9 +52,7 @@ const getSectionStyle = computed(() => {
     !hideTabs.value && layout ? (showModel.value == 'chrome' ? 'padding-top: 85px;' : 'padding-top: 81px;') : '',
     hideTabs.value && !layout.value ? 'padding-top: 48px;' : '',
     !hideTabs.value && !layout.value ? (showModel.value == 'chrome' ? 'padding-top: 85px;' : 'padding-top: 81px;') : '',
-    props.fixedHeader
-      ? ''
-      : `padding-top: 0;${hideTabs.value ? 'min-height: calc(100vh - 48px);' : 'min-height: calc(100vh - 86px);'}`,
+    props.fixedHeader ? '' : `padding-top: 0;${hideTabs.value ? 'min-height: calc(100vh - 48px);' : 'min-height: calc(100vh - 86px);'}`,
   ];
 });
 

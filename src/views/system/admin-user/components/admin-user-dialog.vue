@@ -68,13 +68,7 @@ defineExpose({ formRef });
       <!-- 密码 -->
       <re-col v-show="isAddUserinfo" :sm="24" :value="12" :xs="24">
         <el-form-item :label="$t('adminUser_password')" prop="password">
-          <el-input
-            v-model="form.password"
-            :placeholder="$t('adminUser_password')"
-            autocomplete="off"
-            show-password
-            type="password"
-          />
+          <el-input v-model="form.password" :placeholder="$t('adminUser_password')" autocomplete="off" show-password type="password" />
         </el-form-item>
       </re-col>
 
@@ -89,13 +83,7 @@ defineExpose({ formRef });
       <re-col :sm="24" :value="isAddUserinfo ? 12 : 24" :xs="24">
         <el-form-item :label="$t('adminUser_sex')" prop="sex">
           <el-select v-model="form.sex" :placeholder="$t('adminUser_sex')" clearable filterable>
-            <el-option
-              v-for="(item, index) in sexConstant"
-              :key="index"
-              :label="item.label"
-              :navigationBar="false"
-              :value="item.value"
-            />
+            <el-option v-for="(item, index) in sexConstant" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
           </el-select>
         </el-form-item>
       </re-col>
@@ -137,14 +125,7 @@ defineExpose({ formRef });
       <!-- 用户简介 -->
       <re-col :sm="24" :value="24" :xs="24">
         <el-form-item :label="$t('adminUser_summary')" prop="summary">
-          <el-input
-            v-model="form.summary"
-            :placeholder="$t('adminUser_summary')"
-            autocomplete="off"
-            maxlength="200"
-            show-word-limit
-            type="textarea"
-          />
+          <el-input v-model="form.summary" :placeholder="$t('adminUser_summary')" autocomplete="off" maxlength="200" show-word-limit type="textarea" />
         </el-form-item>
       </re-col>
     </el-row>

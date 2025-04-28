@@ -79,12 +79,7 @@ onMounted(() => {
 
     <!-- 消息类型 -->
     <el-form-item :label="$t('messageType')" prop="messageTypeId">
-      <el-select
-        v-model="formState.messageTypeId"
-        :placeholder="`${$t('select')}${$t('messageType')}`"
-        clearable
-        filterable
-      >
+      <el-select v-model="formState.messageTypeId" :placeholder="`${$t('select')}${$t('messageType')}`" clearable filterable>
         <el-option
           v-for="(item, index) in messageTypeStore.allMessageTypeList"
           :key="index"
@@ -141,14 +136,7 @@ onMounted(() => {
 
     <!-- 封面内容 -->
     <el-form-item :label="$t('cover')" prop="cover">
-      <el-upload
-        :auto-upload="true"
-        :before-upload="beforeUpload"
-        :http-request="onUpload"
-        :show-file-list="false"
-        accept="image/*"
-        drag
-      >
+      <el-upload :auto-upload="true" :before-upload="beforeUpload" :http-request="onUpload" :show-file-list="false" accept="image/*" drag>
         <el-image v-if="coverUrl" :src="coverUrl" fit="cover" lazy>
           <template #placeholder>
             <ImageLoading />
@@ -163,26 +151,12 @@ onMounted(() => {
 
     <!-- 简介 -->
     <el-form-item :label="$t('summary')" prop="summary">
-      <el-input
-        v-model="formState.summary"
-        :autosize="{ minRows: 3, maxRows: 6 }"
-        maxlength="200"
-        minlength="10"
-        show-word-limit
-        type="textarea"
-      />
+      <el-input v-model="formState.summary" :autosize="{ minRows: 3, maxRows: 6 }" maxlength="200" minlength="10" show-word-limit type="textarea" />
     </el-form-item>
 
     <!-- 消息等级 -->
     <el-form-item :label="$t('level')" prop="level">
-      <el-select
-        v-model="formState.level"
-        :placeholder="$t('select') + $t('level')"
-        clearable
-        filterable
-        remote
-        remote-show-suffix
-      >
+      <el-select v-model="formState.level" :placeholder="$t('select') + $t('level')" clearable filterable remote remote-show-suffix>
         <el-option v-for="item in messageLevel" :key="item" :label="$t(item)" :value="item" />
       </el-select>
     </el-form-item>

@@ -1,16 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
-import {
-  coverUrl,
-  editorTypeList,
-  loading,
-  onSearchUserinfo,
-  onUpload,
-  rules,
-  updateMessage,
-  userDataList,
-} from '@/views/message-manger/message-send/utils';
+import { coverUrl, editorTypeList, loading, onSearchUserinfo, onUpload, rules, updateMessage, userDataList } from '@/views/message-manger/message-send/utils';
 import { $t } from '@/plugins/i18n';
 import { usePublicHooks } from '@/views/hooks';
 import { useMessageTypeStore } from '@/store/message/messageType';
@@ -52,12 +43,7 @@ defineExpose({ formRef });
 
             <!-- 消息类型 -->
             <el-form-item :label="$t('messageType')" prop="messageTypeId">
-              <el-select
-                v-model="updateMessage.messageTypeId"
-                :placeholder="`${$t('select')}${$t('messageType')}`"
-                clearable
-                filterable
-              >
+              <el-select v-model="updateMessage.messageTypeId" :placeholder="`${$t('select')}${$t('messageType')}`" clearable filterable>
                 <el-option
                   v-for="(item, index) in messageTypeStore.allMessageTypeList"
                   :key="index"
@@ -114,12 +100,7 @@ defineExpose({ formRef });
             <!-- 编辑器类型 -->
             <el-form-item :label="$t('editorType')" prop="editorType">
               <el-radio-group v-model="updateMessage.editorType">
-                <el-radio
-                  v-for="(item, index) in editorTypeList"
-                  :key="index"
-                  :navigationBar="false"
-                  :value="item.value"
-                >
+                <el-radio v-for="(item, index) in editorTypeList" :key="index" :navigationBar="false" :value="item.value">
                   {{ item.label }}
                 </el-radio>
               </el-radio-group>
@@ -127,14 +108,7 @@ defineExpose({ formRef });
 
             <!-- 封面内容 -->
             <el-form-item :label="$t('cover')" prop="cover">
-              <el-upload
-                :auto-upload="true"
-                :before-upload="beforeUpload"
-                :http-request="onUpload"
-                :show-file-list="false"
-                accept="image/*"
-                drag
-              >
+              <el-upload :auto-upload="true" :before-upload="beforeUpload" :http-request="onUpload" :show-file-list="false" accept="image/*" drag>
                 <el-image v-if="coverUrl" :src="coverUrl" fit="cover" lazy>
                   <template #placeholder>
                     <ImageLoading />
@@ -149,26 +123,12 @@ defineExpose({ formRef });
 
             <!-- 简介 -->
             <el-form-item :label="$t('summary')" prop="summary">
-              <el-input
-                v-model="updateMessage.summary"
-                :autosize="{ minRows: 3, maxRows: 6 }"
-                maxlength="200"
-                minlength="10"
-                show-word-limit
-                type="textarea"
-              />
+              <el-input v-model="updateMessage.summary" :autosize="{ minRows: 3, maxRows: 6 }" maxlength="200" minlength="10" show-word-limit type="textarea" />
             </el-form-item>
 
             <!-- 消息等级 -->
             <el-form-item :label="$t('level')" prop="level">
-              <el-select
-                v-model="updateMessage.level"
-                :placeholder="$t('level')"
-                clearable
-                filterable
-                remote
-                remote-show-suffix
-              >
+              <el-select v-model="updateMessage.level" :placeholder="$t('level')" clearable filterable remote remote-show-suffix>
                 <el-option v-for="item in messageLevel" :key="item" :label="$t(item)" :value="item" />
               </el-select>
             </el-form-item>

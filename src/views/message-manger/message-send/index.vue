@@ -1,14 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import {
-  auth,
-  columns,
-  deleteIds,
-  onDelete,
-  onDeleteBatch,
-  onSearch,
-  onUpdate,
-} from '@/views/message-manger/message-send/utils';
+import { auth, columns, deleteIds, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/message-manger/message-send/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
 import Delete from '@iconify-icons/ep/delete';
@@ -64,41 +56,20 @@ onMounted(() => {
 <template>
   <div class="main">
     <ReAuth :value="auth.search">
-      <el-form
-        ref="formRef"
-        :inline="true"
-        :model="messageSendStore.form"
-        class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto"
-      >
+      <el-form ref="formRef" :inline="true" :model="messageSendStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
         <!-- 消息标题 -->
         <el-form-item :label="$t('title')" prop="title">
-          <el-input
-            v-model="messageSendStore.form.title"
-            :placeholder="`${$t('input')}${$t('title')}`"
-            class="!w-[180px]"
-            clearable
-          />
+          <el-input v-model="messageSendStore.form.title" :placeholder="`${$t('input')}${$t('title')}`" class="!w-[180px]" clearable />
         </el-form-item>
 
         <!-- 发送人昵称 -->
         <el-form-item :label="$t('sendNickname')" prop="sendNickname">
-          <el-input
-            v-model="messageSendStore.form.sendNickname"
-            :placeholder="`${$t('input')}${$t('sendNickname')}`"
-            class="!w-[180px]"
-            clearable
-          />
+          <el-input v-model="messageSendStore.form.sendNickname" :placeholder="`${$t('input')}${$t('sendNickname')}`" class="!w-[180px]" clearable />
         </el-form-item>
 
         <!-- 消息类型 -->
         <el-form-item :label="$t('messageType')" prop="messageType">
-          <el-select
-            v-model="messageSendStore.form.messageType"
-            :placeholder="`${$t('select')}${$t('messageType')}`"
-            class="!w-[180px]"
-            clearable
-            filterable
-          >
+          <el-select v-model="messageSendStore.form.messageType" :placeholder="`${$t('select')}${$t('messageType')}`" class="!w-[180px]" clearable filterable>
             <el-option
               v-for="(item, index) in messageTypeStore.allMessageTypeList"
               :key="index"
@@ -111,72 +82,32 @@ onMounted(() => {
 
         <!-- 编辑器类型 -->
         <el-form-item :label="$t('editorType')" prop="editorType">
-          <el-select
-            v-model="messageSendStore.form.editorType"
-            :placeholder="`${$t('select')}${$t('editorType')}`"
-            class="!w-[180px]"
-            clearable
-            filterable
-          >
-            <el-option
-              v-for="(item, index) in ['rich', 'markdown']"
-              :key="index"
-              :label="item"
-              :navigationBar="false"
-              :value="item"
-            />
+          <el-select v-model="messageSendStore.form.editorType" :placeholder="`${$t('select')}${$t('editorType')}`" class="!w-[180px]" clearable filterable>
+            <el-option v-for="(item, index) in ['rich', 'markdown']" :key="index" :label="item" :navigationBar="false" :value="item" />
           </el-select>
         </el-form-item>
 
         <!-- 消息等级 -->
         <el-form-item :label="$t('level')" prop="level">
-          <el-select
-            v-model="messageSendStore.form.level"
-            :placeholder="$t('level')"
-            class="!w-[180px]"
-            clearable
-            filterable
-            remote
-            remote-show-suffix
-          >
+          <el-select v-model="messageSendStore.form.level" :placeholder="$t('level')" class="!w-[180px]" clearable filterable remote remote-show-suffix>
             <el-option v-for="item in messageLevel" :key="item" :label="$t(item)" :value="item" />
           </el-select>
         </el-form-item>
 
         <!-- 消息等级简介 -->
         <el-form-item :label="$t('extra')" prop="extra">
-          <el-input
-            v-model="messageSendStore.form.extra"
-            class="!w-[180px]"
-            maxlength="20"
-            minlength="10"
-            show-word-limit
-            type="text"
-          />
+          <el-input v-model="messageSendStore.form.extra" class="!w-[180px]" maxlength="20" minlength="10" show-word-limit type="text" />
         </el-form-item>
 
         <!-- 0:未读 1:已读 -->
         <el-form-item :label="$t('status')" prop="status">
-          <el-select
-            v-model="messageSendStore.form.status"
-            :placeholder="$t('status')"
-            class="!w-[180px]"
-            clearable
-            filterable
-            remote
-            remote-show-suffix
-          >
+          <el-select v-model="messageSendStore.form.status" :placeholder="$t('status')" class="!w-[180px]" clearable filterable remote remote-show-suffix>
             <el-option v-for="(item, index) in isReadStatus" :key="index" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
 
         <el-form-item>
-          <el-button
-            :icon="useRenderIcon('ri:search-line')"
-            :loading="messageSendStore.loading"
-            type="primary"
-            @click="onSearch"
-          >
+          <el-button :icon="useRenderIcon('ri:search-line')" :loading="messageSendStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -187,14 +118,7 @@ onMounted(() => {
     <PureTableBar :columns="columns" title="系统消息" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
         <!-- 批量删除按钮 -->
-        <el-button
-          v-if="hasAuth(auth.deleted)"
-          :disabled="!(deleteIds.length > 0)"
-          :icon="useRenderIcon(Delete)"
-          plain
-          type="danger"
-          @click="onDeleteBatch"
-        >
+        <el-button v-if="hasAuth(auth.deleted)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
           {{ $t('delete_batches') }}
         </el-button>
       </template>
@@ -259,22 +183,10 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
-            <el-button
-              v-if="hasAuth(auth.update)"
-              :icon="useRenderIcon(EditPen)"
-              :size="size"
-              class="reset-margin"
-              link
-              type="primary"
-              @click="onUpdate(row)"
-            >
+            <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
-            <el-popconfirm
-              v-if="hasAuth(auth.deleted)"
-              :title="`${$t('delete')}${row.title}?`"
-              @confirm="onDelete(row)"
-            >
+            <el-popconfirm v-if="hasAuth(auth.deleted)" :title="`${$t('delete')}${row.title}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

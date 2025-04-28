@@ -1,14 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import {
-  auth,
-  columns,
-  deleteIds,
-  onDelete,
-  onDeleteBatch,
-  onSearch,
-  onView,
-} from '@/views/monitor/user-login-log/utils';
+import { auth, columns, deleteIds, onDelete, onDeleteBatch, onSearch, onView } from '@/views/monitor/user-login-log/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
 import Delete from '@iconify-icons/ep/delete';
@@ -59,50 +51,25 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <el-form
-      ref="formRef"
-      :inline="true"
-      :model="userLoginLogStore.form"
-      class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto"
-    >
+    <el-form ref="formRef" :inline="true" :model="userLoginLogStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
       <!-- 用户名 -->
       <el-form-item :label="$t('userLoginLog_username')" prop="username">
-        <el-input
-          v-model="userLoginLogStore.form.username"
-          :placeholder="`${$t('input')}${$t('userLoginLog_username')}`"
-          class="!w-[180px]"
-          clearable
-        />
+        <el-input v-model="userLoginLogStore.form.username" :placeholder="`${$t('input')}${$t('userLoginLog_username')}`" class="!w-[180px]" clearable />
       </el-form-item>
 
       <!-- 登录Ip -->
       <el-form-item :label="$t('userLoginLog_ipAddress')" prop="ipAddress">
-        <el-input
-          v-model="userLoginLogStore.form.ipAddress"
-          :placeholder="`${$t('input')}${$t('userLoginLog_ipAddress')}`"
-          class="!w-[180px]"
-          clearable
-        />
+        <el-input v-model="userLoginLogStore.form.ipAddress" :placeholder="`${$t('input')}${$t('userLoginLog_ipAddress')}`" class="!w-[180px]" clearable />
       </el-form-item>
 
       <!-- 登录Ip归属地 -->
       <el-form-item :label="$t('userLoginLog_ipRegion')" prop="ipRegion">
-        <el-input
-          v-model="userLoginLogStore.form.ipRegion"
-          :placeholder="`${$t('input')}${$t('userLoginLog_ipRegion')}`"
-          class="!w-[180px]"
-          clearable
-        />
+        <el-input v-model="userLoginLogStore.form.ipRegion" :placeholder="`${$t('input')}${$t('userLoginLog_ipRegion')}`" class="!w-[180px]" clearable />
       </el-form-item>
 
       <!-- 操作类型 -->
       <el-form-item :label="$t('userLoginLog_type')" prop="type">
-        <el-input
-          v-model="userLoginLogStore.form.type"
-          :placeholder="`${$t('input')}${$t('userLoginLog_type')}`"
-          class="!w-[180px]"
-          clearable
-        />
+        <el-input v-model="userLoginLogStore.form.type" :placeholder="`${$t('input')}${$t('userLoginLog_type')}`" class="!w-[180px]" clearable />
       </el-form-item>
 
       <!-- 标识客户端是否是通过Ajax发送请求的 -->
@@ -116,12 +83,7 @@ onMounted(() => {
       </el-form-item>
 
       <el-form-item>
-        <el-button
-          :icon="useRenderIcon('ri:search-line')"
-          :loading="userLoginLogStore.loading"
-          type="primary"
-          @click="onSearch"
-        >
+        <el-button :icon="useRenderIcon('ri:search-line')" :loading="userLoginLogStore.loading" type="primary" @click="onSearch">
           {{ $t('search') }}
         </el-button>
         <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -129,22 +91,10 @@ onMounted(() => {
     </el-form>
     <ReAuth :value="auth.search" />
 
-    <PureTableBar
-      :columns="columns"
-      :title="$t('userLoginLog')"
-      @fullscreen="tableRef.setAdaptive()"
-      @refresh="onSearch"
-    >
+    <PureTableBar :columns="columns" :title="$t('userLoginLog')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
         <!-- 批量删除按钮 -->
-        <el-button
-          v-if="hasAuth(auth.delete)"
-          :disabled="!(deleteIds.length > 0)"
-          :icon="useRenderIcon(Delete)"
-          plain
-          type="danger"
-          @click="onDeleteBatch"
-        >
+        <el-button v-if="hasAuth(auth.delete)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
           {{ $t('deleteBatches') }}
         </el-button>
       </template>
@@ -183,22 +133,10 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
-            <el-button
-              v-if="hasAuth(auth.search)"
-              :icon="useRenderIcon(View)"
-              :size="size"
-              class="reset-margin"
-              link
-              type="primary"
-              @click="onView(row)"
-            >
+            <el-button v-if="hasAuth(auth.search)" :icon="useRenderIcon(View)" :size="size" class="reset-margin" link type="primary" @click="onView(row)">
               {{ $t('view') }}
             </el-button>
-            <el-popconfirm
-              v-if="hasAuth(auth.delete)"
-              :title="`${$t('delete')}${row.username}?`"
-              @confirm="onDelete(row)"
-            >
+            <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')}${row.username}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

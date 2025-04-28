@@ -31,10 +31,7 @@ interface LocalForageDbMethodsCore {
 
   keys(callback?: (err: any, keys: string[]) => void): Promise<string[]>;
 
-  iterate<T, U>(
-    iteratee: (value: T, key: string, iterationNumber: number) => U,
-    callback?: (err: any, result: U) => void
-  ): Promise<U>;
+  iterate<T, U>(iteratee: (value: T, key: string, iterationNumber: number) => U, callback?: (err: any, result: U) => void): Promise<U>;
 }
 
 interface LocalForageDropInstanceFn {

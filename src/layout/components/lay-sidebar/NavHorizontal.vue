@@ -18,23 +18,10 @@ import Check from '@iconify-icons/ep/check';
 import { $t } from '@/plugins/i18n';
 
 const menuRef = ref();
-const showLogo = ref(
-  storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.showLogo ?? true
-);
+const showLogo = ref(storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.showLogo ?? true);
 
 const { t, route, locale, translationCh, translationEn } = useTranslationLang(menuRef);
-const {
-  title,
-  logout,
-  onPanel,
-  getLogo,
-  username,
-  userAvatar,
-  backTopMenu,
-  avatarsStyle,
-  getDropdownItemStyle,
-  getDropdownItemClass,
-} = useNav();
+const { title, logout, onPanel, getLogo, username, userAvatar, backTopMenu, avatarsStyle, getDropdownItemStyle, getDropdownItemClass } = useNav();
 
 const defaultActive = computed(() => (!isAllEmpty(route.meta?.activePath) ? route.meta.activePath : route.path));
 
@@ -55,19 +42,8 @@ onMounted(() => {
       <img :src="getLogo()" alt="logo" />
       <span>{{ title }}</span>
     </div>
-    <el-menu
-      ref="menuRef"
-      :default-active="defaultActive"
-      class="horizontal-header-menu"
-      mode="horizontal"
-      popper-class="pure-scrollbar"
-    >
-      <LaySidebarItem
-        v-for="route in usePermissionStoreHook().wholeMenus"
-        :key="route.path"
-        :base-path="route.path"
-        :item="route"
-      />
+    <el-menu ref="menuRef" :default-active="defaultActive" class="horizontal-header-menu" mode="horizontal" popper-class="pure-scrollbar">
+      <LaySidebarItem v-for="route in usePermissionStoreHook().wholeMenus" :key="route.path" :base-path="route.path" :item="route" />
     </el-menu>
     <div class="horizontal-header-right">
       <!-- 菜单搜索 -->

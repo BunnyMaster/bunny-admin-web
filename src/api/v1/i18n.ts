@@ -35,12 +35,7 @@ export const downloadI18n = (params: object) => {
 
 /** 多语言管理---文件更新多语言可以是JSON、Excel */
 export const uploadI18nFile = (data: any) => {
-  return http.request<BaseResult<object>>(
-    'put',
-    'i18n/file',
-    { data },
-    { headers: { 'Content-Type': 'multipart/form-data' } }
-  );
+  return http.request<BaseResult<object>>('put', 'i18n/file', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
 
 // ------------------------------------------------

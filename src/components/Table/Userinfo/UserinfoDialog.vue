@@ -44,11 +44,7 @@ onMounted(() => {
           </div>
           <h1 class="list-card-item_detail--name">{{ $t('user_details') }}</h1>
         </div>
-        <el-tag
-          :color="userinfo.status ? '#F67676' : '#00a870'"
-          class="mx-1 list-card-item_detail--operation--tag"
-          effect="dark"
-        >
+        <el-tag :color="userinfo.status ? '#F67676' : '#00a870'" class="mx-1 list-card-item_detail--operation--tag" effect="dark">
           {{ $t('user_status') }}：{{ userinfo.status ? $t('disable') : $t('normal') }}
         </el-tag>
       </el-row>

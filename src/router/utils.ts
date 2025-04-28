@@ -1,10 +1,4 @@
-import {
-  createWebHashHistory,
-  createWebHistory,
-  type RouteComponent,
-  type RouteRecordRaw,
-  type RouterHistory,
-} from 'vue-router';
+import { createWebHashHistory, createWebHistory, type RouteComponent, type RouteRecordRaw, type RouterHistory } from 'vue-router';
 import { router } from './index';
 import { isProxy, toRaw } from 'vue';
 import { useTimeoutFn } from '@vueuse/core';
@@ -140,10 +134,7 @@ function handleAsyncRoutes(routeList) {
     usePermissionStoreHook().handleWholeMenus(routeList);
   }
   if (!useMultiTagsStoreHook().getMultiTagsCache) {
-    useMultiTagsStoreHook().handleTags('equal', [
-      ...routerArrays,
-      ...usePermissionStoreHook().flatteningRoutes.filter((v) => v?.meta?.fixedTag),
-    ]);
+    useMultiTagsStoreHook().handleTags('equal', [...routerArrays, ...usePermissionStoreHook().flatteningRoutes.filter((v) => v?.meta?.fixedTag)]);
   }
   addPathMatch();
 }

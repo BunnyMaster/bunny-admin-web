@@ -1,15 +1,5 @@
 import { defineStore } from 'pinia';
-import {
-  ascending,
-  type cacheType,
-  constantMenus,
-  debounce,
-  filterNoPermissionTree,
-  filterTree,
-  formatFlatteningRoutes,
-  getKeyList,
-  store,
-} from './utils';
+import { ascending, type cacheType, constantMenus, debounce, filterNoPermissionTree, filterTree, formatFlatteningRoutes, getKeyList, store } from './utils';
 import { useMultiTagsStoreHook } from './multiTags';
 
 export const usePermissionStore = defineStore({

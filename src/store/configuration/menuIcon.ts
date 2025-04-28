@@ -1,11 +1,5 @@
 import { defineStore } from 'pinia';
-import {
-  createMenuIcon,
-  deleteMenuIcon,
-  getIconNameListByIconName,
-  getMenuIconPage,
-  updateMenuIcon,
-} from '@/api/v1/menu/menuIcon';
+import { createMenuIcon, deleteMenuIcon, getIconNameListByIconName, getMenuIconPage, updateMenuIcon } from '@/api/v1/menu/menuIcon';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';

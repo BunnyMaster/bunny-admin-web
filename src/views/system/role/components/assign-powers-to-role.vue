@@ -1,13 +1,5 @@
 <script lang="ts" setup>
-import {
-  contentRef,
-  currentRow,
-  iconClass,
-  onMenuPowerClick,
-  powerTreeIsShow,
-  powerTreeRef,
-  tableRef,
-} from '@/views/system/role/utils';
+import { contentRef, currentRow, iconClass, onMenuPowerClick, powerTreeIsShow, powerTreeRef, tableRef } from '@/views/system/role/utils';
 import Close from '@iconify-icons/ep/close';
 import Check from '@iconify-icons/ep/check';
 import { computed, nextTick, onMounted, ref, watch } from 'vue';
@@ -79,31 +71,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    v-if="powerTreeIsShow"
-    class="!min-w-[calc(100vw-60vw-268px)] w-full mt-2 px-2 pb-2 bg-bg_color ml-2 overflow-auto"
-  >
+  <div v-if="powerTreeIsShow" class="!min-w-[calc(100vw-60vw-268px)] w-full mt-2 px-2 pb-2 bg-bg_color ml-2 overflow-auto">
     <div class="flex justify-between w-full px-3 pt-5 pb-4">
       <div class="flex">
         <span :class="iconClass">
-          <IconifyIconOffline
-            v-tippy="{ content: '关闭' }"
-            :icon="Close"
-            class="dark:text-white"
-            height="18px"
-            width="18px"
-            @click="onMenuPowerClick"
-          />
+          <IconifyIconOffline v-tippy="{ content: '关闭' }" :icon="Close" class="dark:text-white" height="18px" width="18px" @click="onMenuPowerClick" />
         </span>
         <span :class="[iconClass, 'ml-2']">
-          <IconifyIconOffline
-            v-tippy="{ content: '保存菜单权限' }"
-            :icon="Check"
-            class="dark:text-white"
-            height="18px"
-            width="18px"
-            @click="onSave"
-          />
+          <IconifyIconOffline v-tippy="{ content: '保存菜单权限' }" :icon="Check" class="dark:text-white" height="18px" width="18px" @click="onSave" />
         </span>
       </div>
       <p class="font-bold truncate">
@@ -111,13 +86,7 @@ onMounted(() => {
         {{ `${currentRow?.name ? `（${currentRow.name}）` : ''}` }}
       </p>
     </div>
-    <el-input
-      v-model="treeSearchValue"
-      class="mb-1"
-      clearable
-      placeholder="请输入菜单进行搜索"
-      @input="onQueryChanged"
-    />
+    <el-input v-model="treeSearchValue" class="mb-1" clearable placeholder="请输入菜单进行搜索" @input="onQueryChanged" />
     <div class="flex flex-wrap">
       <el-checkbox v-model="isExpandAll" label="展开/折叠" />
       <el-checkbox v-model="isSelectAll" label="全选/全不选" />

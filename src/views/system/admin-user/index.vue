@@ -100,107 +100,48 @@ onMounted(() => {
     />
     <div :class="[deviceDetection() ? ['w-full', 'mt-2'] : 'w-[calc(100%-200px)]']">
       <ReAuth :value="auth.query">
-        <el-form
-          ref="formRef"
-          :inline="true"
-          :model="adminUserStore.form"
-          class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto"
-        >
+        <el-form ref="formRef" :inline="true" :model="adminUserStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
           <!-- 查询用户名 -->
           <el-form-item :label="$t('adminUser_username')" prop="username">
-            <el-input
-              v-model="adminUserStore.form.username"
-              :placeholder="`${$t('input')}${$t('adminUser_username')}`"
-              class="!w-[180px]"
-              clearable
-            />
+            <el-input v-model="adminUserStore.form.username" :placeholder="`${$t('input')}${$t('adminUser_username')}`" class="!w-[180px]" clearable />
           </el-form-item>
 
           <!-- 查询昵称 -->
           <el-form-item :label="$t('adminUser_nickname')" prop="nickname">
-            <el-input
-              v-model="adminUserStore.form.nickname"
-              :placeholder="`${$t('input')}${$t('adminUser_nickname')}`"
-              class="!w-[180px]"
-              clearable
-            />
+            <el-input v-model="adminUserStore.form.nickname" :placeholder="`${$t('input')}${$t('adminUser_nickname')}`" class="!w-[180px]" clearable />
           </el-form-item>
 
           <!-- 查询邮箱 -->
           <el-form-item :label="$t('adminUser_email')" prop="email">
-            <el-input
-              v-model="adminUserStore.form.email"
-              :placeholder="`${$t('input')}${$t('adminUser_email')}`"
-              class="!w-[180px]"
-              clearable
-            />
+            <el-input v-model="adminUserStore.form.email" :placeholder="`${$t('input')}${$t('adminUser_email')}`" class="!w-[180px]" clearable />
           </el-form-item>
 
           <!-- 查询手机号 -->
           <el-form-item :label="$t('adminUser_phone')" prop="phone">
-            <el-input
-              v-model="adminUserStore.form.phone"
-              :placeholder="`${$t('input')}${$t('adminUser_phone')}`"
-              class="!w-[180px]"
-              clearable
-            />
+            <el-input v-model="adminUserStore.form.phone" :placeholder="`${$t('input')}${$t('adminUser_phone')}`" class="!w-[180px]" clearable />
           </el-form-item>
 
           <!-- 查询性别 -->
           <el-form-item :label="$t('adminUser_sex')" prop="sex">
-            <el-select
-              v-model="adminUserStore.form.sex"
-              :placeholder="`${$t('input')}${$t('adminUser_sex')}`"
-              class="!w-[180px]"
-              clearable
-              filterable
-            >
-              <el-option
-                v-for="(item, index) in sexConstant"
-                :key="index"
-                :label="item.label"
-                :navigationBar="false"
-                :value="item.value"
-              />
+            <el-select v-model="adminUserStore.form.sex" :placeholder="`${$t('input')}${$t('adminUser_sex')}`" class="!w-[180px]" clearable filterable>
+              <el-option v-for="(item, index) in sexConstant" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
             </el-select>
           </el-form-item>
 
           <!-- 查询简介 -->
           <el-form-item :label="$t('adminUser_summary')" prop="summary">
-            <el-input
-              v-model="adminUserStore.form.summary"
-              :placeholder="`${$t('input')}${$t('adminUser_summary')}`"
-              class="!w-[180px]"
-              clearable
-            />
+            <el-input v-model="adminUserStore.form.summary" :placeholder="`${$t('input')}${$t('adminUser_summary')}`" class="!w-[180px]" clearable />
           </el-form-item>
 
           <!-- 查询状态 -->
           <el-form-item :label="$t('adminUser_status')" prop="status">
-            <el-select
-              v-model="adminUserStore.form.status"
-              :placeholder="`${$t('input')}${$t('adminUser_status')}`"
-              class="!w-[180px]"
-              clearable
-              filterable
-            >
-              <el-option
-                v-for="(item, index) in userStatus"
-                :key="index"
-                :label="item.label"
-                :navigationBar="false"
-                :value="item.value"
-              />
+            <el-select v-model="adminUserStore.form.status" :placeholder="`${$t('input')}${$t('adminUser_status')}`" class="!w-[180px]" clearable filterable>
+              <el-option v-for="(item, index) in userStatus" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
             </el-select>
           </el-form-item>
 
           <el-form-item>
-            <el-button
-              :icon="useRenderIcon('ri:search-line')"
-              :loading="adminUserStore.loading"
-              type="primary"
-              @click="onSearch"
-            >
+            <el-button :icon="useRenderIcon('ri:search-line')" :loading="adminUserStore.loading" type="primary" @click="onSearch">
               {{ $t('search') }}
             </el-button>
             <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -215,14 +156,7 @@ onMounted(() => {
           </el-button>
 
           <!-- 批量删除按钮 -->
-          <el-button
-            v-if="hasAuth(auth.delete)"
-            :disabled="!(deleteIds.length > 0)"
-            :icon="useRenderIcon(Delete)"
-            plain
-            type="danger"
-            @click="onDeleteBatch"
-          >
+          <el-button v-if="hasAuth(auth.delete)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
             {{ $t('deleteBatches') }}
           </el-button>
         </template>
@@ -314,11 +248,7 @@ onMounted(() => {
               </el-button>
 
               <!-- 删除 -->
-              <el-popconfirm
-                v-if="hasAuth(auth.delete)"
-                :title="`${$t('delete')} ${row.username}?`"
-                @confirm="onDelete(row)"
-              >
+              <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')} ${row.username}?`" @confirm="onDelete(row)">
                 <template #reference>
                   <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                     {{ $t('delete') }}
@@ -333,53 +263,25 @@ onMounted(() => {
                   <el-dropdown-menu>
                     <!-- 上传头像 -->
                     <el-dropdown-item v-if="hasAuth(auth.update)">
-                      <el-button
-                        :class="tableSelectButtonClass"
-                        :icon="useRenderIcon(Upload)"
-                        :size="size"
-                        link
-                        type="primary"
-                        @click="onUploadAvatar(row)"
-                      >
+                      <el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Upload)" :size="size" link type="primary" @click="onUploadAvatar(row)">
                         {{ $t('upload_avatar') }}
                       </el-button>
                     </el-dropdown-item>
                     <!-- 重置密码 -->
                     <el-dropdown-item v-if="hasAuth(auth.update)">
-                      <el-button
-                        :class="tableSelectButtonClass"
-                        :icon="useRenderIcon(Password)"
-                        :size="size"
-                        link
-                        type="primary"
-                        @click="onResetPassword(row)"
-                      >
+                      <el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Password)" :size="size" link type="primary" @click="onResetPassword(row)">
                         {{ $t('reset_passwords') }}
                       </el-button>
                     </el-dropdown-item>
                     <!-- 分配角色 -->
                     <el-dropdown-item v-if="hasAuth(auth.update)">
-                      <el-button
-                        :class="tableSelectButtonClass"
-                        :icon="useRenderIcon(Role)"
-                        :size="size"
-                        link
-                        type="primary"
-                        @click="onAssignRolesToUser(row)"
-                      >
+                      <el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Role)" :size="size" link type="primary" @click="onAssignRolesToUser(row)">
                         {{ $t('assign_roles') }}
                       </el-button>
                     </el-dropdown-item>
                     <!-- 强制下线 -->
                     <el-dropdown-item v-if="hasAuth(auth.update)">
-                      <el-button
-                        :class="tableSelectButtonClass"
-                        :icon="useRenderIcon(Airplane)"
-                        :size="size"
-                        link
-                        type="primary"
-                        @click="onForcedOffline(row)"
-                      >
+                      <el-button :class="tableSelectButtonClass" :icon="useRenderIcon(Airplane)" :size="size" link type="primary" @click="onForcedOffline(row)">
                         {{ $t('forced_offline') }}
                       </el-button>
                     </el-dropdown-item>
