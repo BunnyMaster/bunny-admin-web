@@ -8,9 +8,9 @@ export const columns: TableColumnList = [
   // 部门名称
   { label: $t('dept_deptName'), prop: 'deptName', width: 200 },
   // 管理者
-  { label: $t('dept_manager'), prop: 'manager', width: 220 },
+  { label: $t('dept_manager'), prop: 'manager' },
   // 部门简介
-  { label: $t('dept_summary'), prop: 'summary', width: 360 },
+  { label: $t('dept_summary'), prop: 'summary' },
   { label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
   { label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
   { label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 130 },

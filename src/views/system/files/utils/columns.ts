@@ -8,7 +8,7 @@ export const columns: TableColumnList = [
   // 文件的名称
   { label: $t('files_filename'), prop: 'filename', width: 280 },
   // 文件在服务器上的存储路径
-  { label: $t('files_filepath'), prop: 'filepath', width: 280 },
+  { label: $t('files_filepath'), prop: 'filepath' },
   // 文件的MIME类型
   { label: $t('files_fileType'), prop: 'fileType', width: 180 },
   // 下载数量

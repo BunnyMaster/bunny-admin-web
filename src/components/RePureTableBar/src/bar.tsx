@@ -1,16 +1,16 @@
-import Sortable from 'sortablejs';
 import { $t } from '@/plugins/i18n';
-import { useEpThemeStoreHook } from '@/store/epTheme';
-import { computed, defineComponent, getCurrentInstance, nextTick, type PropType, ref, unref } from 'vue';
+import { useEpThemeStoreHook } from '@/store/modules/epTheme';
 import { cloneDeep, delay, getKeyList, isBoolean, isFunction } from '@pureadmin/utils';
+import Sortable from 'sortablejs';
+import { computed, defineComponent, getCurrentInstance, nextTick, type PropType, ref, unref } from 'vue';
 
-import Fullscreen from '~icons/ri/fullscreen-fill';
-import ExitFullscreen from '~icons/ri/fullscreen-exit-fill';
+import CollapseIcon from '@/assets/table-bar/collapse.svg?component';
 import DragIcon from '@/assets/table-bar/drag.svg?component';
 import ExpandIcon from '@/assets/table-bar/expand.svg?component';
 import RefreshIcon from '@/assets/table-bar/refresh.svg?component';
 import SettingIcon from '@/assets/table-bar/settings.svg?component';
-import CollapseIcon from '@/assets/table-bar/collapse.svg?component';
+import ExitFullscreen from '~icons/ri/fullscreen-exit-fill';
+import Fullscreen from '~icons/ri/fullscreen-fill';
 
 const props = {
   /** 头部最左边的标题 */
@@ -112,7 +112,7 @@ export default defineComponent({
     }
 
     function handleCheckColumnListChange(val: boolean, label: string) {
-      dynamicColumns.value.filter((item) => $t(item.label) === $t(label))[0].hide = !val;
+      dynamicColumns.value.filter((item) => item.label === label)[0].hide = !val;
     }
 
     async function onReset() {
@@ -171,7 +171,7 @@ export default defineComponent({
     };
 
     const isFixedColumn = (label: string) => {
-      return dynamicColumns.value.filter((item) => $t(item.label) === $t(label))[0].fixed;
+      return dynamicColumns.value.filter((item) => item.label === label)[0].fixed;
     };
 
     const rendTippyProps = (content: string) => {
@@ -230,7 +230,7 @@ export default defineComponent({
                     onChange={(value) => handleCheckAllChange(value)}
                   />
                   <el-button type="primary" link onClick={() => onReset()}>
-                    重置
+                    {$t('buttons.reset')}
                   </el-button>
                 </div>
 
@@ -250,8 +250,8 @@ export default defineComponent({
                                 onMouseenter={(event: { preventDefault: () => void }) => rowDrop(event)}
                               />
                               <el-checkbox key={index} label={item} value={item} onChange={(value) => handleCheckColumnListChange(value, item)}>
-                                <span title={$t(item)} class="inline-block w-[120px] truncate hover:text-text_color_primary">
-                                  {$t(item)}
+                                <span title={item} class="inline-block w-[120px] truncate hover:text-text_color_primary">
+                                  {item}
                                 </span>
                               </el-checkbox>
                             </div>

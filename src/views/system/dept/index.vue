@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
+import ReAuth from '@/components/ReAuth/src/auth';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { PureTableBar } from '@/components/RePureTableBar';
+import { selectUserinfo } from '@/components/Table/Userinfo/columns';
+import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
+import { useDeptStore } from '@/store/system/dept';
+import { handleTree } from '@/utils/tree';
 import { auth, columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/system/dept/utils';
-import PureTableBar from '@/components/TableBar/src/bar';
-import AddFill from '~icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
+import { FormInstance } from 'element-plus';
+import { computed, onMounted, ref } from 'vue';
 import Delete from '~icons/ep/delete';
 import EditPen from '~icons/ep/edit-pen';
 import Refresh from '~icons/ep/refresh';
-import { selectUserinfo } from '@/components/Table/Userinfo/columns';
-import { $t } from '@/plugins/i18n';
-import { useDeptStore } from '@/store/system/dept';
-import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import { handleTree } from '@/utils/tree';
-import { FormInstance } from 'element-plus';
-import { hasAuth } from '@/router/utils';
-import ReAuth from '@/components/ReAuth/src/auth';
+import AddFill from '~icons/ri/add-circle-line';
 
 defineOptions({ name: 'DeptManger' });
 const tableRef = ref();

@@ -1,6 +1,6 @@
 import Sortable from 'sortablejs';
 import { $t } from '@/plugins/i18n';
-import { useEpThemeStoreHook } from '@/store/epTheme';
+import { useEpThemeStoreHook } from '@/store/modules/epTheme';
 import { computed, defineComponent, getCurrentInstance, nextTick, type PropType, ref, unref } from 'vue';
 import { cloneDeep, delay, getKeyList, isBoolean, isFunction } from '@pureadmin/utils';
 

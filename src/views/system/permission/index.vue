@@ -1,25 +1,25 @@
 <script lang="ts" setup>
-import { computed, h, onMounted, ref } from 'vue';
-import { auth, columns, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate, onUpdateBatchParent, powerIds } from '@/views/system/permission/utils';
-import PureTableBar from '@/components/TableBar/src/bar';
-import AddFill from '~icons/ri/add-circle-line';
-import PureTable from '@pureadmin/table';
-import Delete from '~icons/ep/delete';
-import EditPen from '~icons/ep/edit-pen';
-import Refresh from '~icons/ep/refresh';
-import { selectUserinfo } from '@/components/Table/Userinfo/columns';
-import { $t } from '@/plugins/i18n';
-import { usePermissionStore } from '@/store/system/power';
+import ReAuth from '@/components/ReAuth/src/auth';
+import { addDialog } from '@/components/ReDialog/index';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { PureTableBar } from '@/components/RePureTableBar';
+import { selectUserinfo } from '@/components/Table/Userinfo/columns';
+import { RequestMethod } from '@/enums/baseConstant';
+import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
+import { usePermissionStore } from '@/store/system/power';
+import { auth, columns, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate, onUpdateBatchParent, powerIds } from '@/views/system/permission/utils';
+import FileUploadDialog from '@/views/system/role/components/file-upload-dialog.vue';
+import PureTable from '@pureadmin/table';
 import { handleTree } from '@pureadmin/utils';
 import { FormInstance } from 'element-plus';
-import { hasAuth } from '@/router/utils';
-import ReAuth from '@/components/ReAuth/src/auth';
-import { RequestMethod } from '@/enums/baseConstant';
+import { computed, h, onMounted, ref } from 'vue';
+import Delete from '~icons/ep/delete';
 import Download from '~icons/ep/download';
+import EditPen from '~icons/ep/edit-pen';
+import Refresh from '~icons/ep/refresh';
+import AddFill from '~icons/ri/add-circle-line';
 import Upload from '~icons/ri/upload-line';
-import { addDialog } from '@/components/ReDialog/index';
-import FileUpdateRoleDialog from '@/views/system/role/components/file-update-role-dialog.vue';
 
 defineOptions({ name: 'PermissionManger' });
 
@@ -68,7 +68,7 @@ const uploadPermission = async (type: string) => {
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(FileUpdateRoleDialog, { ref: formRef }),
+    contentRenderer: () => h(FileUploadDialog, { ref: formRef }),
     beforeSure: (done, { options }) => {
       const form = options.props.form;
       formRef.value.formRef.validate(async (valid: any) => {

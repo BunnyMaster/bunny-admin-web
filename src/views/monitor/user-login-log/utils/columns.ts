@@ -11,13 +11,13 @@ export const columns: TableColumnList = [
     width: 60,
   },
   // 用户名
-  { label: $t('userLoginLog_username'), prop: 'username', width: 180 },
+  { label: $t('userLoginLog_username'), prop: 'username', minWidth: 180 },
   // 登录Ip
-  { label: $t('userLoginLog_ipAddress'), prop: 'ipAddress', width: 130 },
+  { label: $t('userLoginLog_ipAddress'), prop: 'ipAddress', minWidth: 130 },
   // 登录Ip归属地
-  { label: $t('userLoginLog_ipRegion'), prop: 'ipRegion', width: 160 },
+  { label: $t('userLoginLog_ipRegion'), prop: 'ipRegion', minWidth: 160 },
   // 登录时代理
-  { label: $t('userLoginLog_userAgent'), prop: 'userAgent', width: 200 },
+  { label: $t('userLoginLog_userAgent'), prop: 'userAgent', minWidth: 200 },
   // 操作类型
   { label: $t('userLoginLog_type'), prop: 'type', width: 130 },
   // 标识客户端是否是通过Ajax发送请求的

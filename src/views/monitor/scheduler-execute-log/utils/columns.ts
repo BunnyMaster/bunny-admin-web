@@ -11,14 +11,14 @@ export const columns: TableColumnList = [
     width: 60,
   },
   // 任务名称
-  { label: $t('quartzExecuteLog_jobName'), prop: 'jobName', width: 100 },
+  { label: $t('quartzExecuteLog_jobName'), prop: 'jobName', minWidth: 100 },
   // 任务分组
-  { label: $t('quartzExecuteLog_jobGroup'), prop: 'jobGroup', width: 100 },
+  { label: $t('quartzExecuteLog_jobGroup'), prop: 'jobGroup', minWidth: 100 },
   // 执行任务类名
   {
     label: $t('quartzExecuteLog_jobClassName'),
     prop: 'jobClassName',
-    width: 300,
+    minWidth: 300,
   },
   // 执行任务core表达式
   {

@@ -1,21 +1,21 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import ReAuth from '@/components/ReAuth/src/auth';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { PureTableBar } from '@/components/RePureTableBar';
+import { selectUserinfo } from '@/components/Table/Userinfo/columns';
+import { isReadStatus } from '@/enums/baseConstant';
+import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
+import { useMessageSendStore } from '@/store/message/messageSend';
+import { useMessageTypeStore } from '@/store/message/messageType';
+import { messageLevel } from '@/views/message-manger/message-editing/utils';
 import { auth, columns, deleteIds, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/message-manger/message-send/utils';
-import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
+import { FormInstance } from 'element-plus';
+import { onMounted, ref } from 'vue';
 import Delete from '~icons/ep/delete';
 import EditPen from '~icons/ep/edit-pen';
 import Refresh from '~icons/ep/refresh';
-import { selectUserinfo } from '@/components/Table/Userinfo/columns';
-import { $t } from '@/plugins/i18n';
-import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import { FormInstance } from 'element-plus';
-import { messageLevel } from '@/views/message-manger/message-editing/utils';
-import { isReadStatus } from '@/enums/baseConstant';
-import { useMessageSendStore } from '@/store/message/messageSend';
-import { useMessageTypeStore } from '@/store/message/messageType';
-import { hasAuth } from '@/router/utils';
-import ReAuth from '@/components/ReAuth/src/auth';
 
 defineOptions({ name: 'MessageSender' });
 

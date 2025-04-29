@@ -11,9 +11,9 @@ export const columns: TableColumnList = [
     width: 60,
   },
   // 邮箱
-  { label: $t('emailUsers_email'), prop: 'email', width: 180 },
+  { label: $t('emailUsers_email'), prop: 'email', minWidth: 100 },
   // 密码
-  { label: $t('emailUsers_password'), prop: 'password', width: 160 },
+  { label: $t('emailUsers_password'), prop: 'password', minWidth: 100 },
   // Host地址
   { label: $t('emailUsers_host'), prop: 'host', width: 150 },
   // 端口号

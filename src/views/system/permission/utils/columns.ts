@@ -1,6 +1,6 @@
-import { reactive } from 'vue';
 import { $t } from '@/plugins/i18n';
 import type { FormRules } from 'element-plus';
+import { reactive } from 'vue';
 
 // 表格列
 export const columns: TableColumnList = [
@@ -11,7 +11,7 @@ export const columns: TableColumnList = [
   // 权限名称
   { label: $t('power_powerName'), prop: 'powerName', width: 220 },
   // 请求路径
-  { label: $t('power_requestUrl'), prop: 'requestUrl', width: 360, align: 'left' },
+  { label: $t('power_requestUrl'), prop: 'requestUrl', align: 'left' },
   { label: $t('requestMethod'), prop: 'requestMethod', width: 90 },
   { label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
   { label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },

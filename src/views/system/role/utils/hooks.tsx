@@ -6,7 +6,6 @@ import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/role/utils/types';
 import { $t } from '@/plugins/i18n';
 import { getPowerListByRoleId } from '@/api/v1/system/power';
-import { isAllEmpty } from '@pureadmin/utils';
 
 // 表格ref
 export const tableRef = ref();
@@ -40,7 +39,7 @@ export function onAdd() {
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(RoleDialog, { ref: formRef }),
+    contentRenderer: () => h(RoleDialog, { ref: formRef, formInline: { roleCode: undefined, description: undefined } }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -64,7 +63,7 @@ export function onUpdate(row: any) {
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(RoleDialog, { ref: formRef }),
+    contentRenderer: () => h(RoleDialog, { ref: formRef, formInline: { roleCode: row.roleCode, description: row.description } }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -118,12 +117,13 @@ export const onDeleteBatch = async () => {
 export const onMenuPowerClick = async (row: any) => {
   const { id } = row;
 
-  if (isAllEmpty(id)) {
+  if (!id) {
     currentRow.value = null;
     powerTreeIsShow.value = false;
   } else {
     currentRow.value = row;
     powerTreeIsShow.value = true;
+
     const { data } = await getPowerListByRoleId({ id });
     powerTreeRef.value.setCheckedKeys(data);
   }

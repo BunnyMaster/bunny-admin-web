@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import { auth, columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/configuration/menu-icon/utils';
-import PureTableBar from '@/components/TableBar/src/bar';
+import ReAuth from '@/components/ReAuth/src/auth';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import AddFill from '~icons/ri/add-circle-line';
+import { PureTableBar } from '@/components/RePureTableBar';
+import { selectUserinfo } from '@/components/Table/Userinfo/columns';
+import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
+import { useMenuIconStore } from '@/store/configuration/menuIcon';
+import MenuIconSelectIconName from '@/views/configuration/menu-icon/components/menu-icon-select-icon-name.vue';
+import { auth, columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/configuration/menu-icon/utils';
 import PureTable from '@pureadmin/table';
+import { onMounted, ref } from 'vue';
 import Delete from '~icons/ep/delete';
 import EditPen from '~icons/ep/edit-pen';
 import Refresh from '~icons/ep/refresh';
-import { selectUserinfo } from '@/components/Table/Userinfo/columns';
-import { $t } from '@/plugins/i18n';
-import { useMenuIconStore } from '@/store/configuration/menuIcon';
-import MenuIconSelectIconName from '@/views/configuration/menu-icon/components/menu-icon-select-icon-name.vue';
-import { hasAuth } from '@/router/utils';
-import ReAuth from '@/components/ReAuth/src/auth';
+import AddFill from '~icons/ri/add-circle-line';
 
 defineOptions({ name: 'MenuIconConfiguration' });
 const tableRef = ref();

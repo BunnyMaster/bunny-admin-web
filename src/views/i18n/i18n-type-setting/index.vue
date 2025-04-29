@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import { auth, columns, onAdd, onDelete, onSearch, onUpdate } from '@/views/i18n/i18n-type-setting/utils';
-import PureTableBar from '@/components/TableBar/src/bar';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import AddFill from '~icons/ri/add-circle-line';
-import PureTable from '@pureadmin/table';
-import { userI18nTypeStore } from '@/store/i18n/i18nType';
-import Delete from '~icons/ep/delete';
-import EditPen from '~icons/ep/edit-pen';
+import { PureTableBar } from '@/components/RePureTableBar';
 import TableIsDefaultTag from '@/components/Table/TableIsDefaultTag.vue';
-import Refresh from '~icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { hasAuth } from '@/router/utils';
+import { userI18nTypeStore } from '@/store/i18n/i18nType';
+import { auth, columns, onAdd, onDelete, onSearch, onUpdate } from '@/views/i18n/i18n-type-setting/utils';
+import PureTable from '@pureadmin/table';
+import { onMounted, ref } from 'vue';
+import Delete from '~icons/ep/delete';
+import EditPen from '~icons/ep/edit-pen';
+import Refresh from '~icons/ep/refresh';
+import AddFill from '~icons/ri/add-circle-line';
 
 defineOptions({ name: 'I18nType' });
 

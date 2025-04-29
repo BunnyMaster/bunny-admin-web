@@ -4,7 +4,7 @@ import { $t } from '@/plugins/i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { onMounted, ref, toRaw, watch } from 'vue';
 import { findRouteByPath, getParentPaths } from '@/router/utils';
-import { useMultiTagsStoreHook } from '@/store/multiTags';
+import { useMultiTagsStoreHook } from '@/store/modules/multiTags';
 
 const route = useRoute();
 const levelList = ref([]);

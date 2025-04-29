@@ -12,8 +12,8 @@ import { computed, type CSSProperties } from 'vue';
 import { useAppStoreHook } from '@/store/modules/app';
 import { useUserStoreHook } from '@/store/system/user';
 import { isAllEmpty, useGlobal } from '@pureadmin/utils';
-import { useEpThemeStoreHook } from '@/store/epTheme';
-import { usePermissionStoreHook } from '@/store/permission';
+import { useEpThemeStoreHook } from '@/store/modules/epTheme';
+import { usePermissionStoreHook } from '@/store/modules/permission';
 import ExitFullscreen from '~icons/ri/fullscreen-exit-fill';
 import Fullscreen from '~icons/ri/fullscreen-fill';
 

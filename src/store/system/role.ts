@@ -25,7 +25,7 @@ export const useRoleStore = defineStore('roleStore', {
       // 分页查询结果
       pagination: {
         currentPage: 1,
-        pageSize: 30,
+        pageSize: 15,
         total: 1,
         pageSizes,
       },

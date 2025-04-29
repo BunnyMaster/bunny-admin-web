@@ -2,7 +2,7 @@
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { useNav } from '@/layout/hooks/useNav';
 import { findRouteByPath, getParentPaths } from '@/router/utils';
-import { usePermissionStoreHook } from '@/store/permission';
+import { usePermissionStoreHook } from '@/store/modules/permission';
 import { isAllEmpty } from '@pureadmin/utils';
 import { nextTick, onMounted, ref, toRaw, watch } from 'vue';
 import { useTranslationLang } from '../../hooks/useTranslationLang';

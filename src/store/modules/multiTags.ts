@@ -11,7 +11,7 @@ import {
   routerArrays,
   storageLocal,
   store,
-} from './utils';
+} from '../utils';
 import { usePermissionStoreHook } from './permission';
 
 export const useMultiTagsStore = defineStore('pure-multiTags', {

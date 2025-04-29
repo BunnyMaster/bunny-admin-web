@@ -15,17 +15,15 @@ export const columns: TableColumnList = [
   {
     label: $t('emailTemplate_templateName'),
     prop: 'templateName',
-    width: 150,
   },
   // 模板名称
   {
     label: $t('emailTemplate_emailUser'),
     prop: 'emailUser',
     slot: 'emailUser',
-    width: 180,
   },
   // 主题
-  { label: $t('emailTemplate_subject'), prop: 'subject', width: 200 },
+  { label: $t('emailTemplate_subject'), prop: 'subject' },
   // 邮件内容
   { label: $t('emailTemplate_body'), prop: 'body', width: 150 },
   // 邮件类型

@@ -1,21 +1,21 @@
 <script lang="ts" setup>
-import { computed, nextTick, onBeforeMount, onUnmounted, reactive, ref, unref, watch } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { emitter } from '@/utils/mitt';
-import LayPanel from '../lay-panel/index.vue';
-import { useNav } from '@/layout/hooks/useNav';
-import { useAppStoreHook } from '@/store/modules/app';
-import { useMultiTagsStoreHook } from '@/store/multiTags';
 import Segmented, { type OptionsType } from '@/components/ReSegmented';
 import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange';
+import { useNav } from '@/layout/hooks/useNav';
+import { useAppStoreHook } from '@/store/modules/app';
+import { useMultiTagsStoreHook } from '@/store/modules/multiTags';
+import { emitter } from '@/utils/mitt';
 import { debounce, isNumber, useDark, useGlobal } from '@pureadmin/utils';
+import { computed, nextTick, onBeforeMount, onUnmounted, reactive, ref, unref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import LayPanel from '../lay-panel/index.vue';
 
+import DarkIcon from '@/assets/svg/dark.svg?component';
+import DayIcon from '@/assets/svg/day.svg?component';
+import SystemIcon from '@/assets/svg/system.svg?component';
 import Check from '~icons/ep/check';
 import LeftArrow from '~icons/ri/arrow-left-s-line?width=20&height=20';
 import RightArrow from '~icons/ri/arrow-right-s-line?width=20&height=20';
-import DayIcon from '@/assets/svg/day.svg?component';
-import DarkIcon from '@/assets/svg/dark.svg?component';
-import SystemIcon from '@/assets/svg/system.svg?component';
 
 const { t } = useI18n();
 const { device } = useNav();

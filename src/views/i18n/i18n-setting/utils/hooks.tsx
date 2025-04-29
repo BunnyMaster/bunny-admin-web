@@ -5,7 +5,7 @@ import { messageBox } from '@/utils/message';
 import I18nDialog from '@/views/i18n/i18n-setting/components/i18n-dialog.vue';
 import type { FormProps } from '@/views/i18n/i18n-setting/utils/types';
 import { h, ref } from 'vue';
-import I18nUseFileUploadDoalog from '@/views/i18n/i18n-setting/components/i18n-use-file-upload-doalog.vue';
+import I18NUploadDialog from '@/views/i18n/i18n-setting/components/i18n-upload-dialog.vue';
 
 export const formRef = ref();
 const i18nStore = userI18nStore();
@@ -25,7 +25,7 @@ export const downloadI18nSetting = (type: string) => {
 
 /* 下载多语言配置 */
 export const updateI18nSetting = (fileType: string) => {
-  const i18nUseFileUploadRef = ref();
+  const uploadFormRef = ref();
 
   addDialog({
     title: $t('update_multilingual'),
@@ -34,9 +34,9 @@ export const updateI18nSetting = (fileType: string) => {
     fullscreenIcon: true,
     closeOnClickModal: false,
     props: { form: { type: undefined, file: undefined, fileType } },
-    contentRenderer: () => h(I18nUseFileUploadDoalog, { ref: i18nUseFileUploadRef }),
+    contentRenderer: () => h(I18NUploadDialog, { ref: uploadFormRef, form: { type: '', file: undefined, fileType } }),
     beforeSure: async (done, { options }) => {
-      i18nUseFileUploadRef.value.formRef.validate(async (valid: any) => {
+      uploadFormRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
         const { type, file, fileType } = options.props.form;
         await i18nStore.editI18nByFile({ type, file: file[0].raw, fileType });
@@ -56,7 +56,7 @@ export const onAdd = () => {
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(I18nDialog, { ref: formRef }),
+    contentRenderer: () => h(I18nDialog, { ref: formRef, formInline: { keyName: '', translation: '', typeName: '' } }),
     footerButtons: [
       {
         label: $t('cancel'),
@@ -75,7 +75,6 @@ export const onAdd = () => {
           const form = options.props.formInline as FormProps;
           formRef.value.ruleFormRef.validate(async (valid: any) => {
             if (!valid) return;
-
             const result = await i18nStore.addI18n(form);
             if (!result) return;
             closeDialog(options, index);
@@ -110,16 +109,16 @@ export const onUpdate = (row: any) => {
     title: $t('update_multilingual'),
     width: '30%',
     props: {
-      formInline: {
-        keyName: row.keyName,
-        translation: row.translation,
-        typeName: row.typeName,
-      },
+      formInline: { keyName: row.keyName, translation: row.translation, typeName: row.typeName },
     },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(I18nDialog, { ref: formRef }),
+    contentRenderer: () =>
+      h(I18nDialog, {
+        ref: formRef,
+        formInline: { keyName: row.keyName, translation: row.translation, typeName: row.typeName },
+      }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormProps;
       formRef.value.ruleFormRef.validate(async (valid: any) => {

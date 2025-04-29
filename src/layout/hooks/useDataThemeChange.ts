@@ -6,8 +6,8 @@ import { routerArrays } from '@/layout/types';
 import { resetRouter, router } from '@/router';
 import type { themeColorsType } from '../types';
 import { useAppStoreHook } from '@/store/modules/app';
-import { useEpThemeStoreHook } from '@/store/epTheme';
-import { useMultiTagsStoreHook } from '@/store/multiTags';
+import { useEpThemeStoreHook } from '@/store/modules/epTheme';
+import { useMultiTagsStoreHook } from '@/store/modules/multiTags';
 import { darken, lighten, storageLocal, useGlobal } from '@pureadmin/utils';
 
 export function useDataThemeChange() {

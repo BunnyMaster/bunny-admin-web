@@ -1,21 +1,21 @@
 <script lang="tsx" setup>
 import ReAuth from '@/components/ReAuth/src/auth';
+import { addDialog } from '@/components/ReDialog/index';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
-import PureTableBar from '@/components/TableBar/src/bar';
 import { $t } from '@/plugins/i18n';
 import { hasAuth } from '@/router/utils';
 import { useEmailTemplateStore } from '@/store/configuration/emailTemplate';
+import { useEmailUsersStore } from '@/store/configuration/emailUsers';
 import { auth, columns, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate, selectRows } from '@/views/configuration/email-template/utils';
+import PureTable from '@pureadmin/table';
+import { onMounted, ref } from 'vue';
 import Delete from '~icons/ep/delete';
 import EditPen from '~icons/ep/edit-pen';
 import Refresh from '~icons/ep/refresh';
 import View from '~icons/ep/view';
 import AddFill from '~icons/ri/add-circle-line';
-import PureTable from '@pureadmin/table';
-import { onMounted, ref } from 'vue';
-import { useEmailUsersStore } from '@/store/configuration/emailUsers';
-import { addDialog } from '@/components/ReDialog/index';
 
 defineOptions({ name: 'EmailTemplate' });
 

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { ListItem } from '../data';
-import { nextTick, PropType, ref } from 'vue';
 import { useNav } from '@/layout/hooks/useNav';
 import { deviceDetection } from '@pureadmin/utils';
+import { nextTick, PropType, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { ListItem } from '../data';
 
 defineProps({
   noticeItem: {
@@ -50,7 +50,7 @@ function goMessageDetail(message: ListItem) {
 </script>
 
 <template>
-  <div class="notice-container border-b-[1px] border-solid border-[#f0f0f0] dark:border-[#303030]" @click="goMessageDetail(noticeItem)">
+  <div class="notice-container border-[1px] border-solid border-[#f0f0f0] dark:border-[#303030]" @click="goMessageDetail(noticeItem)">
     <!--<el-avatar v-if="noticeItem.cover" :size="30" :src="noticeItem.cover" class="notice-container-avatar" />-->
     <img v-if="noticeItem.cover" :src="noticeItem.cover" alt="" class="notice-container-avatar" />
     <div class="notice-container-text">
@@ -101,6 +101,7 @@ function goMessageDetail(message: ListItem) {
   align-items: flex-start;
   justify-content: space-between;
   padding: 12px 0;
+  margin: 2px 0 0 0;
 
   // border-bottom: 1px solid #f0f0f0;
 

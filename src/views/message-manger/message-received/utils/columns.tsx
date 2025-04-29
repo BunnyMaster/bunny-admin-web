@@ -11,41 +11,41 @@ export const columns: TableColumnList = [
     width: 60,
   },
   // 消息标题
-  { label: $t('title'), prop: 'title', width: 150 },
+  { label: $t('title'), prop: 'title', minWidth: 150 },
   // 消息简介
-  { label: $t('summary'), prop: 'summary', width: 200 },
+  { label: $t('summary'), prop: 'summary', minWidth: 200 },
   // 发送人昵称
   {
     label: $t('sendNickname'),
     prop: 'sendNickname',
     slot: 'sendNickname',
-    width: 130,
+    minWidth: 130,
   },
   // 接受人昵称
   {
     label: $t('receivedUserNickname'),
     prop: 'receivedUserNickname',
     slot: 'receivedUserNickname',
-    width: 150,
+    minWidth: 150,
   },
   // 消息类型
   {
     label: $t('messageType'),
     prop: 'messageType',
     slot: 'messageType',
-    width: 130,
+    minWidth: 130,
   },
   // 编辑器类型
   {
     label: $t('editorType'),
     prop: 'editorType',
-    width: 130,
+    minWidth: 130,
     formatter({ editorType }) {
       return editorType === 'rich' ? <ElText type={'info'}>{editorType}</ElText> : <ElText type={'warning'}>{editorType}</ElText>;
     },
   },
   // 封面
-  { label: $t('cover'), prop: 'cover', slot: 'cover', width: 80 },
+  { label: $t('cover'), prop: 'cover', slot: 'cover', minWidth: 80 },
   // 消息等级
   {
     label: $t('level'),
@@ -59,10 +59,10 @@ export const columns: TableColumnList = [
         )
       );
     },
-    width: 130,
+    minWidth: 130,
   },
   // 消息等级详情
-  { label: $t('extra'), prop: 'extra', slot: 'extra', width: 230 },
+  { label: $t('extra'), prop: 'extra', slot: 'extra', minWidth: 230 },
   // 0:未读 1:已读
   {
     label: $t('status'),

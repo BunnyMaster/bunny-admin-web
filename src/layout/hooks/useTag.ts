@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { $t } from '@/plugins/i18n';
 import { responsiveStorageNameSpace } from '@/config';
 import { useSettingStoreHook } from '@/store/modules/settings';
-import { useMultiTagsStoreHook } from '@/store/multiTags';
+import { useMultiTagsStoreHook } from '@/store/modules/multiTags';
 import { hasClass, isBoolean, isEqual, storageLocal, toggleClass } from '@pureadmin/utils';
 
 import Fullscreen from '~icons/ri/fullscreen-fill';

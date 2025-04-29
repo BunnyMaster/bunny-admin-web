@@ -1,6 +1,6 @@
-import { getPluginsList } from './build/plugins';
-import { exclude, include } from './build/optimize';
 import { type ConfigEnv, loadEnv, type UserConfigExport } from 'vite';
+import { exclude, include } from './build/optimize';
+import { getPluginsList } from './build/plugins';
 import { __APP_INFO__, alias, pathResolve, root, wrapperEnv } from './build/utils';
 
 export default ({ mode }: ConfigEnv): UserConfigExport => {
@@ -33,7 +33,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
         clientFiles: ['./index.html', './src/{views,components}/*'],
       },
     },
-    plugins: getPluginsList(VITE_CDN, VITE_COMPRESSION),
+    plugins: getPluginsList(VITE_CDN, VITE_COMPRESSION, VITE_PORT),
     // https://cn.vitejs.dev/config/dep-optimization-options.html#dep-optimization-options
     optimizeDeps: {
       include,

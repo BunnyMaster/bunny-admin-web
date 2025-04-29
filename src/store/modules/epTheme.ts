@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getConfig, responsiveStorageNameSpace, storageLocal, store } from './utils';
+import { getConfig, responsiveStorageNameSpace, storageLocal, store } from '../utils';
 
 export const useEpThemeStore = defineStore('pure-epTheme', {
   state: () => ({

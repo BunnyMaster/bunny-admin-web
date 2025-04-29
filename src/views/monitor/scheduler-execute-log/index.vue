@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import { auth, columns, deleteIds, onDelete, onDeleteBatch, onSearch, onView, state } from '@/views/monitor/scheduler-execute-log/utils';
-import PureTableBar from '@/components/TableBar/src/bar';
-import PureTable from '@pureadmin/table';
-import Delete from '~icons/ep/delete';
-import Refresh from '~icons/ep/refresh';
+import ReAuth from '@/components/ReAuth/src/auth';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
 import { useQuartzExecuteLogStore } from '@/store/monitor/quartzExecuteLog';
-import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { auth, columns, deleteIds, onDelete, onDeleteBatch, onSearch, onView, state } from '@/views/monitor/scheduler-execute-log/utils';
+import PureTable from '@pureadmin/table';
 import { FormInstance } from 'element-plus';
-import View from '~icons/ep/view';
+import { onMounted, ref } from 'vue';
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
-import { hasAuth } from '@/router/utils';
-import ReAuth from '@/components/ReAuth/src/auth';
+import Delete from '~icons/ep/delete';
+import Refresh from '~icons/ep/refresh';
+import View from '~icons/ep/view';
 
 defineOptions({ name: 'SchedulerExecuteLog' });
 
