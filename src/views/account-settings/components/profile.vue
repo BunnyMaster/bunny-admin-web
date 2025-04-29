@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import ReCropperPreview from '@/components/CropperPreview';
+import ReCropperPreview from '@/components/ReCropperPreview';
 import { sexConstant } from '@/enums/baseConstant';
 import { $t } from '@/plugins/i18n';
 import { useAdminUserStore } from '@/store/system/adminUser';

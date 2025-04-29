@@ -8,7 +8,7 @@ import { $t } from '@/plugins/i18n';
 import { isAddUserinfo } from '@/views/system/admin-user/utils/columns';
 import ResetPasswordDialog from '@/components/Table/ResetPasswords.vue';
 import { deviceDetection, handleTree } from '@pureadmin/utils';
-import CropperPreview from '@/components/CropperPreview';
+import CropperPreview from '@/components/ReCropperPreview';
 import AssignUserToRole from '@/views/system/admin-user/components/assign-roles-to-user.vue';
 import { useUserStore } from '@/store/system/user';
 import { useDeptStore } from '@/store/system/dept';

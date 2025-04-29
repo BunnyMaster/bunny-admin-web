@@ -1,12 +1,12 @@
 .scroll-num {
-  animation: enhance-bounce-in-down 1s calc(var(--delay) * 1s) forwards;
+  width: var(--width, 20px);
+  height: var(--height, calc(var(--width, 20px) * 1.8));
   color: var(--color, #333);
   font-size: var(--height, calc(var(--width, 20px) * 1.1));
-  height: var(--height, calc(var(--width, 20px) * 1.8));
   line-height: var(--height, calc(var(--width, 20px) * 1.8));
-  overflow: hidden;
   text-align: center;
-  width: var(--width, 20px);
+  overflow: hidden;
+  animation: enhance-bounce-in-down 1s calc(var(--delay) * 1s) forwards;
 }
 
 ul {

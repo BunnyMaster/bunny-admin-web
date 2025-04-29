@@ -16,7 +16,7 @@ defineProps({
 </script>
 
 <template>
-  <div v-if="list.length">
+  <div v-if="list.length" class="mb-4">
     <NoticeItem v-for="(item, index) in list" :key="index" :noticeItem="item" />
   </div>
   <el-empty v-else :description="emptyText" />

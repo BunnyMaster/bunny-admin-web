@@ -21,9 +21,7 @@ const i18nStore = userI18nStore();
 const i18n = useI18n();
 const { $storage } = useNav();
 
-/**
- * * 设置多语言内容
- */
+/* 设置多语言内容 */
 const setI18n = async () => {
   await i18nStore.loadI18nMap();
   const languageData = JSON.parse(localStorage.getItem('i18nStore') as any);
@@ -44,9 +42,7 @@ const setI18n = async () => {
   i18n.mergeLocaleMessage(locale, languageData.i18n[locale]);
 };
 
-/**
- * * 当前语言类别
- */
+/* 当前语言类别 */
 const currentLocale = computed(() => {
   const languageData = JSON.parse(localStorage.getItem('i18nStore') as any);
   const local = languageData ? languageData.i18n.local : {};

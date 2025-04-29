@@ -2,26 +2,26 @@ import './circled.css';
 import Cropper from 'cropperjs';
 import { ElUpload } from 'element-plus';
 import type { CSSProperties } from 'vue';
-import { computed, defineComponent, onMounted, onUnmounted, type PropType, ref, unref } from 'vue';
 import { useEventListener } from '@vueuse/core';
 import { longpress } from '@/directives/longpress';
-import { directive as tippy, useTippy } from 'vue-tippy';
-import { debounce, delay, downloadByBase64, isArray, useResizeObserver } from '@pureadmin/utils';
+import { useTippy, directive as tippy } from 'vue-tippy';
+import { type PropType, ref, unref, computed, onMounted, onUnmounted, defineComponent } from 'vue';
+import { delay, debounce, isArray, downloadByBase64, useResizeObserver } from '@pureadmin/utils';
 import {
-  ArrowDown,
-  ArrowH,
-  ArrowLeft,
-  ArrowRight,
-  ArrowUp,
-  ArrowV,
-  ChangeIcon,
-  DownloadIcon,
   Reload,
+  Upload,
+  ArrowH,
+  ArrowV,
+  ArrowUp,
+  ArrowDown,
+  ArrowLeft,
+  ChangeIcon,
+  ArrowRight,
   RotateLeft,
+  SearchPlus,
   RotateRight,
   SearchMinus,
-  SearchPlus,
-  Upload,
+  DownloadIcon,
 } from './svg';
 
 type Options = Cropper.Options;
@@ -101,7 +101,7 @@ export default defineComponent({
     });
 
     const iconClass = computed(() => {
-      return ['p-[6px]', 'h-[30px]', 'w-[30px]', 'outline-none', 'rounded-[4px]', 'cursor-pointer', 'hover:bg-[rgba(0,0,0,0.06)]'];
+      return ['p-[6px]', 'h-[30px]', 'w-[30px]', 'outline-hidden', 'rounded-[4px]', 'cursor-pointer', 'hover:bg-[rgba(0,0,0,0.06)]'];
     });
 
     const getWrapperStyle = computed((): CSSProperties => {
@@ -124,7 +124,7 @@ export default defineComponent({
     async function init() {
       const imgEl = unref(imgElRef);
       if (!imgEl) return;
-      const result: any = new Cropper(imgEl, {
+      cropper.value = new Cropper(imgEl, {
         ...defaultOptions,
         ready: () => {
           isReady.value = true;
@@ -142,11 +142,6 @@ export default defineComponent({
         },
         ...props.options,
       });
-
-      // 如果图片不存在直接将加载变为加载完成
-      if (!result.ready) emit('readied', cropper.value);
-
-      cropper.value = result;
     }
 
     function realTimeCroppered() {
@@ -226,30 +221,55 @@ export default defineComponent({
         return () => (
           <div class="flex flex-wrap w-[60px] justify-between">
             <ElUpload accept="image/*" show-file-list={false} before-upload={beforeUpload}>
-              <Upload class={iconClass.value} v-tippy={{ content: '上传', placement: 'left-start' }} />
+              <Upload
+                class={iconClass.value}
+                v-tippy={{
+                  content: '上传',
+                  placement: 'left-start',
+                }}
+              />
             </ElUpload>
             <DownloadIcon
               class={iconClass.value}
-              v-tippy={{ content: '下载', placement: 'right-start' }}
+              v-tippy={{
+                content: '下载',
+                placement: 'right-start',
+              }}
               onClick={() => downloadByBase64(imgBase64.value, 'cropping.png')}
             />
             <ChangeIcon
               class={iconClass.value}
-              v-tippy={{ content: '圆形、矩形裁剪', placement: 'left-start' }}
+              v-tippy={{
+                content: '圆形、矩形裁剪',
+                placement: 'left-start',
+              }}
               onClick={() => {
                 inCircled.value = !inCircled.value;
                 realTimeCroppered();
               }}
             />
-            <Reload class={iconClass.value} v-tippy={{ content: '重置', placement: 'right-start' }} onClick={() => handCropper('reset')} />
+            <Reload
+              class={iconClass.value}
+              v-tippy={{
+                content: '重置',
+                placement: 'right-start',
+              }}
+              onClick={() => handCropper('reset')}
+            />
             <ArrowUp
               class={iconClass.value}
-              v-tippy={{ content: '上移（可长按）', placement: 'left-start' }}
+              v-tippy={{
+                content: '上移（可长按）',
+                placement: 'left-start',
+              }}
               v-longpress={[() => handCropper('move', [0, -10]), '0:100']}
             />
             <ArrowDown
               class={iconClass.value}
-              v-tippy={{ content: '下移（可长按）', placement: 'right-start' }}
+              v-tippy={{
+                content: '下移（可长按）',
+                placement: 'right-start',
+              }}
               v-longpress={[() => handCropper('move', [0, 10]), '0:100']}
             />
             <ArrowLeft
@@ -262,21 +282,58 @@ export default defineComponent({
             />
             <ArrowRight
               class={iconClass.value}
-              v-tippy={{ content: '右移（可长按）', placement: 'right-start' }}
+              v-tippy={{
+                content: '右移（可长按）',
+                placement: 'right-start',
+              }}
               v-longpress={[() => handCropper('move', [10, 0]), '0:100']}
             />
-            <ArrowH class={iconClass.value} v-tippy={{ content: '水平翻转', placement: 'left-start' }} onClick={() => handCropper('scaleX', -1)} />
-            <ArrowV class={iconClass.value} v-tippy={{ content: '垂直翻转', placement: 'right-start' }} onClick={() => handCropper('scaleY', -1)} />
-            <RotateLeft class={iconClass.value} v-tippy={{ content: '逆时针旋转', placement: 'left-start' }} onClick={() => handCropper('rotate', -45)} />
-            <RotateRight class={iconClass.value} v-tippy={{ content: '顺时针旋转', placement: 'right-start' }} onClick={() => handCropper('rotate', 45)} />
+            <ArrowH
+              class={iconClass.value}
+              v-tippy={{
+                content: '水平翻转',
+                placement: 'left-start',
+              }}
+              onClick={() => handCropper('scaleX', -1)}
+            />
+            <ArrowV
+              class={iconClass.value}
+              v-tippy={{
+                content: '垂直翻转',
+                placement: 'right-start',
+              }}
+              onClick={() => handCropper('scaleY', -1)}
+            />
+            <RotateLeft
+              class={iconClass.value}
+              v-tippy={{
+                content: '逆时针旋转',
+                placement: 'left-start',
+              }}
+              onClick={() => handCropper('rotate', -45)}
+            />
+            <RotateRight
+              class={iconClass.value}
+              v-tippy={{
+                content: '顺时针旋转',
+                placement: 'right-start',
+              }}
+              onClick={() => handCropper('rotate', 45)}
+            />
             <SearchPlus
               class={iconClass.value}
-              v-tippy={{ content: '放大（可长按）', placement: 'left-start' }}
+              v-tippy={{
+                content: '放大（可长按）',
+                placement: 'left-start',
+              }}
               v-longpress={[() => handCropper('zoom', 0.1), '0:100']}
             />
             <SearchMinus
               class={iconClass.value}
-              v-tippy={{ content: '缩小（可长按）', placement: 'right-start' }}
+              v-tippy={{
+                content: '缩小（可长按）',
+                placement: 'right-start',
+              }}
               v-longpress={[() => handCropper('zoom', -0.1), '0:100']}
             />
           </div>

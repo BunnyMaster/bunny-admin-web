@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import ReCol from '@/components/ReCol';
 import { chartData, useDark } from './utils';
-import { ReNormalCountTo } from '@/components/CountTo';
+import { ReNormalCountTo } from '@/components/ReCountTo';
 import ChartLine from '@/views/welcome/components/ChartLine.vue';
 import ChartRound from '@/views/welcome/components/ChartRound.vue';
 import { getServerCommitList, getWebCommitList, serverCommitList, webCommitList } from '@/views/welcome/utils';
