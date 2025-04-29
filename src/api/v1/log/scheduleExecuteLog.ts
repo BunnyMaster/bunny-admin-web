@@ -10,5 +10,7 @@ export const getScheduleExecuteLogPage = (data: any) => {
 
 /** 调度任务执行日志---删除调度任务执行日志 */
 export const deleteScheduleExecuteLog = (data: any) => {
-  return http.request<BaseResult<object>>('delete', 'scheduleExecuteLog', { data });
+  return http.request<BaseResult<object>>('delete', 'scheduleExecuteLog', {
+    data,
+  });
 };

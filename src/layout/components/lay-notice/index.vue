@@ -3,7 +3,7 @@ import { useI18n } from 'vue-i18n';
 import { onMounted } from 'vue';
 import { activeKey, computedNoticesNum, getLabel, notices, noticesNum } from './data';
 import NoticeList from './components/NoticeList.vue';
-import BellIcon from '@iconify-icons/ep/bell';
+import BellIcon from '~icons/ep/bell';
 import { useMessageTypeStore } from '@/store/message/messageType';
 
 const { t } = useI18n();

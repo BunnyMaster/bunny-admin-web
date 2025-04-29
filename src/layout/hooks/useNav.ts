@@ -2,9 +2,11 @@ import { storeToRefs } from 'pinia';
 import { getConfig } from '@/config';
 import { useRouter } from 'vue-router';
 import { emitter } from '@/utils/mitt';
+import Avatar from '@/assets/user.jpg';
 import { getTopMenu } from '@/router/utils';
 import { useFullscreen } from '@vueuse/core';
 import type { routeMetaType } from '../types';
+import { $t } from '@/plugins/i18n';
 import { remainingPaths, router } from '@/router';
 import { computed, type CSSProperties } from 'vue';
 import { useAppStoreHook } from '@/store/modules/app';
@@ -12,10 +14,8 @@ import { useUserStoreHook } from '@/store/system/user';
 import { isAllEmpty, useGlobal } from '@pureadmin/utils';
 import { useEpThemeStoreHook } from '@/store/epTheme';
 import { usePermissionStoreHook } from '@/store/permission';
-import ExitFullscreen from '@iconify-icons/ri/fullscreen-exit-fill';
-import Fullscreen from '@iconify-icons/ri/fullscreen-fill';
-import { $t } from '@/plugins/i18n';
-import { UserAvatar } from '@/enums/baseConstant';
+import ExitFullscreen from '~icons/ri/fullscreen-exit-fill';
+import Fullscreen from '~icons/ri/fullscreen-fill';
 
 const errorInfo = 'The current routing configuration is incorrect, please check the configuration';
 
@@ -39,7 +39,7 @@ export function useNav() {
 
   /** 头像（如果头像为空则使用 src/assets/user.jpg ） */
   const userAvatar = computed(() => {
-    return isAllEmpty(useUserStoreHook()?.avatar) ? UserAvatar : useUserStoreHook()?.avatar;
+    return isAllEmpty(useUserStoreHook()?.avatar) ? Avatar : useUserStoreHook()?.avatar;
   });
 
   /** 昵称（如果昵称为空则显示用户名） */
@@ -59,7 +59,7 @@ export function useNav() {
 
   const getDropdownItemClass = computed(() => {
     return (locale, t) => {
-      return locale === t ? '' : 'dark:hover:!text-primary';
+      return locale === t ? '' : 'dark:hover:text-primary!';
     };
   });
 
@@ -76,7 +76,9 @@ export function useNav() {
   });
 
   const { $storage, $config } = useGlobal<GlobalPropertiesApi>();
-  const layout = computed(() => $storage?.layout?.layout);
+  const layout = computed(() => {
+    return $storage?.layout?.layout;
+  });
 
   const title = computed(() => {
     return $config.Title;
@@ -85,7 +87,7 @@ export function useNav() {
   /** 动态title */
   function changeTitle(meta: routeMetaType) {
     const Title = getConfig().Title;
-    if (Title) document.title = `${meta.title} | ${Title}`;
+    if (Title) document.title = `${$t(meta.title)} | ${Title}`;
     else document.title = $t(meta.title);
   }
 
@@ -100,6 +102,10 @@ export function useNav() {
 
   function onPanel() {
     emitter.emit('openPanel');
+  }
+
+  function toAccountSettings() {
+    router.push({ name: 'AccountSettings' });
   }
 
   function toggleSideBar() {
@@ -162,6 +168,7 @@ export function useNav() {
     userAvatar,
     avatarsStyle,
     tooltipEffect,
+    toAccountSettings,
     getDropdownItemStyle,
     getDropdownItemClass,
   };

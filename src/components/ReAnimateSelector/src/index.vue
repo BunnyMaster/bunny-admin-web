@@ -1,8 +1,7 @@
-<script lang="ts" setup>
-import { computed, ref } from 'vue';
+<script setup lang="ts">
+import { ref, computed } from 'vue';
 import { animates } from './animate';
 import { cloneDeep } from '@pureadmin/utils';
-import { $t } from '@/plugins/i18n';
 
 defineOptions({
   name: 'ReAnimateSelector',
@@ -11,7 +10,7 @@ defineOptions({
 defineProps({
   placeholder: {
     type: String,
-    default: $t('pleaseSelectAnimation'),
+    default: '请选择动画',
   },
 });
 
@@ -62,7 +61,6 @@ function filterMethod(value: any) {
 }
 
 const animateMap = ref({});
-
 function onMouseEnter(index: string | number) {
   animateMap.value[index] = animateMap.value[index]?.loading
     ? Object.assign({}, animateMap.value[index], {
@@ -72,7 +70,6 @@ function onMouseEnter(index: string | number) {
         loading: true,
       });
 }
-
 function onMouseleave() {
   animateMap.value = {};
 }
@@ -80,33 +77,33 @@ function onMouseleave() {
 
 <template>
   <el-select
-    :filter-method="filterMethod"
-    :model-value="inputValue"
-    :placeholder="placeholder"
     clearable
     filterable
+    :placeholder="placeholder"
     popper-class="pure-animate-popper"
+    :model-value="inputValue"
+    :filter-method="filterMethod"
     @clear="onClear"
   >
     <template #empty>
       <div class="w-[280px]">
-        <el-scrollbar :view-style="{ overflow: 'hidden' }" class="border-t border-[#e5e7eb]" height="212px" noresize>
-          <ul class="flex flex-wrap justify-around mb-1">
+        <el-scrollbar noresize height="212px" :view-style="{ overflow: 'hidden' }" class="border-t border-[#e5e7eb]">
+          <ul class="flex flex-wrap justify-around mb-1!">
             <li
               v-for="(animate, index) in animatesList"
               :key="index"
               :class="animateClass"
               :style="animateStyle(animate)"
-              @click="onChangeIcon(animate)"
               @mouseenter.prevent="onMouseEnter(index)"
               @mouseleave.prevent="onMouseleave"
+              @click="onChangeIcon(animate)"
             >
               <h4 :class="[`animate__animated animate__${animateMap[index]?.loading ? animate + ' animate__infinite' : ''} `]">
                 {{ animate }}
               </h4>
             </li>
           </ul>
-          <el-empty v-show="animatesList.length === 0" :description="`${searchVal} ${$t('animationNotExist')}`" :image-size="60" />
+          <el-empty v-show="animatesList.length === 0" :description="`${searchVal} 动画不存在`" :image-size="60" />
         </el-scrollbar>
       </div>
     </template>

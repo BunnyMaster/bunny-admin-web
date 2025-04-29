@@ -86,9 +86,24 @@ export const getAllMessageList = async () => {
     })) as ListItem[];
 
   noticesData.value = [
-    { key: '1', name: $t('status.pureNotify'), list: notifications, emptyText: $t('status.pureNoNotify') },
-    { key: '2', name: $t('status.pureMessage'), list: notify, emptyText: $t('status.pureNoMessage') },
-    { key: '3', name: $t('status.systemMessage'), list: system, emptyText: $t('status.systemMessage') },
+    {
+      key: '1',
+      name: $t('status.pureNotify'),
+      list: notifications,
+      emptyText: $t('status.pureNoNotify'),
+    },
+    {
+      key: '2',
+      name: $t('status.pureMessage'),
+      list: notify,
+      emptyText: $t('status.pureNoMessage'),
+    },
+    {
+      key: '3',
+      name: $t('status.systemMessage'),
+      list: system,
+      emptyText: $t('status.systemMessage'),
+    },
   ];
 
   // 调用浏览器系统通知

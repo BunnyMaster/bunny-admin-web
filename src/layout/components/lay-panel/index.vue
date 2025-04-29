@@ -4,7 +4,7 @@ import { emitter } from '@/utils/mitt';
 import { onClickOutside } from '@vueuse/core';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange';
-import CloseIcon from '@iconify-icons/ep/close';
+import CloseIcon from '~icons/ep/close';
 
 const target = ref(null);
 const show = ref<Boolean>(false);

@@ -6,12 +6,12 @@ export const whiteList = ['/refresh-token', '/login'];
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 export const defaultConfig: AxiosRequestConfig = {
   // 默认请求地址
-  baseURL: import.meta.env.VITE_BASE_API,
+  baseURL: '/api',
   // 设置超时时间
-  timeout: import.meta.env.VITE_BASE_API_TIMEOUT,
+  timeout: 6000,
   // @ts-expect-error
-  retry: import.meta.env.VITE_BASE_API_RETRY, //设置全局重试请求次数（最多重试几次请求）
-  retryDelay: import.meta.env.VITE_BASE_API_RETRY_DELAY, //设置全局请求间隔
+  retry: 3, //设置全局重试请求次数（最多重试几次请求）
+  retryDelay: 3000, //设置全局请求间隔
   // 跨域允许携带凭证
   // withCredentials: true,
   headers: {

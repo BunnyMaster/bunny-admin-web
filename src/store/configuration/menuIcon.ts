@@ -36,7 +36,7 @@ export const useMenuIconStore = defineStore('menuIconStore', {
   actions: {
     /** 获取系统菜单图标 */
     async fetchMenuIconListPage() {
-      const data = { ...this.pagination, ...this.form };
+      const data: any = { ...this.pagination, ...this.form };
       delete data.pageSizes;
       delete data.total;
       delete data.background;

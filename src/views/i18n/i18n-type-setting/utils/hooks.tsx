@@ -46,7 +46,13 @@ export function onUpdate(row: any) {
   addDialog({
     title: `修改多语言类型`,
     width: '30%',
-    props: { formInline: { typeName: row.typeName, summary: row.summary, isDefault: row.isDefault } },
+    props: {
+      formInline: {
+        typeName: row.typeName,
+        summary: row.summary,
+        isDefault: row.isDefault,
+      },
+    },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
@@ -56,7 +62,10 @@ export function onUpdate(row: any) {
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
 
-        const result = await i18nTypeStore.editI18nType({ ...form, id: row.id });
+        const result = await i18nTypeStore.editI18nType({
+          ...form,
+          id: row.id,
+        });
         if (!result) return;
         done();
         await onSearch();

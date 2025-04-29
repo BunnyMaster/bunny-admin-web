@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { contentRef, currentRow, iconClass, onMenuPowerClick, powerTreeIsShow, powerTreeRef, tableRef } from '@/views/system/role/utils';
-import Close from '@iconify-icons/ep/close';
-import Check from '@iconify-icons/ep/check';
+import Close from '~icons/ep/close';
+import Check from '~icons/ep/check';
 import { computed, nextTick, onMounted, ref, watch } from 'vue';
 import { delay, getKeyList, handleTree, subBefore, useResizeObserver } from '@pureadmin/utils';
 import { usePermissionStore } from '@/store/system/power';

@@ -2,11 +2,11 @@
 import { onMounted, ref } from 'vue';
 import { auth, columns, onAdd, onDelete, onPause, onResume, onSearch, onUpdate } from '@/views/scheduler/schedulers/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
-import AddFill from '@iconify-icons/ri/add-circle-line';
+import AddFill from '~icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import Delete from '@iconify-icons/ep/delete';
-import EditPen from '@iconify-icons/ep/edit-pen';
-import Refresh from '@iconify-icons/ep/refresh';
+import Delete from '~icons/ep/delete';
+import EditPen from '~icons/ep/edit-pen';
+import Refresh from '~icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useSchedulersStore } from '@/store/scheduler/schedulers';
@@ -68,7 +68,7 @@ onMounted(() => {
           <el-input v-model="schedulersStore.form.triggerState" :placeholder="`${$t('input')}${$t('schedulers_triggerState')}`" class="!w-[180px]" clearable />
         </el-form-item>
         <el-form-item>
-          <el-button :icon="useRenderIcon('ri:search-line')" :loading="schedulersStore.loading" type="primary" @click="onSearch">
+          <el-button :icon="useRenderIcon('ri/search-line')" :loading="schedulersStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -89,7 +89,10 @@ onMounted(() => {
           :adaptiveConfig="{ offsetBottom: 96 }"
           :columns="dynamicColumns"
           :data="schedulersStore.datalist"
-          :header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
+          :header-cell-style="{
+            background: 'var(--el-fill-color-light)',
+            color: 'var(--el-text-color-primary)',
+          }"
           :loading="schedulersStore.loading"
           :pagination="schedulersStore.pagination"
           :size="size"

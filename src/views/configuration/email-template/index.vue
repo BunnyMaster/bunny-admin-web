@@ -7,11 +7,11 @@ import { $t } from '@/plugins/i18n';
 import { hasAuth } from '@/router/utils';
 import { useEmailTemplateStore } from '@/store/configuration/emailTemplate';
 import { auth, columns, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate, selectRows } from '@/views/configuration/email-template/utils';
-import Delete from '@iconify-icons/ep/delete';
-import EditPen from '@iconify-icons/ep/edit-pen';
-import Refresh from '@iconify-icons/ep/refresh';
-import View from '@iconify-icons/ep/view';
-import AddFill from '@iconify-icons/ri/add-circle-line';
+import Delete from '~icons/ep/delete';
+import EditPen from '~icons/ep/edit-pen';
+import Refresh from '~icons/ep/refresh';
+import View from '~icons/ep/view';
+import AddFill from '~icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
 import { onMounted, ref } from 'vue';
 import { useEmailUsersStore } from '@/store/configuration/emailUsers';
@@ -88,7 +88,7 @@ onMounted(() => {
           <el-input v-model="emailTemplateStore.form.type" :placeholder="`${$t('input')}${$t('emailTemplate_type')}`" class="!w-[180px]" clearable />
         </el-form-item>
         <el-form-item>
-          <el-button :icon="useRenderIcon('ri:search-line')" :loading="emailTemplateStore.loading" type="primary" @click="onSearch">
+          <el-button :icon="useRenderIcon('ri/search-line')" :loading="emailTemplateStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -114,7 +114,10 @@ onMounted(() => {
           :adaptiveConfig="{ offsetBottom: 96 }"
           :columns="dynamicColumns"
           :data="emailTemplateStore.datalist"
-          :header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
+          :header-cell-style="{
+            background: 'var(--el-fill-color-light)',
+            color: 'var(--el-text-color-primary)',
+          }"
           :loading="emailTemplateStore.loading"
           :pagination="emailTemplateStore.pagination"
           :size="size"

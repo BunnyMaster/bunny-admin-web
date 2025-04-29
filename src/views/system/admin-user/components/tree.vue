@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { getCurrentInstance, ref, watch } from 'vue';
-import Dept from '@iconify-icons/ri/git-branch-line';
-import More2Fill from '@iconify-icons/ri/more-2-fill';
-import OfficeBuilding from '@iconify-icons/ep/office-building';
-import LocationCompany from '@iconify-icons/ep/add-location';
+import Dept from '~icons/ri/git-branch-line';
+import More2Fill from '~icons/ri/more-2-fill';
+import OfficeBuilding from '~icons/ep/office-building';
+import LocationCompany from '~icons/ep/add-location';
 import ExpandIcon from '@/assets/svg/expand.svg?component';
 import UnExpandIcon from '@/assets/svg/unexpand.svg?component';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import Reset from '@iconify-icons/ri/restart-line';
+import Reset from '~icons/ri/restart-line';
 import { buttonClass, defaultProps, onSearch, Tree } from '@/views/system/admin-user/utils';
 import { useAdminUserStore } from '@/store/system/adminUser';
 import { $t } from '@/plugins/i18n';
@@ -86,7 +86,7 @@ defineExpose({ onTreeReset });
       <el-input v-model="searchValue" :placeholder="$t('input') + $t('adminUser_dept')" class="ml-2" clearable size="small">
         <template #suffix>
           <el-icon class="el-input__icon">
-            <IconifyIconOffline v-show="searchValue.length === 0" icon="ri:search-line" />
+            <IconifyIconOffline v-show="searchValue.length === 0" icon="ri/search-line" />
           </el-icon>
         </template>
       </el-input>

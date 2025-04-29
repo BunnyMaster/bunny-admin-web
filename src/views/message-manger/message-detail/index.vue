@@ -3,7 +3,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { onBeforeMount, ref } from 'vue';
 import { deviceDetection, useGlobal } from '@pureadmin/utils';
 import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange';
-import leftLine from '@iconify-icons/ri/arrow-left-s-line';
+import leftLine from '~icons/ri/arrow-left-s-line';
 import { $t } from '@/plugins/i18n';
 import { useMessageTypeStore } from '@/store/message/messageType';
 import { onSearch } from '@/views/message-manger/message-detail/utils';
@@ -70,7 +70,7 @@ onBeforeMount(() => {
 
 <style lang="scss">
 .pure-account-settings {
-  background: $menuBg;
+  background: var(--pure-theme-menu-bg) !important;
 }
 
 .pure-account-settings-menu {
@@ -79,12 +79,11 @@ onBeforeMount(() => {
 
   .el-menu-item {
     height: 48px !important;
-    color: $menuText;
-    background-color: transparent !important;
+    color: var(--pure-theme-menu-text);
     transition: color 0.2s;
 
     &:hover {
-      color: $menuTitleHover !important;
+      color: var(--pure-theme-menu-title-hover) !important;
     }
 
     &.is-active {

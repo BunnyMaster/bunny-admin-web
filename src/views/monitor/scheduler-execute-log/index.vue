@@ -3,14 +3,14 @@ import { onMounted, ref } from 'vue';
 import { auth, columns, deleteIds, onDelete, onDeleteBatch, onSearch, onView, state } from '@/views/monitor/scheduler-execute-log/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
-import Delete from '@iconify-icons/ep/delete';
-import Refresh from '@iconify-icons/ep/refresh';
+import Delete from '~icons/ep/delete';
+import Refresh from '~icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useQuartzExecuteLogStore } from '@/store/monitor/quartzExecuteLog';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { FormInstance } from 'element-plus';
-import View from '@iconify-icons/ep/view';
+import View from '~icons/ep/view';
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
 import { hasAuth } from '@/router/utils';
@@ -96,7 +96,7 @@ onMounted(() => {
           />
         </el-form-item>
         <el-form-item>
-          <el-button :icon="useRenderIcon('ri:search-line')" :loading="quartzExecuteLogStore.loading" type="primary" @click="onSearch">
+          <el-button :icon="useRenderIcon('ri/search-line')" :loading="quartzExecuteLogStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -118,7 +118,10 @@ onMounted(() => {
           :adaptiveConfig="{ offsetBottom: 96 }"
           :columns="dynamicColumns"
           :data="quartzExecuteLogStore.datalist"
-          :header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
+          :header-cell-style="{
+            background: 'var(--el-fill-color-light)',
+            color: 'var(--el-text-color-primary)',
+          }"
           :loading="quartzExecuteLogStore.loading"
           :pagination="quartzExecuteLogStore.pagination"
           :size="size"

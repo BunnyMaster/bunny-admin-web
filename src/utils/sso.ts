@@ -42,9 +42,12 @@ import { message } from '@/utils/message';
 
     // 删除不需要显示在 url 的参数
     delete params.roles;
-    delete (params as any).accessToken;
+    delete params.token;
 
-    const newUrl = `${location.origin}${location.pathname}${subBefore(location.hash, '?')}?${JSON.stringify(params).replace(/["{}]/g, '').replace(/:/g, '=').replace(/,/g, '&')}`;
+    const newUrl = `${location.origin}${location.pathname}${subBefore(location.hash, '?')}?${JSON.stringify(params)
+      .replace(/["{}]/g, '')
+      .replace(/:/g, '=')
+      .replace(/,/g, '&')}`;
 
     // 替换历史记录项
     window.location.replace(newUrl);

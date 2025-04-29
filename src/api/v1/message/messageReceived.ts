@@ -15,7 +15,9 @@ export const updateMessageReceivedByAdmin = (data: any) => {
 
 /** 管理员操作用户消息---管理删除用户消息 */
 export const deleteMessageReceivedByAdmin = (data: any) => {
-  return http.request<BaseResult<object>>('delete', 'messageReceived', { data });
+  return http.request<BaseResult<object>>('delete', 'messageReceived', {
+    data,
+  });
 };
 
 /** 用户系统消息---用户获取系统消息列表 */

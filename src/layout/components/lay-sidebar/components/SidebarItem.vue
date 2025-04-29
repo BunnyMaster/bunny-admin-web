@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import { Text } from '@/components/ReText';
 import { getConfig } from '@/config';
-import { useNav } from '@/layout/hooks/useNav';
+import { posix } from 'path-browserify';
 import { menuType } from '@/layout/types';
-import path from 'path';
-import { computed, type CSSProperties, type PropType, ref, toRaw, useAttrs } from 'vue';
-import SidebarExtraIcon from './SidebarExtraIcon.vue';
-import SidebarLinkItem from './SidebarLinkItem.vue';
-
+import { ReText } from '@/components/ReText';
+import { useNav } from '@/layout/hooks/useNav';
 import { $t } from '@/plugins/i18n';
-import EpArrowDown from '@iconify-icons/ep/arrow-down-bold';
-import ArrowLeft from '@iconify-icons/ep/arrow-left-bold';
-import ArrowRight from '@iconify-icons/ep/arrow-right-bold';
-import ArrowUp from '@iconify-icons/ep/arrow-up-bold';
+import SidebarLinkItem from './SidebarLinkItem.vue';
+import SidebarExtraIcon from './SidebarExtraIcon.vue';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { computed, type CSSProperties, type PropType, ref, toRaw, useAttrs } from 'vue';
+
+import ArrowUp from '~icons/ep/arrow-up-bold';
+import EpArrowDown from '~icons/ep/arrow-down-bold';
+import ArrowLeft from '~icons/ep/arrow-left-bold';
+import ArrowRight from '~icons/ep/arrow-right-bold';
 
 const attrs = useAttrs();
 const { layout, isCollapse, tooltipEffect, getDivStyle } = useNav();
@@ -47,6 +47,20 @@ const getSubMenuIconStyle = computed((): CSSProperties => {
     alignItems: 'center',
     margin: layout.value === 'horizontal' ? '0 5px 0 0' : isCollapse.value ? '0 auto' : '0 5px 0 0',
   };
+});
+
+const textClass = computed(() => {
+  const item = props.item;
+  const baseClass = 'w-full! text-inherit!';
+  if (
+    layout.value !== 'horizontal' &&
+    isCollapse.value &&
+    !toRaw(item.meta.icon) &&
+    ((layout.value === 'vertical' && item.parentId === null) || (layout.value === 'mix' && item.pathList.length === 2))
+  ) {
+    return `${baseClass} min-w-[54px]! text-center! px-3!`;
+  }
+  return baseClass;
 });
 
 const expandCloseIcon = computed(() => {
@@ -87,8 +101,7 @@ function resolvePath(routePath) {
   if (httpReg.test(routePath) || httpReg.test(props.basePath)) {
     return routePath || props.basePath;
   } else {
-    // 使用path.posix.resolve替代path.resolve 避免windows环境下使用electron出现盘符问题
-    return path.posix.resolve(props.basePath, routePath);
+    return posix.resolve(props.basePath, routePath);
   }
 }
 </script>
@@ -104,7 +117,7 @@ function resolvePath(routePath) {
           (!item?.meta.icon && isCollapse && layout === 'vertical' && item?.pathList?.length === 1) ||
           (!onlyOneChild.meta.icon && isCollapse && layout === 'mix' && item?.pathList?.length === 2)
         "
-        class="!w-full !pl-4 !text-inherit"
+        class="w-full! px-3! min-w-[54px]! text-center! text-inherit!"
         truncated
       >
         {{ $t(onlyOneChild.meta.title) }}
@@ -112,15 +125,15 @@ function resolvePath(routePath) {
 
       <template #title>
         <div :style="getDivStyle">
-          <Text
+          <ReText
             :tippyProps="{
               offset: [0, -10],
               theme: tooltipEffect,
             }"
-            class="!w-full !text-inherit"
+            class="w-full! text-inherit!"
           >
             {{ $t(onlyOneChild.meta.title) }}
-          </Text>
+          </ReText>
           <SidebarExtraIcon :extraIcon="onlyOneChild.meta.extraIcon" />
         </div>
       </template>
@@ -131,24 +144,20 @@ function resolvePath(routePath) {
       <div v-if="toRaw(item.meta.icon)" :style="getSubMenuIconStyle" class="sub-menu-icon">
         <component :is="useRenderIcon(item.meta && toRaw(item.meta.icon))" />
       </div>
-      <Text
+      <ReText
         v-if="
           layout === 'mix' && toRaw(item.meta.icon)
             ? !isCollapse || item?.pathList?.length !== 2
             : !(layout === 'vertical' && isCollapse && toRaw(item.meta.icon) && item.parentId === null)
         "
-        :class="{
-          '!w-full': true,
-          '!text-inherit': true,
-          '!pl-4': layout !== 'horizontal' && isCollapse && !toRaw(item.meta.icon) && item.parentId === null,
-        }"
+        :class="textClass"
         :tippyProps="{
           offset: [0, -10],
           theme: tooltipEffect,
         }"
       >
         {{ $t(item.meta.title) }}
-      </Text>
+      </ReText>
       <SidebarExtraIcon v-if="!isCollapse" :extraIcon="item.meta.extraIcon" />
     </template>
 

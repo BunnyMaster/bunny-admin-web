@@ -67,7 +67,9 @@ export const getUserListByKeyword = (data: any) => {
 
 /** 用户管理---强制用户下线 */
 export const forcedOfflineByAdmin = (data: any) => {
-  return http.request<BaseResult<UserResult>>('put', 'user/forcedOffline', { data });
+  return http.request<BaseResult<UserResult>>('put', 'user/forcedOffline', {
+    data,
+  });
 };
 
 // -----------------------------------------

@@ -6,15 +6,45 @@ export const rules = {
   // 消息标题
   title: [{ required: true, message: `${$t('input')}${$t('title')}`, trigger: 'blur' }],
   // 消息类型
-  messageTypeId: [{ required: true, message: `${$t('input')}${$t('messageType')}`, trigger: 'blur' }],
+  messageTypeId: [
+    {
+      required: true,
+      message: `${$t('input')}${$t('messageType')}`,
+      trigger: 'blur',
+    },
+  ],
   // 消息内容
-  content: [{ required: true, message: `${$t('input')}${$t('content')}`, trigger: 'blur' }],
+  content: [
+    {
+      required: true,
+      message: `${$t('input')}${$t('content')}`,
+      trigger: 'blur',
+    },
+  ],
   // 编辑器类型
-  editorType: [{ required: true, message: `${$t('input')}${$t('editorType')}`, trigger: 'blur' }],
+  editorType: [
+    {
+      required: true,
+      message: `${$t('input')}${$t('editorType')}`,
+      trigger: 'blur',
+    },
+  ],
   // 消息简介
-  summary: [{ required: true, message: `${$t('input')}${$t('summary')}`, trigger: 'blur' }],
+  summary: [
+    {
+      required: true,
+      message: `${$t('input')}${$t('summary')}`,
+      trigger: 'blur',
+    },
+  ],
   // 消息简介
-  level: [{ required: true, message: `${$t('select')}${$t('level')}`, trigger: 'blur' }],
+  level: [
+    {
+      required: true,
+      message: `${$t('select')}${$t('level')}`,
+      trigger: 'blur',
+    },
+  ],
 };
 
 export const messageLevel = ['primary', 'success', 'warning', 'info', 'danger'];

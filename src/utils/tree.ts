@@ -167,6 +167,5 @@ export const handleTree = (data: any[], id?: string, parentId?: string, children
       }
     }
   }
-
   return tree;
 };

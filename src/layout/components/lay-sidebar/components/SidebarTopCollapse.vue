@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import MenuFold from '@iconify-icons/ri/menu-fold-fill';
-import MenuUnfold from '@iconify-icons/ri/menu-unfold-fill';
+import MenuFold from '~icons/ri/menu-fold-fill';
+import MenuUnfold from '~icons/ri/menu-unfold-fill';
 
 interface Props {
-  isActive: boolean;
+  isActive?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -24,6 +24,6 @@ const toggleClick = () => {
 
 <template>
   <div class="px-3 mr-1 navbar-bg-hover" :title="isActive ? t('buttons.pureClickCollapse') : t('buttons.pureClickExpand')" @click="toggleClick">
-    <IconifyIconOffline :icon="isActive ? MenuFold : MenuUnfold" class="inline-block align-middle hover:text-primary dark:hover:!text-white" />
+    <IconifyIconOffline :icon="isActive ? MenuFold : MenuUnfold" class="inline-block! align-middle hover:text-primary dark:hover:text-white!" />
   </div>
 </template>

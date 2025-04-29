@@ -18,7 +18,9 @@ export const createRouter = (data?: any) => {
 
 /** 菜单管理-清除选中菜单所有角色 */
 export const clearRouterRole = (data: any) => {
-  return http.request<BaseResult<any>>('delete', `routerRole/clearRouterRole`, { data });
+  return http.request<BaseResult<any>>('delete', `routerRole/clearRouterRole`, {
+    data,
+  });
 };
 
 /** 菜单管理-更新菜单 */

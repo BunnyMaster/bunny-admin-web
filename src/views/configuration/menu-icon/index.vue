@@ -3,11 +3,11 @@ import { onMounted, ref } from 'vue';
 import { auth, columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/configuration/menu-icon/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import AddFill from '@iconify-icons/ri/add-circle-line';
+import AddFill from '~icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import Delete from '@iconify-icons/ep/delete';
-import EditPen from '@iconify-icons/ep/edit-pen';
-import Refresh from '@iconify-icons/ep/refresh';
+import Delete from '~icons/ep/delete';
+import EditPen from '~icons/ep/edit-pen';
+import Refresh from '~icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useMenuIconStore } from '@/store/configuration/menuIcon';
@@ -60,7 +60,7 @@ onMounted(() => {
           <MenuIconSelectIconName :form-inline="menuIconStore.form" class="!w-[180px]" />
         </el-form-item>
         <el-form-item>
-          <el-button :icon="useRenderIcon('ri:search-line')" :loading="menuIconStore.loading" type="primary" @click="onSearch">
+          <el-button :icon="useRenderIcon('ri/search-line')" :loading="menuIconStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -86,7 +86,10 @@ onMounted(() => {
           :adaptiveConfig="{ offsetBottom: 96 }"
           :columns="dynamicColumns"
           :data="menuIconStore.datalist"
-          :header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
+          :header-cell-style="{
+            background: 'var(--el-fill-color-light)',
+            color: 'var(--el-text-color-primary)',
+          }"
           :loading="menuIconStore.loading"
           :pagination="menuIconStore.pagination"
           :size="size"

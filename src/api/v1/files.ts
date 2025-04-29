@@ -24,7 +24,9 @@ export const deleteFiles = (data: any) => {
 
 /** 系统文件管理---根据文件id下载文件 */
 export const downloadFilesByFileId = (data: any) => {
-  return http.request<any>('get', `files/file/${data.id}`, { responseType: 'blob' });
+  return http.request<any>('get', `files/file/${data.id}`, {
+    responseType: 'blob',
+  });
 };
 
 /** 系统文件管理---获取所有文件类型 */

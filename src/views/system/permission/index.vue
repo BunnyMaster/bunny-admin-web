@@ -2,11 +2,11 @@
 import { computed, h, onMounted, ref } from 'vue';
 import { auth, columns, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate, onUpdateBatchParent, powerIds } from '@/views/system/permission/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
-import AddFill from '@iconify-icons/ri/add-circle-line';
+import AddFill from '~icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import Delete from '@iconify-icons/ep/delete';
-import EditPen from '@iconify-icons/ep/edit-pen';
-import Refresh from '@iconify-icons/ep/refresh';
+import Delete from '~icons/ep/delete';
+import EditPen from '~icons/ep/edit-pen';
+import Refresh from '~icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { usePermissionStore } from '@/store/system/power';
@@ -16,8 +16,8 @@ import { FormInstance } from 'element-plus';
 import { hasAuth } from '@/router/utils';
 import ReAuth from '@/components/ReAuth/src/auth';
 import { RequestMethod } from '@/enums/baseConstant';
-import Download from '@iconify-icons/ep/download';
-import Upload from '@iconify-icons/ri/upload-line';
+import Download from '~icons/ep/download';
+import Upload from '~icons/ri/upload-line';
 import { addDialog } from '@/components/ReDialog/index';
 import FileUpdateRoleDialog from '@/views/system/role/components/file-update-role-dialog.vue';
 
@@ -108,7 +108,7 @@ onMounted(() => {
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button :icon="useRenderIcon('ri:search-line')" :loading="powerStore.loading" type="primary" @click="onSearch">
+          <el-button :icon="useRenderIcon('ri/search-line')" :loading="powerStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>

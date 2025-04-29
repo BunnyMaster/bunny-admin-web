@@ -15,8 +15,20 @@ interface Props {
 }
 
 const rules = reactive<FormRules>({
-  type: [{ required: true, message: `${$t('select')}${$t('i18n_type')}`, trigger: 'blur' }],
-  file: [{ required: true, message: `${$t('select')}${$t('files')}`, trigger: 'blur' }],
+  type: [
+    {
+      required: true,
+      message: `${$t('select')}${$t('i18n_type')}`,
+      trigger: 'blur',
+    },
+  ],
+  file: [
+    {
+      required: true,
+      message: `${$t('select')}${$t('files')}`,
+      trigger: 'blur',
+    },
+  ],
 });
 
 const props = withDefaults(defineProps<Props>(), {

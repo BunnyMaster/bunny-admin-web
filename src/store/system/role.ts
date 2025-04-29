@@ -41,7 +41,6 @@ export const useRoleStore = defineStore('roleStore', {
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
       delete data.total;
-      delete data.background;
 
       // 获取角色列表
       const result = await getRolePage(data);
@@ -56,7 +55,10 @@ export const useRoleStore = defineStore('roleStore', {
       const result = await getRoleList();
       if (result.code !== 200) return;
 
-      this.allRoleList = result.data.map((role) => ({ key: role.id, label: role.description }));
+      this.allRoleList = result.data.map((role) => ({
+        key: role.id,
+        label: role.description,
+      }));
     },
 
     /** 添加角色 */

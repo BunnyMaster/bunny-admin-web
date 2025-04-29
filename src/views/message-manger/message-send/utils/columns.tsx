@@ -5,21 +5,40 @@ import { reactive } from 'vue';
 // 表格列
 export const columns: TableColumnList = [
   { type: 'selection', align: 'left' },
-  { type: 'index', index: (index: number) => index + 1, label: '序号', minWidth: 60 },
+  {
+    type: 'index',
+    index: (index: number) => index + 1,
+    label: '序号',
+    width: 60,
+  },
   // 消息标题
-  { label: $t('title'), prop: 'title', minWidth: 150 },
+  { label: $t('title'), prop: 'title', width: 150 },
   // 消息简介
-  { label: $t('summary'), prop: 'summary', minWidth: 200 },
+  { label: $t('summary'), prop: 'summary', width: 200 },
   // 发送人昵称
-  { label: $t('sendNickname'), prop: 'sendNickname', slot: 'sendNickname', minWidth: 130 },
+  {
+    label: $t('sendNickname'),
+    prop: 'sendNickname',
+    slot: 'sendNickname',
+    width: 130,
+  },
   // 接受人昵称
-  { label: $t('receivedUserNickname'), prop: 'receivedUserNickname', minWidth: 150 },
+  {
+    label: $t('receivedUserNickname'),
+    prop: 'receivedUserNickname',
+    width: 150,
+  },
   // 消息类型
-  { label: $t('messageType'), prop: 'messageType', slot: 'messageType', minWidth: 130 },
+  {
+    label: $t('messageType'),
+    prop: 'messageType',
+    slot: 'messageType',
+    width: 130,
+  },
   // 编辑器类型
-  { label: $t('editorType'), prop: 'editorType', minWidth: 105 },
+  { label: $t('editorType'), prop: 'editorType', width: 105 },
   // 封面
-  { label: $t('cover'), prop: 'cover', slot: 'cover', minWidth: 80 },
+  { label: $t('cover'), prop: 'cover', slot: 'cover', width: 80 },
   // 消息等级
   {
     label: $t('level'),
@@ -33,15 +52,40 @@ export const columns: TableColumnList = [
         )
       );
     },
-    minWidth: 130,
+    width: 130,
   },
   // 消息等级详情
-  { label: $t('extra'), prop: 'extra', slot: 'extra', minWidth: 230 },
-  { label: $t('table.updateTime'), prop: 'updateTime', sortable: true, minWidth: 160 },
-  { label: $t('table.createTime'), prop: 'createTime', sortable: true, minWidth: 160 },
-  { label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', minWidth: 130 },
-  { label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', minWidth: 130 },
-  { label: $t('table.operation'), fixed: 'right', minWidth: 210, slot: 'operation' },
+  { label: $t('extra'), prop: 'extra', slot: 'extra', width: 230 },
+  {
+    label: $t('table.updateTime'),
+    prop: 'updateTime',
+    sortable: true,
+    width: 160,
+  },
+  {
+    label: $t('table.createTime'),
+    prop: 'createTime',
+    sortable: true,
+    width: 160,
+  },
+  {
+    label: $t('table.createUser'),
+    prop: 'createUser',
+    slot: 'createUser',
+    width: 130,
+  },
+  {
+    label: $t('table.updateUser'),
+    prop: 'updateUser',
+    slot: 'updateUser',
+    width: 130,
+  },
+  {
+    label: $t('table.operation'),
+    fixed: 'right',
+    width: 210,
+    slot: 'operation',
+  },
 ];
 
 // 添加规则
@@ -49,13 +93,37 @@ export const rules = reactive<FormRules>({
   // 消息标题
   title: [{ required: true, message: `${$t('input')}${$t('title')}`, trigger: 'blur' }],
   // 发送人用户ID
-  sendUserId: [{ required: true, message: `${$t('input')}${$t('sendUserId')}`, trigger: 'blur' }],
+  sendUserId: [
+    {
+      required: true,
+      message: `${$t('input')}${$t('sendUserId')}`,
+      trigger: 'blur',
+    },
+  ],
   // 消息类型
-  messageTypeId: [{ required: true, message: `${$t('input')}${$t('messageType')}`, trigger: 'blur' }],
+  messageTypeId: [
+    {
+      required: true,
+      message: `${$t('input')}${$t('messageType')}`,
+      trigger: 'blur',
+    },
+  ],
   // 消息内容
-  content: [{ required: true, message: `${$t('input')}${$t('content')}`, trigger: 'blur' }],
+  content: [
+    {
+      required: true,
+      message: `${$t('input')}${$t('content')}`,
+      trigger: 'blur',
+    },
+  ],
   // 编辑器类型
-  editorType: [{ required: true, message: `${$t('input')}${$t('editorType')}`, trigger: 'blur' }],
+  editorType: [
+    {
+      required: true,
+      message: `${$t('input')}${$t('editorType')}`,
+      trigger: 'blur',
+    },
+  ],
 });
 
 /** 编辑器类型 */

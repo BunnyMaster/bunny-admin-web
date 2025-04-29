@@ -43,7 +43,9 @@ function hoverDescription(event, description) {
 }
 
 function goMessageDetail(message: ListItem) {
-  router.push({ path: `/message-detail/${message.messageType}/${message.messageId}` });
+  router.push({
+    path: `/message-detail/${message.messageType}/${message.messageId}`,
+  });
 }
 </script>
 

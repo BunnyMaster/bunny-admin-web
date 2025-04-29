@@ -1,10 +1,9 @@
-<script lang="ts" setup>
-import { type ButtonProps, closeDialog, type DialogOptions, dialogStore, type EventType } from './index';
-import { computed, ref } from 'vue';
+<script setup lang="ts">
+import { type EventType, type ButtonProps, type DialogOptions, closeDialog, dialogStore } from './index';
+import { ref, computed } from 'vue';
 import { isFunction } from '@pureadmin/utils';
-import Fullscreen from '@iconify-icons/ri/fullscreen-fill';
-import ExitFullscreen from '@iconify-icons/ri/fullscreen-exit-fill';
-import { $t } from '@/plugins/i18n';
+import Fullscreen from '~icons/ri/fullscreen-fill';
+import ExitFullscreen from '~icons/ri/fullscreen-exit-fill';
 
 defineOptions({
   name: 'ReDialog',
@@ -19,7 +18,7 @@ const footerButtons = computed(() => {
       ? options.footerButtons
       : ([
           {
-            label: $t('cancel'),
+            label: '取消',
             text: true,
             bg: true,
             btnClick: ({ dialog: { options, index } }) => {
@@ -32,7 +31,7 @@ const footerButtons = computed(() => {
             },
           },
           {
-            label: $t('confirm'),
+            label: '确定',
             type: 'primary',
             text: true,
             bg: true,
@@ -64,7 +63,7 @@ const footerButtons = computed(() => {
 });
 
 const fullscreenClass = computed(() => {
-  return ['el-icon', 'el-dialog__close', '-translate-x-2', 'cursor-pointer', 'hover:!text-[red]'];
+  return ['el-icon', 'el-dialog__close', '-translate-x-2', 'cursor-pointer', 'hover:text-[red]!'];
 });
 
 function eventsCallBack(event: EventType, options: DialogOptions, index: number, isClickFullScreen = false) {
@@ -84,14 +83,14 @@ function handleClose(options: DialogOptions, index: number, args = { command: 'c
   <el-dialog
     v-for="(options, index) in dialogStore"
     :key="index"
-    v-model="options.visible"
-    :fullscreen="fullscreen ? true : !!options?.fullscreen"
-    class="pure-dialog"
     v-bind="options"
-    @closeAutoFocus="eventsCallBack('closeAutoFocus', options, index)"
+    v-model="options.visible"
+    class="pure-dialog"
+    :fullscreen="fullscreen ? true : options?.fullscreen ? true : false"
     @closed="handleClose(options, index)"
-    @openAutoFocus="eventsCallBack('openAutoFocus', options, index)"
     @opened="eventsCallBack('open', options, index)"
+    @openAutoFocus="eventsCallBack('openAutoFocus', options, index)"
+    @closeAutoFocus="eventsCallBack('closeAutoFocus', options, index)"
   >
     <!-- header -->
     <template v-if="options?.fullscreenIcon || options?.headerRenderer" #header="{ close, titleId, titleClass }">
@@ -107,12 +106,12 @@ function handleClose(options: DialogOptions, index: number, args = { command: 'c
             }
           "
         >
-          <IconifyIconOffline :icon="options?.fullscreen ? ExitFullscreen : fullscreen ? ExitFullscreen : Fullscreen" class="pure-dialog-svg" />
+          <IconifyIconOffline class="pure-dialog-svg" :icon="options?.fullscreen ? ExitFullscreen : fullscreen ? ExitFullscreen : Fullscreen" />
         </i>
       </div>
       <component :is="options?.headerRenderer({ close, titleId, titleClass })" v-else />
     </template>
-    <component :is="options.contentRenderer({ options, index })" v-bind="options?.props" @close="(args) => handleClose(options, index, args)" />
+    <component v-bind="options?.props" :is="options.contentRenderer({ options, index })" @close="(args) => handleClose(options, index, args)" />
     <!-- footer -->
     <template v-if="!options?.hideFooter" #footer>
       <template v-if="options?.footerRenderer">
@@ -136,8 +135,8 @@ function handleClose(options: DialogOptions, index: number, args = { command: 'c
           </el-popconfirm>
           <el-button
             v-else
-            :loading="key === 1 && sureBtnMap[index]?.loading"
             v-bind="btn"
+            :loading="key === 1 && sureBtnMap[index]?.loading"
             @click="
               btn.btnClick({
                 dialog: { options, index },

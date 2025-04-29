@@ -6,8 +6,7 @@ import { type DataInfo, removeToken, setToken, userKey } from '@/utils/auth';
 import { message, storeMessage } from '@/utils/message';
 import { createUserRole, getRoleListByUserId } from '@/api/v1/system/role';
 
-export const useUserStore = defineStore({
-  id: 'system-user',
+export const useUserStore = defineStore('system-user', {
   state: (): userType => ({
     // 头像
     avatar: storageLocal().getItem<DataInfo<number>>(userKey)?.avatar ?? '',
@@ -68,7 +67,10 @@ export const useUserStore = defineStore({
 
     /** 刷新`token` */
     async handRefreshToken(data: any) {
-      const result = await refreshTokenApi({ ...data, readMeDay: this.readMeDay });
+      const result = await refreshTokenApi({
+        ...data,
+        readMeDay: this.readMeDay,
+      });
       if (result.code === 200) {
         setToken(data.data);
         return true;

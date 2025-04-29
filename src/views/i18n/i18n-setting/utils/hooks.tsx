@@ -110,7 +110,11 @@ export const onUpdate = (row: any) => {
     title: $t('update_multilingual'),
     width: '30%',
     props: {
-      formInline: { keyName: row.keyName, translation: row.translation, typeName: row.typeName },
+      formInline: {
+        keyName: row.keyName,
+        translation: row.translation,
+        typeName: row.typeName,
+      },
     },
     draggable: true,
     fullscreenIcon: true,

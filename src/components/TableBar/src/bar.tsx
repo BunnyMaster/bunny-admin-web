@@ -4,8 +4,8 @@ import { useEpThemeStoreHook } from '@/store/epTheme';
 import { computed, defineComponent, getCurrentInstance, nextTick, type PropType, ref, unref } from 'vue';
 import { cloneDeep, delay, getKeyList, isBoolean, isFunction } from '@pureadmin/utils';
 
-import Fullscreen from '@iconify-icons/ri/fullscreen-fill';
-import ExitFullscreen from '@iconify-icons/ri/fullscreen-exit-fill';
+import Fullscreen from '~icons/ri/fullscreen-fill';
+import ExitFullscreen from '~icons/ri/fullscreen-exit-fill';
 import DragIcon from '@/assets/table-bar/drag.svg?component';
 import ExpandIcon from '@/assets/table-bar/expand.svg?component';
 import RefreshIcon from '@/assets/table-bar/refresh.svg?component';
@@ -200,7 +200,9 @@ export default defineComponent({
                 <>
                   <ExpandIcon
                     class={['w-[16px]', iconClass.value]}
-                    style={{ transform: isExpandAll.value ? 'none' : 'rotate(-90deg)' }}
+                    style={{
+                      transform: isExpandAll.value ? 'none' : 'rotate(-90deg)',
+                    }}
                     v-tippy={rendTippyProps(isExpandAll.value ? '折叠' : '展开')}
                     onClick={() => onExpand()}
                   />

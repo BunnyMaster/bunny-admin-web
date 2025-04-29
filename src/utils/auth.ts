@@ -51,7 +51,11 @@ export function setToken(data: any) {
   expires = new Date(data.expires).getTime(); // 如果后端直接设置时间戳，将此处代码改为expires = data.expires，然后把上面的DataInfo<Date>改成DataInfo<number>即可
   const cookieString = JSON.stringify({ token, expires, refreshToken });
 
-  expires > 0 ? Cookies.set(TokenKey, cookieString, { expires: (expires - Date.now()) / 86400000 }) : Cookies.set(TokenKey, cookieString);
+  expires > 0
+    ? Cookies.set(TokenKey, cookieString, {
+        expires: (expires - Date.now()) / 86400000,
+      })
+    : Cookies.set(TokenKey, cookieString);
 
   Cookies.set(multipleTabsKey, 'true', isRemembered ? { expires: readMeDay } : {});
 
@@ -62,7 +66,15 @@ export function setToken(data: any) {
     userStore.roles = roles;
     userStore.permissions = permissions;
 
-    storageLocal().setItem(userKey, { refreshToken, expires, avatar, username, nickname, roles, permissions });
+    storageLocal().setItem(userKey, {
+      refreshToken,
+      expires,
+      avatar,
+      username,
+      nickname,
+      roles,
+      permissions,
+    });
   }
 
   if (data.username && data.roles) {

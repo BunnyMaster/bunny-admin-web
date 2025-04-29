@@ -99,7 +99,10 @@ export async function onUpdate(row: any) {
         data.content = encode(data.content);
 
         // 更新消息内容
-        const result = await messageSendStore.editMessage({ ...data, id: row.id });
+        const result = await messageSendStore.editMessage({
+          ...data,
+          id: row.id,
+        });
         if (!result) return;
         Object.assign(updateMessage, {});
         done();

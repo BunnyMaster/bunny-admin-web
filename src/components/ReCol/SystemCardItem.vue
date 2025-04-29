@@ -21,7 +21,9 @@ defineProps({
             <slot name="icon" />
           </div>
         </el-row>
-        <p class="list-card-item_detail--name text-text_color_primary">{{ title }}</p>
+        <p class="list-card-item_detail--name text-text_color_primary">
+          {{ title }}
+        </p>
         <slot name="default" />
       </div>
     </div>
@@ -78,10 +80,10 @@ defineProps({
       height: 40px;
       margin-bottom: 24px;
       overflow: hidden;
-      font-size: 12px;
-      line-height: 20px;
       text-overflow: ellipsis;
       -webkit-line-clamp: 2;
+      font-size: 12px;
+      line-height: 20px;
       -webkit-box-orient: vertical;
     }
   }

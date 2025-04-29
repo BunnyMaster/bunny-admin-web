@@ -2,10 +2,10 @@
 import { onMounted, ref } from 'vue';
 import { $t } from '@/plugins/i18n';
 import PureTableBar from '@/components/TableBar/src/bar';
-import Delete from '@iconify-icons/ep/delete';
-import EditPen from '@iconify-icons/ep/edit-pen';
-import Refresh from '@iconify-icons/ep/refresh';
-import AddFill from '@iconify-icons/ri/add-circle-line';
+import Delete from '~icons/ep/delete';
+import EditPen from '~icons/ep/edit-pen';
+import Refresh from '~icons/ep/refresh';
+import AddFill from '~icons/ri/add-circle-line';
 import { auth, clearAllRolesSelect, columns, mergeArgs, onAdd, onDelete, onSearch, onUpdate, selectIds, tableRef } from '@/views/system/menu/utils';
 import PureTable from '@pureadmin/table';
 import { userMenuStore } from '@/store/system/menu';
@@ -54,7 +54,7 @@ onMounted(() => {
         </el-form-item>
 
         <el-form-item>
-          <el-button :icon="useRenderIcon('ri:search-line')" :loading="routerStore.loading" type="primary" @click="onSearch">
+          <el-button :icon="useRenderIcon('ri/search-line')" :loading="routerStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>

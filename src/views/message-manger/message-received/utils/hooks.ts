@@ -25,7 +25,10 @@ export const updateMarkMessageReceived = async (status: boolean) => {
   });
   if (!result) return;
 
-  result = await messageReceivedStore.editMessageReceived({ ids: selectIds.value, status });
+  result = await messageReceivedStore.editMessageReceived({
+    ids: selectIds.value,
+    status,
+  });
   if (!result) return;
   await onSearch();
 };

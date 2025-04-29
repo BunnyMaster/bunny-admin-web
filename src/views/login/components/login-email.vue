@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { currentPage, emailRules, onBack } from '@/views/login/utils';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import User from '@iconify-icons/ri/user-3-fill';
-import Lock from '@iconify-icons/ri/lock-fill';
+import User from '~icons/ri/user-3-fill';
+import Lock from '~icons/ri/lock-fill';
 import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';

@@ -4,10 +4,10 @@ import { useI18n } from 'vue-i18n';
 import { useGlobal } from '@pureadmin/utils';
 import { useNav } from '@/layout/hooks/useNav';
 
-import MenuFold from '@iconify-icons/ri/menu-fold-fill';
+import MenuFold from '~icons/ri/menu-fold-fill';
 
 interface Props {
-  isActive: boolean;
+  isActive?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -18,7 +18,7 @@ const { t } = useI18n();
 const { tooltipEffect } = useNav();
 
 const iconClass = computed(() => {
-  return ['ml-4', 'mb-1', 'w-[16px]', 'h-[16px]', 'inline-block', 'align-middle', 'cursor-pointer', 'duration-[100ms]'];
+  return ['ml-4', 'mb-1', 'w-[16px]', 'h-[16px]', 'inline-block!', 'align-middle', 'cursor-pointer', 'duration-[100ms]'];
 });
 
 const { $storage } = useGlobal<GlobalPropertiesApi>();

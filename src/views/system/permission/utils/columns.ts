@@ -5,19 +5,19 @@ import type { FormRules } from 'element-plus';
 // 表格列
 export const columns: TableColumnList = [
   { type: 'selection', align: 'left' },
-  { type: 'index', index: (index: number) => index + 1, label: $t('index'), minWidth: 60 },
+  { type: 'index', index: (index: number) => index + 1, label: $t('index'), width: 60 },
   // 权限编码
-  { label: $t('power_powerCode'), prop: 'powerCode', minWidth: 240, align: 'left' },
+  { label: $t('power_powerCode'), prop: 'powerCode', width: 240, align: 'left' },
   // 权限名称
-  { label: $t('power_powerName'), prop: 'powerName', minWidth: 220 },
+  { label: $t('power_powerName'), prop: 'powerName', width: 220 },
   // 请求路径
-  { label: $t('power_requestUrl'), prop: 'requestUrl', minWidth: 360, align: 'left' },
-  { label: $t('requestMethod'), prop: 'requestMethod', minWidth: 80 },
-  { label: $t('table.updateTime'), prop: 'updateTime', sortable: true, minWidth: 160 },
-  { label: $t('table.createTime'), prop: 'createTime', sortable: true, minWidth: 160 },
-  { label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', minWidth: 130 },
-  { label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', minWidth: 130 },
-  { label: $t('table.operation'), fixed: 'right', minWidth: 210, slot: 'operation' },
+  { label: $t('power_requestUrl'), prop: 'requestUrl', width: 360, align: 'left' },
+  { label: $t('requestMethod'), prop: 'requestMethod', width: 90 },
+  { label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
+  { label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
+  { label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 130 },
+  { label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 130 },
+  { label: $t('table.operation'), fixed: 'right', width: 210, slot: 'operation' },
 ];
 
 // 添加规则

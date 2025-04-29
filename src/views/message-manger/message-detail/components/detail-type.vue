@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 import { columns, markAsAllRead, markAsRead, onDelete, onSearch, selectIds } from '@/views/message-manger/message-detail/utils';
 import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
-import Delete from '@iconify-icons/ep/delete';
+import Delete from '~icons/ep/delete';
 import { $t } from '@/plugins/i18n';
 import { Message } from '@element-plus/icons-vue';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
@@ -83,7 +83,10 @@ onMounted(() => {
           :adaptiveConfig="{ offsetBottom: 96 }"
           :columns="dynamicColumns"
           :data="messageUserStore.datalist"
-          :header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
+          :header-cell-style="{
+            background: 'var(--el-fill-color-light)',
+            color: 'var(--el-text-color-primary)',
+          }"
           :loading="messageUserStore.loading"
           :pagination="messageUserStore.pagination"
           :size="size"

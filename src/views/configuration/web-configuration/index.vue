@@ -25,7 +25,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-form ref="ruleFormRef" :model="form" :rules="rules" class="bg-white p-[30px] h-[100%]" label-position="left" label-width="auto" status-icon>
+  <el-form ref="ruleFormRef" :model="form" :rules="rules" class="bg-white p-[30px] h-[100%]" label-position="left" label-width="300" status-icon>
     <el-row :gutter="30">
       <!-- 应用程序的版本 -->
       <re-col :sm="24" :value="12" :xs="24">

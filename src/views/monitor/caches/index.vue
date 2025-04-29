@@ -8,7 +8,10 @@ const caches = ref([]);
 const onSearch = async () => {
   let result = await fetchSystemCaches();
   result = result.cacheManagers.cacheManagerWithMouth.caches;
-  caches.value = Object.entries(result).map(([key, value]) => ({ key, value: value.target }));
+  caches.value = Object.entries(result).map(([key, value]) => ({
+    key,
+    value: value.target,
+  }));
 };
 
 onMounted(() => {
