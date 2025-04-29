@@ -1,246 +1,247 @@
-<h1>vue-pure-admin</h1>
+# BunnyAuth动态权限控制简介
 
-![GitHub license](https://img.shields.io/github/license/pure-admin/vue-pure-admin?style=flat)
-![GitHub stars](https://img.shields.io/github/stars/pure-admin/vue-pure-admin?color=fa6470&style=flat)
-![GitHub forks](https://img.shields.io/github/forks/pure-admin/vue-pure-admin?style=flat)
+> [!IMPORTANT]
+>
+> 前端项目整体都由此模板开发
+>
+> 项目由[小铭](https://github.com/xiaoxian521)开源权限模板[Pure-admin](https://pure-admin.github.io/vue-pure-admin/)
+>
+> **Pure-admin文档**：https://pure-admin.github.io/pure-admin-doc
 
-**中文** | [English](./README.en-US.md)
+## 视频说明地址
 
-## 简介
+**介绍视频视频**
 
-`vue-pure-admin` 是一款开源免费且开箱即用的中后台管理系统模版。完全采用 `ECMAScript` 模块（`ESM`）规范来编写和组织代码，使用了最新的 `Vue3`、
-`Vite`、`Element-Plus`、`TypeScript`、`Pinia`、`Tailwindcss` 等主流技术开发
+- [环境搭建](https://www.bilibili.com/video/BV17odHY6E3S/?spm_id_from=333.1387.homepage.video_card.click&vd_source=d42b5b664efb958be39eef8ee1196a7e)
+- [运行项目](https://www.bilibili.com/video/BV1qodHYzErA/?spm_id_from=333.1387.homepage.video_card.click&vd_source=d42b5b664efb958be39eef8ee1196a7e)
+- [前端部署](https://www.bilibili.com/video/BV1BddHYgEPq/?spm_id_from=333.1387.homepage.video_card.click&vd_source=d42b5b664efb958be39eef8ee1196a7e)
+- [后端部署](https://www.bilibili.com/video/BV1BddHYgEFt/?spm_id_from=333.1387.homepage.video_card.click&vd_source=d42b5b664efb958be39eef8ee1196a7e)
+- [Bunny v0.0.1 代码生成器](https://www.bilibili.com/video/BV1qddHYgErv/?spm_id_from=333.1387.homepage.video_card.click)
 
-## 研发理念
+**Github地址**
 
-稳定中求创新，技术中见未来
+- 权限后端：https://github.com/BunnyMaster/bunny-admin-server
+- 权限前端：https://github.com/BunnyMaster/bunny-admin-web
+- 代码生成器前端：https://github.com/BunnyMaster/generator-code-web
+- 代码生成器后端：https://github.com/BunnyMaster/generator-code-server
 
-## 精简版本（实际项目开发请用精简版本，提供 `非国际化` 、`国际化` 两个版本选择）
+**`Gitee`地址**
 
-精简版本是基于 [vue-pure-admin](https://github.com/pure-admin/vue-pure-admin) 提炼出的架子，包含主体功能，更适合实际项目开发，打包后的大小在全局引入 [element-plus](https://element-plus.org) 的情况下仍然低于 `2.3MB`，并且会永久同步完整版的代码。开启 `brotli` 压缩和 `cdn` 替换本地库模式后，打包大小低于 `350kb`
+- 权限后端：https://gitee.com/BunnyBoss/bunny-admin-server
+- 权限前端：https://gitee.com/BunnyBoss/bunny-admin-web
+- 代码生成器前端：https://gitee.com/BunnyBoss/generator-code-web
+- 代码生成器后端：https://gitee.com/BunnyBoss/generator-code-server
 
-[点我查看非国际化精简版本](https://github.com/pure-admin/pure-admin-thin)  
-[点我查看国际化精简版本](https://github.com/pure-admin/pure-admin-thin/tree/i18n)
+## 🚀 项目简介
 
-## 配套视频
+一个基于 Spring Security 6 的现代化动态权限控制系统，提供完整的 RBAC 权限管理解决方案。支持前后端分离架构，可灵活配置细粒度权限控制。
 
-[点我查看 UI 设计](https://www.bilibili.com/video/BV17g411T7rq)  
-[点我查看快速开发教程](https://www.bilibili.com/video/BV1kg411v7QT)
+## ✨ v4.0.0 重大更新
 
-## 配套保姆级文档
+新分支` sysn_6.0.0`与上游【Pure Admin】合并
 
-[点我查看 vue-pure-admin 文档](https://pure-admin.cn/)  
-[点我查看 @pureadmin/utils 文档](https://pure-admin-utils.netlify.app)
+### 核心改进
 
-## 优质服务、软件外包、赞助支持
+- **全面重构**：后端接口、实体类等重构，前端重构部分j+优化操作体验
+- **批量操作支持**：
+  - ✅菜单管理：完善属性内容
+  - ✅ 权限管理：支持 JSON/Excel 导入导出
+  - ✅ 角色管理：支持 Excel 批量更新
+  - ✅ 多语言配置：支持 JSON/Excel 更新（全量替换模式）
 
-[点我查看详情](https://pure-admin.cn/pages/service/)
+### 技术亮点
 
-## `js` 版本
+- **注解扫描**：通过 `AnnotationScanner.java` 自动扫描想要的注解
 
-[点我查看 js 版本](https://pure-admin.cn/pages/js/)
+  ```java
+  // 示例：扫描特定注解的类
+  public static Set<Class<?>> getClassesWithAnnotation(Class<?> annotation) {
+      // 实现细节...
+  }
+  ```
 
-## `max` 版本
+- **应用场景**：
+  - 定时任务配置
+  - 权限接口发现
 
-[点我查看 max 版本](https://pure-admin.cn/pages/max/)
+### 界面优化
 
-## `Tauri` 版本
+![权限管理界面](./images/image-20250428223816172.png)
+![角色管理界面](./images/image-20250428223843974.png)
 
-[点我查看 Tauri 版本](https://github.com/pure-admin/tauri-pure-admin)
+## 🔐 权限控制体系
 
-## `Electron` 版本
+![image-20250428225337843](./images/image-20250428225337843-1745854181492-5.png)
 
-[点我查看 Electron 版本](https://github.com/pure-admin/electron-pure-admin)
+### 访问规则配置
 
-## 预览
+通过 `WebSecurityConfig` 配置
 
-[点我查看预览](https://pure-admin.github.io/vue-pure-admin)
+| 路径类型 | 示例              | 访问要求 | 配置方式                  |
+| -------- | ----------------- | -------- | ------------------------- |
+| 公开接口 | `/api/public/**`  | 无需认证 | 路径包含 `public` 关键字  |
+| 私有接口 | `/api/private/**` | 需登录   | 路径包含 `private` 关键字 |
 
-`PC` 端
+### 路径匹配策略
 
-<p align="center">
-  <img alt="PureAdmin" src="https://xiaoxian521.github.io/hyperlink/img/vue-pure-admin/1.jpg">
-  <br />
-  <img alt="PureAdmin" src="https://xiaoxian521.github.io/hyperlink/img/vue-pure-admin/2.jpg">
-</p>
+```java
+public static String[] annotations = { ... };
 
-暗色风格
-
-<p align="center">
-  <img alt="PureAdmin" src="https://xiaoxian521.github.io/hyperlink/img/vue-pure-admin/3.jpg">
-  <br />
-  <img alt="PureAdmin" src="https://xiaoxian521.github.io/hyperlink/img/vue-pure-admin/4.jpg">
-</p>
-
-移动端
-
-<p align="center">
-  <img alt="PureAdmin" src="https://xiaoxian521.github.io/hyperlink/img/vue-pure-admin/5.jpg">
-</p>
-
-### 使用 `Gitpod`
-
-在 `Gitpod`（适用于 `GitHub` 的免费在线开发环境）中打开项目，并立即开始编码.
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/pure-admin/vue-pure-admin)
-
-## 安装使用
-
-### 拉取代码
-
-#### 推荐使用 `@pureadmin/cli` 脚手架
-
-<br/>
-<img src="https://xiaoxian521.github.io/hyperlink/gif/pure-admin-cli.gif" alt="pure-admin-cli" />
-
-1. 全局安装
-
-```bash
-npm install -g @pureadmin/cli
+// 配置示例
+http.authorizeHttpRequests(auth -> auth
+    .authorizeHttpRequests(authorize -> authorize
+    .requestMatchers(annotations).permitAll()
+);
 ```
 
-2. 交互式选择模板并创建项目
+## 🛠️ 应用场景
+
+### 1. 纯前端控制模式
+
+前端原理详情查看Pure文档：https://pure-admin.cn/pages/RBAC/#%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE
+
+![image-20250428230444403](./images/image-20250428230444403-1745854157395-3.png)
+
+- **页面控制**：
+  1. 为路由菜单分配角色
+  2. 为用户分配角色
+- **按钮控制**：
+  ```ts
+  // 前端权限码配置
+  const auth = {
+    add: ['i18nType::add'],
+    update: ['i18nType::update'],
+    delete: ['i18nType::delete'],
+  };
+  ```
+
+### 2. 纯后端控制模式
+
+- 接口级权限：分页这种就可以添加为`/api/permission/*/*`
+
+  ```java
+  @Tag(name = "系统权限")
+  @RestController
+  @RequestMapping("api/permission")
+  public class PermissionController {
+      @Operation(summary = "分页查询", tags = {"permission::page"})
+      @GetMapping("{page}/{limit}")
+      public Result<PageResult<PermissionVo>> getPermissionPage(
+          @PathVariable Integer page,
+          @PathVariable Integer limit) {
+          // ...
+      }
+  }
+  ```
+
+### 3. 全栈控制模式
+
+前两个结合
+
+## 🛡️ 安全配置
+
+### 路径匹配策略
+
+AntPath详情：https://juejin.cn/spost/7498247273660743732
+
+| 模式     | 示例            | 说明             |
+| -------- | --------------- | ---------------- |
+| 精确匹配 | `/api/user`     | 完全匹配路径     |
+| 通配符   | `/api/user/*`   | 匹配单级路径     |
+| 多级通配 | `/api/user/**`  | 匹配多级路径     |
+| 方法限定 | `GET /api/user` | 匹配特定HTTP方法 |
+
+## 🧰 技术栈
+
+### 前端
+
+- Vue 3 + PureAdmin 模板
+- 自定义权限组件
+- 国际化支持
+
+### 后端
+
+- Spring Boot 3 + Spring Security 6
+- JDK 17
+- MySQL + Redis + MinIO
+- Swagger + Knife4j 文档
+
+### 开发环境
+
+根据不懂docker 启动方式不一样
 
 ```bash
-pure create
+# 一键启动依赖服务
+docker-compose up -d
+# 新版的docker
+docker compose up -d
 ```
 
-[点我查看 @pureadmin/cli 脚手架详细用法](https://github.com/pure-admin/pure-admin-cli#pureadmincli)
+## 📚 最佳实践
 
-#### 从 `GitHub` 上拉取
+1. **注解规范**：
+   ```java
+   @Tag(name = "模块名称", description = "模块描述")
+   @Operation(summary = "接口摘要", tags = {"权限码"})
+   // 或者
+   @Operation(summary = "接口摘要", tags = "权限码")
+   ```
+2. **权限码设计**：
 
-```bash
-git clone https://github.com/pure-admin/vue-pure-admin.git
-```
+   - 模块::操作 (如 `user::create`)
+   - 分层级设计 (如 `system:user:update`)
 
-#### 从 `Gitee` 上拉取
+3. **批量操作**：
+   - 使用 Excel/JSON 管理大量权限配置
+   - 定期备份权限配置
 
-```bash
-git clone https://gitee.com/yiming_chang/vue-pure-admin.git
-```
+## 🌟 项目优势
 
-### 安装依赖
+1. **真正的动态控制** - 无需硬编码权限逻辑
+2. **灵活的数据导入** - 支持多种文件格式
+3. **细粒度控制** - 从页面到按钮的多层级权限
+4. **现代化技术栈** - 基于最新 Spring 生态
+5. **开箱即用** - 提供完整 Docker 部署方案
 
-```bash
-cd vue-pure-admin
+## 📌 注意事项
 
-pnpm install
-```
+1. 多语言更新会完全替换现有配置
+2. 生产环境建议禁用 Swagger 端点
+3. 复杂权限建议使用 Excel 批量管理
 
-### 启动平台
+## 📈 后续规划
 
-```bash
-pnpm dev
-```
+- [ ] 权限级别拖拽
+- [ ] 权限树型结构动态添加、更新、删除
+- [ ] 用户设置持久化存储到数据库
+- [ ] 权限弹窗页面优化
+- [ ] 后端文档注释完善
+- [ ] 系统监控后端返回403停止请求
 
-### 项目打包
+## 前后端接口规范
 
-```bash
-pnpm build
-```
+### 前端示例规范
 
-## Docker 支持
+| **操作** | **API 层**    | **Pinia 层**    |
+| :------- | :------------ | :-------------- |
+| 查询单个 | `getUser`     | `loadUser`      |
+| 查询列表 | `getUserList` | `loadUserList`  |
+| 分页查询 | `getUserPage` | `fetchUserPage` |
+| 新增数据 | `createUser`  | `addUser`       |
+| 更新数据 | `updateUser`  | `editUser`      |
+| 删除数据 | `deleteUser`  | `removeUser`    |
 
-1. 自定义镜像名为 `vue-pure-admin` 的镜像（请注意下面命令末尾有一个点 `.` 表示使用当前路径下的 `Dockerfile` 文件，可根据实际情况指定路径）
+### 后端接口示例规范
 
-```bash
-docker build -t vue-pure-admin .
-```
+遵循Restful
 
-2. 端口映射并启动 `docker` 容器（`8080:80`：表示在容器中使用 `80` 端口，并将该端口转发到主机的 `8080` 端口；`pure-admin`：表示自定义容器名；`vue-pure-admin`：表示自定义镜像名）
+| **操作** | **RESTful**                 |
+| :------- | :-------------------------- |
+| 查询列表 | `GET /users`                |
+| 分页查询 | `GET /users/{page}/{limit}` |
+| 查询单个 | `GET /users/{id}`           |
+| 新增     | `POST /users`               |
+| 更新     | `PUT /users/{id}`           |
+| 删除     | `DELETE /users/{id}`        |
 
-```bash
-docker run -dp 8080:80  --name pure-admin vue-pure-admin
-```
-
-操作完上面两个命令后，在浏览器打开 `http://localhost:8080` 即可预览
-
-当然也可以通过 [Docker Desktop](https://www.docker.com/products/docker-desktop/) 可视化界面去操作 `docker` 项目，如下图
-
-<p align="center">
-  <img alt="docker-desktop" width="100%" src="https://xiaoxian521.github.io/hyperlink/img/docker-desktop.jpg">
-</p>
-
-## 更新日志
-
-[CHANGELOG](./CHANGELOG.zh_CN.md)
-
-## 如何贡献
-
-非常欢迎您的加入！[提一个 Issue](https://github.com/pure-admin/vue-pure-admin/issues/new/choose) 或者提交一个 `Pull Request`
-
-**Pull Request:**
-
-1. Fork 代码!
-2. 创建自己的分支: `git checkout -b feat/xxxx`
-3. 提交您的修改: `git commit -am 'feat(function): add xxxxx'`
-4. 推送您的分支: `git push origin feat/xxxx`
-5. 提交`pull request`
-
-## 特别代码贡献
-
-非常感谢你们能深入了解源码并对 `pure-admin` 组织作出优秀贡献 ❤️
-
-|                   **贡献人**                    |                                   **具体代码**                                   |
-| :---------------------------------------------: | :------------------------------------------------------------------------------: |
-|       [hb0730](https://github.com/hb0730)       |    [代码](https://github.com/pure-admin/vue-pure-admin/commits?author=hb0730)    |
-|         [o-cc](https://github.com/o-cc)         |     [代码](https://github.com/pure-admin/vue-pure-admin/commits?author=o-cc)     |
-| [yj-liuzepeng](https://github.com/yj-liuzepeng) | [代码](https://github.com/pure-admin/vue-pure-admin/commits?author=yj-liuzepeng) |
-|   [skyline523](https://github.com/skyline523)   |  [代码](https://github.com/pure-admin/vue-pure-admin/commits?author=skyline523)  |
-| [shark-lajiao](https://github.com/shark-lajiao) | [代码](https://github.com/pure-admin/vue-pure-admin/commits?author=shark-lajiao) |
-|      [WitMiao](https://github.com/WitMiao)      |   [代码](https://github.com/pure-admin/vue-pure-admin/commits?author=WitMiao)    |
-|     [QFifteen](https://github.com/QFifteen)     |   [代码](https://github.com/pure-admin/vue-pure-admin/commits?author=QFifteen)   |
-|      [edgexie](https://github.com/edgexie)      |   [代码](https://github.com/pure-admin/vue-pure-admin/commits?author=edgexie)    |
-|       [way-jm](https://github.com/way-jm)       |    [代码](https://github.com/pure-admin/vue-pure-admin/commits?author=way-jm)    |
-|   [simple-hui](https://github.com/simple-hui)   |  [代码](https://github.com/pure-admin/vue-pure-admin/commits?author=simple-hui)  |
-|   [tinysimple](https://github.com/tinysimple)   |  [代码](https://github.com/pure-admin/vue-pure-admin/commits?author=tinysimple)  |
-
-## `Git` 贡献提交规范
-
-参考 [vue](https://github.com/vuejs/vue/blob/dev/.github/COMMIT_CONVENTION.md) 规范 ([Angular](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular))
-
-- `feat` 增加新功能
-- `fix` 修复问题/BUG
-- `style` 代码风格相关无影响运行结果的
-- `perf` 优化/性能提升
-- `refactor` 重构
-- `revert` 撤销修改
-- `test` 测试相关
-- `docs` 文档/注释
-- `chore` 依赖更新/脚手架配置修改等
-- `workflow` 工作流改进
-- `ci` 持续集成
-- `types` 类型定义文件更改
-- `wip` 开发中
-
-## 浏览器支持
-
-本地开发推荐使用 `Chrome`、`Edge`、`Firefox` 浏览器，作者常用的是最新版 `Chrome` 浏览器  
-实际使用中感觉 `Firefox` 在动画上要比别的浏览器更加丝滑，只是作者用 `Chrome` 已经习惯了，看个人爱好选择吧  
-更详细的浏览器兼容性支持请看 [Vue 支持哪些浏览器？](https://cn.vuejs.org/about/faq.html#what-browsers-does-vue-support) 和 [Vite 浏览器兼容性](https://cn.vitejs.dev/guide/build#browser-compatibility)
-
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
-| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|                                                                                                不支持                                                                                                |                                                                                              最后两个版本                                                                                              |                                                                                                   最后两个版本                                                                                                    |                                                                                                 最后两个版本                                                                                                  |                                                                                                 最后两个版本                                                                                                  |
-
-## 维护者
-
-[xiaoxian521](https://github.com/xiaoxian521)、[Ten-K](https://github.com/Ten-K)
-
-## 许可证
-
-完全免费开源
-
-[MIT © 2020-present, pure-admin](./LICENSE)
-
-## `Star`
-
-非常感谢留下星星的好心人，感谢您的支持 :heart:
-
-[![Stargazers repo roster for @pure-admin/vue-pure-admin](https://bytecrank.com/nastyox/reporoster/php/stargazersSVG.php?user=pure-admin&repo=vue-pure-admin)](https://github.com/pure-admin/vue-pure-admin/stargazers)
-
-## `Fork`
-
-瞧，那些 `小哥哥` 、`小姐姐` 认真 `学习` 的样子真滴是 `哎呦不错哦` :heart:
-
-[![Forkers repo roster for @pure-admin/vue-pure-admin](https://bytecrank.com/nastyox/reporoster/php/forkersSVG.php?user=pure-admin&repo=vue-pure-admin)](https://github.com/pure-admin/vue-pure-admin/network/members)
+![wx_alipay](./images/wx_alipay.png)
