@@ -43,9 +43,7 @@
     "lint:prettier": "prettier --write  \"src/**/*.{js,ts,json,tsx,css,scss,vue,html,md}\"",
     "lint:stylelint": "stylelint --cache --fix \"**/*.{html,vue,css,scss}\" --cache-location node_modules/.cache/stylelint/",
     "lint": "pnpm lint:eslint && pnpm lint:prettier && pnpm lint:stylelint",
-    "prepare": "husky install",
-    "preinstall": "npx only-allow pnpm",
-    "commit": "git pull && git add -A && git-cz && git push"
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
@@ -111,9 +109,6 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.4.0",
-    "@commitlint/config-conventional": "^19.2.2",
-    "@commitlint/types": "^19.0.3",
     "@eslint/js": "^9.9.1",
     "@faker-js/faker": "^8.4.1",
     "@iconify-icons/ep": "^1.2.12",
@@ -136,10 +131,7 @@
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "autoprefixer": "^10.4.20",
     "boxen": "^7.1.1",
-    "commitizen": "^4.3.0",
-    "commitlint": "^17.8.1",
     "cssnano": "^7.0.5",
-    "cz-git": "^1.9.4",
     "dagre": "^0.8.5",
     "eslint": "^9.9.1",
     "eslint-config-prettier": "^9.1.0",
@@ -147,7 +139,6 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-vue": "^9.27.0",
     "gradient-string": "^2.0.2",
-    "husky": "^8.0.3",
     "lint-staged": "^15.2.9",
     "postcss": "^8.4.41",
     "postcss-html": "^1.7.0",
@@ -190,11 +181,6 @@
       "allowedVersions": {
         "eslint": "9"
       }
-    }
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-git"
     }
   },
   "packageManager": "pnpm@10.8.1+sha512.c50088ba998c67b8ca8c99df8a5e02fd2ae2e2b29aaf238feaa9e124248d3f48f9fb6db2424949ff901cffbb5e0f0cc1ad6aedb602cd29450751d11c35023677"
