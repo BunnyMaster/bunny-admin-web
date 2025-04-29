@@ -54,6 +54,7 @@ export default defineComponent({
       state.rAF = requestAnimationFrame(count);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function pauseResume() {
       if (state.paused) {
         resume();
@@ -75,6 +76,7 @@ export default defineComponent({
       requestAnimationFrame(count);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function reset() {
       state.startTime = null;
       cancelAnimationFrame(state.rAF);

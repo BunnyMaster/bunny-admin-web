@@ -9,32 +9,32 @@ export const isAddUserinfo = ref(false);
 // 表格列
 export const columns: TableColumnList = [
   { type: 'selection', align: 'left' },
-  { type: 'index', index: (index: number) => index + 1, label: $t('index'), minWidth: 60 },
+  { type: 'index', index: (index: number) => index + 1, label: $t('index'), width: 60 },
   // 用户名
-  { label: $t('adminUser_username'), prop: 'username', minWidth: 260 },
+  { label: $t('adminUser_username'), prop: 'username' },
   // 状态
-  { label: $t('adminUser_status'), prop: 'status', slot: 'status', minWidth: 100 },
+  { label: $t('adminUser_status'), prop: 'status', slot: 'status', width: 100 },
   // 昵称
-  { label: $t('adminUser_nickname'), prop: 'nickname', minWidth: 260 },
+  { label: $t('adminUser_nickname'), prop: 'nickname', width: 260 },
   // 邮箱
-  { label: $t('adminUser_email'), prop: 'email', minWidth: 260 },
+  { label: $t('adminUser_email'), prop: 'email', width: 260 },
   // 手机号
-  { label: $t('adminUser_phone'), prop: 'phone', minWidth: 160 },
+  { label: $t('adminUser_phone'), prop: 'phone', width: 160 },
   // 头像
-  { label: $t('adminUser_avatar'), prop: 'avatar', slot: 'avatar', minWidth: 90 },
+  { label: $t('adminUser_avatar'), prop: 'avatar', slot: 'avatar', width: 90 },
   // 性别
-  { label: $t('adminUser_sex'), prop: 'sex', slot: 'sex', minWidth: 90 },
+  { label: $t('adminUser_sex'), prop: 'sex', slot: 'sex', width: 90 },
   // 个人描述
-  { label: $t('adminUser_summary'), prop: 'summary', minWidth: 460 },
+  { label: $t('adminUser_summary'), prop: 'summary', width: 460 },
   // 登录的IP地址
-  { label: $t('lastLoginIp'), prop: 'ipAddress', minWidth: 130 },
+  { label: $t('lastLoginIp'), prop: 'ipAddress', width: 130 },
   // IP地区
-  { label: $t('lastLoginIpAddress'), prop: 'ipRegion', minWidth: 130 },
-  { label: $t('table.updateTime'), prop: 'updateTime', sortable: true, minWidth: 160 },
-  { label: $t('table.createTime'), prop: 'createTime', sortable: true, minWidth: 160 },
-  { label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', minWidth: 130 },
-  { label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', minWidth: 130 },
-  { label: $t('table.operation'), fixed: 'right', minWidth: 210, slot: 'operation' },
+  { label: $t('lastLoginIpAddress'), prop: 'ipRegion', width: 130 },
+  { label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
+  { label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
+  { label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 130 },
+  { label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 130 },
+  { label: $t('table.operation'), fixed: 'right', width: 220, slot: 'operation' },
 ];
 
 // 添加规则

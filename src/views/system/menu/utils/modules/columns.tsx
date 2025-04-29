@@ -67,29 +67,29 @@ export const columns: TableColumnList = [
         <span>{$t(row.title)}</span>
       </>
     ),
-    minWidth: 170,
+    width: 170,
   },
   // 菜单类型
   {
     label: $t('menuType'),
     prop: 'menuType',
-    minWidth: 130,
+    width: 130,
     cellRenderer: ({ row, props }) => (
       <ElTag size={props.size} type={getMenuType(row.menuType)} effect="plain">
         {getMenuType(row.menuType, true)}
       </ElTag>
     ),
   },
-  { label: $t('routerPath'), prop: 'path', minWidth: 230 },
+  { label: $t('routerPath'), prop: 'path', width: 230 },
   // 组件路径
   {
     label: $t('componentPath'),
     prop: 'component',
     formatter: ({ path, component }) => (isAllEmpty(component) ? path : component),
-    minWidth: 200,
+    width: 200,
   },
   // 路由等级
-  { label: $t('sort'), prop: 'rank', minWidth: 80, slot: 'rank' },
+  { label: $t('sort'), prop: 'rank', width: 80, slot: 'rank' },
   // 是否i按时
   {
     label: $t('visible'),
@@ -100,11 +100,11 @@ export const columns: TableColumnList = [
       </ElLink>
     ),
   },
-  { label: $t('table.updateTime'), prop: 'updateTime', sortable: true, minWidth: 160 },
-  { label: $t('table.createTime'), prop: 'createTime', sortable: true, minWidth: 160 },
-  { label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', minWidth: 130 },
-  { label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', minWidth: 130 },
-  { label: $t('table.operation'), fixed: 'right', minWidth: 210, slot: 'operation' },
+  { label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
+  { label: $t('table.createTime'), prop: 'createTime', sortable: true, width: 160 },
+  { label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', width: 130 },
+  { label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', width: 130 },
+  { label: $t('table.operation'), fixed: 'right', width: 210, slot: 'operation' },
 ];
 
 /** 自定义表单规则校验 */

@@ -5,8 +5,8 @@ import NProgress from '@/utils/progress';
 import { $t } from '@/plugins/i18n';
 import { buildHierarchyTree } from '@/utils/tree';
 import remainingRouter from './modules/remaining';
-import { useMultiTagsStoreHook } from '@/store/multiTags';
-import { usePermissionStoreHook } from '@/store/permission';
+import { useMultiTagsStoreHook } from '@/store/modules/multiTags';
+import { usePermissionStoreHook } from '@/store/modules/permission';
 import { isAllEmpty, isUrl, openLink, storageLocal } from '@pureadmin/utils';
 import {
   ascending,

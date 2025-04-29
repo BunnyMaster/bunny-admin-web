@@ -1,31 +1,32 @@
 <script lang="ts" setup>
-import { emitter } from '@/utils/mitt';
-import { useNav } from '@/layout/hooks/useNav';
-import LaySearch from '../lay-search/index.vue';
-import LayNotice from '../lay-notice/index.vue';
 import { responsiveStorageNameSpace } from '@/config';
-import { computed, nextTick, onMounted, ref } from 'vue';
+import { useNav } from '@/layout/hooks/useNav';
+import { usePermissionStoreHook } from '@/store/modules/permission';
+import { emitter } from '@/utils/mitt';
 import { isAllEmpty, storageLocal } from '@pureadmin/utils';
+import { computed, nextTick, onMounted, ref } from 'vue';
 import { useTranslationLang } from '../../hooks/useTranslationLang';
-import { usePermissionStoreHook } from '@/store/permission';
-import LaySidebarItem from '../lay-sidebar/components/SidebarItem.vue';
+import LayNotice from '../lay-notice/index.vue';
+import LaySearch from '../lay-search/index.vue';
 import LaySidebarFullScreen from '../lay-sidebar/components/SidebarFullScreen.vue';
-import LogoutCircleRLine from '@iconify-icons/ri/logout-circle-r-line';
-import Setting from '@iconify-icons/ri/settings-3-line';
-import Check from '@iconify-icons/ep/check';
+import LaySidebarItem from '../lay-sidebar/components/SidebarItem.vue';
+
+import GlobalizationIcon from '@/assets/svg/globalization.svg?component';
 import { $t } from '@/plugins/i18n';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
-import GlobalizationIcon from '@/assets/svg/globalization.svg?component';
+import Check from '~icons/ep/check';
+import LogoutCircleRLine from '~icons/ri/logout-circle-r-line';
+import Setting from '~icons/ri/settings-3-line';
 
 const menuRef = ref();
 const showLogo = ref(storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.showLogo ?? true);
 
-const { t, route, locale, translation } = useTranslationLang(menuRef);
+const { route, locale, translation } = useTranslationLang(menuRef);
 const { title, logout, onPanel, getLogo, username, userAvatar, backTopMenu, avatarsStyle, getDropdownItemStyle, getDropdownItemClass } = useNav();
 
 const defaultActive = computed(() => (!isAllEmpty(route.meta?.activePath) ? route.meta.activePath : route.path));
-
 const i18nTypeStore = userI18nTypeStore();
+
 nextTick(() => {
   menuRef.value?.handleResize();
 });

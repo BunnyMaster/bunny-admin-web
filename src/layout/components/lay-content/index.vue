@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { useI18n } from 'vue-i18n';
-import LayFrame from '../lay-frame/index.vue';
-import LayFooter from '../lay-footer/index.vue';
-import { useTags } from '@/layout/hooks/useTag';
-import { isNumber, useGlobal } from '@pureadmin/utils';
 import BackTopIcon from '@/assets/svg/back_top.svg?component';
+import { useTags } from '@/layout/hooks/useTag';
+import { usePermissionStoreHook } from '@/store/modules/permission';
+import { isNumber, useGlobal } from '@pureadmin/utils';
 import { computed, defineComponent, h, Transition } from 'vue';
-import { usePermissionStoreHook } from '@/store/permission';
+import { useI18n } from 'vue-i18n';
+import LayFooter from '../lay-footer/index.vue';
+import LayFrame from '../lay-frame/index.vue';
 
 const props = defineProps({
   fixedHeader: Boolean,

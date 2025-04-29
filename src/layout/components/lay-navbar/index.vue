@@ -9,8 +9,8 @@ import LaySidebarBreadCrumb from '../lay-sidebar/components/SidebarBreadCrumb.vu
 import LaySidebarTopCollapse from '../lay-sidebar/components/SidebarTopCollapse.vue';
 
 import GlobalizationIcon from '@/assets/svg/globalization.svg?component';
-import Setting from '@iconify-icons/ri/settings-3-line';
-import Check from '@iconify-icons/ep/check';
+import Setting from '~icons/ri/settings-3-line';
+import Check from '~icons/ep/check';
 import { $t } from '@/plugins/i18n';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
 import { onMounted } from 'vue';

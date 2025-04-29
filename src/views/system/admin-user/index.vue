@@ -1,5 +1,16 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import Airplane from '@/assets/svg/airplane.svg';
+import ReAuth from '@/components/ReAuth/src/auth';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { PureTableBar } from '@/components/RePureTableBar';
+import { selectUserinfo } from '@/components/Table/Userinfo/columns';
+import { sexConstant, tableSelectButtonClass, UserAvatar, userStatus } from '@/enums/baseConstant';
+import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
+import { useAdminUserStore } from '@/store/system/adminUser';
+import { useDeptStore } from '@/store/system/dept';
+import { usePublicHooks } from '@/views/hooks';
+import Tree from '@/views/system/admin-user/components/tree.vue';
 import {
   auth,
   columns,
@@ -18,29 +29,18 @@ import {
   switchLoadMap,
   updateUserStatus,
 } from '@/views/system/admin-user/utils';
-import PureTableBar from '@/components/TableBar/src/bar';
-import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import Delete from '@iconify-icons/ep/delete';
-import EditPen from '@iconify-icons/ep/edit-pen';
-import Refresh from '@iconify-icons/ep/refresh';
-import { selectUserinfo } from '@/components/Table/Userinfo/columns';
-import { $t } from '@/plugins/i18n';
-import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import Upload from '@iconify-icons/ri/upload-line';
-import Role from '@iconify-icons/ri/admin-line';
-import Password from '@iconify-icons/ri/lock-password-line';
-import More from '@iconify-icons/ep/more-filled';
-import { useAdminUserStore } from '@/store/system/adminUser';
-import { sexConstant, tableSelectButtonClass, UserAvatar, userStatus } from '@/enums/baseConstant';
 import { deviceDetection } from '@pureadmin/utils';
-import Tree from '@/views/system/admin-user/components/tree.vue';
-import Airplane from '@/assets/svg/airplane.svg';
-import { useDeptStore } from '@/store/system/dept';
 import { FormInstance } from 'element-plus';
-import { usePublicHooks } from '@/views/hooks';
-import { hasAuth } from '@/router/utils';
-import ReAuth from '@/components/ReAuth/src/auth';
+import { onMounted, ref } from 'vue';
+import Delete from '~icons/ep/delete';
+import EditPen from '~icons/ep/edit-pen';
+import More from '~icons/ep/more-filled';
+import Refresh from '~icons/ep/refresh';
+import AddFill from '~icons/ri/add-circle-line';
+import Role from '~icons/ri/admin-line';
+import Password from '~icons/ri/lock-password-line';
+import Upload from '~icons/ri/upload-line';
 
 defineOptions({ name: 'AdminUserManger' });
 
@@ -141,7 +141,7 @@ onMounted(() => {
           </el-form-item>
 
           <el-form-item>
-            <el-button :icon="useRenderIcon('ri:search-line')" :loading="adminUserStore.loading" type="primary" @click="onSearch">
+            <el-button :icon="useRenderIcon('ri/search-line')" :loading="adminUserStore.loading" type="primary" @click="onSearch">
               {{ $t('search') }}
             </el-button>
             <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>

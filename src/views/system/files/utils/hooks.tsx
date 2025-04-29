@@ -1,7 +1,7 @@
 import { addDialog } from '@/components/ReDialog/index';
 import FilesDialog from '@/views/system/files/components/files-dialog.vue';
 import { useFilesStore } from '@/store/monitor/files';
-import { h, ref } from 'vue';
+import { h, ref, VNode } from 'vue';
 import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/files/utils/types';
 import { $t } from '@/plugins/i18n';
@@ -11,7 +11,7 @@ import type { UploadFiles } from 'element-plus';
 
 // 选择的row列表
 export const selectRows = ref([]);
-export const formRef = ref();
+export const formRef = ref<VNode | null>(null);
 const filesStore = useFilesStore();
 
 /** 搜索初始化系统文件 */
@@ -37,7 +37,11 @@ export function onAdd() {
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(FilesDialog, { ref: formRef }),
+    contentRenderer: () => {
+      const dialog = h(FilesDialog, {}, []);
+      formRef.value = dialog;
+      return dialog;
+    },
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -78,7 +82,11 @@ export function onUpdate(row: any) {
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(FilesDialog, { ref: formRef }),
+    contentRenderer: () => {
+      const dialog = h(FilesDialog, { ref: formRef }, []);
+      formRef.value = dialog;
+      return dialog;
+    },
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {

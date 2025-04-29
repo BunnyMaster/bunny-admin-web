@@ -56,9 +56,10 @@ interface LocalForageDriverSupportFunc {
 
 interface LocalForageDriver extends LocalForageDriverDbMethods {
   _driver: string;
-  _support?: boolean | LocalForageDriverSupportFunc;
 
   _initStorage(options: LocalForageOptions): void;
+
+  _support?: boolean | LocalForageDriverSupportFunc;
 }
 
 interface LocalForageSerializer {
@@ -84,9 +85,7 @@ export interface LocalForage extends LocalForageDbMethods {
    * @param {LocalForageOptions} options?
    */
   config(options: LocalForageOptions): boolean;
-
   config(options: string): any;
-
   config(): LocalForageOptions;
 
   /**
@@ -123,11 +122,8 @@ export interface LocalForage extends LocalForageDbMethods {
 
 export interface ProxyStorage {
   setItem<T>(k: string, v: T, m: number): Promise<T>;
-
   getItem<T>(k: string): Promise<T>;
-
   removeItem(k: string): Promise<void>;
-
   clear(): Promise<void>;
 }
 

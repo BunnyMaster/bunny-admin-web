@@ -9,7 +9,7 @@ import { isAddUserinfo } from '@/views/system/admin-user/utils/columns';
 import ResetPasswordDialog from '@/components/Table/ResetPasswords.vue';
 import { deviceDetection, handleTree } from '@pureadmin/utils';
 import CropperPreview from '@/components/ReCropperPreview';
-import AssignUserToRole from '@/views/system/admin-user/components/assign-roles-to-user.vue';
+import RolesToUser from '@/views/system/admin-user/components/roles-to-user.vue';
 import { useUserStore } from '@/store/system/user';
 import { useDeptStore } from '@/store/system/dept';
 import DeleteBatchDialog from '@/components/Table/DeleteBatchDialog.vue';
@@ -262,7 +262,7 @@ export const onAssignRolesToUser = (row: any) => {
     draggable: true,
     closeOnClickModal: false,
     fullscreenIcon: true,
-    contentRenderer: () => <AssignUserToRole ref={assignRolesRef} userId={row.id} />,
+    contentRenderer: () => <RolesToUser ref={assignRolesRef} userId={row.id} />,
     beforeSure: async (done: any) => {
       // 分配用户角色
       const data = { userId: row.id, roleIds: assignRolesRef.value.assignRoles };

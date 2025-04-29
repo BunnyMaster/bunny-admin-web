@@ -1,8 +1,8 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { IconJson } from '@/components/ReIcon/data';
 import { cloneDeep, isAllEmpty } from '@pureadmin/utils';
-import { computed, CSSProperties, ref, watch } from 'vue';
-import Search from '@iconify-icons/ri/search-eye-line';
+import { ref, computed, CSSProperties, watch } from 'vue';
+import Search from '~icons/ri/search-eye-line';
 
 type ParameterCSSProperties = (item?: string) => CSSProperties | undefined;
 
@@ -40,12 +40,10 @@ const tabsList = [
   },
 ];
 
-const pageList = computed(
-  () =>
-    currentActiveType.value !== 'web' &&
-    copyIconList[currentActiveType.value]
-      .filter((i) => i.includes(filterValue.value))
-      .slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value)
+const pageList = computed(() =>
+  copyIconList[currentActiveType.value]
+    .filter((i) => i.includes(filterValue.value))
+    .slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value)
 );
 
 const iconItemStyle = computed((): ParameterCSSProperties => {
@@ -97,7 +95,7 @@ function onClear() {
 
 watch(
   () => pageList.value,
-  () => currentActiveType.value !== 'web' && (totalPage.value = copyIconList[currentActiveType.value].filter((i) => i.includes(filterValue.value)).length),
+  () => (totalPage.value = copyIconList[currentActiveType.value].filter((i) => i.includes(filterValue.value)).length),
   { immediate: true }
 );
 watch(
@@ -116,12 +114,12 @@ watch(
     <el-input v-model="inputValue" disabled>
       <template #append>
         <el-popover
+          :width="350"
+          trigger="click"
+          popper-class="pure-popper"
           :popper-options="{
             placement: 'auto',
           }"
-          :width="350"
-          popper-class="pure-popper"
-          trigger="click"
           @before-enter="onBeforeEnter"
           @after-leave="onAfterLeave"
         >
@@ -132,41 +130,42 @@ watch(
             </div>
           </template>
 
-          <el-input v-model="filterValue" class="px-2 pt-2" clearable placeholder="搜索图标" />
+          <el-input v-model="filterValue" class="px-2 pt-2" placeholder="搜索图标" clearable />
 
           <el-tabs v-model="currentActiveType" @tab-click="handleClick">
             <el-tab-pane v-for="(pane, index) in tabsList" :key="index" :label="pane.label" :name="pane.name">
               <el-scrollbar height="220px">
-                <ul class="flex flex-wrap px-2 ml-2">
+                <ul class="flex flex-wrap px-2! ml-2!">
                   <li
                     v-for="(item, key) in pageList"
                     :key="key"
-                    :style="iconItemStyle(item)"
                     :title="item"
                     class="icon-item p-2 cursor-pointer mr-2 mt-1 flex justify-center items-center border border-[#e5e7eb]"
+                    :style="iconItemStyle(item)"
                     @click="onChangeIcon(item)"
                   >
-                    <IconifyIconOnline :icon="currentActiveType + item" height="20px" width="20px" />
+                    <IconifyIconOnline :icon="currentActiveType + item" width="20px" height="20px" />
                   </li>
                 </ul>
                 <el-empty v-show="pageList.length === 0" :description="`${filterValue} 图标不存在`" :image-size="60" />
               </el-scrollbar>
-              <div class="w-full h-9 flex items-center overflow-auto border-t border-[#e5e7eb]">
-                <el-pagination
-                  :current-page="currentPage"
-                  :page-size="pageSize"
-                  :pager-count="5"
-                  :total="totalPage"
-                  background
-                  class="flex-auto ml-2"
-                  layout="pager"
-                  size="small"
-                  @current-change="onCurrentChange"
-                />
-                <el-button bg class="justify-end mr-2 ml-2" size="small" text type="danger" @click="onClear">清空</el-button>
-              </div>
             </el-tab-pane>
           </el-tabs>
+
+          <div class="w-full h-9 flex items-center overflow-auto border-t border-[#e5e7eb]">
+            <el-pagination
+              class="flex-auto ml-2"
+              :total="totalPage"
+              :current-page="currentPage"
+              :page-size="pageSize"
+              :pager-count="5"
+              layout="pager"
+              background
+              size="small"
+              @current-change="onCurrentChange"
+            />
+            <el-button class="justify-end mx-2!" type="danger" size="small" text bg @click="onClear">清空</el-button>
+          </div>
         </el-popover>
       </template>
     </el-input>
@@ -178,8 +177,8 @@ watch(
   &:hover {
     color: var(--el-color-primary);
     border-color: var(--el-color-primary);
-    transition: all 0.4s;
     transform: scaleX(1.05);
+    transition: all 0.4s;
   }
 }
 

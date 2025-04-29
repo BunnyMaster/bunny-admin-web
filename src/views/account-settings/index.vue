@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { Text } from '@/components/ReText';
+import Text from '@/components/ReText';
 import LaySidebarTopCollapse from '@/layout/components/lay-sidebar/components/SidebarTopCollapse.vue';
 import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange';
 import { $t } from '@/plugins/i18n';
 import { panes, userInfos } from '@/views/account-settings/utils';
-import leftLine from '@iconify-icons/ri/arrow-left-s-line';
+import leftLine from '~icons/ri/arrow-left-s-line';
 import { deviceDetection, useGlobal } from '@pureadmin/utils';
 import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -77,7 +77,7 @@ onBeforeMount(() => {
 
 <style lang="scss">
 .pure-account-settings {
-  background: $menuBg;
+  background: var(--pure-theme-menu-bg) !important;
 }
 
 .pure-account-settings-menu {
@@ -86,12 +86,12 @@ onBeforeMount(() => {
 
   .el-menu-item {
     height: 48px !important;
-    color: $menuText;
+    color: var(--pure-theme-menu-text);
     background-color: transparent !important;
     transition: color 0.2s;
 
     &:hover {
-      color: $menuTitleHover !important;
+      color: var(--pure-theme-menu-title-hover) !important;
     }
 
     &.is-active {

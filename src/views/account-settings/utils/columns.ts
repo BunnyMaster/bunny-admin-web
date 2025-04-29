@@ -2,11 +2,11 @@ import dayjs from 'dayjs';
 import { reactive } from 'vue';
 import type { FormRules } from 'element-plus';
 import { $t } from '@/plugins/i18n';
-import ProfileIcon from '@iconify-icons/ri/user-3-line';
+import ProfileIcon from '~icons/ri/user-3-line';
 import Profile from '@/views/account-settings/components/profile.vue';
-import SecurityLogIcon from '@iconify-icons/ri/window-line';
+import SecurityLogIcon from '~icons/ri/window-line';
 import SecurityLog from '@/views/account-settings/components/security-log.vue';
-import AccountManagementIcon from '@iconify-icons/ri/profile-line';
+import AccountManagementIcon from '~icons/ri/profile-line';
 import AccountManagement from '@/views/account-settings/components/account-management.vue';
 
 export const columns: TableColumnList = [

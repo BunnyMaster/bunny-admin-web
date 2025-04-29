@@ -79,7 +79,10 @@ export function onUpdate(row: any) {
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
 
-        const result = await emailUsersStore.editEmailUsers({ ...form, id: row.id });
+        const result = await emailUsersStore.editEmailUsers({
+          ...form,
+          id: row.id,
+        });
         if (!result) return;
         done();
         await onSearch();

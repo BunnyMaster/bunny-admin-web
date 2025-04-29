@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { isEqual } from '@pureadmin/utils';
+import { $t } from '@/plugins/i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { onMounted, ref, toRaw, watch } from 'vue';
 import { findRouteByPath, getParentPaths } from '@/router/utils';
-import { useMultiTagsStoreHook } from '@/store/multiTags';
-import { $t } from '@/plugins/i18n';
+import { useMultiTagsStoreHook } from '@/store/modules/multiTags';
 
 const route = useRoute();
 const levelList = ref([]);
@@ -99,9 +99,9 @@ watch(
 </script>
 
 <template>
-  <el-breadcrumb class="!leading-[50px] select-none" separator="/">
+  <el-breadcrumb class="leading-[50px]! select-none" separator="/">
     <transition-group name="breadcrumb">
-      <el-breadcrumb-item v-for="item in levelList" :key="item.path" class="!inline !items-stretch">
+      <el-breadcrumb-item v-for="item in levelList" :key="item.path" class="inline! items-stretch!">
         <a @click.prevent="handleLink(item)">
           {{ $t(item.meta.title) }}
         </a>

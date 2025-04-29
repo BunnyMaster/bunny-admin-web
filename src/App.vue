@@ -2,20 +2,23 @@
   <el-config-provider :locale="currentLocale">
     <router-view />
     <ReDialog />
+    <ReDrawer />
   </el-config-provider>
 </template>
 
 <script lang="ts" setup>
+import { computed, onBeforeMount, onMounted } from 'vue';
+import { checkVersion } from 'version-rocket';
 import { ElConfigProvider } from 'element-plus';
-import { computed, onMounted } from 'vue';
 import { ReDialog } from '@/components/ReDialog';
+import { ReDrawer } from '@/components/ReDrawer';
 import en from 'element-plus/es/locale/lang/en';
 import zhCn from 'element-plus/es/locale/lang/zh-cn';
 import plusEn from 'plus-pro-components/es/locale/lang/en';
 import plusZhCn from 'plus-pro-components/es/locale/lang/zh-cn';
+import { userI18nStore } from '@/store/i18n/i18n';
 import { useNav } from '@/layout/hooks/useNav';
 import { useI18n } from 'vue-i18n';
-import { userI18nStore } from '@/store/i18n/i18n';
 
 const i18nStore = userI18nStore();
 const i18n = useI18n();
@@ -50,30 +53,30 @@ const currentLocale = computed(() => {
 });
 
 onMounted(() => {
-  // 设置多语言
   setI18n();
 });
+
+onBeforeMount(() => {
+  const { version, name: title } = __APP_INFO__.pkg;
+  const { VITE_PUBLIC_PATH, MODE } = import.meta.env;
+  // https://github.com/guMcrey/version-rocket/blob/main/README.zh-CN.md#api
+  if (MODE === 'production') {
+    // 版本实时更新检测，只作用于线上环境
+    checkVersion(
+      // config
+      {
+        // 5分钟检测一次版本
+        pollingTime: 300000,
+        localPackageVersion: version,
+        originVersionFileUrl: `${location.origin}${VITE_PUBLIC_PATH}version.json`,
+      },
+      // options
+      {
+        title,
+        description: '检测到新版本',
+        buttonText: '立即更新',
+      }
+    );
+  }
+});
 </script>
-
-<style>
-/* 定义滚动条高宽及背景高宽分别对应横竖滚动条的尺寸 */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  background-color: var(--el-text-color-secondary);
-}
-
-/* 定义滚动条轨道内阴影+圆角 */
-::-webkit-scrollbar-track {
-  background-color: #ebecef;
-  border-radius: 5px;
-  box-shadow: inset 0 0 6px #ebecef;
-}
-
-/* 定义滑块内阴影+圆角 */
-::-webkit-scrollbar-thumb {
-  background-color: #d0d2d6;
-  border-radius: 5px;
-  box-shadow: inset 0 0 6px #d0d2d6;
-}
-</style>

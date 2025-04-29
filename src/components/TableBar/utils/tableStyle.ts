@@ -1,5 +1,5 @@
 import { computed } from 'vue';
-import { useEpThemeStoreHook } from '@/store/epTheme';
+import { useEpThemeStoreHook } from '@/store/modules/epTheme';
 
 /**
  * * 表格头部样式

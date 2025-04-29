@@ -2,7 +2,7 @@
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { useNav } from '@/layout/hooks/useNav';
 import { findRouteByPath, getParentPaths } from '@/router/utils';
-import { usePermissionStoreHook } from '@/store/permission';
+import { usePermissionStoreHook } from '@/store/modules/permission';
 import { isAllEmpty } from '@pureadmin/utils';
 import { nextTick, onMounted, ref, toRaw, watch } from 'vue';
 import { useTranslationLang } from '../../hooks/useTranslationLang';
@@ -12,16 +12,17 @@ import LaySidebarExtraIcon from '../lay-sidebar/components/SidebarExtraIcon.vue'
 import LaySidebarFullScreen from '../lay-sidebar/components/SidebarFullScreen.vue';
 
 import GlobalizationIcon from '@/assets/svg/globalization.svg?component';
-import Check from '@iconify-icons/ep/check';
-import LogoutCircleRLine from '@iconify-icons/ri/logout-circle-r-line';
-import Setting from '@iconify-icons/ri/settings-3-line';
+import Check from '~icons/ep/check';
+import LogoutCircleRLine from '~icons/ri/logout-circle-r-line';
+import Setting from '~icons/ri/settings-3-line';
 import { useI18n } from 'vue-i18n';
 import { $t } from '@/plugins/i18n';
+import { userI18nTypeStore } from '@/store/i18n/i18nType';
 
 const menuRef = ref();
 const defaultActive = ref(null);
 const { t } = useI18n();
-const { route, locale, translationCh, translationEn } = useTranslationLang(menuRef);
+const { route, locale, translation } = useTranslationLang(menuRef);
 const { device, logout, onPanel, resolvePath, username, userAvatar, getDivStyle, avatarsStyle, getDropdownItemStyle, getDropdownItemClass } = useNav();
 
 function getDefaultActive(routePath) {
@@ -30,6 +31,8 @@ function getDefaultActive(routePath) {
   const parentRoutes = getParentPaths(routePath, wholeMenus)[0];
   defaultActive.value = !isAllEmpty(route.meta?.activePath) ? route.meta.activePath : findRouteByPath(parentRoutes, wholeMenus)?.children[0]?.path;
 }
+
+const i18nTypeStore = userI18nTypeStore();
 
 onMounted(() => {
   getDefaultActive(route.path);
@@ -68,29 +71,21 @@ watch(
       <!-- 菜单搜索 -->
       <LaySearch id="header-search" />
       <!-- 国际化 -->
-      <el-dropdown id="header-translation" trigger="click">
-        <GlobalizationIcon class="navbar-bg-hover w-[40px] h-[48px] p-[11px] cursor-pointer outline-none" />
+      <el-dropdown trigger="click">
+        <GlobalizationIcon class="hover:text-primary hover:!bg-[transparent] w-[20px] h-[20px] ml-1.5 cursor-pointer outline-none duration-300" />
         <template #dropdown>
           <el-dropdown-menu class="translation">
             <el-dropdown-item
-              :class="['dark:!text-white', getDropdownItemClass(locale, 'zh')]"
-              :style="getDropdownItemStyle(locale, 'zh')"
-              @click="translationCh"
+              v-for="item in i18nTypeStore.translationTypeList"
+              :key="item.key"
+              :class="['dark:!text-white', getDropdownItemClass(locale, item.key)]"
+              :style="getDropdownItemStyle(locale, item.key)"
+              @click="translation(item.key)"
             >
-              <span v-show="locale === 'zh'" class="check-zh">
+              <span v-show="locale === item.key" class="check">
                 <IconifyIconOffline :icon="Check" />
               </span>
-              简体中文
-            </el-dropdown-item>
-            <el-dropdown-item
-              :class="['dark:!text-white', getDropdownItemClass(locale, 'en')]"
-              :style="getDropdownItemStyle(locale, 'en')"
-              @click="translationEn"
-            >
-              <span v-show="locale === 'en'" class="check-en">
-                <IconifyIconOffline :icon="Check" />
-              </span>
-              English
+              {{ item.value }}
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>

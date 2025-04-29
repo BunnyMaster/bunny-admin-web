@@ -69,7 +69,9 @@ defineExpose({ ruleFormRef });
             striped
             striped-flow
           />
-          <p :style="{ color: curScore === index ? item.color : '' }" class="text-center">{{ item.text }}</p>
+          <p :style="{ color: curScore === index ? item.color : '' }" class="text-center">
+            {{ item.text }}
+          </p>
         </div>
       </div>
     </div>

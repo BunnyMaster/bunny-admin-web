@@ -1,21 +1,21 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import { auth, columns, onDeleteBatch, onSearch, selectIds, updateMarkMessageReceived } from '@/views/message-manger/message-received/utils';
-import PureTableBar from '@/components/TableBar/src/bar';
-import PureTable from '@pureadmin/table';
-import Delete from '@iconify-icons/ep/delete';
-import Refresh from '@iconify-icons/ep/refresh';
-import { selectUserinfo } from '@/components/Table/Userinfo/columns';
-import { $t } from '@/plugins/i18n';
+import ReAuth from '@/components/ReAuth/src/auth';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import { FormInstance } from 'element-plus';
-import { messageLevel } from '@/views/message-manger/message-editing/utils';
+import { PureTableBar } from '@/components/RePureTableBar';
+import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { isReadStatus } from '@/enums/baseConstant';
+import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
 import { useMessageReceivedStore } from '@/store/message/messageReceived';
 import { useMessageTypeStore } from '@/store/message/messageType';
+import { messageLevel } from '@/views/message-manger/message-editing/utils';
+import { auth, columns, onDeleteBatch, onSearch, selectIds, updateMarkMessageReceived } from '@/views/message-manger/message-received/utils';
 import { Message } from '@element-plus/icons-vue';
-import { hasAuth } from '@/router/utils';
-import ReAuth from '@/components/ReAuth/src/auth';
+import PureTable from '@pureadmin/table';
+import { FormInstance } from 'element-plus';
+import { onMounted, ref } from 'vue';
+import Delete from '~icons/ep/delete';
+import Refresh from '~icons/ep/refresh';
 
 defineOptions({ name: 'MessageReceived' });
 
@@ -113,7 +113,7 @@ onMounted(() => {
         </el-form-item>
 
         <el-form-item>
-          <el-button :icon="useRenderIcon('ri:search-line')" :loading="messageReceivedStore.loading" type="primary" @click="onSearch">
+          <el-button :icon="useRenderIcon('ri/search-line')" :loading="messageReceivedStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -159,7 +159,10 @@ onMounted(() => {
           :adaptiveConfig="{ offsetBottom: 96 }"
           :columns="dynamicColumns"
           :data="messageReceivedStore.datalist"
-          :header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
+          :header-cell-style="{
+            background: 'var(--el-fill-color-light)',
+            color: 'var(--el-text-color-primary)',
+          }"
           :loading="messageReceivedStore.loading"
           :pagination="messageReceivedStore.pagination"
           :size="size"

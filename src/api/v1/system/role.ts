@@ -29,7 +29,9 @@ export const getRoleList = () => {
 
 /** 角色---使用Excel导出导出角色列表 */
 export const exportRoleList = () => {
-  return http.request<BaseResult<any>>('get', `role/file/export`, { responseType: 'blob' });
+  return http.request<BaseResult<any>>('get', `role/file/export`, {
+    responseType: 'blob',
+  });
 };
 
 /* 角色---使用Excel更新角色列表 */

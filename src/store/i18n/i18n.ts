@@ -10,7 +10,7 @@ export const userI18nStore = defineStore('i18nStore', {
   state() {
     return {
       // ? 多语言内容
-      i18n: {},
+      i18n: { local: '' } as any,
       // 多语言列表
       datalist: [],
       // 查询表单
@@ -39,7 +39,7 @@ export const userI18nStore = defineStore('i18nStore', {
         // 当前的返回参数
         const data = result.data;
         // 将返回对象中key设置name，后端不好设置
-        for (let key in data) if (key !== 'local') data[key].name = key;
+        for (const key in data) if (key !== 'local') data[key].name = key;
 
         // 赋值返回参数
         this.i18n = data;

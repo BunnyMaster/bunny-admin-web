@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import { columns, markAsAllRead, markAsRead, onDelete, onSearch, selectIds } from '@/views/message-manger/message-detail/utils';
-import PureTableBar from '@/components/TableBar/src/bar';
-import PureTable from '@pureadmin/table';
-import Delete from '@iconify-icons/ep/delete';
-import { $t } from '@/plugins/i18n';
-import { Message } from '@element-plus/icons-vue';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { PureTableBar } from '@/components/RePureTableBar';
 import { isReadStatus } from '@/enums/baseConstant';
-import { useMessageUserStore } from '@/store/message/messageUser';
+import { $t } from '@/plugins/i18n';
 import { useMessageTypeStore } from '@/store/message/messageType';
+import { useMessageUserStore } from '@/store/message/messageUser';
+import { columns, markAsAllRead, markAsRead, onDelete, onSearch, selectIds } from '@/views/message-manger/message-detail/utils';
+import { Message } from '@element-plus/icons-vue';
+import PureTable from '@pureadmin/table';
+import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import Delete from '~icons/ep/delete';
 
 const tableRef = ref();
 const formRef = ref();
@@ -83,7 +83,10 @@ onMounted(() => {
           :adaptiveConfig="{ offsetBottom: 96 }"
           :columns="dynamicColumns"
           :data="messageUserStore.datalist"
-          :header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
+          :header-cell-style="{
+            background: 'var(--el-fill-color-light)',
+            color: 'var(--el-text-color-primary)',
+          }"
           :loading="messageUserStore.loading"
           :pagination="messageUserStore.pagination"
           :size="size"

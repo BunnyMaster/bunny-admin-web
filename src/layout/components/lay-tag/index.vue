@@ -2,8 +2,8 @@
 import { routerArrays } from '@/layout/types';
 import { $t } from '@/plugins/i18n';
 import { getTopMenu, handleAliveRoute } from '@/router/utils';
-import { useMultiTagsStoreHook } from '@/store/multiTags';
-import { usePermissionStoreHook } from '@/store/permission';
+import { useMultiTagsStoreHook } from '@/store/modules/multiTags';
+import { usePermissionStoreHook } from '@/store/modules/permission';
 import { useSettingStoreHook } from '@/store/modules/settings';
 import { emitter } from '@/utils/mitt';
 import { delay, isAllEmpty, isEqual, useResizeObserver } from '@pureadmin/utils';
@@ -13,11 +13,11 @@ import { useTags } from '../../hooks/useTag';
 import { RouteConfigs } from '../../types';
 import TagChrome from './components/TagChrome.vue';
 
-import ArrowDown from '@iconify-icons/ri/arrow-down-s-line';
-import ArrowLeftSLine from '@iconify-icons/ri/arrow-left-s-line';
-import ArrowRightSLine from '@iconify-icons/ri/arrow-right-s-line';
-import ExitFullscreen from '@iconify-icons/ri/fullscreen-exit-fill';
-import Fullscreen from '@iconify-icons/ri/fullscreen-fill';
+import ArrowDown from '~icons/ri/arrow-down-s-line';
+import ArrowLeftSLine from '~icons/ri/arrow-left-s-line';
+import ArrowRightSLine from '~icons/ri/arrow-right-s-line';
+import ExitFullscreen from '~icons/ri/fullscreen-exit-fill';
+import Fullscreen from '~icons/ri/fullscreen-fill';
 
 const {
   Close,

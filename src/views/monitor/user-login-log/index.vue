@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import { auth, columns, deleteIds, onDelete, onDeleteBatch, onSearch, onView } from '@/views/monitor/user-login-log/utils';
-import PureTableBar from '@/components/TableBar/src/bar';
-import PureTable from '@pureadmin/table';
-import Delete from '@iconify-icons/ep/delete';
-import View from '@iconify-icons/ep/view';
-import Refresh from '@iconify-icons/ep/refresh';
+import ReAuth from '@/components/ReAuth/src/auth';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { useUserLoginLogStore } from '@/store/monitor/userLoginLog';
-import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import { FormInstance } from 'element-plus';
 import { hasAuth } from '@/router/utils';
-import ReAuth from '@/components/ReAuth/src/auth';
+import { useUserLoginLogStore } from '@/store/monitor/userLoginLog';
+import { auth, columns, deleteIds, onDelete, onDeleteBatch, onSearch, onView } from '@/views/monitor/user-login-log/utils';
+import PureTable from '@pureadmin/table';
+import { FormInstance } from 'element-plus';
+import { onMounted, ref } from 'vue';
+import Delete from '~icons/ep/delete';
+import Refresh from '~icons/ep/refresh';
+import View from '~icons/ep/view';
 
 defineOptions({ name: 'UserLoginLog' });
 
@@ -83,7 +83,7 @@ onMounted(() => {
       </el-form-item>
 
       <el-form-item>
-        <el-button :icon="useRenderIcon('ri:search-line')" :loading="userLoginLogStore.loading" type="primary" @click="onSearch">
+        <el-button :icon="useRenderIcon('ri/search-line')" :loading="userLoginLogStore.loading" type="primary" @click="onSearch">
           {{ $t('search') }}
         </el-button>
         <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -105,7 +105,10 @@ onMounted(() => {
           :adaptiveConfig="{ offsetBottom: 96 }"
           :columns="dynamicColumns"
           :data="userLoginLogStore.datalist"
-          :header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
+          :header-cell-style="{
+            background: 'var(--el-fill-color-light)',
+            color: 'var(--el-text-color-primary)',
+          }"
           :loading="userLoginLogStore.loading"
           :pagination="userLoginLogStore.pagination"
           :size="size"

@@ -44,7 +44,7 @@ export const useMessageSendStore = defineStore('messageSendStore', {
     /** 获取系统消息 */
     async fetchMessagePage() {
       // 整理请求参数
-      const data = { ...this.pagination, ...this.form };
+      const data: any = { ...this.pagination, ...this.form };
       delete data.pageSizes;
       delete data.total;
       delete data.background;

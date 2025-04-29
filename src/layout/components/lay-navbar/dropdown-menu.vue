@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { useNav } from '@/layout/hooks/useNav';
-import LogoutCircleRLine from '@iconify-icons/ri/logout-circle-r-line';
+import LogoutCircleRLine from '~icons/ri/logout-circle-r-line';
 import { $t } from '@/plugins/i18n';
-import AccountSettingsIcon from '@iconify-icons/ri/user-settings-line';
+import AccountSettingsIcon from '~icons/ri/user-settings-line';
 import { useRouter } from 'vue-router';
 
 const { logout, username, userAvatar, avatarsStyle } = useNav();

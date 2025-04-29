@@ -71,7 +71,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-form ref="formRef" :model="formState" :rules="rules" class="w-[100%] p-5" label-width="auto">
+  <el-form ref="formRef" :model="formState" :rules="rules" class="w-[100%] p-5" label-width="100px">
     <!-- 标题 -->
     <el-form-item :label="$t('title')" prop="title">
       <el-input v-model="formState.title" />

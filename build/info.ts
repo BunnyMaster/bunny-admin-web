@@ -1,18 +1,16 @@
-import type { Plugin } from 'vite';
-import { getPackageSize } from './utils';
+import boxen, { type Options as BoxenOptions } from 'boxen';
 import dayjs, { type Dayjs } from 'dayjs';
 import duration from 'dayjs/plugin/duration';
-import gradientString from 'gradient-string';
-import boxen, { type Options as BoxenOptions } from 'boxen';
-
+import gradient from 'gradient-string';
+import type { Plugin } from 'vite';
+import { getPackageSize } from './utils';
 dayjs.extend(duration);
 
-const welcomeMessage = (VITE_PORT: number) => {
-  return gradientString('cyan', 'magenta').multiline(
-    `您好! 欢迎使用 bunny 系列开发模板项目访问地址如下：
-http://localhost:${VITE_PORT}`
+const welcomeMessage = (VITE_PORT: number) =>
+  gradient(['cyan', 'magenta']).multiline(
+    `您好! 欢迎使用 bunny 系列开发模板项目访问地址如下：\nhttp://localhost:${VITE_PORT}
+pure-admin 开源项目保姆级文档：\nhttps://pure-admin.cn`
   );
-};
 
 const boxenOptions: BoxenOptions = {
   padding: 0.5,
@@ -45,7 +43,7 @@ export function viteBuildInfo(VITE_PORT: number): Plugin {
           callback: (size: string) => {
             console.log(
               boxen(
-                gradientString('cyan', 'magenta').multiline(
+                gradient(['cyan', 'magenta']).multiline(
                   `🎉 恭喜打包完成（总用时${dayjs.duration(endTime.diff(startTime)).format('mm分ss秒')}，打包后的大小为${size}）`
                 ),
                 boxenOptions

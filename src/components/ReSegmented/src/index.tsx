@@ -1,8 +1,8 @@
 import './index.css';
 import type { OptionsType } from './type';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import { isFunction, isNumber, useDark, useResizeObserver } from '@pureadmin/utils';
-import { defineComponent, getCurrentInstance, h, nextTick, type PropType, ref, toRef, watch } from 'vue';
+import { useDark, isNumber, isFunction, useResizeObserver } from '@pureadmin/utils';
+import { type PropType, h, ref, toRef, watch, nextTick, defineComponent, getCurrentInstance } from 'vue';
 
 const props = {
   options: {
@@ -15,7 +15,7 @@ const props = {
     require: false,
     default: '0',
   },
-  /** 将宽度调整为父元素宽度   */
+  /** 将宽度调整为父元素宽度	 */
   block: {
     type: Boolean,
     default: false,

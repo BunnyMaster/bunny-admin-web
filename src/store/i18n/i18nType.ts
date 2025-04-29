@@ -24,7 +24,10 @@ export const userI18nTypeStore = defineStore('i18nTypeStore', {
   },
   getters: {
     translationTypeList(state) {
-      return state.datalist.map((item) => ({ key: item.typeName, value: item.summary }));
+      return state.datalist.map((item) => ({
+        key: item.typeName,
+        value: item.summary,
+      }));
     },
   },
   actions: {
@@ -32,7 +35,7 @@ export const userI18nTypeStore = defineStore('i18nTypeStore', {
     async loadI18nTypeList() {
       const result = await getI18nTypeList(this.form);
       if (result.code === 200) {
-        this.datalist = result.data;
+        this.datalist = result.data as any;
         return true;
       }
       return false;

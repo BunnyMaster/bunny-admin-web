@@ -2,23 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
-    <meta content="webkit" name="renderer" />
-    <!--
-如果遇到http和https混用问题，可以使将全部的htp都转成https 但是如果都不支持
-如果对方服务器可以支持https可以试下这个方案
-如果不支持需要修改代码，将请求修改成/api/xxx的形式之后使用NGINX做反向代理
--->
-    <!--<meta content="upgrade-insecure-requests" http-equiv="Content-Security-Policy" />-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
     <meta
-      content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0"
       name="viewport"
+      content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0"
     />
-    <title>bunny-admin</title>
-    <link href="/favicon.ico" rel="icon" />
-    <script>
-      window.process = {};
-    </script>
+    <title>vue-pure-admin</title>
+    <link rel="icon" href="/favicon.ico" />
   </head>
 
   <body>
@@ -62,7 +53,7 @@
         .loader::after {
           position: absolute;
           top: 0;
-          content: '';
+          content: "";
         }
 
         .loader::before {
@@ -88,6 +79,6 @@
       </style>
       <div class="loader"></div>
     </div>
-    <script src="/src/main.ts" type="module"></script>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

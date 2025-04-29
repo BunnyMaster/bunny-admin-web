@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import { auth, columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/configuration/menu-icon/utils';
-import PureTableBar from '@/components/TableBar/src/bar';
+import ReAuth from '@/components/ReAuth/src/auth';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import AddFill from '@iconify-icons/ri/add-circle-line';
-import PureTable from '@pureadmin/table';
-import Delete from '@iconify-icons/ep/delete';
-import EditPen from '@iconify-icons/ep/edit-pen';
-import Refresh from '@iconify-icons/ep/refresh';
+import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
 import { useMenuIconStore } from '@/store/configuration/menuIcon';
 import MenuIconSelectIconName from '@/views/configuration/menu-icon/components/menu-icon-select-icon-name.vue';
-import { hasAuth } from '@/router/utils';
-import ReAuth from '@/components/ReAuth/src/auth';
+import { auth, columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/configuration/menu-icon/utils';
+import PureTable from '@pureadmin/table';
+import { onMounted, ref } from 'vue';
+import Delete from '~icons/ep/delete';
+import EditPen from '~icons/ep/edit-pen';
+import Refresh from '~icons/ep/refresh';
+import AddFill from '~icons/ri/add-circle-line';
 
 defineOptions({ name: 'MenuIconConfiguration' });
 const tableRef = ref();
@@ -60,7 +60,7 @@ onMounted(() => {
           <MenuIconSelectIconName :form-inline="menuIconStore.form" class="!w-[180px]" />
         </el-form-item>
         <el-form-item>
-          <el-button :icon="useRenderIcon('ri:search-line')" :loading="menuIconStore.loading" type="primary" @click="onSearch">
+          <el-button :icon="useRenderIcon('ri/search-line')" :loading="menuIconStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -86,7 +86,10 @@ onMounted(() => {
           :adaptiveConfig="{ offsetBottom: 96 }"
           :columns="dynamicColumns"
           :data="menuIconStore.datalist"
-          :header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
+          :header-cell-style="{
+            background: 'var(--el-fill-color-light)',
+            color: 'var(--el-text-color-primary)',
+          }"
           :loading="menuIconStore.loading"
           :pagination="menuIconStore.pagination"
           :size="size"

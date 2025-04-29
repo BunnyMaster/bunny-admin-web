@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import { auth, columns, onAdd, onDelete, onDeleteBatch, onDownload, onDownloadBatch, onSearch, onUpdate, selectRows } from '@/views/system/files/utils';
-import PureTableBar from '@/components/TableBar/src/bar';
-import AddFill from '@iconify-icons/ri/add-circle-line';
-import PureTable from '@pureadmin/table';
-import Delete from '@iconify-icons/ep/delete';
-import Download from '@iconify-icons/ep/download';
-import EditPen from '@iconify-icons/ep/edit-pen';
-import Refresh from '@iconify-icons/ep/refresh';
+import ReAuth from '@/components/ReAuth/src/auth';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { useFilesStore } from '@/store/monitor/files';
-import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import { FormInstance } from 'element-plus';
 import { hasAuth } from '@/router/utils';
-import ReAuth from '@/components/ReAuth/src/auth';
+import { useFilesStore } from '@/store/monitor/files';
+import { auth, columns, onAdd, onDelete, onDeleteBatch, onDownload, onDownloadBatch, onSearch, onUpdate, selectRows } from '@/views/system/files/utils';
+import PureTable from '@pureadmin/table';
+import { FormInstance } from 'element-plus';
+import { onMounted, ref } from 'vue';
+import Delete from '~icons/ep/delete';
+import Download from '~icons/ep/download';
+import EditPen from '~icons/ep/edit-pen';
+import Refresh from '~icons/ep/refresh';
+import AddFill from '~icons/ri/add-circle-line';
 
 defineOptions({ name: 'FileManger' });
 
@@ -75,7 +75,7 @@ onMounted(() => {
           />
         </el-form-item>
         <el-form-item>
-          <el-button :icon="useRenderIcon('ri:search-line')" :loading="filesStore.loading" type="primary" @click="onSearch">
+          <el-button :icon="useRenderIcon('ri/search-line')" :loading="filesStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>

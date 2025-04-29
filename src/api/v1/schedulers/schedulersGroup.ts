@@ -20,7 +20,9 @@ export const updateSchedulersGroup = (data: any) => {
 
 /** 任务调度分组---删除任务调度分组 */
 export const deleteSchedulersGroup = (data: any) => {
-  return http.request<BaseResult<object>>('delete', 'schedulersGroup', { data });
+  return http.request<BaseResult<object>>('delete', 'schedulersGroup', {
+    data,
+  });
 };
 
 /** 任务调度分组---获取所有任务调度分组 */

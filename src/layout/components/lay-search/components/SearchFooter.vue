@@ -1,10 +1,10 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import { useNav } from '@/layout/hooks/useNav';
 import MdiKeyboardEsc from '@/assets/svg/keyboard_esc.svg?component';
 import EnterOutlined from '@/assets/svg/enter_outlined.svg?component';
-import ArrowUpLine from '@iconify-icons/ri/arrow-up-line';
-import ArrowDownLine from '@iconify-icons/ri/arrow-down-line';
+import ArrowUpLine from '~icons/ri/arrow-up-line';
+import ArrowDownLine from '~icons/ri/arrow-down-line';
 
 withDefaults(defineProps<{ total: number }>(), {
   total: 0,

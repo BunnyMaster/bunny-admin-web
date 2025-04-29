@@ -14,7 +14,7 @@ import Sortable from 'sortablejs';
 import { $t } from '@/plugins/i18n';
 import { DeleteFilled, EditPen } from '@element-plus/icons-vue';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import Refresh from '@iconify-icons/ep/refresh';
+import Refresh from '~icons/ep/refresh';
 import { FormInstance } from 'element-plus';
 
 // * 传入数据
@@ -229,7 +229,7 @@ onMounted(() => {
     >
       <slot name="tableForm" />
       <el-form-item>
-        <el-button :icon="useRenderIcon('ri:search-line')" :loading="loading" type="primary" @click="onSearch">
+        <el-button :icon="useRenderIcon('ri/search-line')" :loading="loading" type="primary" @click="onSearch">
           {{ $t('buttons.search') }}
         </el-button>
         <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(ruleFormRef)">

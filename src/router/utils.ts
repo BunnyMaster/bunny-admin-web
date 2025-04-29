@@ -7,8 +7,8 @@ import { getConfig } from '@/config';
 import { buildHierarchyTree } from '@/utils/tree';
 import { type DataInfo, userKey } from '@/utils/auth';
 import { type menuType, routerArrays } from '@/layout/types';
-import { useMultiTagsStoreHook } from '@/store/multiTags';
-import { usePermissionStoreHook } from '@/store/permission';
+import { useMultiTagsStoreHook } from '@/store/modules/multiTags';
+import { usePermissionStoreHook } from '@/store/modules/permission';
 // 动态路由
 import { fetchRouterAsync } from '@/api/v1/system/system';
 // import { getAsyncRoutes } from '@/api/routes';

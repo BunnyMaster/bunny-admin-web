@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import { auth, columns, onAdd, onDelete, onSearch, onUpdate } from '@/views/i18n/i18n-type-setting/utils';
-import PureTableBar from '@/components/TableBar/src/bar';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import AddFill from '@iconify-icons/ri/add-circle-line';
-import PureTable from '@pureadmin/table';
-import { userI18nTypeStore } from '@/store/i18n/i18nType';
-import Delete from '@iconify-icons/ep/delete';
-import EditPen from '@iconify-icons/ep/edit-pen';
+import { PureTableBar } from '@/components/RePureTableBar';
 import TableIsDefaultTag from '@/components/Table/TableIsDefaultTag.vue';
-import Refresh from '@iconify-icons/ep/refresh';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { hasAuth } from '@/router/utils';
+import { userI18nTypeStore } from '@/store/i18n/i18nType';
+import { auth, columns, onAdd, onDelete, onSearch, onUpdate } from '@/views/i18n/i18n-type-setting/utils';
+import PureTable from '@pureadmin/table';
+import { onMounted, ref } from 'vue';
+import Delete from '~icons/ep/delete';
+import EditPen from '~icons/ep/edit-pen';
+import Refresh from '~icons/ep/refresh';
+import AddFill from '~icons/ri/add-circle-line';
 
 defineOptions({ name: 'I18nType' });
 
@@ -41,7 +41,7 @@ onMounted(() => {
         <el-input v-model="i18nTypeStore.form.summary" :placeholder="`${$t('input')}${$t('i18n_summary')}`" class="!w-[180px]" clearable />
       </el-form-item>
       <el-form-item>
-        <el-button :icon="useRenderIcon('ri:search-line')" :loading="i18nTypeStore.loading" type="primary" @click="onSearch">
+        <el-button :icon="useRenderIcon('ri/search-line')" :loading="i18nTypeStore.loading" type="primary" @click="onSearch">
           {{ $t('search') }}
         </el-button>
         <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -61,7 +61,10 @@ onMounted(() => {
           :adaptiveConfig="{ offsetBottom: 45 }"
           :columns="dynamicColumns"
           :data="i18nTypeStore.datalist"
-          :header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
+          :header-cell-style="{
+            background: 'var(--el-fill-color-light)',
+            color: 'var(--el-text-color-primary)',
+          }"
           :loading="i18nTypeStore.loading"
           :size="size"
           adaptive

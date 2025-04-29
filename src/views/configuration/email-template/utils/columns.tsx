@@ -5,17 +5,29 @@ import { reactive } from 'vue';
 // 表格列
 export const columns: TableColumnList = [
   { type: 'selection', align: 'left' },
-  { type: 'index', index: (index: number) => index + 1, label: '序号', minWidth: 60 },
+  {
+    type: 'index',
+    index: (index: number) => index + 1,
+    label: '序号',
+    width: 60,
+  },
   // 模板名称
-  { label: $t('emailTemplate_templateName'), prop: 'templateName', minWidth: 150 },
+  {
+    label: $t('emailTemplate_templateName'),
+    prop: 'templateName',
+  },
   // 模板名称
-  { label: $t('emailTemplate_emailUser'), prop: 'emailUser', slot: 'emailUser', minWidth: 180 },
+  {
+    label: $t('emailTemplate_emailUser'),
+    prop: 'emailUser',
+    slot: 'emailUser',
+  },
   // 主题
-  { label: $t('emailTemplate_subject'), prop: 'subject', minWidth: 200 },
+  { label: $t('emailTemplate_subject'), prop: 'subject' },
   // 邮件内容
-  { label: $t('emailTemplate_body'), prop: 'body', minWidth: 150 },
+  { label: $t('emailTemplate_body'), prop: 'body', width: 150 },
   // 邮件类型
-  { label: $t('emailTemplate_type'), prop: 'summary', minWidth: 150 },
+  { label: $t('emailTemplate_type'), prop: 'summary', width: 150 },
   // 是否默认
   {
     label: $t('isDefault'),
@@ -23,27 +35,88 @@ export const columns: TableColumnList = [
     formatter({ isDefault }) {
       return isDefault ? <ElTag type={'success'}>{$t('default')}</ElTag> : <ElTag type={'danger'}>{$t('no_default')}</ElTag>;
     },
-    minWidth: 100,
+    width: 100,
   },
-  { label: $t('table.updateTime'), prop: 'updateTime', sortable: true, minWidth: 160 },
-  { label: $t('table.createTime'), prop: 'createTime', sortable: true, minWidth: 160 },
-  { label: $t('table.createUser'), prop: 'createUser', slot: 'createUser', minWidth: 130 },
-  { label: $t('table.updateUser'), prop: 'updateUser', slot: 'updateUser', minWidth: 130 },
-  { label: $t('table.operation'), fixed: 'right', minWidth: 210, slot: 'operation' },
+  {
+    label: $t('table.updateTime'),
+    prop: 'updateTime',
+    sortable: true,
+    width: 160,
+  },
+  {
+    label: $t('table.createTime'),
+    prop: 'createTime',
+    sortable: true,
+    width: 160,
+  },
+  {
+    label: $t('table.createUser'),
+    prop: 'createUser',
+    slot: 'createUser',
+    width: 130,
+  },
+  {
+    label: $t('table.updateUser'),
+    prop: 'updateUser',
+    slot: 'updateUser',
+    width: 130,
+  },
+  {
+    label: $t('table.operation'),
+    fixed: 'right',
+    width: 210,
+    slot: 'operation',
+  },
 ];
 
 // 添加规则
 export const rules = reactive({
   // 模板名称
-  templateName: [{ required: true, message: `${$t('input')}${$t('emailTemplate_templateName')}`, trigger: 'blur' }],
+  templateName: [
+    {
+      required: true,
+      message: `${$t('input')}${$t('emailTemplate_templateName')}`,
+      trigger: 'blur',
+    },
+  ],
   // 模板名称
-  emailUser: [{ required: true, message: `${$t('input')}${$t('emailTemplate_templateName')}`, trigger: 'blur' }],
+  emailUser: [
+    {
+      required: true,
+      message: `${$t('input')}${$t('emailTemplate_templateName')}`,
+      trigger: 'blur',
+    },
+  ],
   // 主题
-  subject: [{ required: true, message: `${$t('input')}${$t('emailTemplate_subject')}`, trigger: 'blur' }],
+  subject: [
+    {
+      required: true,
+      message: `${$t('input')}${$t('emailTemplate_subject')}`,
+      trigger: 'blur',
+    },
+  ],
   // 是否默认
-  isDefault: [{ required: true, message: `${$t('input')}${$t('emailTemplate_subject')}`, trigger: 'blur' }],
+  isDefault: [
+    {
+      required: true,
+      message: `${$t('input')}${$t('emailTemplate_subject')}`,
+      trigger: 'blur',
+    },
+  ],
   // 邮件内容
-  body: [{ required: true, message: `${$t('input')}${$t('emailTemplate_body')}`, trigger: 'blur' }],
+  body: [
+    {
+      required: true,
+      message: `${$t('input')}${$t('emailTemplate_body')}`,
+      trigger: 'blur',
+    },
+  ],
   // 邮件类型
-  type: [{ required: true, message: `${$t('input')}${$t('emailTemplate_type')}`, trigger: 'blur' }],
+  type: [
+    {
+      required: true,
+      message: `${$t('input')}${$t('emailTemplate_type')}`,
+      trigger: 'blur',
+    },
+  ],
 });

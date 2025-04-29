@@ -25,5 +25,7 @@ export const deleteMenuIcon = (data: any) => {
 
 /** 系统菜单图标---根据名称搜索图标 */
 export const getIconNameListByIconName = (data: any) => {
-  return http.request<BaseResult<object>>('get', 'menuIcon/public', { params: data });
+  return http.request<BaseResult<object>>('get', 'menuIcon/public', {
+    params: data,
+  });
 };

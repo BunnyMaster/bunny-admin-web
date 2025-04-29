@@ -1,5 +1,10 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import ReAuth from '@/components/ReAuth/src/auth';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { PureTableBar } from '@/components/RePureTableBar';
+import { selectUserinfo } from '@/components/Table/Userinfo/columns';
+import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
 import { userI18nStore } from '@/store/i18n/i18n';
 import {
   auth,
@@ -13,19 +18,14 @@ import {
   onUpdate,
   updateI18nSetting,
 } from '@/views/i18n/i18n-setting/utils';
-import { useRenderIcon } from '@/components/ReIcon/src/hooks';
-import AddFill from '@iconify-icons/ri/add-circle-line';
-import EditPen from '@iconify-icons/ep/edit-pen';
-import Delete from '@iconify-icons/ep/delete';
-import PureTableBar from '@/components/TableBar/src/bar';
 import PureTable from '@pureadmin/table';
-import Refresh from '@iconify-icons/ep/refresh';
-import { $t } from '@/plugins/i18n';
-import { selectUserinfo } from '@/components/Table/Userinfo/columns';
-import { hasAuth } from '@/router/utils';
-import Download from '@iconify-icons/ep/download';
-import Upload from '@iconify-icons/ri/upload-line';
-import ReAuth from '@/components/ReAuth/src/auth';
+import { onMounted, ref } from 'vue';
+import Delete from '~icons/ep/delete';
+import Download from '~icons/ep/download';
+import EditPen from '~icons/ep/edit-pen';
+import Refresh from '~icons/ep/refresh';
+import AddFill from '~icons/ri/add-circle-line';
+import Upload from '~icons/ri/upload-line';
 
 defineOptions({ name: 'I18n' });
 
@@ -76,7 +76,7 @@ onMounted(() => {
           <el-input v-model="i18nStore.form.typeName" :placeholder="`${$t('input')}${$t('i18n.typeName')}`" class="!w-[180px]" clearable />
         </el-form-item>
         <el-form-item>
-          <el-button :icon="useRenderIcon('ri:search-line')" :loading="i18nStore.loading" type="primary" @click="onSearch">
+          <el-button :icon="useRenderIcon('ri/search-line')" :loading="i18nStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(pageFormRef)">

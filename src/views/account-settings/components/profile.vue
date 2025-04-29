@@ -5,7 +5,7 @@ import { $t } from '@/plugins/i18n';
 import { useAdminUserStore } from '@/store/system/adminUser';
 import { message } from '@/utils/message';
 import { cropperBlob, handleSubmitImage, isShow, onSearchByUserinfo, rules, uploadAvatarSrc, userInfos } from '@/views/account-settings/utils';
-import uploadLine from '@iconify-icons/ri/upload-line';
+import uploadLine from '~icons/ri/upload-line';
 import { deviceDetection } from '@pureadmin/utils';
 import type { FormInstance } from 'element-plus';
 import { onMounted, ref } from 'vue';

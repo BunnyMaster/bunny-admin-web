@@ -1,5 +1,12 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import ReAuth from '@/components/ReAuth/src/auth';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { PureTableBar } from '@/components/RePureTableBar';
+import { selectUserinfo } from '@/components/Table/Userinfo/columns';
+import { enabledOrNotStatus } from '@/enums/baseConstant';
+import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
+import { useEmailUsersStore } from '@/store/configuration/emailUsers';
 import {
   auth,
   columns,
@@ -12,21 +19,14 @@ import {
   onUpdate,
   switchLoadMap,
 } from '@/views/configuration/email-user/utils';
-import PureTableBar from '@/components/TableBar/src/bar';
-import AddFill from '@iconify-icons/ri/add-circle-line';
-import PureTable from '@pureadmin/table';
-import Delete from '@iconify-icons/ep/delete';
-import EditPen from '@iconify-icons/ep/edit-pen';
-import Refresh from '@iconify-icons/ep/refresh';
-import { selectUserinfo } from '@/components/Table/Userinfo/columns';
-import { $t } from '@/plugins/i18n';
-import { useEmailUsersStore } from '@/store/configuration/emailUsers';
-import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { usePublicHooks } from '@/views/hooks';
+import PureTable from '@pureadmin/table';
 import { FormInstance } from 'element-plus';
-import { hasAuth } from '@/router/utils';
-import { enabledOrNotStatus } from '@/enums/baseConstant';
-import ReAuth from '@/components/ReAuth/src/auth';
+import { onMounted, ref } from 'vue';
+import Delete from '~icons/ep/delete';
+import EditPen from '~icons/ep/edit-pen';
+import Refresh from '~icons/ep/refresh';
+import AddFill from '~icons/ri/add-circle-line';
 
 defineOptions({ name: 'EmailUsersConfiguration' });
 
@@ -110,7 +110,7 @@ onMounted(() => {
         </el-form-item>
 
         <el-form-item>
-          <el-button :icon="useRenderIcon('ri:search-line')" :loading="emailUsersStore.loading" type="primary" @click="onSearch">
+          <el-button :icon="useRenderIcon('ri/search-line')" :loading="emailUsersStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -136,7 +136,10 @@ onMounted(() => {
           :adaptiveConfig="{ offsetBottom: 96 }"
           :columns="dynamicColumns"
           :data="emailUsersStore.datalist"
-          :header-cell-style="{ background: 'var(--el-fill-color-light)', color: 'var(--el-text-color-primary)' }"
+          :header-cell-style="{
+            background: 'var(--el-fill-color-light)',
+            color: 'var(--el-text-color-primary)',
+          }"
           :loading="emailUsersStore.loading"
           :pagination="emailUsersStore.pagination"
           :size="size"

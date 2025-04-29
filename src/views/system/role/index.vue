@@ -1,5 +1,12 @@
 <script lang="ts" setup>
-import { h, onMounted } from 'vue';
+import ReAuth from '@/components/ReAuth/src/auth';
+import { addDialog } from '@/components/ReDialog/index';
+import { useRenderIcon } from '@/components/ReIcon/src/hooks';
+import { PureTableBar } from '@/components/RePureTableBar';
+import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
+import { useRoleStore } from '@/store/system/role';
+import FileUploadDialog from '@/views/system/role/components/file-upload-dialog.vue';
 import {
   auth,
   columns,
@@ -15,26 +22,18 @@ import {
   powerTreeIsShow,
   tableRef,
 } from '@/views/system/role/utils';
-import PureTableBar from '@/components/TableBar/src/bar';
-import AddFill from '@iconify-icons/ri/add-circle-line';
 import PureTable from '@pureadmin/table';
-import Delete from '@iconify-icons/ep/delete';
-import EditPen from '@iconify-icons/ep/edit-pen';
-import Refresh from '@iconify-icons/ep/refresh';
-import { selectUserinfo } from '@/components/Table/Userinfo/columns';
-import { $t } from '@/plugins/i18n';
-import { useRoleStore } from '@/store/system/role';
-import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { deviceDetection } from '@pureadmin/utils';
-import Menu from '@iconify-icons/ep/menu';
-import AssignPowersToRole from '@/views/system/role/components/assign-powers-to-role.vue';
-import { hasAuth } from '@/router/utils';
-import ReAuth from '@/components/ReAuth/src/auth';
-import Download from '@iconify-icons/ep/download';
-import Upload from '@iconify-icons/ri/upload-line';
-import { addDialog } from '@/components/ReDialog/index';
-import FileUpdateRoleDialog from '@/views/system/role/components/file-update-role-dialog.vue';
 import { FormInstance } from 'element-plus';
+import { h, onMounted } from 'vue';
+import Delete from '~icons/ep/delete';
+import Download from '~icons/ep/download';
+import EditPen from '~icons/ep/edit-pen';
+import Menu from '~icons/ep/menu';
+import Refresh from '~icons/ep/refresh';
+import AddFill from '~icons/ri/add-circle-line';
+import Upload from '~icons/ri/upload-line';
+import PowersToRole from '@/views/system/role/components/powers-to-role.vue';
 
 defineOptions({ name: 'RoleManger' });
 
@@ -78,7 +77,7 @@ const onUpdateByFile = () => {
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(FileUpdateRoleDialog, { ref: formRef }),
+    contentRenderer: () => h(FileUploadDialog, { ref: formRef }),
     beforeSure: (done, { options }) => {
       const form = options.props.form;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -103,7 +102,7 @@ onMounted(() => {
 <template>
   <div class="main">
     <ReAuth :value="auth.query">
-      <el-form ref="formRef" :inline="true" :model="roleStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+      <el-form ref="formRef" :inline="true" :model="roleStore.form" class="search-form bg-bg_color w-full pl-8 pt-[12px] overflow-auto">
         <el-form-item :label="$t('role_roleCode')" prop="roleCode">
           <el-input v-model="roleStore.form.roleCode" :placeholder="`${$t('input')}${$t('role_roleCode')}`" class="!w-[180px]" clearable />
         </el-form-item>
@@ -111,7 +110,7 @@ onMounted(() => {
           <el-input v-model="roleStore.form.description" :placeholder="`${$t('input')}${$t('role_description')}`" class="!w-[180px]" clearable />
         </el-form-item>
         <el-form-item>
-          <el-button :icon="useRenderIcon('ri:search-line')" :loading="roleStore.loading" type="primary" @click="onSearch">
+          <el-button :icon="useRenderIcon('ri/search-line')" :loading="roleStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
@@ -121,10 +120,10 @@ onMounted(() => {
 
     <div ref="contentRef" :class="['flex', deviceDetection() ? 'flex-wrap' : '']">
       <PureTableBar
-        :class="[powerTreeIsShow && !deviceDetection() ? '!w-[60vw]' : 'w-full']"
+        :class="[powerTreeIsShow && !deviceDetection() ? 'w-[60vw]!' : 'w-full']"
         :columns="columns"
         :title="$t('role')"
-        style="transition: width 220ms cubic-bezier(0.4, 0, 0.2, 1)"
+        style="transition: width 330ms cubic-bezier(0.4, 0, 0.2, 1)"
         @fullscreen="tableRef.setAdaptive()"
         @refresh="onSearch"
       >
@@ -169,17 +168,6 @@ onMounted(() => {
             @page-current-change="onCurrentPageChange"
             @selection-change="onSelectionChange"
           >
-            <template #createUser="{ row }">
-              <el-button v-show="row.createUser" link type="primary" @click="selectUserinfo(row.createUser)">
-                {{ row.createUsername }}
-              </el-button>
-            </template>
-
-            <template #updateUser="{ row }">
-              <el-button v-show="row.updateUser" link type="primary" @click="selectUserinfo(row.updateUser)">
-                {{ row.updateUsername }}
-              </el-button>
-            </template>
             <template #operation="{ row }">
               <!-- 修改 -->
               <el-button
@@ -220,7 +208,7 @@ onMounted(() => {
       </PureTableBar>
 
       <!-- 为角色分配角色 -->
-      <assign-powers-to-role />
+      <powers-to-role />
     </div>
   </div>
 </template>
