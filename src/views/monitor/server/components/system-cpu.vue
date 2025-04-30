@@ -8,6 +8,7 @@ import { useIntervalFn } from '@vueuse/core';
 import dayjs from 'dayjs';
 import { fetchSystemCPU } from '@/api/v1/actuator';
 import SystemCardItem from '@/components/ReCol/SystemCardItem.vue';
+import { message } from '@/utils/message';
 
 const cupECharts = ref();
 const myChart = ref<any>();
@@ -17,6 +18,8 @@ const seriesData = ref([]);
 const xSeriesData = ref([]);
 // 数据显示长度
 const dateDisplayLength = ref(20);
+
+const hasAuthority = ref(true);
 
 const option = reactive<UtilsEChartsOption>({
   tooltip: {
@@ -71,6 +74,18 @@ const onSearch = async () => {
 
   // 获取数据
   const result = await fetchSystemCPU();
+
+  // 当前i请求是否可以继续
+  if (result.code) {
+    if (result.code == 403) {
+      hasAuthority.value = false;
+      message('Access Denied');
+    }
+    if (result.code != 200) {
+      hasAuthority.value = false;
+    }
+  }
+
   const measurement = result.measurements[0];
   if (measurement) {
     const value = measurement.value;
@@ -91,8 +106,8 @@ onMounted(() => {
 
   onSearch();
 
-  // 定时刷新
-  useIntervalFn(() => onSearch(), 2000);
+  // 定时刷新，并且当前有权限才能继续请求
+  useIntervalFn(() => hasAuthority.value && onSearch(), 2000);
 });
 </script>
 

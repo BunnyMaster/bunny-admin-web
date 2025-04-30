@@ -24,7 +24,7 @@ class PureHttp {
   private static retryOriginalRequest(config: PureHttpRequestConfig) {
     return new Promise((resolve) => {
       PureHttp.requests.push((token: string) => {
-        config.headers['token'] = formatToken(token);
+        config.headers['Authorization'] = formatToken(token);
         resolve(config);
       });
     });

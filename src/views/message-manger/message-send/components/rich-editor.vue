@@ -20,7 +20,8 @@ editorConfig.MENU_CONF['uploadImage'] = {
   // 选择文件时的类型限制，根据实际业务改写
   allowedFileTypes: ['image/png', 'image/jpg', 'image/jpeg'],
   meta: { type: 'message' },
-  headers: { token: token.value },
+  // TODO 修改為 Authorization
+  headers: { Authorization: token.value },
   // 自定义插入图片
   customInsert(res: any, insertFn) {
     // res.data.url是后端返回的图片地址，根据实际业务改写

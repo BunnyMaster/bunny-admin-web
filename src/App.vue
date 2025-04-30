@@ -56,7 +56,7 @@ onMounted(() => {
   setI18n();
 });
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   const { version, name: title } = __APP_INFO__.pkg;
   const { VITE_PUBLIC_PATH, MODE } = import.meta.env;
   // https://github.com/guMcrey/version-rocket/blob/main/README.zh-CN.md#api
