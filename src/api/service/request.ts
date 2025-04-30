@@ -26,7 +26,8 @@ class PureHttp {
   private static retryOriginalRequest(config: PureHttpRequestConfig) {
     return new Promise((resolve) => {
       PureHttp.requests.push((token: string) => {
-        config.headers['token'] = formatToken(token);
+        // TODO Authorization
+        config.headers['Authorization'] = formatToken(token);
         resolve(config);
       });
     });
@@ -97,7 +98,8 @@ class PureHttp {
                       .then((res: any) => {
                         // 从结果中获取token
                         const token = res.data.token;
-                        config.headers['token'] = formatToken(token);
+                        // TODO Authorization
+                        config.headers['Authorization'] = formatToken(token);
                         PureHttp.requests.forEach((cb) => cb(token));
                         PureHttp.requests = [];
                       })
@@ -107,7 +109,8 @@ class PureHttp {
                   }
                   resolve(PureHttp.retryOriginalRequest(config));
                 } else {
-                  config.headers['token'] = formatToken(data.token);
+                  // TODO Authorization
+                  config.headers['Authorization'] = formatToken(data.token);
                   resolve(config);
                 }
               } else {

@@ -72,13 +72,13 @@ onMounted(() => {
           :xs="24"
           class="mb-[18px]"
         >
-          <el-card class="h-[1178px] overflow-y-auto" shadow="never">
-            <el-tabs v-model="activeName" class="demo-tabs" @tab-click="onTabClick">
+          <el-card class="h-[1178px]" shadow="never">
+            <el-tabs v-model="activeName" @tab-click="onTabClick">
               <el-tab-pane label="前端文档" name="web">
-                <web-read-me class="mt-3 h-[100%]" />
+                <web-read-me class="mt-3" />
               </el-tab-pane>
               <el-tab-pane label="后端文档" name="server">
-                <server-read-me class="mt-3 h-[100%]" />
+                <server-read-me class="mt-3" />
               </el-tab-pane>
             </el-tabs>
           </el-card>
@@ -135,26 +135,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 :deep(.el-card) {
   --el-card-border-color: none;
-
-  /* 解决概率进度条宽度 */
-  .el-progress--line {
-    width: 85%;
-  }
-
-  /* 解决概率进度条字体大小 */
-  .el-progress-bar__innerText {
-    font-size: 15px;
-  }
-
-  /* 隐藏 el-scrollbar 滚动条 */
-  .el-scrollbar__bar {
-    display: none;
-  }
-
-  /* el-timeline 每一项上下、左右边距 */
-  .el-timeline-item {
-    margin: 0 6px;
-  }
+  overflow-y: auto;
 }
 
 .main-content {

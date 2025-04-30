@@ -34,6 +34,7 @@ import Refresh from '~icons/ep/refresh';
 import AddFill from '~icons/ri/add-circle-line';
 import Upload from '~icons/ri/upload-line';
 import PowersToRole from '@/views/system/role/components/powers-to-role.vue';
+import { useRouter } from 'vue-router';
 
 defineOptions({ name: 'RoleManger' });
 
@@ -93,6 +94,7 @@ const onUpdateByFile = () => {
     },
   });
 };
+const router = useRouter();
 
 onMounted(() => {
   onSearch();
