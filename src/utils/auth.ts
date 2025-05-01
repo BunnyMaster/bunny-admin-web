@@ -103,7 +103,7 @@ export function removeToken() {
   storageLocal().removeItem(userKey);
 }
 
-/** 格式化token（jwt格式） */
+/** 格式化 Authorization（jwt格式） */
 export const formatToken = (token: string): string => {
   return `Bearer ${token}`;
 };
