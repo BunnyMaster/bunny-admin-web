@@ -3,7 +3,6 @@ import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
 import { coverUrl, editorTypeList, loading, onSearchUserinfo, onUpload, rules, updateMessage, userDataList } from '@/views/message-manger/message-send/utils';
 import { $t } from '@/plugins/i18n';
-import { usePublicHooks } from '@/views/hooks';
 import { useMessageTypeStore } from '@/store/message/messageType';
 import LoadingSvg from '@/assets/svg/loading.svg';
 import { beforeUpload, messageLevel, settingLR } from '@/views/message-manger/message-editing/utils';
@@ -13,8 +12,6 @@ import RichEditor from '@/views/message-manger/message-send/components/rich-edit
 import MarkdownEditor from '@/views/message-manger/message-send/components/markdown-editor.vue';
 import ImageLoading from '@/components/Upload/ImageLoading.vue';
 
-// 用户是否停用样式
-const { switchStyle } = usePublicHooks();
 const formRef = ref<FormInstance>();
 const messageTypeStore = useMessageTypeStore();
 
@@ -38,7 +35,7 @@ defineExpose({ formRef });
           <el-form ref="formRef" :model="updateMessage" :rules="rules" class="w-[100%] p-5" label-width="auto">
             <!-- 标题 -->
             <el-form-item :label="$t('title')" prop="title">
-              <el-input v-model="updateMessage.title" />
+              <el-input v-model="updateMessage.title" maxlength="8" show-word-limit />
             </el-form-item>
 
             <!-- 消息类型 -->
@@ -135,7 +132,7 @@ defineExpose({ formRef });
 
             <!-- 消息等级简介 -->
             <el-form-item :label="$t('extra')" prop="extra">
-              <el-input v-model="updateMessage.extra" maxlength="20" minlength="10" show-word-limit type="text" />
+              <el-input v-model="updateMessage.extra" maxlength="4" show-word-limit type="text" />
             </el-form-item>
           </el-form>
         </template>

@@ -19,7 +19,7 @@ const loading = ref(false);
 const { t } = useI18n();
 
 const ruleForm = reactive({
-  username: 'bunny',
+  username: 'Administrator',
   password: 'admin123',
   type: currentPage.value,
 });
