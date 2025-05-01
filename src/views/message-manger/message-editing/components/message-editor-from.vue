@@ -74,7 +74,7 @@ onMounted(() => {
   <el-form ref="formRef" :model="formState" :rules="rules" class="w-[100%] p-5" label-width="100px">
     <!-- 标题 -->
     <el-form-item :label="$t('title')" prop="title">
-      <el-input v-model="formState.title" />
+      <el-input v-model="formState.title" maxlength="8" show-word-limit />
     </el-form-item>
 
     <!-- 消息类型 -->
@@ -151,7 +151,7 @@ onMounted(() => {
 
     <!-- 简介 -->
     <el-form-item :label="$t('summary')" prop="summary">
-      <el-input v-model="formState.summary" :autosize="{ minRows: 3, maxRows: 6 }" maxlength="200" minlength="10" show-word-limit type="textarea" />
+      <el-input v-model="formState.summary" :autosize="{ minRows: 3, maxRows: 6 }" maxlength="200" minlength="4" show-word-limit type="textarea" />
     </el-form-item>
 
     <!-- 消息等级 -->
@@ -163,7 +163,7 @@ onMounted(() => {
 
     <!-- 消息等级简介 -->
     <el-form-item :label="$t('extra')" prop="extra">
-      <el-input v-model="formState.extra" maxlength="20" minlength="10" show-word-limit type="text" />
+      <el-input v-model="formState.extra" maxlength="5" show-word-limit type="text" />
     </el-form-item>
 
     <!-- 提交 -->

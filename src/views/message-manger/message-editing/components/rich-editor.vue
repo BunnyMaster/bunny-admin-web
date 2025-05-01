@@ -22,7 +22,7 @@ editorConfig.MENU_CONF['uploadImage'] = {
   allowedFileTypes: ['image/png', 'image/jpg', 'image/jpeg'],
   meta: { type: 'message' },
   // TODO 修改為 Authorization
-  headers: { Authorization: token.value },
+  headers: { Authorization: `Bearer ${token.value}` },
   // 自定义插入图片
   customInsert(res: any, insertFn) {
     // res.data.url是后端返回的图片地址，根据实际业务改写

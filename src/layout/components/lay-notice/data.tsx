@@ -3,6 +3,7 @@ import { throttle } from '@pureadmin/utils';
 import { ElNotification, ElTag } from 'element-plus';
 import { getMessageReceivedPageByUser } from '@/api/v1/message/messageReceived';
 import { $t } from '@/plugins/i18n';
+import { router } from '@/store/utils';
 
 export interface ListItem {
   messageId: string;
@@ -129,8 +130,10 @@ const showNotification = (NotificationList) => {
     NotificationList.forEach((message) => {
       ElNotification({
         title: message?.title,
+        position: 'bottom-left',
+        duration: 2000,
         message: (
-          <div class="flex ">
+          <div class="flex" onClick={() => router.push(`/message-detail/${message.messageType}/${message.messageId}`)}>
             <img src={message.cover} alt="" style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
             <div class="flex justify-between mt-3 mx-2">
               <span class="mr-2">{message.description}</span>
@@ -138,7 +141,6 @@ const showNotification = (NotificationList) => {
             </div>
           </div>
         ),
-        position: 'bottom-right',
       });
     });
   }

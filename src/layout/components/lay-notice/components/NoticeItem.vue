@@ -48,11 +48,9 @@ function goMessageDetail(message: ListItem) {
   });
 }
 </script>
-
 <template>
-  <div class="notice-container border-[1px] border-solid border-[#f0f0f0] dark:border-[#303030]" @click="goMessageDetail(noticeItem)">
-    <!--<el-avatar v-if="noticeItem.cover" :size="30" :src="noticeItem.cover" class="notice-container-avatar" />-->
-    <img v-if="noticeItem.cover" :src="noticeItem.cover" alt="" class="notice-container-avatar" />
+  <div class="notice-container border-0 border-b-[1px] border-solid border-[#f0f0f0] dark:border-[#303030]" @click="goMessageDetail(noticeItem)">
+    <el-avatar v-if="noticeItem.cover" :size="30" :src="noticeItem.cover" class="notice-container-avatar" fit="cover" />
     <div class="notice-container-text">
       <div class="notice-text-title text-[#000000d9] dark:text-white">
         <el-tooltip
@@ -101,14 +99,11 @@ function goMessageDetail(message: ListItem) {
   align-items: flex-start;
   justify-content: space-between;
   padding: 12px 0;
-  margin: 2px 0 0 0;
 
   // border-bottom: 1px solid #f0f0f0;
 
   .notice-container-avatar {
-    width: 30px;
-    margin-right: 8px;
-    object-fit: cover;
+    margin-right: 4px;
     background: #fff;
   }
 
@@ -128,7 +123,7 @@ function goMessageDetail(message: ListItem) {
 
       .notice-title-content {
         flex: 1;
-        width: 200px;
+        width: 180px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

@@ -24,7 +24,7 @@ export const updateMessage = reactive({
   // 封面
   cover: undefined,
   // 消息接受人ids
-  receivedUserIds: undefined,
+  receivedUserIds: [],
   // 发送人用户ID
   sendUserId: undefined,
   // 发送人昵称
@@ -79,6 +79,9 @@ export async function onUpdate(row: any) {
     username: item.username,
   }));
   updateMessage.receivedUserIds = messageSendStore.receivedUserinfoList.map((item: any) => item.receivedUserId);
+  // 消息接受去重
+  const set = new Set(updateMessage.receivedUserIds);
+  updateMessage.receivedUserIds = Array.from(set);
 
   // 设置封面图片
   coverUrl.value = row.cover;
@@ -99,10 +102,7 @@ export async function onUpdate(row: any) {
         data.content = encode(data.content);
 
         // 更新消息内容
-        const result = await messageSendStore.editMessage({
-          ...data,
-          id: row.id,
-        });
+        const result = await messageSendStore.editMessage({ ...data, id: row.id });
         if (!result) return;
         Object.assign(updateMessage, {});
         done();
