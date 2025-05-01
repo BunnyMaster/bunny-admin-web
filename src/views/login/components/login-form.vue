@@ -77,7 +77,7 @@ onBeforeUnmount(() => {
       <el-form-item prop="password">
         <el-input v-model="ruleForm.password" :placeholder="t('login.password')" :prefix-icon="useRenderIcon(Lock)" clearable show-password />
         <el-checkbox v-model="userStore.isRemembered">
-          <el-text size="small" type="primary">{{ userStore.readMeDay }}天免登录(邮箱验证码随便输入,后端校验验证码已注释)</el-text>
+          <el-text size="small" type="primary">{{ userStore.readMeDay }}天免登录</el-text>
         </el-checkbox>
       </el-form-item>
     </Motion>
