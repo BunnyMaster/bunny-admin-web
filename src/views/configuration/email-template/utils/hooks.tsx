@@ -24,7 +24,6 @@ export function onAdd() {
 
   addDialog({
     title: `${$t('addNew')}${$t('emailTemplate')}`,
-    width: '30%',
     props: {
       formInline: {
         templateName: undefined,
@@ -38,7 +37,18 @@ export function onAdd() {
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(EmailTemplateDialog, { ref: formRef }),
+    contentRenderer: () =>
+      h(EmailTemplateDialog, {
+        ref: formRef,
+        formInline: {
+          templateName: undefined,
+          emailUser: undefined,
+          subject: undefined,
+          isDefault: false,
+          body: undefined,
+          type: undefined,
+        },
+      }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -59,7 +69,6 @@ export function onUpdate(row: any) {
 
   addDialog({
     title: `${$t('modify')}${$t('emailTemplate')}`,
-    width: '30%',
     props: {
       formInline: {
         templateName: row.templateName,
@@ -73,7 +82,18 @@ export function onUpdate(row: any) {
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(EmailTemplateDialog, { ref: formRef }),
+    contentRenderer: () =>
+      h(EmailTemplateDialog, {
+        ref: formRef,
+        formInline: {
+          templateName: row.templateName,
+          emailUser: row.emailUser,
+          subject: row.subject,
+          isDefault: row.isDefault,
+          body: row.body,
+          type: row.type,
+        },
+      }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
 

@@ -21,7 +21,7 @@ export async function onSearch() {
 export function onAdd() {
   addDialog({
     title: `${$t('addNew')} ${$t('menuIcon')}`,
-    width: '30%',
+
     props: { formInline: { confirmText: '' } },
     draggable: true,
     fullscreenIcon: true,
@@ -45,7 +45,7 @@ export function onAdd() {
 export function onUpdate(row: any) {
   addDialog({
     title: `${$t('modify')} ${$t('menuIcon')}`,
-    width: '30%',
+
     props: {
       formInline: {
         iconCode: row.iconCode,

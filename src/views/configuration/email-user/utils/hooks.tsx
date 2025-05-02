@@ -24,7 +24,7 @@ export async function onSearch() {
 export function onAdd() {
   addDialog({
     title: `${$t('addNew')}${$t('emailUsers')}`,
-    width: '30%',
+
     props: {
       formInline: {
         email: undefined,
@@ -58,7 +58,7 @@ export function onAdd() {
 export function onUpdate(row: any) {
   addDialog({
     title: `${$t('modify')}${$t('emailUsers')}`,
-    width: '30%',
+
     props: {
       formInline: {
         email: row.email,

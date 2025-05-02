@@ -8,6 +8,7 @@ import {
   getSystemApiInfoList,
   importPermission,
   updatePermission,
+  updatePermissionBatch,
   updatePermissionListByParentId,
 } from '@/api/v1/system/power';
 import { pageSizes } from '@/enums/baseConstant';
@@ -57,7 +58,6 @@ export const usePermissionStore = defineStore('PermissionStore', {
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
       delete data.total;
-      delete data.background;
 
       // 获取权限列表
       const result = await getPermissionPage(data);
@@ -115,6 +115,12 @@ export const usePermissionStore = defineStore('PermissionStore', {
     /** 批量修改权限父级 */
     async updatePermissionListByParentId(data: any) {
       const result = await updatePermissionListByParentId(data);
+      return storeMessage(result);
+    },
+
+    /* 批量更新权限 */
+    async updatePermissionBatch(data: any) {
+      const result = await updatePermissionBatch(data);
       return storeMessage(result);
     },
   },

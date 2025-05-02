@@ -73,7 +73,7 @@ const downloadRoleExcel = () => {
 const onUpdateByFile = () => {
   addDialog({
     title: `${$t('modify')}${$t('role')}`,
-    width: '30%',
+
     props: { form: { file: undefined } },
     draggable: true,
     fullscreenIcon: true,
@@ -139,7 +139,7 @@ onMounted(() => {
             {{ $t('file_import') }}
           </el-button>
 
-          <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd">
+          <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
             {{ $t('addNew') }}
           </el-button>
 

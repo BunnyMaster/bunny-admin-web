@@ -22,7 +22,7 @@ export async function onSearch() {
 export function onAdd() {
   addDialog({
     title: `${$t('addNew')}${$t('schedulersGroup')}`,
-    width: '30%',
+
     props: {
       formInline: {
         groupName: undefined,
@@ -51,7 +51,7 @@ export function onAdd() {
 export function onUpdate(row: any) {
   addDialog({
     title: `${$t('modify')}${$t('schedulersGroup')}`,
-    width: '30%',
+
     props: {
       formInline: {
         groupName: row.groupName,

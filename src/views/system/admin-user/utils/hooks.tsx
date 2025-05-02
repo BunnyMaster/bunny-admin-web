@@ -52,7 +52,6 @@ export function onAdd() {
   isAddUserinfo.value = true;
   addDialog({
     title: `${$t('addNew')}${$t('adminUser')}`,
-    width: '30%',
     props: {
       formInline: {
         username: undefined,
@@ -70,7 +69,22 @@ export function onAdd() {
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(AdminUserDialog, { ref: formRef }),
+    contentRenderer: () =>
+      h(AdminUserDialog, {
+        ref: formRef,
+        formInline: {
+          username: undefined,
+          nickname: undefined,
+          email: undefined,
+          phone: undefined,
+          password: undefined,
+          avatar: undefined,
+          sex: undefined,
+          summary: undefined,
+          status: false,
+          deptId: undefined,
+        },
+      }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -90,7 +104,6 @@ export function onUpdate(row: any) {
   isAddUserinfo.value = false;
   addDialog({
     title: `${$t('modify')}${$t('adminUser')}`,
-    width: '30%',
     props: {
       formInline: {
         username: row.username,
@@ -108,7 +121,22 @@ export function onUpdate(row: any) {
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(AdminUserDialog, { ref: formRef }),
+    contentRenderer: () =>
+      h(AdminUserDialog, {
+        ref: formRef,
+        formInline: {
+          username: row.username,
+          nickname: row.nickname,
+          email: row.email,
+          phone: row.phone,
+          password: row.password,
+          avatar: row.avatar,
+          sex: row.sex,
+          summary: row.summary,
+          status: row.status,
+          deptId: row.deptId,
+        },
+      }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -149,12 +177,12 @@ export const onDeleteBatch = async () => {
 
   addDialog({
     title: $t('deleteBatchTip'),
-    width: '30%',
+
     props: { formInline: { confirmText: '' } },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(DeleteBatchDialog, { ref: formDeletedBatchRef }),
+    contentRenderer: () => h(DeleteBatchDialog, { ref: formDeletedBatchRef, formInline: { confirmText: '' } }),
     beforeSure: (done, { options }) => {
       formDeletedBatchRef.value.formDeletedBatchRef.validate(async (valid: any) => {
         if (!valid) return;
@@ -229,7 +257,7 @@ export const onUploadAvatar = (row: any) => {
 export const onResetPassword = (row: any) => {
   addDialog({
     title: `${$t('buttons.reset')} ${row.username} ${$t('userPassword')}`,
-    width: '30%',
+
     draggable: true,
     closeOnClickModal: false,
     fullscreenIcon: true,

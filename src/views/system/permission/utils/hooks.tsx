@@ -1,5 +1,5 @@
 import { addDialog } from '@/components/ReDialog/index';
-import PowerDialog from '@/views/system/permission/components/power-dialog.vue';
+import PermissionFromDialog from '@/views/system/permission/components/permission-from-dialog.vue';
 import { usePermissionStore } from '@/store/system/power';
 import { h, reactive, ref } from 'vue';
 import { messageBox } from '@/utils/message';
@@ -25,7 +25,7 @@ export async function onSearch() {
 export function onAdd(parentId = 0) {
   addDialog({
     title: `${$t('addNew')}${$t('power')}`,
-    width: '30%',
+
     props: {
       formInline: {
         parentId,
@@ -38,7 +38,17 @@ export function onAdd(parentId = 0) {
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(PowerDialog, { ref: formRef }),
+    contentRenderer: () =>
+      h(PermissionFromDialog, {
+        ref: formRef,
+        formInline: {
+          parentId,
+          powerCode: undefined,
+          powerName: undefined,
+          requestUrl: undefined,
+          requestMethod: undefined,
+        },
+      }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -57,7 +67,7 @@ export function onAdd(parentId = 0) {
 export function onUpdate(row: any) {
   addDialog({
     title: `${$t('modify')}${$t('power')}`,
-    width: '30%',
+
     props: {
       formInline: {
         parentId: row.parentId,
@@ -70,7 +80,17 @@ export function onUpdate(row: any) {
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(PowerDialog, { ref: formRef }),
+    contentRenderer: () =>
+      h(PermissionFromDialog, {
+        ref: formRef,
+        formInline: {
+          parentId: row.parentId,
+          powerCode: row.powerCode,
+          powerName: row.powerName,
+          requestUrl: row.requestUrl,
+          requestMethod: row.requestMethod,
+        },
+      }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -132,7 +152,7 @@ export const onUpdateBatchParent = async () => {
   await powerStore.loadPermissionList();
   addDialog({
     title: $t('update_batches_parent'),
-    width: '30%',
+
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,

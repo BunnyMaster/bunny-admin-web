@@ -76,7 +76,7 @@ defineExpose({ formRef });
       :filter-node-method="filterMethod"
       :props="{ label: 'summary' }"
       accordion
-      class="my-2 py-1 h-[220px] overflow-y-auto"
+      class="my-2 py-1 h-[350px] overflow-y-auto"
       highlight-current
       node-key="path"
       @node-click="onNodeClick"

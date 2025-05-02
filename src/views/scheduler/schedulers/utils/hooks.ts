@@ -20,7 +20,7 @@ export async function onSearch() {
 export function onAdd() {
   addDialog({
     title: `${$t('addNew')}${$t('schedulers')}`,
-    width: '30%',
+
     props: {
       formInline: {
         jobName: undefined,
@@ -52,7 +52,7 @@ export function onAdd() {
 export function onUpdate(row: any) {
   addDialog({
     title: `${$t('modify')}${$t('schedulers')}`,
-    width: '30%',
+
     props: {
       formInline: {
         jobName: row.jobName,

@@ -29,7 +29,7 @@ export const updateI18nSetting = (fileType: string) => {
 
   addDialog({
     title: $t('update_multilingual'),
-    width: '30%',
+
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
@@ -51,7 +51,7 @@ export const updateI18nSetting = (fileType: string) => {
 export const onAdd = () => {
   addDialog({
     title: $t('addMultilingual'),
-    width: '30%',
+
     props: { formInline: { keyName: '', translation: '', typeName: '' } },
     draggable: true,
     fullscreenIcon: true,
@@ -107,7 +107,7 @@ export const onUpdate = (row: any) => {
 
   addDialog({
     title: $t('update_multilingual'),
-    width: '30%',
+
     props: {
       formInline: { keyName: row.keyName, translation: row.translation, typeName: row.typeName },
     },
