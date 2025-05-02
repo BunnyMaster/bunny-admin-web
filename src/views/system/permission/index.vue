@@ -20,6 +20,8 @@ import EditPen from '~icons/ep/edit-pen';
 import Refresh from '~icons/ep/refresh';
 import AddFill from '~icons/ri/add-circle-line';
 import Upload from '~icons/ri/upload-line';
+import More from '~icons/ep/more-filled';
+import PermissionSortDialog from '@/views/system/permission/components/permission-sort-dialog.vue';
 
 defineOptions({ name: 'PermissionManger' });
 
@@ -62,13 +64,12 @@ const downloadPermission = (type: string) => {
 /* 导入权限 */
 const uploadPermission = async (type: string) => {
   addDialog({
-    title: `${$t('modify')}${$t('role')}`,
-    width: '30%',
+    title: `${$t('modify')}${$t('power')}`,
     props: { form: { file: undefined } },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(FileUploadDialog, { ref: formRef }),
+    contentRenderer: () => h(FileUploadDialog, { ref: formRef, form: { file: undefined } }),
     beforeSure: (done, { options }) => {
       const form = options.props.form;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -84,6 +85,25 @@ const uploadPermission = async (type: string) => {
     },
   });
 };
+
+/* 更新排序 */
+const onUpdateSort = () => {
+  addDialog({
+    title: `${$t('modify')}权限排序`,
+    props: { form: { list: [] } },
+    draggable: true,
+    fullscreenIcon: true,
+    closeOnClickModal: false,
+    contentRenderer: () => h(PermissionSortDialog, { form: { list: [] } }),
+    beforeSure: async (done, { options }) => {
+      const form = options.props.form;
+      await powerStore.updatePermissionBatch(form.list);
+      done();
+      await onSearch();
+    },
+  });
+};
+
 onMounted(() => {
   onSearch();
 });
@@ -150,26 +170,28 @@ onMounted(() => {
         </el-dropdown>
 
         <!-- 添加权限按钮 -->
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd()">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd()">
           {{ $t('addNew') }}
         </el-button>
 
-        <!-- 批量更新父级id -->
-        <el-button
-          v-if="hasAuth(auth.update)"
-          :disabled="!(powerIds.length > 0)"
-          :icon="useRenderIcon(EditPen)"
-          plain
-          type="primary"
-          @click="onUpdateBatchParent"
-        >
-          {{ $t('update_batches_parent') }}
-        </el-button>
+        <el-dropdown v-if="hasAuth(auth.update)" class="ml-1" type="primary">
+          <el-button :icon="useRenderIcon(More)" plain type="primary">更多操作</el-button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <!-- 批量更新父级id -->
+              <el-dropdown-item v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" @click="onUpdateSort">拖拽排序</el-dropdown-item>
+              <!-- 批量更新父级id -->
+              <el-dropdown-item v-if="hasAuth(auth.update)" :disabled="!(powerIds.length > 0)" :icon="useRenderIcon(EditPen)" @click="onUpdateBatchParent">
+                {{ $t('update_batches_parent') }}
+              </el-dropdown-item>
 
-        <!-- 批量删除按钮 -->
-        <el-button v-if="hasAuth(auth.delete)" :disabled="!(powerIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
-          {{ $t('deleteBatches') }}
-        </el-button>
+              <!-- 批量删除按钮 -->
+              <el-dropdown-item v-if="hasAuth(auth.delete)" :disabled="!(powerIds.length > 0)" :icon="useRenderIcon(Delete)" @click="onDeleteBatch">
+                {{ $t('deleteBatches') }}
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </template>
 
       <template v-slot="{ size, dynamicColumns }">

@@ -79,7 +79,7 @@ onMounted(() => {
       @refresh="onSearch"
     >
       <template #buttons>
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd()">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd()">
           {{ $t('addNew') }}
         </el-button>
 

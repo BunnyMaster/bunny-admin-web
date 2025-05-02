@@ -43,9 +43,14 @@ export const getSystemApiInfoList = () => {
   return http.request<BaseResult<any>>('get', 'permission/private/getSystemApiInfoList');
 };
 
-/** 权限---更新权限 */
+/** 权限---批量修改权限父级 */
 export const updatePermissionListByParentId = (data: any) => {
-  return http.request<BaseResult<object>>('put', 'permission/update/permissionListByParentId', { data });
+  return http.request<BaseResult<object>>('patch', 'permission/update/permissionListByParentId', { data });
+};
+
+/** 权限---批量更新权限 */
+export const updatePermissionBatch = (data: any) => {
+  return http.request<BaseResult<object>>('patch', 'permission/update/permissionBatch', { data });
 };
 
 /** 角色和权限---根据角色id获取权限内容 */

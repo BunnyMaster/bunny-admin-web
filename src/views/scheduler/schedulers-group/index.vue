@@ -81,7 +81,7 @@ onMounted(() => {
 
     <PureTableBar :columns="columns" :title="$t('schedulersGroup')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
 

@@ -120,7 +120,7 @@ onMounted(() => {
 
     <PureTableBar :columns="columns" :title="$t('email_user_send_config')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
 

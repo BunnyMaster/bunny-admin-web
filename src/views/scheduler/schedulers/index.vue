@@ -78,7 +78,7 @@ onMounted(() => {
 
     <PureTableBar :columns="columns" title="Schedulers视图" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
       </template>
@@ -119,7 +119,8 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
-            <el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
+            <!-- 修改 -->
+            <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
 

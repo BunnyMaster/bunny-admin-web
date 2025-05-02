@@ -22,7 +22,7 @@ export async function onSearch() {
 export function onAdd() {
   addDialog({
     title: `${$t('addNew')}${$t('messageType')}`,
-    width: '30%',
+
     props: {
       formInline: {
         status: true,
@@ -53,7 +53,7 @@ export function onAdd() {
 export function onUpdate(row: any) {
   addDialog({
     title: `${$t('modify')}${$t('messageType')}`,
-    width: '30%',
+
     props: {
       formInline: {
         status: row.status,

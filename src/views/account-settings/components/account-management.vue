@@ -23,7 +23,6 @@ function onResetPassword() {
 
   addDialog({
     title: `修改密码`,
-    width: '30%',
     draggable: true,
     closeOnClickModal: false,
     fullscreenIcon: true,

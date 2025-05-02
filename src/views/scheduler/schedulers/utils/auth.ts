@@ -4,6 +4,7 @@ export const auth = {
   // 添加操作
   add: ['schedulers::add'],
   // 暂停
+  update: ['schedulers::update'],
   pause: ['schedulers::update'],
   // 恢复
   resume: ['schedulers::update'],

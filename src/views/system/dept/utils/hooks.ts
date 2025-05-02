@@ -21,7 +21,6 @@ export async function onSearch() {
 export function onAdd(parentId: number = 0) {
   addDialog({
     title: `${$t('addNew')}${$t('dept')}`,
-    width: '30%',
     props: {
       formInline: {
         parentId,
@@ -33,7 +32,16 @@ export function onAdd(parentId: number = 0) {
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(DeptDialog, { ref: formRef }),
+    contentRenderer: () =>
+      h(DeptDialog, {
+        ref: formRef,
+        formInline: {
+          parentId,
+          manager: undefined,
+          deptName: undefined,
+          summary: undefined,
+        },
+      }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -52,7 +60,7 @@ export function onAdd(parentId: number = 0) {
 export function onUpdate(row: any) {
   addDialog({
     title: `${$t('modify')}${$t('dept')}`,
-    width: '30%',
+
     props: {
       formInline: {
         parentId: row.parentId,
@@ -64,7 +72,16 @@ export function onUpdate(row: any) {
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(DeptDialog, { ref: formRef }),
+    contentRenderer: () =>
+      h(DeptDialog, {
+        ref: formRef,
+        formInline: {
+          parentId: row.parentId,
+          manager: row.manager ? row.manager.split(',') : row.manager,
+          deptName: row.deptName,
+          summary: row.summary,
+        },
+      }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {

@@ -85,20 +85,21 @@ onMounted(() => {
 
     <PureTableBar :columns="columns" :title="$t('system_file')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd">
-          {{ $t('addNew') }}
-        </el-button>
-
         <!-- 批量下载 -->
         <el-button
           v-if="hasAuth(auth.download)"
           :disabled="!(selectRows.length > 0)"
           :icon="useRenderIcon(Download)"
           plain
-          type="success"
+          type="primary"
           @click="onDownloadBatch"
         >
           {{ $t('download_batch') }}
+        </el-button>
+
+        <!-- 新增 -->
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
+          {{ $t('addNew') }}
         </el-button>
 
         <!-- 批量删除按钮 -->

@@ -25,7 +25,7 @@ export async function onSearch() {
 export function onAdd() {
   addDialog({
     title: `${$t('addNew')}${$t('files')}`,
-    width: '30%',
+
     props: {
       formInline: {
         filepath: undefined,
@@ -69,7 +69,7 @@ export function onAdd() {
 export function onUpdate(row: any) {
   addDialog({
     title: `${$t('modify')}${$t('files')}`,
-    width: '30%',
+
     props: {
       formInline: {
         filename: row.filename,

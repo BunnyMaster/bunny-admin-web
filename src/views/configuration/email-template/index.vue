@@ -97,8 +97,9 @@ onMounted(() => {
     </ReAuth>
 
     <PureTableBar :columns="columns" :title="$t('emailTemplate')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
+      <!-- 新增 -->
       <template #buttons>
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
 

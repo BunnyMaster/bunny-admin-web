@@ -19,7 +19,7 @@ export async function onSearch() {
 export function onAdd() {
   addDialog({
     title: `添加多语言类型`,
-    width: '30%',
+
     props: {
       formInline: { typeName: '', summary: '', isDefault: false },
     },
@@ -45,7 +45,7 @@ export function onAdd() {
 export function onUpdate(row: any) {
   addDialog({
     title: `修改多语言类型`,
-    width: '30%',
+
     props: {
       formInline: {
         typeName: row.typeName,

@@ -23,7 +23,7 @@ defineExpose({ formRef });
 </script>
 
 <template>
-  <el-card shadow="never" style="height: calc(100vh - 200px); overflow: auto">
+  <el-card shadow="never" style="height: calc(100vh - 300px); overflow: auto">
     <div class="split-pane">
       <SplitPane :splitSet="settingLR">
         <template #paneL>
@@ -120,7 +120,7 @@ defineExpose({ formRef });
 
             <!-- 简介 -->
             <el-form-item :label="$t('summary')" prop="summary">
-              <el-input v-model="updateMessage.summary" :autosize="{ minRows: 3, maxRows: 6 }" maxlength="200" minlength="10" show-word-limit type="textarea" />
+              <el-input v-model="updateMessage.summary" :autosize="{ minRows: 3, maxRows: 6 }" maxlength="50" minlength="10" show-word-limit type="textarea" />
             </el-form-item>
 
             <!-- 消息等级 -->

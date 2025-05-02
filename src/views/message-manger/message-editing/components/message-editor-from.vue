@@ -151,7 +151,7 @@ onMounted(() => {
 
     <!-- 简介 -->
     <el-form-item :label="$t('summary')" prop="summary">
-      <el-input v-model="formState.summary" :autosize="{ minRows: 3, maxRows: 6 }" maxlength="200" minlength="4" show-word-limit type="textarea" />
+      <el-input v-model="formState.summary" :autosize="{ minRows: 3, maxRows: 6 }" maxlength="100" minlength="4" show-word-limit type="textarea" />
     </el-form-item>
 
     <!-- 消息等级 -->

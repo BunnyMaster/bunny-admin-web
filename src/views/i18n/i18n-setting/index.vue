@@ -76,9 +76,11 @@ onMounted(() => {
           <el-input v-model="i18nStore.form.typeName" :placeholder="`${$t('input')}${$t('i18n.typeName')}`" class="!w-[180px]" clearable />
         </el-form-item>
         <el-form-item>
+          <!-- 表格頂部搜索 -->
           <el-button :icon="useRenderIcon('ri/search-line')" :loading="i18nStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}
           </el-button>
+          <!-- 表格頂部重置 -->
           <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(pageFormRef)">
             {{ $t('buttons.reset') }}
           </el-button>
@@ -95,7 +97,9 @@ onMounted(() => {
           </el-button>
           <template #dropdown>
             <el-dropdown-menu>
+              <!-- 到處為JSON -->
               <el-dropdown-item @click="downloadI18nSetting('json')">{{ $t('download_json') }}</el-dropdown-item>
+              <!--導出爲Excel-->
               <el-dropdown-item @click="downloadI18nSetting('excel')">{{ $t('download_excel') }}</el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -113,7 +117,7 @@ onMounted(() => {
         </el-dropdown>
 
         <!-- 添加多语言 -->
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="primary" @click="onAdd">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
 
@@ -148,12 +152,14 @@ onMounted(() => {
           @page-size-change="onPageSizeChange"
           @page-current-change="onCurrentPageChange"
         >
+          <!-- 創建用戶名 -->
           <template #createUser="{ row }">
             <el-button v-show="row.createUser" link type="primary" @click="selectUserinfo(row.createUser)">
               {{ row.createUsername }}
             </el-button>
           </template>
 
+          <!-- 更新用戶名 -->
           <template #updateUser="{ row }">
             <el-button v-show="row.updateUser" link type="primary" @click="selectUserinfo(row.updateUser)">
               {{ row.updateUsername }}
@@ -161,9 +167,12 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
+            <!-- 修改 -->
             <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
+
+            <!-- 刪除確認 -->
             <el-popconfirm v-if="hasAuth(auth.deleted)" :title="`${$t('confirmDelete')} ${row.translation}`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">

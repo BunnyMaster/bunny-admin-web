@@ -333,7 +333,7 @@ onMounted(() => {
 
       <!-- 提交内容 -->
       <re-col v-if="hasAuth(auth.update)" :sm="24" :value="24" :xs="24">
-        <el-form-item>
+        <el-form-item label-width="0">
           <el-button class="w-full" plain type="primary" @click="submitForm(ruleFormRef)">
             {{ $t('modifyingConfiguration') }}
           </el-button>

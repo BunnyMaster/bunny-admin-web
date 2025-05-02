@@ -8,7 +8,7 @@ export const defaultConfig: AxiosRequestConfig = {
   // 默认请求地址
   baseURL: '/api',
   // 设置超时时间
-  timeout: 6000,
+  timeout: 19000,
   // @ts-expect-error
   retry: 3, //设置全局重试请求次数（最多重试几次请求）
   retryDelay: 3000, //设置全局请求间隔

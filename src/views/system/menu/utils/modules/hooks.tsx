@@ -171,7 +171,7 @@ export const clearAllRolesSelect = async () => {
 
       addDialog({
         title: $t('doubleCheck'),
-        width: '30%',
+
         draggable: true,
         closeOnClickModal: false,
         fullscreenIcon: true,

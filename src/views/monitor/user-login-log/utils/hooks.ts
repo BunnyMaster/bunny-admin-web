@@ -21,7 +21,7 @@ export async function onSearch() {
 export function onView(row: any) {
   addDialog({
     title: `${$t('view')}${$t('userLoginLog')}`,
-    width: '30%',
+
     props: {
       formInline: {
         userId: row.userId,

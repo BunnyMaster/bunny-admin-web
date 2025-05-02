@@ -34,7 +34,7 @@ export async function onSearch() {
 export function onAdd() {
   addDialog({
     title: `${$t('addNew')}${$t('role')}`,
-    width: '30%',
+
     props: { formInline: { roleCode: undefined, description: undefined } },
     draggable: true,
     fullscreenIcon: true,
@@ -58,7 +58,7 @@ export function onAdd() {
 export function onUpdate(row: any) {
   addDialog({
     title: `${$t('modify')}${$t('role')}`,
-    width: '30%',
+
     props: { formInline: { roleCode: row.roleCode, description: row.description } },
     draggable: true,
     fullscreenIcon: true,
