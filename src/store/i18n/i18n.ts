@@ -74,7 +74,6 @@ export const userI18nStore = defineStore('i18nStore', {
 
     /* 用文件更新多语言 */
     async editI18nByFile(data: any) {
-      console.log(data);
       const result = await uploadI18nFile(data);
       return storeMessage(result);
     },
