@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
 import { loadUserinfoById } from '@/api/v1/system/adminUser';
 import userAvatarIcon from '@/assets/svg/user_avatar.svg?component';
 import { $t } from '@/plugins/i18n';
+import { onMounted, ref } from 'vue';
 
 const props = defineProps({
   userId: { type: String as PropType<String> },
@@ -60,8 +60,8 @@ onMounted(() => {
         <el-descriptions-item :label="$t('email')">{{ userinfo.email }}</el-descriptions-item>
         <el-descriptions-item :label="$t('phone')">{{ userinfo.phone }}</el-descriptions-item>
         <el-descriptions-item :label="$t('sex')">
-          <el-tag v-if="userinfo.sex === 1">男</el-tag>
-          <el-tag v-if="userinfo.sex === 0" type="danger">女</el-tag>
+          <el-tag v-if="userinfo.sex === 1">{{ $t('man') }}</el-tag>
+          <el-tag v-if="userinfo.sex === 0" type="danger">{{ $t('female') }}</el-tag>
         </el-descriptions-item>
 
         <el-descriptions-item :label="$t('personDescription')" span="3">

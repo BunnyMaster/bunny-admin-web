@@ -46,7 +46,6 @@ export const useQuartzExecuteLogStore = defineStore('quartzExecuteLogStore', {
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
       delete data.total;
-      delete data.background;
 
       // 获取调度任务执行日志列表
       const result = await getScheduleExecuteLogPage(data);

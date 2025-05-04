@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 import { FormInstance, genFileId, UploadProps, UploadRawFile } from 'element-plus';
 import { addRules, FormProps, uploadRules } from '@/views/system/files/utils';
 import { $t } from '@/plugins/i18n';
-import { useFilesStore } from '@/store/monitor/files';
+import { useFilesStore } from '@/store/system/files';
 import { UploadFilled } from '@element-plus/icons-vue';
 
 const props = withDefaults(defineProps<FormProps>(), {
@@ -28,10 +28,7 @@ const upload = ref();
 const form = ref(props.formInline);
 const filesStore = useFilesStore();
 
-/**
- * * 修改时替换之前文件
- * @param files
- */
+/* 修改时替换之前文件 */
 const handleExceed: UploadProps['onExceed'] = (files) => {
   upload.value!.clearFiles();
   const file = files[0] as UploadRawFile;

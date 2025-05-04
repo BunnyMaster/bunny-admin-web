@@ -1,7 +1,7 @@
 import { addDialog } from '@/components/ReDialog/index';
 import FilesDialog from '@/views/system/files/components/files-dialog.vue';
-import { useFilesStore } from '@/store/monitor/files';
-import { h, ref, VNode } from 'vue';
+import { useFilesStore } from '@/store/system/files';
+import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/files/utils/types';
 import { $t } from '@/plugins/i18n';
@@ -11,7 +11,7 @@ import type { UploadFiles } from 'element-plus';
 
 // 选择的row列表
 export const selectRows = ref([]);
-export const formRef = ref<VNode | null>(null);
+export const formRef = ref();
 const filesStore = useFilesStore();
 
 /** 搜索初始化系统文件 */
@@ -28,17 +28,29 @@ export function onAdd() {
 
     props: {
       formInline: {
+        filename: undefined,
+        fileType: undefined,
         filepath: undefined,
         downloadCount: 0,
         files: [],
-        isAdd: false,
+        isUpload: false,
       },
     },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
     contentRenderer: () => {
-      const dialog = h(FilesDialog, {}, []);
+      const dialog = h(FilesDialog, {
+        ref: formRef,
+        formInline: {
+          filename: undefined,
+          fileType: undefined,
+          filepath: undefined,
+          downloadCount: 0,
+          files: [],
+          isUpload: false,
+        },
+      });
       formRef.value = dialog;
       return dialog;
     },
@@ -83,7 +95,17 @@ export function onUpdate(row: any) {
     fullscreenIcon: true,
     closeOnClickModal: false,
     contentRenderer: () => {
-      const dialog = h(FilesDialog, { ref: formRef }, []);
+      const dialog = h(FilesDialog, {
+        ref: formRef,
+        formInline: {
+          filename: row.filename,
+          fileType: row.fileType,
+          filepath: row.filepath,
+          downloadCount: row.downloadCount,
+          isUpload: true,
+          files: undefined,
+        },
+      });
       formRef.value = dialog;
       return dialog;
     },

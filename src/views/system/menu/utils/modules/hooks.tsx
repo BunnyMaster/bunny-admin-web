@@ -40,8 +40,8 @@ function onAdd(parentId: any = 0) {
         icon: '',
         id: '',
         extraIcon: '',
-        enterTransition: 'fade-transform',
-        leaveTransition: 'fade-transform',
+        enterTransition: '',
+        leaveTransition: '',
         activePath: '',
         redirect: '',
         roles: [],
@@ -58,7 +58,35 @@ function onAdd(parentId: any = 0) {
     draggable: true,
     closeOnClickModal: false,
     fullscreenIcon: true,
-    contentRenderer: () => h(EditForm, { ref: dialogFormRef }),
+    contentRenderer: () =>
+      h(EditForm, {
+        ref: dialogFormRef,
+        formInline: {
+          menuType: 0,
+          higherMenuOptions: formatHigherMenuOptions(cloneDeep(menuStore.datalist)),
+          parentId,
+          title: '',
+          name: '',
+          path: '',
+          component: '',
+          rank: 99,
+          icon: '',
+          id: '',
+          extraIcon: '',
+          enterTransition: '',
+          leaveTransition: '',
+          activePath: '',
+          redirect: '',
+          roles: [],
+          frameSrc: '',
+          frameLoading: true,
+          keepAlive: false,
+          hiddenTag: false,
+          fixedTag: false,
+          showLink: true,
+          showParent: true,
+        },
+      }),
     beforeSure: (done, { options }) => {
       const menuFormRef = dialogFormRef.value.menuFormRef;
       const curData = options.props.formInline as FormItemProps;
@@ -115,7 +143,36 @@ function onUpdate(row?: FormItemProps) {
     fullscreen: deviceDetection(),
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(EditForm, { ref: dialogFormRef }),
+    contentRenderer: () =>
+      h(EditForm, {
+        ref: dialogFormRef,
+        formInline: {
+          id: row?.id,
+          menuType: row?.menuType,
+          higherMenuOptions: formatHigherMenuOptions(cloneDeep(menuStore.datalist)),
+          parentId: row?.parentId,
+          title: row?.title,
+          name: row?.name,
+          path: row?.path,
+          component: row?.component,
+          rank: row?.rank,
+          icon: row?.icon,
+          frameSrc: row?.frameSrc,
+          extraIcon: row?.extraIcon,
+          // 因为要使用动画需要在前面加上 animate__ 修改时需要手动去除
+          enterTransition: row?.enterTransition?.replace('animate__', ''),
+          // 因为要使用动画需要在前面加上 animate__ 修改时需要手动去除
+          leaveTransition: row?.leaveTransition?.replace('animate__', ''),
+          activePath: row?.activePath,
+          frameLoading: row?.frameLoading,
+          keepAlive: row?.keepAlive,
+          hiddenTag: row?.hiddenTag,
+          fixedTag: row?.fixedTag,
+          showLink: row?.showLink,
+          showParent: row?.showParent,
+          redirect: row?.redirect,
+        },
+      }),
     beforeSure: (done, { options }) => {
       const menuFormRef = dialogFormRef.value.menuFormRef;
       const curData = options.props.formInline as FormItemProps;

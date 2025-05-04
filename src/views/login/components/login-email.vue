@@ -21,9 +21,9 @@ const timer = ref(null);
 const { t } = useI18n();
 
 const ruleForm = reactive({
-  username: '1319900154@qq.com',
+  username: 'admin@qq.com',
   password: 'admin123',
-  emailCode: '1',
+  emailCode: '',
   type: currentPage.value,
 });
 

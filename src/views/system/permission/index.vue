@@ -175,7 +175,7 @@ onMounted(() => {
         </el-button>
 
         <el-dropdown v-if="hasAuth(auth.update)" class="ml-1" type="primary">
-          <el-button :icon="useRenderIcon(More)" plain type="primary">更多操作</el-button>
+          <el-button :icon="useRenderIcon(More)" plain type="primary">{{ $t('more_actions') }}</el-button>
           <template #dropdown>
             <el-dropdown-menu>
               <!-- 批量更新父级id -->

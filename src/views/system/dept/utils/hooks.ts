@@ -18,7 +18,7 @@ export async function onSearch() {
 }
 
 /** 添加部门 */
-export function onAdd(parentId: number = 0) {
+export function onAdd(parentId: string = '0') {
   addDialog({
     title: `${$t('addNew')}${$t('dept')}`,
     props: {

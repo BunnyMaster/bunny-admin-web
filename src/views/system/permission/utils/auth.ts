@@ -1,10 +1,10 @@
 export const auth = {
   // 分页查询
-  query: ['power::query', 'power::queryPage'],
+  query: 'permission::page',
   //   // 添加操作
-  add: ['power::addPower'],
+  add: ['permission::add'],
   // 更新操作
-  update: ['power::updatePower'],
+  update: ['permission::update'],
   // 删除操作
-  delete: ['power::delete'],
+  delete: ['permission::delete'],
 };

@@ -11,6 +11,7 @@ import { getTopMenu, initRouter } from '@/router/utils';
 import Motion from '../utils';
 import { ElMessage, FormInstance } from 'element-plus';
 import { currentPage, formRules } from '@/views/login/utils';
+import { $t } from '../../../plugins/i18n';
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -93,7 +94,7 @@ onBeforeUnmount(() => {
     <!-- 邮箱登录 -->
     <Motion :delay="300">
       <el-form-item>
-        <el-button class="w-full" size="default" @click="currentPage = 'email'">邮箱登录</el-button>
+        <el-button class="w-full" size="default" @click="currentPage = 'email'">{{ $t('email_login') }}</el-button>
       </el-form-item>
     </Motion>
   </el-form>

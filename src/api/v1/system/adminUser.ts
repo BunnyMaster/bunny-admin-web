@@ -110,3 +110,8 @@ export const updateUserinfo = (data: any) => {
 export const updateUserPassword = (data: any) => {
   return http.request<BaseResult<object>>('put', 'user/private/update/password', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
+
+/* 查询缓存中的已登录的用户 */
+export const getCacheLoggedInPage = (data: any) => {
+  return http.request<BaseResult<any>>('get', `user/getCacheUserPage/${data.currentPage}/${data.pageSize}`, { data });
+};

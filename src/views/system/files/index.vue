@@ -5,7 +5,7 @@ import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { hasAuth } from '@/router/utils';
-import { useFilesStore } from '@/store/monitor/files';
+import { useFilesStore } from '@/store/system/files';
 import { auth, columns, onAdd, onDelete, onDeleteBatch, onDownload, onDownloadBatch, onSearch, onUpdate, selectRows } from '@/views/system/files/utils';
 import PureTable from '@pureadmin/table';
 import { FormInstance } from 'element-plus';
