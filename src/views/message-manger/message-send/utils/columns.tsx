@@ -8,7 +8,7 @@ export const columns: TableColumnList = [
   {
     type: 'index',
     index: (index: number) => index + 1,
-        label: $t("index"),
+    label: $t('index'),
     width: 60,
   },
   // 消息标题

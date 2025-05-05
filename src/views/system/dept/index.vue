@@ -1,13 +1,11 @@
 <script lang="ts" setup>
-import ReAuth from '@/components/ReAuth/src/auth';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { hasAuth } from '@/router/utils';
 import { useDeptStore } from '@/store/system/dept';
 import { handleTree } from '@/utils/tree';
-import { auth, columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/system/dept/utils';
+import { columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/system/dept/utils';
 import PureTable from '@pureadmin/table';
 import { FormInstance } from 'element-plus';
 import { computed, onMounted, ref } from 'vue';
@@ -53,22 +51,20 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <ReAuth :value="auth.query">
-      <el-form ref="formRef" :inline="true" :model="deptStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-        <el-form-item :label="$t('dept_deptName')" prop="deptName">
-          <el-input v-model="deptStore.form.deptName" :placeholder="`${$t('input')}${$t('dept_deptName')}`" class="!w-[180px]" clearable />
-        </el-form-item>
-        <el-form-item :label="$t('dept_summary')" prop="summary">
-          <el-input v-model="deptStore.form.summary" :placeholder="`${$t('input')}${$t('dept_summary')}`" class="!w-[180px]" clearable />
-        </el-form-item>
-        <el-form-item>
-          <el-button :icon="useRenderIcon('ri/search-line')" :loading="deptStore.loading" type="primary" @click="onSearch">
-            {{ $t('search') }}
-          </el-button>
-          <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
-        </el-form-item>
-      </el-form>
-    </ReAuth>
+    <el-form ref="formRef" :inline="true" :model="deptStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+      <el-form-item :label="$t('dept_deptName')" prop="deptName">
+        <el-input v-model="deptStore.form.deptName" :placeholder="`${$t('input')}${$t('dept_deptName')}`" class="!w-[180px]" clearable />
+      </el-form-item>
+      <el-form-item :label="$t('dept_summary')" prop="summary">
+        <el-input v-model="deptStore.form.summary" :placeholder="`${$t('input')}${$t('dept_summary')}`" class="!w-[180px]" clearable />
+      </el-form-item>
+      <el-form-item>
+        <el-button :icon="useRenderIcon('ri/search-line')" :loading="deptStore.loading" type="primary" @click="onSearch">
+          {{ $t('search') }}
+        </el-button>
+        <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
+      </el-form-item>
+    </el-form>
 
     <PureTableBar
       :columns="columns"
@@ -79,12 +75,12 @@ onMounted(() => {
       @refresh="onSearch"
     >
       <template #buttons>
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd()">
+        <el-button :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd()">
           {{ $t('addNew') }}
         </el-button>
 
         <!-- 批量删除按钮 -->
-        <el-button v-if="hasAuth(auth.delete)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
+        <el-button :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
           {{ $t('deleteBatches') }}
         </el-button>
       </template>
@@ -127,13 +123,13 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
-            <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
+            <el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
-            <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)">
+            <el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)">
               {{ $t('addNew') }}
             </el-button>
-            <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')} ${row.deptName}?`" @confirm="onDelete(row)">
+            <el-popconfirm :title="`${$t('delete')} ${row.deptName}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

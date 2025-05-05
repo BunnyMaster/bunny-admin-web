@@ -3,10 +3,9 @@ import { $t } from '@/plugins/i18n';
 import { onMounted, ref } from 'vue';
 import { FormInstance } from 'element-plus';
 import ReCol from '@/components/ReCol';
-import { auth, form, onSearch, rules, submitForm } from '@/views/configuration/web-configuration/utils';
+import { form, onSearch, rules, submitForm } from '@/views/configuration/web-configuration/utils';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
 import { usePublicHooks } from '@/views/hooks';
-import { hasAuth } from '@/router/utils';
 
 defineOptions({ name: 'WebConfiguration' });
 
@@ -332,7 +331,7 @@ onMounted(() => {
       </re-col>
 
       <!-- 提交内容 -->
-      <re-col v-if="hasAuth(auth.update)" :sm="24" :value="24" :xs="24">
+      <re-col :sm="24" :value="24" :xs="24">
         <el-form-item label-width="0">
           <el-button class="w-full" plain type="primary" @click="submitForm(ruleFormRef)">
             {{ $t('modifyingConfiguration') }}

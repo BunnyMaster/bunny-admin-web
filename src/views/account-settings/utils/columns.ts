@@ -10,7 +10,7 @@ import AccountManagementIcon from '~icons/ri/profile-line';
 import AccountManagement from '@/views/account-settings/components/account-management.vue';
 
 export const columns: TableColumnList = [
-  { type: 'index', index: (index: number) => index + 1,     label: $t("index"), width: 60 },
+  { type: 'index', index: (index: number) => index + 1, label: $t('index'), width: 60 },
   // 用户名
   { label: $t('userLoginLog_username'), prop: 'username', width: 180 },
   // 登录Ip

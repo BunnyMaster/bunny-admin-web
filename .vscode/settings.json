@@ -1,6 +1,7 @@
 {
-    "i18n-ally.localesPaths": [
-        "src/store/i18n",
-        "src/views/i18n"
-    ]
+  "i18n-ally.localesPaths": ["src/store/i18n", "src/views/i18n"],
+  "files.exclude": {
+    "**/.ts": true,
+    "**/.tsx": true
+  }
 }

@@ -1,13 +1,11 @@
 <script lang="ts" setup>
-import ReAuth from '@/components/ReAuth/src/auth';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { hasAuth } from '@/router/utils';
 import { useMenuIconStore } from '@/store/configuration/menuIcon';
 import MenuIconSelectIconName from '@/views/configuration/menu-icon/components/menu-icon-select-icon-name.vue';
-import { auth, columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/configuration/menu-icon/utils';
+import { columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/configuration/menu-icon/utils';
 import PureTable from '@pureadmin/table';
 import { onMounted, ref } from 'vue';
 import Delete from '~icons/ep/delete';
@@ -51,31 +49,29 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <ReAuth :value="auth.query">
-      <el-form ref="formRef" :inline="true" :model="menuIconStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-        <el-form-item :label="$t('menuIcon_iconCode')" prop="iconCode">
-          <el-input v-model="menuIconStore.form.iconCode" :placeholder="`${$t('input')} ${$t('iconCode')}`" class="!w-[180px]" clearable />
-        </el-form-item>
-        <el-form-item :label="$t('menuIcon_iconName')" prop="iconName">
-          <MenuIconSelectIconName :form-inline="menuIconStore.form" class="!w-[180px]" />
-        </el-form-item>
-        <el-form-item>
-          <el-button :icon="useRenderIcon('ri/search-line')" :loading="menuIconStore.loading" type="primary" @click="onSearch">
-            {{ $t('search') }}
-          </el-button>
-          <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
-        </el-form-item>
-      </el-form>
-    </ReAuth>
+    <el-form ref="formRef" :inline="true" :model="menuIconStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+      <el-form-item :label="$t('menuIcon_iconCode')" prop="iconCode">
+        <el-input v-model="menuIconStore.form.iconCode" :placeholder="`${$t('input')} ${$t('iconCode')}`" class="!w-[180px]" clearable />
+      </el-form-item>
+      <el-form-item :label="$t('menuIcon_iconName')" prop="iconName">
+        <MenuIconSelectIconName :form-inline="menuIconStore.form" class="!w-[180px]" />
+      </el-form-item>
+      <el-form-item>
+        <el-button :icon="useRenderIcon('ri/search-line')" :loading="menuIconStore.loading" type="primary" @click="onSearch">
+          {{ $t('search') }}
+        </el-button>
+        <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
+      </el-form-item>
+    </el-form>
 
     <PureTableBar :columns="columns" :title="$t('menuIcon')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
+        <el-button :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
 
         <!-- 批量删除按钮 -->
-        <el-button v-if="hasAuth(auth.delete)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
+        <el-button :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
           {{ $t('deleteBatches') }}
         </el-button>
       </template>
@@ -123,10 +119,10 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
-            <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
+            <el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
-            <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')}${row.iconName}?`" @confirm="onDelete(row)">
+            <el-popconfirm :title="`${$t('delete')}${row.iconName}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

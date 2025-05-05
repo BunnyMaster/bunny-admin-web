@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import {
-  auth,
   beforeUpload,
   coverUrl,
   formState,
@@ -23,7 +22,6 @@ import { useMessageSendStore } from '@/store/message/messageSend';
 import { usePublicHooks } from '@/views/hooks';
 import { Plus } from '@element-plus/icons-vue';
 import ImageLoading from '@/components/Upload/ImageLoading.vue';
-import { hasAuth } from '@/router/utils';
 
 const formRef = ref();
 // 用户是否停用样式
@@ -168,7 +166,7 @@ onMounted(() => {
 
     <!-- 提交 -->
     <el-form-item>
-      <div v-if="hasAuth(auth.add)" class="grid grid-cols-2 w-[100%]">
+      <div class="grid grid-cols-2 w-[100%]">
         <el-button bg class="w-[100%]" text type="primary" @click="submitForm(formRef)">{{ $t('submit') }}</el-button>
         <el-button bg class="w-[100%]" text @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
       </div>
