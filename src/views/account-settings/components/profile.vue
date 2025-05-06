@@ -80,7 +80,9 @@ onMounted(() => {
             <span class="ml-2">{{ $t('upload_avatar') }}</span>
           </el-button>
           <template #tip>
-            <div class="el-upload__tip text-red-600">{{ $t('upload_user_avatar_tip') }}</div>
+            <div class="el-upload__tip">
+              <el-text type="danger">{{ $t('upload_user_avatar_tip') }}</el-text>
+            </div>
           </template>
         </el-upload>
       </el-form-item>

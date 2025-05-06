@@ -47,10 +47,9 @@
   text-transform: uppercase;
   margin: 15px 0;
   color: #999;
-  font:
-    bold 200% Consolas,
-    Monaco,
-    monospace;
+  font: bold 200% Consolas,
+  Monaco,
+  monospace;
 }
 
 @media screen and (max-width: 1180px) {
@@ -72,7 +71,7 @@
   }
 
   .avatar {
-    width: 280px;
+    width: 80px;
     height: 80px;
   }
 }
