@@ -1,12 +1,14 @@
 <script lang="ts" setup>
+import ReAuth from '@/components/ReAuth/src/auth';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { enabledOrNotStatus } from '@/enums/baseConstant';
 import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
 import { useMessageTypeStore } from '@/store/message/messageType';
 import { usePublicHooks } from '@/views/hooks';
-import { columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/message-manger/message-type/utils';
+import { auth, columns, deleteIds, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate } from '@/views/message-manger/message-type/utils';
 import PureTable from '@pureadmin/table';
 import { FormInstance } from 'element-plus';
 import { onMounted, ref } from 'vue';
@@ -54,45 +56,47 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <el-form ref="formRef" :inline="true" :model="messageTypeStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-      <!-- 消息名称 -->
-      <el-form-item :label="$t('messageName')" prop="messageName">
-        <el-input v-model="messageTypeStore.form.messageName" :placeholder="`${$t('input')}${$t('messageName')}`" class="!w-[180px]" clearable />
-      </el-form-item>
+    <ReAuth :value="auth.query">
+      <el-form ref="formRef" :inline="true" :model="messageTypeStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+        <!-- 消息名称 -->
+        <el-form-item :label="$t('messageName')" prop="messageName">
+          <el-input v-model="messageTypeStore.form.messageName" :placeholder="`${$t('input')}${$t('messageName')}`" class="!w-[180px]" clearable />
+        </el-form-item>
 
-      <!-- 消息类型 -->
-      <el-form-item :label="$t('messageType')" prop="messageType">
-        <el-input v-model="messageTypeStore.form.messageType" :placeholder="`${$t('input')}${$t('messageType')}`" class="!w-[180px]" clearable />
-      </el-form-item>
+        <!-- 消息类型 -->
+        <el-form-item :label="$t('messageType')" prop="messageType">
+          <el-input v-model="messageTypeStore.form.messageType" :placeholder="`${$t('input')}${$t('messageType')}`" class="!w-[180px]" clearable />
+        </el-form-item>
 
-      <!-- 消息备注 -->
-      <el-form-item :label="$t('summary')" prop="summary">
-        <el-input v-model="messageTypeStore.form.summary" :placeholder="`${$t('input')}${$t('summary')}`" class="!w-[180px]" clearable />
-      </el-form-item>
+        <!-- 消息备注 -->
+        <el-form-item :label="$t('summary')" prop="summary">
+          <el-input v-model="messageTypeStore.form.summary" :placeholder="`${$t('input')}${$t('summary')}`" class="!w-[180px]" clearable />
+        </el-form-item>
 
-      <!-- 是否启用 -->
-      <el-form-item :label="$t('status')" prop="status">
-        <el-select v-model="messageTypeStore.form.status" :placeholder="`${$t('select')}${$t('status')}`" class="!w-[180px]" clearable filterable>
-          <el-option v-for="(item, index) in enabledOrNotStatus" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
-        </el-select>
-      </el-form-item>
+        <!-- 是否启用 -->
+        <el-form-item :label="$t('status')" prop="status">
+          <el-select v-model="messageTypeStore.form.status" :placeholder="`${$t('select')}${$t('status')}`" class="!w-[180px]" clearable filterable>
+            <el-option v-for="(item, index) in enabledOrNotStatus" :key="index" :label="item.label" :navigationBar="false" :value="item.value" />
+          </el-select>
+        </el-form-item>
 
-      <el-form-item>
-        <el-button :icon="useRenderIcon('ri/search-line')" :loading="messageTypeStore.loading" type="primary" @click="onSearch">
-          {{ $t('search') }}
-        </el-button>
-        <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
-      </el-form-item>
-    </el-form>
+        <el-form-item>
+          <el-button :icon="useRenderIcon('ri/search-line')" :loading="messageTypeStore.loading" type="primary" @click="onSearch">
+            {{ $t('search') }}
+          </el-button>
+          <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
+        </el-form-item>
+      </el-form>
+    </ReAuth>
 
     <PureTableBar :columns="columns" title="系统消息类型" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
-        <el-button :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
 
         <!-- 批量删除按钮 -->
-        <el-button :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
+        <el-button v-if="hasAuth(auth.delete)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
           {{ $t('delete_batches') }}
         </el-button>
       </template>
@@ -147,10 +151,10 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
-            <el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
+            <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
-            <el-popconfirm :title="`${$t('delete')}${row.messageName}?`" @confirm="onDelete(row)">
+            <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')}${row.messageName}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

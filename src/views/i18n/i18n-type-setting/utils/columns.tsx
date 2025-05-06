@@ -7,7 +7,7 @@ export const columns: TableColumnList = [
   {
     type: 'index',
     index: (index: number) => index + 1,
-    label: $t('index'),
+        label: $t("index"),
     width: 60,
   },
   { label: $t('i18n_typeName'), prop: 'typeName' },

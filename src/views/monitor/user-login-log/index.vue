@@ -1,10 +1,12 @@
 <script lang="ts" setup>
+import ReAuth from '@/components/ReAuth/src/auth';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
 import { useUserLoginLogStore } from '@/store/monitor/userLoginLog';
-import { columns, deleteIds, onDelete, onDeleteBatch, onSearch, onView } from '@/views/monitor/user-login-log/utils';
+import { auth, columns, deleteIds, onDelete, onDeleteBatch, onSearch, onView } from '@/views/monitor/user-login-log/utils';
 import PureTable from '@pureadmin/table';
 import { FormInstance } from 'element-plus';
 import { onMounted, ref } from 'vue';
@@ -87,11 +89,12 @@ onMounted(() => {
         <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
       </el-form-item>
     </el-form>
+    <ReAuth :value="auth.search" />
 
     <PureTableBar :columns="columns" :title="$t('userLoginLog')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
         <!-- 批量删除按钮 -->
-        <el-button :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
+        <el-button v-if="hasAuth(auth.delete)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
           {{ $t('deleteBatches') }}
         </el-button>
       </template>
@@ -133,10 +136,10 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
-            <el-button :icon="useRenderIcon(View)" :size="size" class="reset-margin" link type="primary" @click="onView(row)">
+            <el-button v-if="hasAuth(auth.search)" :icon="useRenderIcon(View)" :size="size" class="reset-margin" link type="primary" @click="onView(row)">
               {{ $t('view') }}
             </el-button>
-            <el-popconfirm :title="`${$t('delete')}${row.username}?`" @confirm="onDelete(row)">
+            <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')}${row.username}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

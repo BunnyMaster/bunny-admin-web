@@ -25,5 +25,5 @@ export const deleteEmailTemplate = (data: any) => {
 
 /** 邮件模板表---获取全部邮件类型列表 */
 export const getEmailTypeList = () => {
-  return http.request<BaseResult<any>>('get', 'emailTemplate/private');
+  return http.request<BaseResult<any>>('get', 'emailTemplate/public');
 };

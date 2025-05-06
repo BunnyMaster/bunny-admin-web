@@ -4,8 +4,9 @@ import { PureTableBar } from '@/components/RePureTableBar';
 import TableIsDefaultTag from '@/components/Table/TableIsDefaultTag.vue';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
 import { userI18nTypeStore } from '@/store/i18n/i18nType';
-import { columns, onAdd, onDelete, onSearch, onUpdate } from '@/views/i18n/i18n-type-setting/utils';
+import { auth, columns, onAdd, onDelete, onSearch, onUpdate } from '@/views/i18n/i18n-type-setting/utils';
 import PureTable from '@pureadmin/table';
 import { onMounted, ref } from 'vue';
 import Delete from '~icons/ep/delete';
@@ -49,7 +50,7 @@ onMounted(() => {
 
     <PureTableBar :columns="columns" :title="$t('i18n_type')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
-        <el-button :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
+        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
       </template>
@@ -91,10 +92,10 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
-            <el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
+            <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
-            <el-popconfirm :title="`${$t('delete')} ${row.typeName}?`" @confirm="onDelete(row)">
+            <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')} ${row.typeName}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

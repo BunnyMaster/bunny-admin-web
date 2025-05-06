@@ -1,10 +1,12 @@
 <script lang="ts" setup>
+import ReAuth from '@/components/ReAuth/src/auth';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
 import { useQuartzExecuteLogStore } from '@/store/monitor/quartzExecuteLog';
-import { columns, deleteIds, onDelete, onDeleteBatch, onSearch, onView, state } from '@/views/monitor/scheduler-execute-log/utils';
+import { auth, columns, deleteIds, onDelete, onDeleteBatch, onSearch, onView, state } from '@/views/monitor/scheduler-execute-log/utils';
 import PureTable from '@pureadmin/table';
 import { FormInstance } from 'element-plus';
 import { onMounted, ref } from 'vue';
@@ -51,54 +53,61 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <el-form ref="formRef" :inline="true" :model="quartzExecuteLogStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-      <el-form-item :label="$t('quartzExecuteLog_jobName')" prop="jobName">
-        <el-input v-model="quartzExecuteLogStore.form.jobName" :placeholder="`${$t('input')}${$t('quartzExecuteLog_jobName')}`" class="!w-[180px]" clearable />
-      </el-form-item>
-      <el-form-item :label="$t('quartzExecuteLog_jobGroup')" prop="jobGroup">
-        <el-input
-          v-model="quartzExecuteLogStore.form.jobGroup"
-          :placeholder="`${$t('input')}${$t('quartzExecuteLog_jobGroup')}`"
-          class="!w-[180px]"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item :label="$t('quartzExecuteLog_jobClassName')" prop="jobClassName">
-        <el-input
-          v-model="quartzExecuteLogStore.form.jobClassName"
-          :placeholder="`${$t('input')}${$t('quartzExecuteLog_jobClassName')}`"
-          class="!w-[180px]"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item :label="$t('quartzExecuteLog_cronExpression')" prop="cronExpression">
-        <el-input
-          v-model="quartzExecuteLogStore.form.cronExpression"
-          :placeholder="`${$t('input')}${$t('quartzExecuteLog_cronExpression')}`"
-          class="!w-[180px]"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item :label="$t('quartzExecuteLog_triggerName')" prop="triggerName">
-        <el-input
-          v-model="quartzExecuteLogStore.form.triggerName"
-          :placeholder="`${$t('input')}${$t('quartzExecuteLog_triggerName')}`"
-          class="!w-[180px]"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button :icon="useRenderIcon('ri/search-line')" :loading="quartzExecuteLogStore.loading" type="primary" @click="onSearch">
-          {{ $t('search') }}
-        </el-button>
-        <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
-      </el-form-item>
-    </el-form>
+    <ReAuth :value="auth.search">
+      <el-form ref="formRef" :inline="true" :model="quartzExecuteLogStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+        <el-form-item :label="$t('quartzExecuteLog_jobName')" prop="jobName">
+          <el-input
+            v-model="quartzExecuteLogStore.form.jobName"
+            :placeholder="`${$t('input')}${$t('quartzExecuteLog_jobName')}`"
+            class="!w-[180px]"
+            clearable
+          />
+        </el-form-item>
+        <el-form-item :label="$t('quartzExecuteLog_jobGroup')" prop="jobGroup">
+          <el-input
+            v-model="quartzExecuteLogStore.form.jobGroup"
+            :placeholder="`${$t('input')}${$t('quartzExecuteLog_jobGroup')}`"
+            class="!w-[180px]"
+            clearable
+          />
+        </el-form-item>
+        <el-form-item :label="$t('quartzExecuteLog_jobClassName')" prop="jobClassName">
+          <el-input
+            v-model="quartzExecuteLogStore.form.jobClassName"
+            :placeholder="`${$t('input')}${$t('quartzExecuteLog_jobClassName')}`"
+            class="!w-[180px]"
+            clearable
+          />
+        </el-form-item>
+        <el-form-item :label="$t('quartzExecuteLog_cronExpression')" prop="cronExpression">
+          <el-input
+            v-model="quartzExecuteLogStore.form.cronExpression"
+            :placeholder="`${$t('input')}${$t('quartzExecuteLog_cronExpression')}`"
+            class="!w-[180px]"
+            clearable
+          />
+        </el-form-item>
+        <el-form-item :label="$t('quartzExecuteLog_triggerName')" prop="triggerName">
+          <el-input
+            v-model="quartzExecuteLogStore.form.triggerName"
+            :placeholder="`${$t('input')}${$t('quartzExecuteLog_triggerName')}`"
+            class="!w-[180px]"
+            clearable
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-button :icon="useRenderIcon('ri/search-line')" :loading="quartzExecuteLogStore.loading" type="primary" @click="onSearch">
+            {{ $t('search') }}
+          </el-button>
+          <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
+        </el-form-item>
+      </el-form>
+    </ReAuth>
 
     <PureTableBar :columns="columns" :title="$t('quartzExecuteLog')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
         <!-- 批量删除按钮 -->
-        <el-button :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
+        <el-button v-if="hasAuth(auth.delete)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
           {{ $t('deleteBatches') }}
         </el-button>
       </template>
@@ -154,10 +163,10 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
-            <el-button :icon="useRenderIcon(View)" :size="size" class="reset-margin" link type="primary" @click="onView(row)">
+            <el-button v-if="hasAuth(auth.search)" :icon="useRenderIcon(View)" :size="size" class="reset-margin" link type="primary" @click="onView(row)">
               {{ $t('view') }}
             </el-button>
-            <el-popconfirm :title="`${$t('delete')}${row.jobName}?`" @confirm="onDelete(row)">
+            <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')}${row.jobName}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

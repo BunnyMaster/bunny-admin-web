@@ -1,11 +1,14 @@
 <script lang="ts" setup>
+import ReAuth from '@/components/ReAuth/src/auth';
 import { addDialog } from '@/components/ReDialog/index';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { PureTableBar } from '@/components/RePureTableBar';
 import { $t } from '@/plugins/i18n';
+import { hasAuth } from '@/router/utils';
 import { useRoleStore } from '@/store/system/role';
 import FileUploadDialog from '@/views/system/role/components/file-upload-dialog.vue';
 import {
+  auth,
   columns,
   contentRef,
   deleteIds,
@@ -100,20 +103,22 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <el-form ref="formRef" :inline="true" :model="roleStore.form" class="search-form bg-bg_color w-full pl-8 pt-[12px] overflow-auto">
-      <el-form-item :label="$t('role_roleCode')" prop="roleCode">
-        <el-input v-model="roleStore.form.roleCode" :placeholder="`${$t('input')}${$t('role_roleCode')}`" class="!w-[180px]" clearable />
-      </el-form-item>
-      <el-form-item :label="$t('role_description')" prop="description">
-        <el-input v-model="roleStore.form.description" :placeholder="`${$t('input')}${$t('role_description')}`" class="!w-[180px]" clearable />
-      </el-form-item>
-      <el-form-item>
-        <el-button :icon="useRenderIcon('ri/search-line')" :loading="roleStore.loading" type="primary" @click="onSearch">
-          {{ $t('search') }}
-        </el-button>
-        <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
-      </el-form-item>
-    </el-form>
+    <ReAuth :value="auth.query">
+      <el-form ref="formRef" :inline="true" :model="roleStore.form" class="search-form bg-bg_color w-full pl-8 pt-[12px] overflow-auto">
+        <el-form-item :label="$t('role_roleCode')" prop="roleCode">
+          <el-input v-model="roleStore.form.roleCode" :placeholder="`${$t('input')}${$t('role_roleCode')}`" class="!w-[180px]" clearable />
+        </el-form-item>
+        <el-form-item :label="$t('role_description')" prop="description">
+          <el-input v-model="roleStore.form.description" :placeholder="`${$t('input')}${$t('role_description')}`" class="!w-[180px]" clearable />
+        </el-form-item>
+        <el-form-item>
+          <el-button :icon="useRenderIcon('ri/search-line')" :loading="roleStore.loading" type="primary" @click="onSearch">
+            {{ $t('search') }}
+          </el-button>
+          <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
+        </el-form-item>
+      </el-form>
+    </ReAuth>
 
     <div ref="contentRef" :class="['flex', deviceDetection() ? 'flex-wrap' : '']">
       <PureTableBar
@@ -126,20 +131,20 @@ onMounted(() => {
       >
         <template #buttons>
           <!-- 下载Excel配置 -->
-          <el-button :icon="useRenderIcon(Download)" plain type="primary" @click="downloadRoleExcel">
+          <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(Download)" plain type="primary" @click="downloadRoleExcel">
             {{ $t('download_configuration') }}
           </el-button>
           <!-- 文件更新 -->
-          <el-button :icon="useRenderIcon(Upload)" plain type="primary" @click="onUpdateByFile">
+          <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(Upload)" plain type="primary" @click="onUpdateByFile">
             {{ $t('file_import') }}
           </el-button>
 
-          <el-button :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
+          <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
             {{ $t('addNew') }}
           </el-button>
 
           <!-- 批量删除按钮 -->
-          <el-button :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
+          <el-button v-if="hasAuth(auth.delete)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
             {{ $t('delete_batches') }}
           </el-button>
         </template>
@@ -167,12 +172,20 @@ onMounted(() => {
           >
             <template #operation="{ row }">
               <!-- 修改 -->
-              <el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
+              <el-button
+                v-if="hasAuth(auth.update)"
+                :icon="useRenderIcon(EditPen)"
+                :size="size"
+                class="reset-margin"
+                link
+                type="primary"
+                @click="onUpdate(row)"
+              >
                 {{ $t('modify') }}
               </el-button>
 
               <!-- 删除 -->
-              <el-popconfirm :title="`${$t('delete')}${row.roleCode}?`" @confirm="onDelete(row)">
+              <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')}${row.roleCode}?`" @confirm="onDelete(row)">
                 <template #reference>
                   <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                     {{ $t('delete') }}
@@ -180,7 +193,15 @@ onMounted(() => {
                 </template>
               </el-popconfirm>
 
-              <el-button :icon="useRenderIcon(Menu)" :size="size" class="reset-margin" link type="primary" @click="onMenuPowerClick(row)">
+              <el-button
+                v-if="hasAuth(auth.rolePowerAdd)"
+                :icon="useRenderIcon(Menu)"
+                :size="size"
+                class="reset-margin"
+                link
+                type="primary"
+                @click="onMenuPowerClick(row)"
+              >
                 {{ $t('power_setting') }}
               </el-button>
             </template>

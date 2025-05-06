@@ -64,13 +64,6 @@ onMounted(() => {
           @page-size-change="onPageSizeChange"
           @page-current-change="onCurrentPageChange"
         >
-          <!-- 用户性别 -->
-          <template #sex="{ row }">
-            <el-tag :type="row.sex === 0 ? 'danger' : null" effect="plain">
-              {{ row.sex === 1 ? $t('man') : $t('female') }}
-            </el-tag>
-          </template>
-
           <template #username="{ row }">
             <el-button v-show="row.username" link type="primary" @click="selectUserinfo(row.createUser)">
               {{ row.username }}
