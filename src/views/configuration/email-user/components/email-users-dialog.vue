@@ -8,8 +8,7 @@ import { usePublicHooks } from '@/views/hooks';
 const props = withDefaults(defineProps<FormProps>(), {
   formInline: () => ({
     // 邮箱
-    email: undefined,
-    emailTemplate: undefined,
+    email: '',
     // 密码
     password: undefined,
     // Host地址
@@ -18,6 +17,7 @@ const props = withDefaults(defineProps<FormProps>(), {
     port: undefined,
     // 邮箱协议
     smtpAgreement: undefined,
+    openSSL: false,
     // 是否为默认邮件
     isDefault: false,
   }),

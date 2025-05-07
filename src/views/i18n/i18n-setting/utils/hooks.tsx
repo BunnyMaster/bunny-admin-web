@@ -23,18 +23,17 @@ export const downloadI18nSetting = (type: string) => {
   i18nStore.downloadI18nFile({ type });
 };
 
-/* 下载多语言配置 */
+/* 上传多语言配置 */
 export const updateI18nSetting = (fileType: string) => {
   const uploadFormRef = ref();
 
   addDialog({
     title: $t('update_multilingual'),
-
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    props: { form: { type: undefined, file: undefined, fileType } },
-    contentRenderer: () => h(I18NUploadDialog, { ref: uploadFormRef, form: { type: '', file: undefined, fileType } }),
+    props: { form: { type: undefined, file: undefined, fileType, isAppend: true } },
+    contentRenderer: () => h(I18NUploadDialog, { ref: uploadFormRef, form: { type: '', file: undefined, fileType, isAppend: true } }),
     beforeSure: async (done, { options }) => {
       uploadFormRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
@@ -51,7 +50,6 @@ export const updateI18nSetting = (fileType: string) => {
 export const onAdd = () => {
   addDialog({
     title: $t('addMultilingual'),
-
     props: { formInline: { keyName: '', translation: '', typeName: '' } },
     draggable: true,
     fullscreenIcon: true,

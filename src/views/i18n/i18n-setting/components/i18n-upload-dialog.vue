@@ -11,6 +11,7 @@ interface Props {
     type: string;
     file: any;
     fileType: string;
+    isAppend: boolean;
   };
 }
 
@@ -36,6 +37,7 @@ const props = withDefaults(defineProps<Props>(), {
     type: '',
     file: undefined,
     fileType: '',
+    isAppend: true,
   }),
 });
 
@@ -63,6 +65,10 @@ defineExpose({ formRef });
       </el-select>
     </el-form-item>
 
+    <el-form-item :label="$t('isAppend')" prop="isAppend">
+      <el-switch v-model="form.isAppend" style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
+    </el-form-item>
+
     <el-form-item :label="$t('files')" prop="file">
       <el-upload ref="uploadRef" v-model:file-list="form.file" :autoUpload="false" :limit="1" :on-exceed="handleExceed" class="w-full mt-2" drag>
         <el-icon class="el-icon--upload">
@@ -75,6 +81,6 @@ defineExpose({ formRef });
     </el-form-item>
 
     <!-- 更新提示 -->
-    <el-text type="danger">{{ $t('update_tip') }}</el-text>
+    <el-text type="danger">{{ $t('update_i18n_tip') }}</el-text>
   </el-form>
 </template>
