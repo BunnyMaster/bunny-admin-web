@@ -4,7 +4,7 @@ export const auth = {
   // 添加操作
   add: ['router::addMenu'],
   // 分页查询
-  search: ['router::menuList'],
+  search: 'router::menuList',
   // 删除操作
   deleted: ['router::deletedMenuByIds'],
   // 为菜单分配角色

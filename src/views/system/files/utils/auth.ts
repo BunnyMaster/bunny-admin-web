@@ -1,6 +1,6 @@
 export const auth = {
   // 分页查询
-  query: ['files:query', 'files:queryPage'],
+  query: 'files:query',
   // 更新操作
   update: ['files::update'],
   // 添加操作

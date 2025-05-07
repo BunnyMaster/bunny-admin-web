@@ -1,6 +1,6 @@
 export const auth = {
   // 分页查询
-  search: ['message::getMessageList'],
+  search: 'message::getMessageList',
   // 添加操作
   add: ['message::addMessage'],
   // 更新操作

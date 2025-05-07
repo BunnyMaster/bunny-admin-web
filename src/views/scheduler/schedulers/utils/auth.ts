@@ -1,6 +1,6 @@
 export const auth = {
   // 分页查询
-  query: ['schedulers::query'],
+  query: 'schedulers::query',
   // 添加操作
   add: ['schedulers::add'],
   // 暂停

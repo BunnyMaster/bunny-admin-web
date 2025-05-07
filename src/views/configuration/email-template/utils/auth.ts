@@ -1,6 +1,6 @@
 export const auth = {
   // 分页查询
-  query: ['emailTemplate::query', 'emailTemplate::queryPage'],
+  query: 'emailTemplate::query',
   // 添加操作
   add: ['emailTemplate::add'],
   // 更新操作

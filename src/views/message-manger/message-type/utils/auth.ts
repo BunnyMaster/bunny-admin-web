@@ -1,6 +1,6 @@
 export const auth = {
   // 分页查询
-  query: ['messageType::query', 'messageType::queryPage'],
+  query: 'messageType::query',
   // 添加操作
   add: ['messageType::add'],
   // 更新操作

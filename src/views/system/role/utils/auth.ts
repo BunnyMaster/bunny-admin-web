@@ -1,6 +1,6 @@
 export const auth = {
   // 分页查询
-  query: ['role::query', 'role::queryPage'],
+  query: 'role::query',
   // 添加操作
   add: ['role::add'],
   // 更新操作
