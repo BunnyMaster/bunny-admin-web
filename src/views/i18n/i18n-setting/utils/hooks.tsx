@@ -26,14 +26,15 @@ export const downloadI18nSetting = (type: string) => {
 /* 上传多语言配置 */
 export const updateI18nSetting = (fileType: string) => {
   const uploadFormRef = ref();
+  const form = { type: '', file: undefined, fileType, isAppend: true };
 
   addDialog({
     title: $t('update_multilingual'),
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    props: { form: { type: undefined, file: undefined, fileType, isAppend: true } },
-    contentRenderer: () => h(I18NUploadDialog, { ref: uploadFormRef, form: { type: '', file: undefined, fileType, isAppend: true } }),
+    props: { form },
+    contentRenderer: () => h(I18NUploadDialog, { ref: uploadFormRef, form }),
     beforeSure: async (done, { options }) => {
       uploadFormRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
@@ -48,13 +49,15 @@ export const updateI18nSetting = (fileType: string) => {
 
 /* 行内容添加 打开添加弹窗 */
 export const onAdd = () => {
+  const formInline = { keyName: '', translation: '', typeName: '' };
+
   addDialog({
     title: $t('addMultilingual'),
-    props: { formInline: { keyName: '', translation: '', typeName: '' } },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(I18nDialog, { ref: formRef, formInline: { keyName: '', translation: '', typeName: '' } }),
+    contentRenderer: () => h(I18nDialog, { ref: formRef, formInline }),
     footerButtons: [
       {
         label: $t('cancel'),
@@ -102,21 +105,14 @@ export const onAdd = () => {
 /* 当表格修改时 */
 export const onUpdate = (row: any) => {
   const id = row.id;
-
+  const formInline = { keyName: row.keyName, translation: row.translation, typeName: row.typeName };
   addDialog({
     title: $t('update_multilingual'),
-
-    props: {
-      formInline: { keyName: row.keyName, translation: row.translation, typeName: row.typeName },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () =>
-      h(I18nDialog, {
-        ref: formRef,
-        formInline: { keyName: row.keyName, translation: row.translation, typeName: row.typeName },
-      }),
+    contentRenderer: () => h(I18nDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormProps;
       formRef.value.ruleFormRef.validate(async (valid: any) => {

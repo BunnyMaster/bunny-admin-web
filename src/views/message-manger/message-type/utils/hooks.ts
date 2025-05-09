@@ -20,21 +20,14 @@ export async function onSearch() {
 
 /** 添加系统消息类型 */
 export function onAdd() {
+  const formInline = { status: true, messageName: undefined, messageType: undefined, summary: undefined };
   addDialog({
     title: `${$t('addNew')}${$t('messageType')}`,
-
-    props: {
-      formInline: {
-        status: true,
-        messageName: undefined,
-        messageType: undefined,
-        summary: undefined,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(MessageTypeDialog, { ref: formRef }),
+    contentRenderer: () => h(MessageTypeDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -51,21 +44,15 @@ export function onAdd() {
 
 /* 更新系统消息类型 */
 export function onUpdate(row: any) {
+  const formInline = { status: row.status, messageName: row.messageName, messageType: row.messageType, summary: row.summary };
+
   addDialog({
     title: `${$t('modify')}${$t('messageType')}`,
-
-    props: {
-      formInline: {
-        status: row.status,
-        messageName: row.messageName,
-        messageType: row.messageType,
-        summary: row.summary,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(MessageTypeDialog, { ref: formRef }),
+    contentRenderer: () => h(MessageTypeDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {

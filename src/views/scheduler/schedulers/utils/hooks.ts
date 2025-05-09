@@ -18,22 +18,22 @@ export async function onSearch() {
 
 /** 添加Schedulers视图 */
 export function onAdd() {
+  const formInline = {
+    jobName: undefined,
+    jobGroup: undefined,
+    description: undefined,
+    jobClassName: undefined,
+    cronExpression: undefined,
+    isUpdate: false,
+  };
+
   addDialog({
     title: `${$t('addNew')}${$t('schedulers')}`,
-
-    props: {
-      formInline: {
-        jobName: undefined,
-        jobGroup: undefined,
-        description: undefined,
-        jobClassName: undefined,
-        cronExpression: undefined,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(SchedulersDialog, { ref: formRef }),
+    contentRenderer: () => h(SchedulersDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -50,23 +50,22 @@ export function onAdd() {
 
 /* 更新Schedulers视图 */
 export function onUpdate(row: any) {
+  const formInline = {
+    jobName: row.jobName,
+    jobGroup: row.jobGroup,
+    description: row.description,
+    jobClassName: row.jobClassName,
+    cronExpression: row.cronExpression,
+    isUpdate: true,
+  };
+
   addDialog({
     title: `${$t('modify')}${$t('schedulers')}`,
-
-    props: {
-      formInline: {
-        jobName: row.jobName,
-        jobGroup: row.jobGroup,
-        description: row.description,
-        jobClassName: row.jobClassName,
-        cronExpression: row.cronExpression,
-        isUpdate: true,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(SchedulersDialog, { ref: formRef }),
+    contentRenderer: () => h(SchedulersDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {

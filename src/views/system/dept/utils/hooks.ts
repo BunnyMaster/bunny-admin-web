@@ -19,29 +19,20 @@ export async function onSearch() {
 
 /** 添加部门 */
 export function onAdd(parentId: string = '0') {
+  const formInline = {
+    parentId,
+    manager: undefined,
+    deptName: undefined,
+    summary: undefined,
+  };
+
   addDialog({
     title: `${$t('addNew')}${$t('dept')}`,
-    props: {
-      formInline: {
-        parentId,
-        manager: undefined,
-        deptName: undefined,
-        summary: undefined,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () =>
-      h(DeptDialog, {
-        ref: formRef,
-        formInline: {
-          parentId,
-          manager: undefined,
-          deptName: undefined,
-          summary: undefined,
-        },
-      }),
+    contentRenderer: () => h(DeptDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -58,30 +49,19 @@ export function onAdd(parentId: string = '0') {
 
 /* 更新部门 */
 export function onUpdate(row: any) {
+  const formInline = {
+    parentId: row.parentId,
+    manager: row.manager ? row.manager.split(',') : row.manager,
+    deptName: row.deptName,
+    summary: row.summary,
+  };
   addDialog({
     title: `${$t('modify')}${$t('dept')}`,
-
-    props: {
-      formInline: {
-        parentId: row.parentId,
-        manager: row.manager ? row.manager.split(',') : row.manager,
-        deptName: row.deptName,
-        summary: row.summary,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () =>
-      h(DeptDialog, {
-        ref: formRef,
-        formInline: {
-          parentId: row.parentId,
-          manager: row.manager ? row.manager.split(',') : row.manager,
-          deptName: row.deptName,
-          summary: row.summary,
-        },
-      }),
+    contentRenderer: () => h(DeptDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {

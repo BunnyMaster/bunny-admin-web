@@ -17,7 +17,7 @@ import { Plus } from '@element-plus/icons-vue';
 import { ElMessage, UploadRawFile, UploadRequestOptions } from 'element-plus';
 import { onMounted, ref } from 'vue';
 import { SystemEnum } from '@/enums/upload';
-import { uploadFile } from '@/api/v1/system/system';
+import { uploadImage } from '@/api/v1/system/system';
 import ImageLoading from '@/components/Upload/ImageLoading.vue';
 
 const props = defineProps({
@@ -28,10 +28,7 @@ const emits = defineEmits(['uploadCallback']);
 
 const imageSrc = ref('');
 
-/**
- * * 上传时
- * @param options
- */
+/* 上传图片 */
 const onUpload = async (options: UploadRequestOptions) => {
   // 整理参数
   const file = options.file;
@@ -39,14 +36,12 @@ const onUpload = async (options: UploadRequestOptions) => {
   const data = { file, type };
 
   // 上传文件并返回文件地址
-  const result: any = await uploadFile(data);
-  imageSrc.value = result.data.url;
+  const result: any = await uploadImage(data);
+  imageSrc.value = result.data.thUrl;
   emits('uploadCallback', result);
 };
 
-/**
- * * 删除图片
- */
+/* 删除图片 */
 const onRemoveImage = () => {
   // 清除图片地址和文件信息
   imageSrc.value = '';
@@ -63,9 +58,7 @@ const onRemoveImage = () => {
   emits('uploadCallback', data);
 };
 
-/**
- * * 上传之前
- */
+/* 上传之前 */
 const beforeUpload = (file: UploadRawFile) => {
   if (file.size > SystemEnum.IMAGE_SIZE) {
     ElMessage.error(SystemEnum.IMAGE_MESSAGE);
@@ -73,9 +66,7 @@ const beforeUpload = (file: UploadRawFile) => {
   }
 };
 
-/**
- * * 初始化图片地址
- */
+/* 初始化图片地址 */
 const handleInitiateImageSrc = () => {
   const value = props.imageUrl;
   if (value) imageSrc.value = value;
@@ -85,17 +76,3 @@ onMounted(() => {
   handleInitiateImageSrc();
 });
 </script>
-
-<style lang="scss" scoped>
-//.el-upload {
-//	width: 128px;
-//	height: 128px;
-//}
-//
-//.el-upload-dragger {
-//	display: flex;
-//	align-items: center;
-//	justify-content: center;
-//	height: 100%;
-//}
-</style>

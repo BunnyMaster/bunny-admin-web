@@ -55,15 +55,27 @@ onMounted(() => {
   <div class="main">
     <ReAuth :value="auth.query">
       <el-form ref="formRef" :inline="true" :model="filesStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+        <!--文件的名称-->
         <el-form-item :label="$t('files_filename')" prop="filename">
           <el-input v-model="filesStore.form.filename" :placeholder="`${$t('input')}${$t('files_filename')}`" class="!w-[180px]" clearable />
         </el-form-item>
+        <!--文件在服务器上的存储路径-->
         <el-form-item :label="$t('files_filepath')" prop="filepath">
           <el-input v-model="filesStore.form.filepath" :placeholder="`${$t('input')}${$t('files_filepath')}`" class="!w-[180px]" clearable />
         </el-form-item>
-        <el-form-item :label="$t('files_fileType')" prop="fileType">
-          <el-input v-model="filesStore.form.fileType" :placeholder="`${$t('input')}${$t('files_fileType')}`" class="!w-[180px]" clearable />
+        <!--文件的MIME类型-->
+        <el-form-item :label="$t('files_fileType')" prop="contentType">
+          <el-input v-model="filesStore.form.contentType" :placeholder="`${$t('input')}${$t('files_fileType')}`" class="!w-[180px]" clearable />
         </el-form-item>
+        <!--扩展名-->
+        <el-form-item :label="$t('ext')" prop="ext">
+          <el-input v-model="filesStore.form.ext" :placeholder="`${$t('input')}${$t('ext')}`" class="!w-[180px]" clearable />
+        </el-form-item>
+        <!--平台-->
+        <el-form-item :label="$t('platform')" prop="platform">
+          <el-input v-model="filesStore.form.platform" :placeholder="`${$t('input')}${$t('platform')}`" class="!w-[180px]" clearable />
+        </el-form-item>
+        <!--下载量-->
         <el-form-item :label="$t('files_downloadCount')" prop="downloadCount">
           <el-input
             v-model="filesStore.form.downloadCount"
@@ -74,6 +86,7 @@ onMounted(() => {
             type="number"
           />
         </el-form-item>
+
         <el-form-item>
           <el-button :icon="useRenderIcon('ri/search-line')" :loading="filesStore.loading" type="primary" @click="onSearch">
             {{ $t('search') }}

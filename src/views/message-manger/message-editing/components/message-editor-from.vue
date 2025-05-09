@@ -163,7 +163,7 @@ onMounted(() => {
 
     <!-- 消息等级简介 -->
     <el-form-item :label="$t('extra')" prop="extra">
-      <el-input v-model="formState.extra" maxlength="5" show-word-limit type="text" />
+      <el-input v-model="formState.extra" maxlength="4" show-word-limit type="text" />
     </el-form-item>
 
     <!-- 提交 -->

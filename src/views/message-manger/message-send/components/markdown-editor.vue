@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import { uploadFile } from '@/api/v1/system/system';
+import { uploadImage } from '@/api/v1/system/system';
 import { updateMessage } from '@/views/message-manger/message-send/utils';
 
 /* 上传图片 */
@@ -13,7 +13,7 @@ const onUploadImg = async (files: any, callback: any) => {
         const form = new FormData();
         form.append('file', file);
         form.append('type', 'message');
-        resolve(await uploadFile(form));
+        resolve(await uploadImage(form));
       });
     })
   );

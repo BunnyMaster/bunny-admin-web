@@ -3,14 +3,18 @@ import Text from '@/components/ReText';
 import LaySidebarTopCollapse from '@/layout/components/lay-sidebar/components/SidebarTopCollapse.vue';
 import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange';
 import { $t } from '@/plugins/i18n';
-import { panes, userInfos } from '@/views/account-settings/utils';
+import { panes } from '@/views/account-settings/utils/columns';
 import leftLine from '~icons/ri/arrow-left-s-line';
 import { deviceDetection, useGlobal } from '@pureadmin/utils';
 import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/store/system/user';
+import { storeToRefs } from 'pinia';
 
 const router = useRouter();
 const isOpen = ref(!deviceDetection());
+const userStore = useUserStore();
+const { userinfoForm } = storeToRefs(userStore);
 const { $storage } = useGlobal<GlobalPropertiesApi>();
 const witchPane = ref('profile');
 
@@ -36,13 +40,13 @@ onBeforeMount(() => {
         </el-menu-item>
 
         <div class="flex items-center ml-8 mt-4 mb-4">
-          <el-avatar :size="48" :src="userInfos.avatar" />
+          <el-avatar :size="48" :src="userinfoForm.avatar" />
           <div class="ml-4 flex flex-col max-w-[130px]">
             <Text class="font-bold !self-baseline">
-              {{ userInfos.nickname }}
+              {{ userinfoForm.nickname }}
             </Text>
             <Text class="!self-baseline" type="info">
-              {{ userInfos.username }}
+              {{ userinfoForm.username }}
             </Text>
           </div>
         </div>

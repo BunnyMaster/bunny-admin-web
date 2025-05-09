@@ -22,24 +22,23 @@ export async function onSearch() {
 
 /** 添加邮箱用户发送配置 */
 export function onAdd() {
+  const formInline = {
+    email: undefined,
+    password: undefined,
+    host: undefined,
+    port: undefined,
+    smtpAgreement: undefined,
+    openSSL: true,
+    isDefault: false,
+  };
+  
   addDialog({
     title: `${$t('addNew')}${$t('emailUsers')}`,
-
-    props: {
-      formInline: {
-        email: undefined,
-        password: undefined,
-        host: undefined,
-        port: undefined,
-        smtpAgreement: undefined,
-        openSSL: true,
-        isDefault: false,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(EmailUsersDialog, { ref: formRef }),
+    contentRenderer: () => h(EmailUsersDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -56,24 +55,23 @@ export function onAdd() {
 
 /* 更新邮箱用户发送配置 */
 export function onUpdate(row: any) {
+  const formInline = {
+    email: row.email,
+    password: row.password,
+    host: row.host,
+    port: row.port,
+    smtpAgreement: row.smtpAgreement,
+    openSSL: row.openSSL,
+    isDefault: row.isDefault,
+  };
+
   addDialog({
     title: `${$t('modify')}${$t('emailUsers')}`,
-
-    props: {
-      formInline: {
-        email: row.email,
-        password: row.password,
-        host: row.host,
-        port: row.port,
-        smtpAgreement: row.smtpAgreement,
-        openSSL: row.openSSL,
-        isDefault: row.isDefault,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(EmailUsersDialog, { ref: formRef }),
+    contentRenderer: () => h(EmailUsersDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {

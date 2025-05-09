@@ -25,13 +25,11 @@ export async function onSearch() {
 export function onAdd() {
   addDialog({
     title: `${$t('addNew')}${$t('files')}`,
-
     props: {
       formInline: {
-        filename: undefined,
-        fileType: undefined,
         filepath: undefined,
         downloadCount: 0,
+        // 上传为 files，更新时为 file
         files: [],
         isUpload: false,
       },
@@ -43,10 +41,9 @@ export function onAdd() {
       const dialog = h(FilesDialog, {
         ref: formRef,
         formInline: {
-          filename: undefined,
-          fileType: undefined,
           filepath: undefined,
           downloadCount: 0,
+          // 上传为 files，更新时为 file
           files: [],
           isUpload: false,
         },
@@ -58,14 +55,17 @@ export function onAdd() {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
-
-        // 添加文件
-        form.files = (form.files as UploadFiles).map((file) => file.raw);
         const data = {
           filepath: form.filepath,
           downloadCount: form.downloadCount,
-          files: form.files,
+          files: [],
         };
+
+        // 判断是否更新了文件
+        if (form.files) {
+          data.files = (form.files as UploadFiles).map((file) => file.raw);
+        }
+
         const result = await filesStore.addFiles(data);
 
         // 成功后关闭窗口
@@ -79,33 +79,22 @@ export function onAdd() {
 
 /* 更新系统文件表 */
 export function onUpdate(row: any) {
+  const formInline = {
+    filepath: row.filepath,
+    downloadCount: row.downloadCount,
+    // 上传为 files，更新时为 file
+    files: undefined,
+    isUpload: true,
+  };
+
   addDialog({
     title: `${$t('modify')}${$t('files')}`,
-
-    props: {
-      formInline: {
-        filename: row.filename,
-        fileType: row.fileType,
-        filepath: row.filepath,
-        downloadCount: row.downloadCount,
-        isUpload: true,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
     contentRenderer: () => {
-      const dialog = h(FilesDialog, {
-        ref: formRef,
-        formInline: {
-          filename: row.filename,
-          fileType: row.fileType,
-          filepath: row.filepath,
-          downloadCount: row.downloadCount,
-          isUpload: true,
-          files: undefined,
-        },
-      });
+      const dialog = h(FilesDialog, { ref: formRef, formInline });
       formRef.value = dialog;
       return dialog;
     },
@@ -114,13 +103,21 @@ export function onUpdate(row: any) {
       formRef.value.formRef.validate(async (valid: any) => {
         if (!valid) return;
 
+        const data = {
+          id: row.id,
+          filepath: form.filepath,
+          downloadCount: form.downloadCount,
+          file: undefined,
+          isUpload: true,
+        };
+
         // 判断是否更新了文件
         if (form.files) {
-          form.files = (form.files as UploadFiles).map((file) => file.raw);
+          data.file = (form.files as UploadFiles).map((file) => file.raw)[0];
         }
 
         // 更新文件
-        const result = await filesStore.editFiles({ ...form, id: row.id });
+        const result = await filesStore.editFiles(data);
 
         // 更新完成
         if (!result) return;

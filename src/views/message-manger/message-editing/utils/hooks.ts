@@ -2,7 +2,7 @@ import { reactive, ref } from 'vue';
 import type { UploadRawFile, UploadRequestOptions } from 'element-plus';
 import { SystemEnum } from '@/enums/upload';
 import { message } from '@/utils/message';
-import { uploadFile } from '@/api/v1/system/system';
+import { uploadImage } from '@/api/v1/system/system';
 import { useAdminUserStore } from '@/store/system/adminUser';
 
 // 用户信息列表
@@ -36,9 +36,9 @@ export const onSearchUserinfo = async (keyword: string) => {
 /** 上传时 */
 export const onUpload = async (options: UploadRequestOptions) => {
   const data = { file: options.file, type: 'message' };
-  const result: any = await uploadFile(data);
-  coverUrl.value = result.data.url;
-  formState.cover = result.data.filepath;
+  const result: any = await uploadImage(data);
+  coverUrl.value = result.data.thUrl;
+  formState.cover = result.data.thUrl;
 };
 
 /** 上传之前 */

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { deleteFiles, fetchAddFiles, getFilesPage, getFilesStoragePath, getMediaTypeList, updateFiles } from '@/api/v1/files';
+import { deleteFiles, fetchAddFiles, getFilesPage, getFilesStoragePath, updateFiles } from '@/api/v1/files';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';
@@ -12,8 +12,6 @@ export const useFilesStore = defineStore('filesStore', {
     return {
       // 系统文件表列表
       datalist: [],
-      // 所有文件类型
-      allMediaTypes: [],
       // 所有文件存储路径
       allFilesStoragePath: [],
       // 查询表单
@@ -23,7 +21,11 @@ export const useFilesStore = defineStore('filesStore', {
         // 文件在服务器上的存储路径
         filepath: undefined,
         // 文件的MIME类型
-        fileType: undefined,
+        contentType: undefined,
+        // 扩展名
+        ext: undefined,
+        // 存储平台
+        platform: undefined,
         // 下载数量
         downloadCount: undefined,
       },
@@ -46,7 +48,6 @@ export const useFilesStore = defineStore('filesStore', {
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
       delete data.total;
-      delete data.background;
 
       // 获取系统文件表列表
       const result = await getFilesPage(data);
@@ -72,14 +73,6 @@ export const useFilesStore = defineStore('filesStore', {
     async removeFiles(data: any) {
       const result = await deleteFiles(data);
       return storeMessage(result);
-    },
-
-    /** 获取所有文件类型 */
-    async loadMediaTypeList() {
-      const result = await getMediaTypeList();
-      if (result.code === 200) {
-        this.allMediaTypes = result.data;
-      }
     },
 
     /** 获取所有文件类型 */

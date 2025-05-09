@@ -21,34 +21,22 @@ export async function onSearch() {
 /** 添加邮件模板表 */
 export function onAdd() {
   const formRef = ref();
+  const formInline = {
+    templateName: undefined,
+    emailUser: undefined,
+    subject: undefined,
+    isDefault: false,
+    body: undefined,
+    type: undefined,
+  };
 
   addDialog({
     title: `${$t('addNew')}${$t('emailTemplate')}`,
-    props: {
-      formInline: {
-        templateName: undefined,
-        emailUser: undefined,
-        subject: undefined,
-        isDefault: false,
-        body: undefined,
-        type: undefined,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () =>
-      h(EmailTemplateDialog, {
-        ref: formRef,
-        formInline: {
-          templateName: undefined,
-          emailUser: undefined,
-          subject: undefined,
-          isDefault: false,
-          body: undefined,
-          type: undefined,
-        },
-      }),
+    contentRenderer: () => h(EmailTemplateDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -66,34 +54,22 @@ export function onAdd() {
 /* 更新邮件模板表 */
 export function onUpdate(row: any) {
   const formRef = ref();
-
+  const formInline = {
+    templateName: row.templateName,
+    emailUser: row.emailUser,
+    subject: row.subject,
+    isDefault: row.isDefault,
+    body: row.body,
+    type: row.type,
+  };
+  
   addDialog({
     title: `${$t('modify')}${$t('emailTemplate')}`,
-    props: {
-      formInline: {
-        templateName: row.templateName,
-        emailUser: row.emailUser,
-        subject: row.subject,
-        isDefault: row.isDefault,
-        body: row.body,
-        type: row.type,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () =>
-      h(EmailTemplateDialog, {
-        ref: formRef,
-        formInline: {
-          templateName: row.templateName,
-          emailUser: row.emailUser,
-          subject: row.subject,
-          isDefault: row.isDefault,
-          body: row.body,
-          type: row.type,
-        },
-      }),
+    contentRenderer: () => h(EmailTemplateDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
 

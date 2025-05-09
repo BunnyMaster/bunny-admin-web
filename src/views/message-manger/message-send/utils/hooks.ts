@@ -6,7 +6,7 @@ import { $t } from '@/plugins/i18n';
 import { useAdminUserStore } from '@/store/system/adminUser';
 import { decode, encode } from 'js-base64';
 import type { UploadRequestOptions } from 'element-plus';
-import { uploadFile } from '@/api/v1/system/system';
+import { uploadImage } from '@/api/v1/system/system';
 import { useMessageSendStore } from '@/store/message/messageSend';
 
 export const formRef = ref();
@@ -150,7 +150,7 @@ export const onDeleteBatch = async () => {
 /** 上传时 */
 export const onUpload = async (options: UploadRequestOptions) => {
   const data = { file: options.file, type: 'message' };
-  const result: any = await uploadFile(data);
-  coverUrl.value = result.data.url;
-  updateMessage.cover = result.data.filepath;
+  const result: any = await uploadImage(data);
+  coverUrl.value = result.data.thUrl;
+  updateMessage.cover = result.data.thUrl;
 };

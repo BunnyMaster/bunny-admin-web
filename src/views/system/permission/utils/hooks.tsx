@@ -23,31 +23,24 @@ export async function onSearch() {
 
 /** 添加权限 */
 export function onAdd(parentId = 0) {
+  const formInline = {
+    parentId,
+    powerCode: undefined,
+    powerName: undefined,
+    requestUrl: undefined,
+    requestMethod: undefined,
+  };
+
   addDialog({
     title: `${$t('addNew')}${$t('power')}`,
-
-    props: {
-      formInline: {
-        parentId,
-        powerCode: undefined,
-        powerName: undefined,
-        requestUrl: undefined,
-        requestMethod: undefined,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
     contentRenderer: () =>
       h(PermissionFromDialog, {
         ref: formRef,
-        formInline: {
-          parentId,
-          powerCode: undefined,
-          powerName: undefined,
-          requestUrl: undefined,
-          requestMethod: undefined,
-        },
+        formInline,
       }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
@@ -65,32 +58,21 @@ export function onAdd(parentId = 0) {
 
 /* 更新权限 */
 export function onUpdate(row: any) {
+  const formInline = {
+    parentId: row.parentId,
+    powerCode: row.powerCode,
+    powerName: row.powerName,
+    requestUrl: row.requestUrl,
+    requestMethod: row.requestMethod,
+  };
+
   addDialog({
     title: `${$t('modify')}${$t('power')}`,
-
-    props: {
-      formInline: {
-        parentId: row.parentId,
-        powerCode: row.powerCode,
-        powerName: row.powerName,
-        requestUrl: row.requestUrl,
-        requestMethod: row.requestMethod,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () =>
-      h(PermissionFromDialog, {
-        ref: formRef,
-        formInline: {
-          parentId: row.parentId,
-          powerCode: row.powerCode,
-          powerName: row.powerName,
-          requestUrl: row.requestUrl,
-          requestMethod: row.requestMethod,
-        },
-      }),
+    contentRenderer: () => h(PermissionFromDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {

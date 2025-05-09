@@ -32,14 +32,14 @@ export async function onSearch() {
 
 /** 添加角色 */
 export function onAdd() {
+  const formInline = { roleCode: undefined, description: undefined };
   addDialog({
     title: `${$t('addNew')}${$t('role')}`,
-
-    props: { formInline: { roleCode: undefined, description: undefined } },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(RoleDialog, { ref: formRef, formInline: { roleCode: undefined, description: undefined } }),
+    contentRenderer: () => h(RoleDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -56,14 +56,15 @@ export function onAdd() {
 
 /* 更新角色 */
 export function onUpdate(row: any) {
+  const formInline = { roleCode: row.roleCode, description: row.description };
+
   addDialog({
     title: `${$t('modify')}${$t('role')}`,
-
-    props: { formInline: { roleCode: row.roleCode, description: row.description } },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(RoleDialog, { ref: formRef, formInline: { roleCode: row.roleCode, description: row.description } }),
+    contentRenderer: () => h(RoleDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {

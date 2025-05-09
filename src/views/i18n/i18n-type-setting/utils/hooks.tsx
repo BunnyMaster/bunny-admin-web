@@ -17,16 +17,15 @@ export async function onSearch() {
 
 /* 添加多语言 */
 export function onAdd() {
+  const formInline = { typeName: '', summary: '', isDefault: false };
+
   addDialog({
     title: `添加多语言类型`,
-
-    props: {
-      formInline: { typeName: '', summary: '', isDefault: false },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(AddI18nType, { ref: formRef }),
+    contentRenderer: () => h(AddI18nType, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -43,20 +42,15 @@ export function onAdd() {
 
 /* 更新内容 */
 export function onUpdate(row: any) {
+  const formInline = { typeName: row.typeName, summary: row.summary, isDefault: row.isDefault };
+
   addDialog({
     title: `修改多语言类型`,
-
-    props: {
-      formInline: {
-        typeName: row.typeName,
-        summary: row.summary,
-        isDefault: row.isDefault,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(AddI18nType, { ref: formRef }),
+    contentRenderer: () => h(AddI18nType, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {

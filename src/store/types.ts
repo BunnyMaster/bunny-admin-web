@@ -44,4 +44,14 @@ export type userType = {
   permissions?: Array<string>;
   isRemembered?: boolean;
   readMeDay?: number;
+  userinfoForm?: {
+    avatar: string;
+    username: string;
+    nickname: string;
+    email: string;
+    phone: string;
+    summary: string;
+    password: string;
+    sex: string;
+  };
 };

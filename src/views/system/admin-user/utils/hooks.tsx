@@ -50,41 +50,27 @@ export async function onSearch() {
 /** 添加用户信息 */
 export function onAdd() {
   isAddUserinfo.value = true;
+
+  const formInline = {
+    username: undefined,
+    nickname: undefined,
+    email: undefined,
+    phone: undefined,
+    password: undefined,
+    avatar: undefined,
+    sex: undefined,
+    summary: undefined,
+    status: false,
+    deptId: undefined,
+  };
+
   addDialog({
     title: `${$t('addNew')}${$t('adminUser')}`,
-    props: {
-      formInline: {
-        username: undefined,
-        nickname: undefined,
-        email: undefined,
-        phone: undefined,
-        password: undefined,
-        avatar: undefined,
-        sex: undefined,
-        summary: undefined,
-        status: false,
-        deptId: undefined,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () =>
-      h(AdminUserDialog, {
-        ref: formRef,
-        formInline: {
-          username: undefined,
-          nickname: undefined,
-          email: undefined,
-          phone: undefined,
-          password: undefined,
-          avatar: undefined,
-          sex: undefined,
-          summary: undefined,
-          status: false,
-          deptId: undefined,
-        },
-      }),
+    contentRenderer: () => h(AdminUserDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -102,41 +88,26 @@ export function onAdd() {
 /* 更新用户信息 */
 export function onUpdate(row: any) {
   isAddUserinfo.value = false;
+
+  const formInline = {
+    username: row.username,
+    nickname: row.nickname,
+    email: row.email,
+    phone: row.phone,
+    password: row.password,
+    avatar: row.avatar,
+    sex: row.sex,
+    summary: row.summary,
+    status: row.status,
+    deptId: row.deptId,
+  };
   addDialog({
     title: `${$t('modify')}${$t('adminUser')}`,
-    props: {
-      formInline: {
-        username: row.username,
-        nickname: row.nickname,
-        email: row.email,
-        phone: row.phone,
-        password: row.password,
-        avatar: row.avatar,
-        sex: row.sex,
-        summary: row.summary,
-        status: row.status,
-        deptId: row.deptId,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () =>
-      h(AdminUserDialog, {
-        ref: formRef,
-        formInline: {
-          username: row.username,
-          nickname: row.nickname,
-          email: row.email,
-          phone: row.phone,
-          password: row.password,
-          avatar: row.avatar,
-          sex: row.sex,
-          summary: row.summary,
-          status: row.status,
-          deptId: row.deptId,
-        },
-      }),
+    contentRenderer: () => h(AdminUserDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -177,7 +148,6 @@ export const onDeleteBatch = async () => {
 
   addDialog({
     title: $t('deleteBatchTip'),
-
     props: { formInline: { confirmText: '' } },
     draggable: true,
     fullscreenIcon: true,

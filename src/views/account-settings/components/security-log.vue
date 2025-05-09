@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { $t } from '@/plugins/i18n';
 import { useUserLoginLogStore } from '@/store/monitor/userLoginLog';
-import { columns } from '@/views/account-settings/utils';
+import { columns } from '@/views/account-settings/utils/columns';
 import { PureTable } from '@pureadmin/table';
 import { deviceDetection } from '@pureadmin/utils';
 import { onMounted, reactive } from 'vue';

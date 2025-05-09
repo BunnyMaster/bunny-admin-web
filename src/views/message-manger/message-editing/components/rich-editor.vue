@@ -27,10 +27,8 @@ editorConfig.MENU_CONF['uploadImage'] = {
   customInsert(res: any, insertFn) {
     // res.data.url是后端返回的图片地址，根据实际业务改写
     if (res.data.url) {
-      setTimeout(() => {
-        // insertFn插入图片进编辑器
-        insertFn(res.data.url);
-      }, 2000);
+      // insertFn插入图片进编辑器
+      insertFn(res.data.url);
     }
   },
 };

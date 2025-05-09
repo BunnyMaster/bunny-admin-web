@@ -19,14 +19,15 @@ export async function onSearch() {
 
 /** 添加系统菜单图标 */
 export function onAdd() {
+  const formInline = { iconCode: undefined, iconName: undefined };
+
   addDialog({
     title: `${$t('addNew')} ${$t('menuIcon')}`,
-
-    props: { formInline: { confirmText: '' } },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(MenuIconDialog, { ref: formRef }),
+    contentRenderer: () => h(MenuIconDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -43,19 +44,15 @@ export function onAdd() {
 
 /* 更新系统菜单图标 */
 export function onUpdate(row: any) {
+  const formInline = { iconCode: row.iconCode, iconName: row.iconName };
+
   addDialog({
     title: `${$t('modify')} ${$t('menuIcon')}`,
-
-    props: {
-      formInline: {
-        iconCode: row.iconCode,
-        iconName: row.iconName,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(MenuIconDialog, { ref: formRef }),
+    contentRenderer: () => h(MenuIconDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {

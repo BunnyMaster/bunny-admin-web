@@ -105,6 +105,7 @@ onMounted(() => {
           row-key="id"
           showOverflowTooltip
           table-layout="auto"
+          @row-dblclick="(row) => onUpdate(row)"
           @selection-change="onSelectionChange"
         >
           <template #rank="{ row }">

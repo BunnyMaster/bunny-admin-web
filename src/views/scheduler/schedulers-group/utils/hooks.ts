@@ -20,19 +20,15 @@ export async function onSearch() {
 
 /** 添加任务调度分组 */
 export function onAdd() {
+  const formInline = { groupName: undefined, description: undefined };
+
   addDialog({
     title: `${$t('addNew')}${$t('schedulersGroup')}`,
-
-    props: {
-      formInline: {
-        groupName: undefined,
-        description: undefined,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(SchedulersGroupDialog, { ref: formRef }),
+    contentRenderer: () => h(SchedulersGroupDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {
@@ -49,19 +45,14 @@ export function onAdd() {
 
 /* 更新任务调度分组 */
 export function onUpdate(row: any) {
+  const formInline = { groupName: row.groupName, description: row.description };
   addDialog({
     title: `${$t('modify')}${$t('schedulersGroup')}`,
-
-    props: {
-      formInline: {
-        groupName: row.groupName,
-        description: row.description,
-      },
-    },
+    props: { formInline },
     draggable: true,
     fullscreenIcon: true,
     closeOnClickModal: false,
-    contentRenderer: () => h(SchedulersGroupDialog, { ref: formRef }),
+    contentRenderer: () => h(SchedulersGroupDialog, { ref: formRef, formInline }),
     beforeSure: (done, { options }) => {
       const form = options.props.formInline as FormItemProps;
       formRef.value.formRef.validate(async (valid: any) => {

@@ -22,6 +22,17 @@ export const useUserStore = defineStore('system-user', {
     isRemembered: true,
     // 登录页的免登录存储几天，默认7天
     readMeDay: 7,
+    // 用户修改信息列表
+    userinfoForm: {
+      avatar: '',
+      username: '',
+      nickname: '',
+      email: '',
+      phone: '',
+      summary: '',
+      password: '',
+      sex: '',
+    },
   }),
   actions: {
     /** 登入 */
