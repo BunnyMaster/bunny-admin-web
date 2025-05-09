@@ -1,12 +1,10 @@
 <script lang="ts" setup>
-import ReAuth from '@/components/ReAuth/src/auth';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { hasAuth } from '@/router/utils';
 import { useFilesStore } from '@/store/system/files';
-import { auth, columns, onAdd, onDelete, onDeleteBatch, onDownload, onDownloadBatch, onSearch, onUpdate, selectRows } from '@/views/system/files/utils';
+import { columns, onAdd, onDelete, onDeleteBatch, onDownload, onDownloadBatch, onSearch, onUpdate, selectRows } from '@/views/system/files/utils';
 import PureTable from '@pureadmin/table';
 import { FormInstance } from 'element-plus';
 import { onMounted, ref } from 'vue';
@@ -53,70 +51,61 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <ReAuth :value="auth.query">
-      <el-form ref="formRef" :inline="true" :model="filesStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-        <!--文件的名称-->
-        <el-form-item :label="$t('files_filename')" prop="filename">
-          <el-input v-model="filesStore.form.filename" :placeholder="`${$t('input')}${$t('files_filename')}`" class="!w-[180px]" clearable />
-        </el-form-item>
-        <!--文件在服务器上的存储路径-->
-        <el-form-item :label="$t('files_filepath')" prop="filepath">
-          <el-input v-model="filesStore.form.filepath" :placeholder="`${$t('input')}${$t('files_filepath')}`" class="!w-[180px]" clearable />
-        </el-form-item>
-        <!--文件的MIME类型-->
-        <el-form-item :label="$t('files_fileType')" prop="contentType">
-          <el-input v-model="filesStore.form.contentType" :placeholder="`${$t('input')}${$t('files_fileType')}`" class="!w-[180px]" clearable />
-        </el-form-item>
-        <!--扩展名-->
-        <el-form-item :label="$t('ext')" prop="ext">
-          <el-input v-model="filesStore.form.ext" :placeholder="`${$t('input')}${$t('ext')}`" class="!w-[180px]" clearable />
-        </el-form-item>
-        <!--平台-->
-        <el-form-item :label="$t('platform')" prop="platform">
-          <el-input v-model="filesStore.form.platform" :placeholder="`${$t('input')}${$t('platform')}`" class="!w-[180px]" clearable />
-        </el-form-item>
-        <!--下载量-->
-        <el-form-item :label="$t('files_downloadCount')" prop="downloadCount">
-          <el-input
-            v-model="filesStore.form.downloadCount"
-            :placeholder="`${$t('input')}${$t('files_downloadCount')}`"
-            class="!w-[180px]"
-            clearable
-            min="0"
-            type="number"
-          />
-        </el-form-item>
+    <el-form ref="formRef" :inline="true" :model="filesStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+      <!--文件的名称-->
+      <el-form-item :label="$t('files_filename')" prop="filename">
+        <el-input v-model="filesStore.form.filename" :placeholder="`${$t('input')}${$t('files_filename')}`" class="!w-[180px]" clearable />
+      </el-form-item>
+      <!--文件在服务器上的存储路径-->
+      <el-form-item :label="$t('files_filepath')" prop="filepath">
+        <el-input v-model="filesStore.form.filepath" :placeholder="`${$t('input')}${$t('files_filepath')}`" class="!w-[180px]" clearable />
+      </el-form-item>
+      <!--文件的MIME类型-->
+      <el-form-item :label="$t('files_fileType')" prop="contentType">
+        <el-input v-model="filesStore.form.contentType" :placeholder="`${$t('input')}${$t('files_fileType')}`" class="!w-[180px]" clearable />
+      </el-form-item>
+      <!--扩展名-->
+      <el-form-item :label="$t('ext')" prop="ext">
+        <el-input v-model="filesStore.form.ext" :placeholder="`${$t('input')}${$t('ext')}`" class="!w-[180px]" clearable />
+      </el-form-item>
+      <!--平台-->
+      <el-form-item :label="$t('platform')" prop="platform">
+        <el-input v-model="filesStore.form.platform" :placeholder="`${$t('input')}${$t('platform')}`" class="!w-[180px]" clearable />
+      </el-form-item>
+      <!--下载量-->
+      <el-form-item :label="$t('files_downloadCount')" prop="downloadCount">
+        <el-input
+          v-model="filesStore.form.downloadCount"
+          :placeholder="`${$t('input')}${$t('files_downloadCount')}`"
+          class="!w-[180px]"
+          clearable
+          min="0"
+          type="number"
+        />
+      </el-form-item>
 
-        <el-form-item>
-          <el-button :icon="useRenderIcon('ri/search-line')" :loading="filesStore.loading" type="primary" @click="onSearch">
-            {{ $t('search') }}
-          </el-button>
-          <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
-        </el-form-item>
-      </el-form>
-    </ReAuth>
+      <el-form-item>
+        <el-button :icon="useRenderIcon('ri/search-line')" :loading="filesStore.loading" type="primary" @click="onSearch">
+          {{ $t('search') }}
+        </el-button>
+        <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
+      </el-form-item>
+    </el-form>
 
     <PureTableBar :columns="columns" :title="$t('system_file')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
         <!-- 批量下载 -->
-        <el-button
-          v-if="hasAuth(auth.download)"
-          :disabled="!(selectRows.length > 0)"
-          :icon="useRenderIcon(Download)"
-          plain
-          type="primary"
-          @click="onDownloadBatch"
-        >
+        <el-button :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Download)" plain type="primary" @click="onDownloadBatch">
           {{ $t('download_batch') }}
         </el-button>
 
         <!-- 新增 -->
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
+        <el-button :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
 
         <!-- 批量删除按钮 -->
-        <el-button v-if="hasAuth(auth.delete)" :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
+        <el-button :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
           {{ $t('deleteBatches') }}
         </el-button>
       </template>
@@ -155,21 +144,13 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
-            <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
+            <el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
-            <el-button
-              v-if="hasAuth(auth.download)"
-              :icon="useRenderIcon(EditPen)"
-              :size="size"
-              class="reset-margin"
-              link
-              type="primary"
-              @click="onDownload(row)"
-            >
+            <el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onDownload(row)">
               {{ $t('download') }}
             </el-button>
-            <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')} ${row.filename}?`" @confirm="onDelete(row)">
+            <el-popconfirm :title="`${$t('delete')} ${row.filename}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

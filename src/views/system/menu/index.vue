@@ -4,7 +4,6 @@ import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { hasAuth } from '@/router/utils';
 import { userMenuStore } from '@/store/system/menu';
 import { auth, clearAllRolesSelect, columns, mergeArgs, onAdd, onDelete, onSearch, onUpdate, selectIds, tableRef } from '@/views/system/menu/utils';
 import PureTable from '@pureadmin/table';
@@ -72,19 +71,12 @@ onMounted(() => {
     >
       <template #buttons>
         <!-- 添加菜单 -->
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd()">
+        <el-button :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd()">
           {{ $t('addNew') }}
         </el-button>
 
         <!-- 清除选中所以角色 -->
-        <el-button
-          v-if="hasAuth(auth.clearAllRolesSelect)"
-          :disabled="!(selectIds.length > 0)"
-          :icon="useRenderIcon('ic:baseline-clear')"
-          plain
-          type="danger"
-          @click="clearAllRolesSelect()"
-        >
+        <el-button :disabled="!(selectIds.length > 0)" :icon="useRenderIcon('ic:baseline-clear')" plain type="danger" @click="clearAllRolesSelect()">
           {{ $t('clearAllRolesSelect') }}
         </el-button>
       </template>
@@ -126,7 +118,7 @@ onMounted(() => {
 
           <template #operation="{ row }">
             <!-- 修改 -->
-            <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
+            <el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
 
@@ -146,7 +138,7 @@ onMounted(() => {
             </ReAuth>
 
             <!-- 删除操作 -->
-            <el-popconfirm v-if="hasAuth(auth.deleted)" :title="`${$t('delete')} ${$t(row.title)}?`" @confirm="onDelete(row)">
+            <el-popconfirm :title="`${$t('delete')} ${$t(row.title)}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

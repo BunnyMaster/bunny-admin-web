@@ -1,14 +1,12 @@
 <script lang="ts" setup>
-import ReAuth from '@/components/ReAuth/src/auth';
 import { addDialog } from '@/components/ReDialog/index';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { RequestMethod } from '@/enums/baseConstant';
 import { $t } from '@/plugins/i18n';
-import { hasAuth } from '@/router/utils';
 import { usePermissionStore } from '@/store/system/power';
-import { auth, columns, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate, onUpdateBatchParent, powerIds } from '@/views/system/permission/utils';
+import { columns, onAdd, onDelete, onDeleteBatch, onSearch, onUpdate, onUpdateBatchParent, powerIds } from '@/views/system/permission/utils';
 import FileUploadDialog from '@/views/system/role/components/file-upload-dialog.vue';
 import PureTable from '@pureadmin/table';
 import { handleTree } from '@pureadmin/utils';
@@ -111,30 +109,28 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <ReAuth :value="auth.query">
-      <el-form ref="formRef" :inline="true" :model="powerStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-        <el-form-item :label="$t('power_powerCode')" prop="powerCode">
-          <el-input v-model="powerStore.form.powerCode" :placeholder="`${$t('input')}${$t('power_powerCode')}`" class="!w-[180px]" clearable />
-        </el-form-item>
-        <el-form-item :label="$t('power_powerName')" prop="powerName">
-          <el-input v-model="powerStore.form.powerName" :placeholder="`${$t('input')}${$t('power_powerName')}`" class="!w-[180px]" clearable />
-        </el-form-item>
-        <el-form-item :label="$t('power_requestUrl')" prop="requestUrl">
-          <el-input v-model="powerStore.form.requestUrl" :placeholder="`${$t('input')}${$t('power_requestUrl')}`" class="!w-[180px]" clearable />
-        </el-form-item>
-        <el-form-item :label="$t('requestMethod')" prop="requestMethod">
-          <el-select v-model="powerStore.form.requestMethod" :placeholder="$t('requestMethod')" autocomplete="off" class="!w-[180px]" clearable filterable>
-            <el-option v-for="item in RequestMethod" :key="item" :label="item" :value="item" />
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button :icon="useRenderIcon('ri/search-line')" :loading="powerStore.loading" type="primary" @click="onSearch">
-            {{ $t('search') }}
-          </el-button>
-          <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
-        </el-form-item>
-      </el-form>
-    </ReAuth>
+    <el-form ref="formRef" :inline="true" :model="powerStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+      <el-form-item :label="$t('power_powerCode')" prop="powerCode">
+        <el-input v-model="powerStore.form.powerCode" :placeholder="`${$t('input')}${$t('power_powerCode')}`" class="!w-[180px]" clearable />
+      </el-form-item>
+      <el-form-item :label="$t('power_powerName')" prop="powerName">
+        <el-input v-model="powerStore.form.powerName" :placeholder="`${$t('input')}${$t('power_powerName')}`" class="!w-[180px]" clearable />
+      </el-form-item>
+      <el-form-item :label="$t('power_requestUrl')" prop="requestUrl">
+        <el-input v-model="powerStore.form.requestUrl" :placeholder="`${$t('input')}${$t('power_requestUrl')}`" class="!w-[180px]" clearable />
+      </el-form-item>
+      <el-form-item :label="$t('requestMethod')" prop="requestMethod">
+        <el-select v-model="powerStore.form.requestMethod" :placeholder="$t('requestMethod')" autocomplete="off" class="!w-[180px]" clearable filterable>
+          <el-option v-for="item in RequestMethod" :key="item" :label="item" :value="item" />
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button :icon="useRenderIcon('ri/search-line')" :loading="powerStore.loading" type="primary" @click="onSearch">
+          {{ $t('search') }}
+        </el-button>
+        <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
+      </el-form-item>
+    </el-form>
 
     <PureTableBar
       :columns="columns"
@@ -146,7 +142,7 @@ onMounted(() => {
     >
       <template #buttons>
         <!-- 下载配置 -->
-        <el-dropdown v-if="hasAuth(auth.update)" class="mr-1" type="primary">
+        <el-dropdown class="mr-1" type="primary">
           <el-button :icon="useRenderIcon(Download)" plain type="primary">
             {{ $t('download_configuration') }}
           </el-button>
@@ -159,7 +155,7 @@ onMounted(() => {
         </el-dropdown>
 
         <!-- 更新配置 -->
-        <el-dropdown v-if="hasAuth(auth.update)" class="mr-1" type="primary">
+        <el-dropdown class="mr-1" type="primary">
           <el-button :icon="useRenderIcon(Upload)" plain type="primary">{{ $t('file_import') }}</el-button>
           <template #dropdown>
             <el-dropdown-menu>
@@ -170,23 +166,23 @@ onMounted(() => {
         </el-dropdown>
 
         <!-- 添加权限按钮 -->
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd()">
+        <el-button :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd()">
           {{ $t('addNew') }}
         </el-button>
 
-        <el-dropdown v-if="hasAuth(auth.update)" class="ml-1" type="primary">
+        <el-dropdown class="ml-1" type="primary">
           <el-button :icon="useRenderIcon(More)" plain type="primary">{{ $t('more_actions') }}</el-button>
           <template #dropdown>
             <el-dropdown-menu>
               <!-- 批量更新父级id -->
-              <el-dropdown-item v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" @click="onUpdateSort">拖拽排序</el-dropdown-item>
+              <el-dropdown-item :icon="useRenderIcon(EditPen)" @click="onUpdateSort">拖拽排序</el-dropdown-item>
               <!-- 批量更新父级id -->
-              <el-dropdown-item v-if="hasAuth(auth.update)" :disabled="!(powerIds.length > 0)" :icon="useRenderIcon(EditPen)" @click="onUpdateBatchParent">
+              <el-dropdown-item :disabled="!(powerIds.length > 0)" :icon="useRenderIcon(EditPen)" @click="onUpdateBatchParent">
                 {{ $t('update_batches_parent') }}
               </el-dropdown-item>
 
               <!-- 批量删除按钮 -->
-              <el-dropdown-item v-if="hasAuth(auth.delete)" :disabled="!(powerIds.length > 0)" :icon="useRenderIcon(Delete)" @click="onDeleteBatch">
+              <el-dropdown-item :disabled="!(powerIds.length > 0)" :icon="useRenderIcon(Delete)" @click="onDeleteBatch">
                 {{ $t('deleteBatches') }}
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -230,15 +226,15 @@ onMounted(() => {
 
           <template #operation="{ row }">
             <!-- 修改 -->
-            <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
+            <el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
             <!-- 添加 -->
-            <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)">
+            <el-button :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)">
               {{ $t('addNew') }}
             </el-button>
             <!-- 删除 -->
-            <el-popconfirm v-if="hasAuth(auth.delete)" :title="`${$t('delete')}${row.powerName}?`" @confirm="onDelete(row)">
+            <el-popconfirm :title="`${$t('delete')}${row.powerName}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}
