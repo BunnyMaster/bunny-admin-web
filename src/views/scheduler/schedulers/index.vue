@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import ReAuth from '@/components/ReAuth/src/auth';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { useSchedulersStore } from '@/store/scheduler/schedulers';
-import { auth, columns, onAdd, onDelete, onPause, onResume, onSearch, onUpdate } from '@/views/scheduler/schedulers/utils';
+import { columns, onAdd, onDelete, onPause, onResume, onSearch, onUpdate } from '@/views/scheduler/schedulers/utils';
 import PureTable from '@pureadmin/table';
 import { FormInstance } from 'element-plus';
 import { onMounted, ref } from 'vue';
@@ -122,34 +121,30 @@ onMounted(() => {
             </el-button>
 
             <!-- 暂停-->
-            <ReAuth :value="auth.pause">
-              <el-button
-                v-if="row.triggerState !== 'PAUSED'"
-                :icon="useRenderIcon('line-md:pause')"
-                :size="size"
-                class="reset-margin"
-                link
-                type="primary"
-                @click="onPause(row)"
-              >
-                {{ $t('pause') }}
-              </el-button>
-            </ReAuth>
+            <el-button
+              v-if="row.triggerState !== 'PAUSED'"
+              :icon="useRenderIcon('line-md:pause')"
+              :size="size"
+              class="reset-margin"
+              link
+              type="primary"
+              @click="onPause(row)"
+            >
+              {{ $t('pause') }}
+            </el-button>
 
             <!-- 恢复 -->
-            <ReAuth :value="auth.resume">
-              <el-button
-                v-if="row.triggerState === 'PAUSED'"
-                :icon="useRenderIcon('material-symbols:resume')"
-                :size="size"
-                class="reset-margin"
-                link
-                type="primary"
-                @click="onResume(row)"
-              >
-                {{ $t('resume') }}
-              </el-button>
-            </ReAuth>
+            <el-button
+              v-if="row.triggerState === 'PAUSED'"
+              :icon="useRenderIcon('material-symbols:resume')"
+              :size="size"
+              class="reset-margin"
+              link
+              type="primary"
+              @click="onResume(row)"
+            >
+              {{ $t('resume') }}
+            </el-button>
 
             <!-- 删除 -->
             <el-popconfirm :title="`${$t('delete')}${row.jobName}?`" @confirm="onDelete(row)">

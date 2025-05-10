@@ -34,9 +34,6 @@ const form = ref(props.formInline);
 const powerStore = usePermissionStore();
 const { allPowerList, systemApiInfoList } = storeToRefs(powerStore);
 
-// tab 默认选中项
-const activeName = ref('system');
-
 // 过滤搜索
 const queryText = ref('');
 

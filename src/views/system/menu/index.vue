@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import ReAuth from '@/components/ReAuth/src/auth';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
 import { userMenuStore } from '@/store/system/menu';
-import { auth, clearAllRolesSelect, columns, mergeArgs, onAdd, onDelete, onSearch, onUpdate, selectIds, tableRef } from '@/views/system/menu/utils';
+import { clearAllRolesSelect, columns, mergeArgs, onAdd, onDelete, onSearch, onUpdate, selectIds, tableRef } from '@/views/system/menu/utils';
 import PureTable from '@pureadmin/table';
 import { FormInstance } from 'element-plus';
 import { onMounted, ref } from 'vue';
@@ -46,20 +45,18 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <ReAuth :value="auth.search">
-      <el-form ref="formRef" :inline="true" :model="routerStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-        <el-form-item label="菜单名称" prop="title">
-          <el-input v-model="routerStore.form.title" :placeholder="$t('input')" class="!w-[180px]" clearable />
-        </el-form-item>
+    <el-form ref="formRef" :inline="true" :model="routerStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+      <el-form-item label="菜单名称" prop="title">
+        <el-input v-model="routerStore.form.title" :placeholder="$t('input')" class="!w-[180px]" clearable />
+      </el-form-item>
 
-        <el-form-item>
-          <el-button :icon="useRenderIcon('ri/search-line')" :loading="routerStore.loading" type="primary" @click="onSearch">
-            {{ $t('search') }}
-          </el-button>
-          <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
-        </el-form-item>
-      </el-form>
-    </ReAuth>
+      <el-form-item>
+        <el-button :icon="useRenderIcon('ri/search-line')" :loading="routerStore.loading" type="primary" @click="onSearch">
+          {{ $t('search') }}
+        </el-button>
+        <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">{{ $t('buttons.reset') }}</el-button>
+      </el-form-item>
+    </el-form>
 
     <PureTableBar
       :columns="columns"
@@ -123,19 +120,9 @@ onMounted(() => {
             </el-button>
 
             <!-- 新增 -->
-            <ReAuth :value="auth.add">
-              <el-button
-                v-show="row.menuType !== 3"
-                :icon="useRenderIcon(AddFill)"
-                :size="size"
-                class="reset-margin"
-                link
-                type="primary"
-                @click="onAdd(row.id)"
-              >
-                {{ $t('addNew') }}
-              </el-button>
-            </ReAuth>
+            <el-button v-show="row.menuType !== 3" :icon="useRenderIcon(AddFill)" :size="size" class="reset-margin" link type="primary" @click="onAdd(row.id)">
+              {{ $t('addNew') }}
+            </el-button>
 
             <!-- 删除操作 -->
             <el-popconfirm :title="`${$t('delete')} ${$t(row.title)}?`" @confirm="onDelete(row)">

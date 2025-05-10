@@ -95,12 +95,12 @@ onMounted(() => {
     <PureTableBar :columns="columns" :title="$t('emailTemplate')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <!-- 新增 -->
       <template #buttons>
-        <el-button : :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
+        <el-button :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
 
         <!-- 批量删除按钮 -->
-        <el-button : :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
+        <el-button :disabled="!(selectRows.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
           {{ $t('deleteBatches') }}
         </el-button>
       </template>
@@ -154,12 +154,12 @@ onMounted(() => {
             </el-button>
 
             <!-- 修改 -->
-            <el-button : :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
+            <el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
 
             <!-- 删除 -->
-            <el-popconfirm : :title="`${$t('delete')} ${row.templateName}?`" @confirm="onDelete(row)">
+            <el-popconfirm :title="`${$t('delete')} ${row.templateName}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

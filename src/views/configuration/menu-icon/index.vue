@@ -66,12 +66,12 @@ onMounted(() => {
 
     <PureTableBar :columns="columns" :title="$t('menuIcon')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
-        <el-button : :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
+        <el-button :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
 
         <!-- 批量删除按钮 -->
-        <el-button : :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
+        <el-button :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
           {{ $t('deleteBatches') }}
         </el-button>
       </template>
@@ -119,10 +119,10 @@ onMounted(() => {
           </template>
 
           <template #operation="{ row }">
-            <el-button : :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
+            <el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
-            <el-popconfirm : :title="`${$t('delete')}${row.iconName}?`" @confirm="onDelete(row)">
+            <el-popconfirm :title="`${$t('delete')}${row.iconName}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

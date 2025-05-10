@@ -1,13 +1,10 @@
 <script lang="ts" setup>
-import ReAuth from '@/components/ReAuth/src/auth';
 import { useRenderIcon } from '@/components/ReIcon/src/hooks';
 import { PureTableBar } from '@/components/RePureTableBar';
 import { selectUserinfo } from '@/components/Table/Userinfo/columns';
 import { $t } from '@/plugins/i18n';
-import { hasAuth } from '@/router/utils';
 import { userI18nStore } from '@/store/i18n/i18n';
 import {
-  auth,
   columns,
   deleteIds,
   downloadI18nSetting,
@@ -64,34 +61,32 @@ onMounted(() => {
 
 <template>
   <div class="main">
-    <ReAuth :value="auth.query">
-      <el-form ref="pageFormRef" :inline="true" :model="i18nStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
-        <el-form-item :label="$t('i18n.keyName')" prop="keyName">
-          <el-input v-model="i18nStore.form.keyName" :placeholder="`${$t('input')}${$t('i18n.keyName')}`" class="!w-[180px]" clearable />
-        </el-form-item>
-        <el-form-item :label="$t('i18n.translation')" prop="translation">
-          <el-input v-model="i18nStore.form.translation" :placeholder="`${$t('input')}${$t('i18n.translation')}`" class="!w-[180px]" clearable />
-        </el-form-item>
-        <el-form-item :label="$t('i18n.typeName')" prop="typeName">
-          <el-input v-model="i18nStore.form.typeName" :placeholder="`${$t('input')}${$t('i18n.typeName')}`" class="!w-[180px]" clearable />
-        </el-form-item>
-        <el-form-item>
-          <!-- 表格頂部搜索 -->
-          <el-button :icon="useRenderIcon('ri/search-line')" :loading="i18nStore.loading" type="primary" @click="onSearch">
-            {{ $t('search') }}
-          </el-button>
-          <!-- 表格頂部重置 -->
-          <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(pageFormRef)">
-            {{ $t('buttons.reset') }}
-          </el-button>
-        </el-form-item>
-      </el-form>
-    </ReAuth>
+    <el-form ref="pageFormRef" :inline="true" :model="i18nStore.form" class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto">
+      <el-form-item :label="$t('i18n.keyName')" prop="keyName">
+        <el-input v-model="i18nStore.form.keyName" :placeholder="`${$t('input')}${$t('i18n.keyName')}`" class="!w-[180px]" clearable />
+      </el-form-item>
+      <el-form-item :label="$t('i18n.translation')" prop="translation">
+        <el-input v-model="i18nStore.form.translation" :placeholder="`${$t('input')}${$t('i18n.translation')}`" class="!w-[180px]" clearable />
+      </el-form-item>
+      <el-form-item :label="$t('i18n.typeName')" prop="typeName">
+        <el-input v-model="i18nStore.form.typeName" :placeholder="`${$t('input')}${$t('i18n.typeName')}`" class="!w-[180px]" clearable />
+      </el-form-item>
+      <el-form-item>
+        <!-- 表格頂部搜索 -->
+        <el-button :icon="useRenderIcon('ri/search-line')" :loading="i18nStore.loading" type="primary" @click="onSearch">
+          {{ $t('search') }}
+        </el-button>
+        <!-- 表格頂部重置 -->
+        <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(pageFormRef)">
+          {{ $t('buttons.reset') }}
+        </el-button>
+      </el-form-item>
+    </el-form>
 
     <PureTableBar :columns="columns" :title="$t('multilingualManagement')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
         <!-- 下载多语言配置 -->
-        <el-dropdown v-if="hasAuth(auth.download)" class="mr-1" type="primary">
+        <el-dropdown class="mr-1" type="primary">
           <el-button :icon="useRenderIcon(Download)" plain type="primary">
             {{ $t('download_configuration') }}
           </el-button>
@@ -106,7 +101,7 @@ onMounted(() => {
         </el-dropdown>
 
         <!-- 更新多语言配置 -->
-        <el-dropdown v-if="hasAuth(auth.update)" class="mr-1" type="primary">
+        <el-dropdown class="mr-1" type="primary">
           <el-button :icon="useRenderIcon(Upload)" plain type="primary">{{ $t('file_import') }}</el-button>
           <template #dropdown>
             <el-dropdown-menu>
@@ -117,12 +112,12 @@ onMounted(() => {
         </el-dropdown>
 
         <!-- 添加多语言 -->
-        <el-button v-if="hasAuth(auth.add)" :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
+        <el-button :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
 
         <!-- 批量删除按钮 -->
-        <el-button v-if="hasAuth(auth.deleted)" :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
+        <el-button :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
           {{ $t('deleteBatches') }}
         </el-button>
       </template>
@@ -168,12 +163,12 @@ onMounted(() => {
 
           <template #operation="{ row }">
             <!-- 修改 -->
-            <el-button v-if="hasAuth(auth.update)" :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
+            <el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
 
             <!-- 刪除確認 -->
-            <el-popconfirm v-if="hasAuth(auth.deleted)" :title="`${$t('confirmDelete')} ${row.translation}`" @confirm="onDelete(row)">
+            <el-popconfirm :title="`${$t('confirmDelete')} ${row.translation}`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}

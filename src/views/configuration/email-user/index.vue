@@ -100,12 +100,12 @@ onMounted(() => {
 
     <PureTableBar :columns="columns" :title="$t('email_user_send_config')" @fullscreen="tableRef.setAdaptive()" @refresh="onSearch">
       <template #buttons>
-        <el-button : :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
+        <el-button :icon="useRenderIcon(AddFill)" plain type="success" @click="onAdd">
           {{ $t('addNew') }}
         </el-button>
 
         <!-- 批量删除按钮 -->
-        <el-button : :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
+        <el-button :disabled="!(deleteIds.length > 0)" :icon="useRenderIcon(Delete)" plain type="danger" @click="onDeleteBatch">
           {{ $t('deleteBatches') }}
         </el-button>
       </template>
@@ -162,16 +162,16 @@ onMounted(() => {
 
           <!-- 插槽-更新用户 -->
           <template #updateUser="{ row }">
-            <el-button v-show="row.updateUser" : link type="primary" @click="selectUserinfo(row.updateUser)">
+            <el-button v-show="row.updateUser" link type="primary" @click="selectUserinfo(row.updateUser)">
               {{ row.updateUsername }}
             </el-button>
           </template>
 
           <template #operation="{ row }">
-            <el-button : :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
+            <el-button :icon="useRenderIcon(EditPen)" :size="size" class="reset-margin" link type="primary" @click="onUpdate(row)">
               {{ $t('modify') }}
             </el-button>
-            <el-popconfirm : :title="`${$t('delete')}${row.email}?`" @confirm="onDelete(row)">
+            <el-popconfirm :title="`${$t('delete')}${row.email}?`" @confirm="onDelete(row)">
               <template #reference>
                 <el-button :icon="useRenderIcon(Delete)" :size="size" class="reset-margin" link type="primary">
                   {{ $t('delete') }}
