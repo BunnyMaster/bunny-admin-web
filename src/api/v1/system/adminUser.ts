@@ -56,20 +56,18 @@ export const deleteUserByAdmin = (data: any) => {
 };
 
 /** 用户管理---根据用户id查询 */
-export const loadUserinfoById = (data?: object) => {
-  return http.request<BaseResult<UserResult>>('get', 'user/private/getUserinfoById', { params: data });
+export const loadUserinfoById = (data?: any) => {
+  return http.request<BaseResult<UserResult>>('get', `user/private/users/${data.id}`);
 };
 
 /** 用户信息---根据用户名查询用户列表 */
 export const getUserListByKeyword = (data: any) => {
-  return http.request<BaseResult<object>>('get', 'user/private/getUserListByKeyword', { params: data });
+  return http.request<BaseResult<object>>('get', 'user/private/users/search', { params: data });
 };
 
 /** 用户管理---强制用户下线 */
 export const forcedOfflineByAdmin = (data: any) => {
-  return http.request<BaseResult<UserResult>>('put', 'user/forcedOffline', {
-    data,
-  });
+  return http.request<BaseResult<UserResult>>('put', `user/${data.id}/force-logout`);
 };
 
 // -----------------------------------------
@@ -83,12 +81,12 @@ export const userLogin = (data?: object) => {
 
 /** 刷新`token` */
 export const refreshTokenApi = (data?: object) => {
-  return http.request<BaseResult<RefreshTokenResult>>('post', 'user/public/refreshToken', { data });
+  return http.request<BaseResult<RefreshTokenResult>>('post', 'user/public/refresh-token', { data });
 };
 
 /** 发送邮件 */
 export const sendLoginEmail = (data: any) => {
-  return http.request<BaseResult<any>>('post', '/user/public/sendLoginEmail', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
+  return http.request<BaseResult<any>>('post', '/user/public/email-code', { data }, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
 
 /** 获取用户信息,根据当前token获取 */
@@ -113,5 +111,5 @@ export const updateUserPassword = (data: any) => {
 
 /* 查询缓存中的已登录的用户 */
 export const getCacheLoggedInPage = (data: any) => {
-  return http.request<BaseResult<any>>('get', `user/getCacheUserPage/${data.currentPage}/${data.pageSize}`, { data });
+  return http.request<BaseResult<any>>('get', `user/users/logged-in/${data.currentPage}/${data.pageSize}`, { data });
 };

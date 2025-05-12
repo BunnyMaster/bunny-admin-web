@@ -31,5 +31,5 @@ export const downloadFilesByFileId = (data: any) => {
 
 /** 系统文件管理---获取所有文件存储基础路径 */
 export const getFilesStoragePath = () => {
-  return http.request<BaseResult<any>>('get', `files/private/getAllFilesStoragePath`);
+  return http.request<BaseResult<any>>('get', `files/private/file-storage-paths`);
 };

@@ -32,7 +32,7 @@ export const getPlatformConfig = async (app: App): Promise<undefined> => {
   return axios({
     method: 'get',
     // TODO 後端讀取 platform-config.json
-    url: `/api/config/public/webConfig`,
+    url: `/api/config/public/web-config`,
   })
     .then(({ data: config }) => {
       let $config = app.config.globalProperties.$config;

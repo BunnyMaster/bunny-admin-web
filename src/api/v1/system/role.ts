@@ -41,12 +41,12 @@ export const updateRoleByFile = (data: any) => {
 
 /** 为用户分配角色---根据用户id获取所有角色 */
 export const getRoleListByUserId = (data: any) => {
-  return http.request<BaseResult<any>>('get', `userRole/private/getRoleListByUserId`, { params: data });
+  return http.request<BaseResult<any>>('get', `user-role/private/roles/${data.userId}`);
 };
 
 /** 为用户分配角色---为用户分配角色 */
 export const createUserRole = (data: object) => {
-  return http.request<BaseResult<any>>('post', 'userRole', { data });
+  return http.request<BaseResult<any>>('post', 'user-role', { data });
 };
 
 /** 角色和权限---为角色分配权限 */

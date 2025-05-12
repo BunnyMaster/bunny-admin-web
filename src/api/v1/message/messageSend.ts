@@ -25,10 +25,10 @@ export const deleteMessage = (data: any) => {
 
 /** 用户系统消息---根据消息id查询消息详情 */
 export const getMessageDetailById = (data: any) => {
-  return http.request<BaseResult<any>>('get', `message/private/getMessageDetailById`, { params: data });
+  return http.request<BaseResult<any>>('get', `message/private/message/${data.id}`);
 };
 
 /** 系统消息---根据消息id获取接收人信息 */
 export const getReceivedUserinfoByMessageId = (data: any) => {
-  return http.request<BaseResult<any>>('get', `message/private/getReceivedUserinfoByMessageId`, { params: data });
+  return http.request<BaseResult<any>>('get', `message/private/messages/${data.messageId}/recipients`);
 };

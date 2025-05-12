@@ -44,22 +44,22 @@ export const uploadI18nFile = (data: any) => {
 
 /** 多语言类型管理---添加多语言类型 */
 export const createI18Type = (data: any) => {
-  return http.request<BaseResult<object>>('post', 'i18nType', { data });
+  return http.request<BaseResult<object>>('post', 'i18n-type', { data });
 };
 
 /** 多语言类型管理---更新多语言类型 */
 export const updateI18nType = (data: any) => {
-  return http.request<BaseResult<object>>('put', 'i18nType', { data });
+  return http.request<BaseResult<object>>('put', 'i18n-type', { data });
 };
 
 /** 多语言类型管理---删除多语言类型 */
 export const deleteI18nType = (data: any) => {
-  return http.request<BaseResult<object>>('delete', 'i18nType', { data });
+  return http.request<BaseResult<object>>('delete', 'i18n-type', { data });
 };
 
 /** 多语言类型管理---获取全部多语言类型列表 */
 export const getI18nTypeList = (data: any) => {
-  return http.request<BaseResult<ResultTable>>('get', 'i18nType/public', {
+  return http.request<BaseResult<ResultTable>>('get', 'i18n-type/public', {
     params: data,
   });
 };

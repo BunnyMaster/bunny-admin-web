@@ -63,7 +63,6 @@ export const useAdminUserStore = defineStore('adminUserStore', {
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
       delete data.total;
-      delete data.background;
 
       // 获取用户信息列表
       const result = await getUserPageByAdmin(data);
@@ -93,7 +92,7 @@ export const useAdminUserStore = defineStore('adminUserStore', {
 
     /** 强制用户下线 */
     async forcedOffline(data: any) {
-      const result = await forcedOfflineByAdmin(data);
+      const result = await forcedOfflineByAdmin({ data });
       return storeMessage(result);
     },
 

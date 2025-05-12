@@ -10,7 +10,7 @@ import {
   updatePermission,
   updatePermissionBatch,
   updatePermissionListByParentId,
-} from '@/api/v1/system/power';
+} from '@/api/v1/system/permission';
 import { pageSizes } from '@/enums/baseConstant';
 import { storeMessage } from '@/utils/message';
 import { storePagination } from '@/store/useStorePagination';

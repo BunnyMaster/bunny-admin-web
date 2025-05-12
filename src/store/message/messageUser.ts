@@ -44,7 +44,6 @@ export const useMessageUserStore = defineStore('messageUserStore', {
       const data = { ...this.pagination, ...this.form };
       delete data.pageSizes;
       delete data.total;
-      delete data.background;
 
       // 获取系统消息列表
       const result = await getMessageReceivedPageByUser(data);
@@ -62,7 +61,7 @@ export const useMessageUserStore = defineStore('messageUserStore', {
         this.messageDetail = result.data;
 
         // 解码消息内容
-        this.messageDetail.content = decode(this.messageDetail?.content);
+        (this.messageDetail as any).content = decode((this.messageDetail as any)?.content);
       }
     },
 

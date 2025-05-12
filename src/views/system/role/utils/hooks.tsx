@@ -5,7 +5,7 @@ import { h, ref } from 'vue';
 import { messageBox } from '@/utils/message';
 import type { FormItemProps } from '@/views/system/role/utils/types';
 import { $t } from '@/plugins/i18n';
-import { getPowerListByRoleId } from '@/api/v1/system/power';
+import { getPowerListByRoleId } from '@/api/v1/system/permission';
 
 // 表格ref
 export const tableRef = ref();

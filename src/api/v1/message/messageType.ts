@@ -25,5 +25,5 @@ export const deleteMessageType = (data: any) => {
 
 /** 系统消息类型---获取所有消息列表 */
 export const getMessageTypeList = () => {
-  return http.request<BaseResult<ResultTable>>('get', '/messageType/private/getMessageList');
+  return http.request<BaseResult<ResultTable>>('get', '/messageType/private/messages');
 };

@@ -35,27 +35,25 @@ export const importPermission = (data: any) => {
 
 /** 权限---获取所有权限 */
 export const getPermissionList = () => {
-  return http.request<BaseResult<any>>('get', `permission/private/getPermissionList`);
+  return http.request<BaseResult<any>>('get', `permission/private/permissions`);
 };
 
 /* 权限---获取系统API信息 */
 export const getSystemApiInfoList = () => {
-  return http.request<BaseResult<any>>('get', 'permission/private/getSystemApiInfoList');
+  return http.request<BaseResult<any>>('get', 'permission/private/system/apis');
 };
 
 /** 权限---批量修改权限父级 */
 export const updatePermissionListByParentId = (data: any) => {
-  return http.request<BaseResult<object>>('patch', 'permission/update/permissionListByParentId', { data });
+  return http.request<BaseResult<object>>('patch', 'permission/update/permissions/parent', { data });
 };
 
 /** 权限---批量更新权限 */
 export const updatePermissionBatch = (data: any) => {
-  return http.request<BaseResult<object>>('patch', 'permission/update/permissionBatch', { data });
+  return http.request<BaseResult<object>>('patch', 'permission/update/permissions/batch', { data });
 };
 
 /** 角色和权限---根据角色id获取权限内容 */
 export const getPowerListByRoleId = (data: any) => {
-  return http.request<BaseResult<object>>('get', 'rolePermission/private/getPermissionListByRoleId', {
-    params: data,
-  });
+  return http.request<BaseResult<object>>('get', `rolePermission/private/permissions/${data.id}`);
 };

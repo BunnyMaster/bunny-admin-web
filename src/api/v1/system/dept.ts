@@ -25,5 +25,5 @@ export const deleteDept = (data: any) => {
 
 /** 部门管理---获取所有部门管理列表 */
 export const getDeptList = () => {
-  return http.request<BaseResult<object>>('get', 'dept/private/getDeptList');
+  return http.request<BaseResult<object>>('get', 'dept/private/departments');
 };

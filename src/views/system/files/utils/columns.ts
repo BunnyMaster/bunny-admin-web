@@ -10,7 +10,8 @@ export const columns: TableColumnList = [
   // 文件在服务器上的存储路径
   { label: $t('files_filepath'), prop: 'filepath' },
   // 文件的MIME类型
-  { label: $t('files_fileType'), prop: 'fileType', width: 180 },
+  { label: $t('files_fileType'), prop: 'contentType', width: 180 },
+  { label: '缩略图类型', prop: 'thContentType', width: 180 },
   // 下载数量
   { label: $t('files_downloadCount'), prop: 'downloadCount', width: 115 },
   { label: $t('table.updateTime'), prop: 'updateTime', sortable: true, width: 160 },
