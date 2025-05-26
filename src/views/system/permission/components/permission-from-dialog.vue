@@ -51,9 +51,7 @@ const onNodeClick = (node) => {
   form.value.powerName = node.summary;
   form.value.requestMethod = node.httpMethod;
   form.value.requestUrl = node.path;
-  if (node.powerCodes && node.powerCodes.length > 0) {
-    form.value.powerCode = node.powerCodes[0];
-  }
+  form.value.powerCode = node.powerCode;
 };
 
 onMounted(() => {
