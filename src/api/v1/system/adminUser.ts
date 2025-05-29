@@ -81,7 +81,7 @@ export const userLogin = (data?: object) => {
 
 /** 刷新`token` */
 export const refreshTokenApi = (data?: object) => {
-  return http.request<BaseResult<RefreshTokenResult>>('post', 'user/public/refresh-token', { data });
+  return http.request<BaseResult<RefreshTokenResult>>('post', 'user/private/refresh-token', { data });
 };
 
 /** 发送邮件 */
